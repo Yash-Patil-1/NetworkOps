@@ -1,0 +1,666 @@
+[
+  {
+    "id": "q-noc-alert-01",
+    "topic_id": "alerting-thresholds",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between a threshold-based and anomaly-based alert?",
+    "correct_answers": [
+      "static vs dynamic",
+      "fixed value vs baseline",
+      "deviation",
+      "normal behavior"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Threshold alerts trigger at fixed values (CPU > 90%). Anomaly alerts detect deviations from learned baseline behavior.",
+    "hints": [
+      "One is fixed, one learns"
+    ]
+  },
+  {
+    "id": "q-noc-alert-02",
+    "topic_id": "alerting-thresholds",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "CPU alerts fire every 5 minutes during batch jobs at 2 AM. How do you fix this?",
+    "correct_answers": [
+      "maintenance window",
+      "suppress",
+      "schedule",
+      "time-based",
+      "threshold adjustment"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Configure maintenance windows or time-based alert suppression for known batch job schedules.",
+    "hints": [
+      "Scheduled events shouldn't alert"
+    ]
+  },
+  {
+    "id": "q-noc-alert-03",
+    "topic_id": "alerting-thresholds",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is alert fatigue and how do you prevent it?",
+    "correct_answers": [
+      "too many alerts",
+      "ignore",
+      "desensitize",
+      "tune",
+      "reduce noise"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Alert fatigue occurs when operators receive too many alerts and start ignoring them. Prevent by tuning thresholds, deduplication, correlation, and severity classification.",
+    "hints": [
+      "When everything alerts, nothing matters"
+    ]
+  },
+  {
+    "id": "q-noc-incident-01",
+    "topic_id": "incident-mgmt",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What are the typical incident severity levels?",
+    "correct_answers": [
+      "p1 p2 p3",
+      "critical major minor",
+      "sev 1 2 3",
+      "high medium low"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Common severity levels: P1/Critical (service down), P2/Major (degraded), P3/Minor (limited impact), P4/Low (cosmetic).",
+    "hints": [
+      "Usually 3-5 levels"
+    ]
+  },
+  {
+    "id": "q-noc-incident-02",
+    "topic_id": "incident-mgmt",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the first step in incident response?",
+    "correct_answers": [
+      "identify",
+      "detect",
+      "acknowledge",
+      "triage",
+      "assess"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "First step: Identify/Detect the incident, then Triage (assess severity and impact), then Respond.",
+    "hints": [
+      "Before you can fix it, you must know about it"
+    ]
+  },
+  {
+    "id": "q-noc-incident-03",
+    "topic_id": "incident-mgmt",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "A P1 incident has been open for 30 minutes with no resolution. What should happen?",
+    "correct_answers": [
+      "escalate",
+      "escalation",
+      "management",
+      "next tier",
+      "communication"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Escalate to next tier/management per escalation matrix. Increase communication frequency. Consider engaging vendor support.",
+    "hints": [
+      "Time-based escalation"
+    ]
+  },
+  {
+    "id": "q-noc-rca-01",
+    "topic_id": "rca-analysis",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the '5 Whys' technique in RCA?",
+    "correct_answers": [
+      "ask why repeatedly",
+      "root cause",
+      "keep asking",
+      "underlying cause"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "The 5 Whys technique asks 'Why?' repeatedly (typically 5 times) to drill past symptoms to the root cause.",
+    "hints": [
+      "Keep asking why"
+    ]
+  },
+  {
+    "id": "q-noc-rca-02",
+    "topic_id": "rca-analysis",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between a root cause and a contributing factor?",
+    "correct_answers": [
+      "primary vs secondary",
+      "direct vs indirect",
+      "main cause",
+      "without it wouldn't happen"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Root cause: the primary reason the incident occurred (removing it prevents recurrence). Contributing factors: conditions that made it worse but didn't directly cause it.",
+    "hints": [
+      "One is the main reason"
+    ]
+  },
+  {
+    "id": "q-noc-rca-03",
+    "topic_id": "rca-analysis",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "A network outage was caused by a misconfigured ACL pushed during a change window. What is the root cause?",
+    "correct_answers": [
+      "insufficient review",
+      "no peer review",
+      "testing",
+      "change process",
+      "validation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Root cause is likely insufficient change validation/peer review process, not the ACL itself. The ACL is the immediate cause; the process gap is the root cause.",
+    "hints": [
+      "Look beyond the technical error"
+    ]
+  },
+  {
+    "id": "q-noc-sla-01",
+    "topic_id": "sla-mgmt",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What does 99.99% availability (four nines) mean in downtime per year?",
+    "correct_answers": [
+      "52 minutes",
+      "52.6 minutes",
+      "less than an hour"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "99.99% = 52.6 minutes of allowed downtime per year (4.38 min/month).",
+    "hints": [
+      "About an hour per year"
+    ]
+  },
+  {
+    "id": "q-noc-sla-02",
+    "topic_id": "sla-mgmt",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "How do you calculate availability percentage?",
+    "correct_answers": [
+      "uptime / total time",
+      "(total - downtime) / total",
+      "mtbf / (mtbf + mttr)"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Availability = (Total Time - Downtime) / Total Time \u00d7 100%. Also: MTBF / (MTBF + MTTR).",
+    "hints": [
+      "Uptime divided by total time"
+    ]
+  },
+  {
+    "id": "q-noc-sla-03",
+    "topic_id": "sla-mgmt",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is the difference between MTBF and MTTR?",
+    "correct_answers": [
+      "between failures",
+      "time to repair",
+      "mean time",
+      "failure vs recovery"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "MTBF (Mean Time Between Failures) = average time between incidents. MTTR (Mean Time To Repair/Recover) = average time to restore service.",
+    "hints": [
+      "One measures reliability, one measures recovery"
+    ]
+  },
+  {
+    "id": "q-noc-snmp-01",
+    "topic_id": "snmp-monitoring",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What port does SNMP use?",
+    "correct_answers": [
+      "161",
+      "udp 161"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SNMP uses UDP port 161 for queries and UDP port 162 for traps.",
+    "hints": [
+      "UDP, not TCP"
+    ]
+  },
+  {
+    "id": "q-noc-snmp-02",
+    "topic_id": "snmp-monitoring",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between SNMP polling and traps?",
+    "correct_answers": [
+      "pull vs push",
+      "agent sends",
+      "manager queries",
+      "unsolicited"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Polling: manager queries agents periodically (pull). Traps: agents send unsolicited notifications to manager (push).",
+    "hints": [
+      "One asks, one tells"
+    ]
+  },
+  {
+    "id": "q-noc-snmp-03",
+    "topic_id": "snmp-monitoring",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "Why is SNMPv3 preferred over v2c?",
+    "correct_answers": [
+      "authentication",
+      "encryption",
+      "security",
+      "no community string",
+      "privacy"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SNMPv3 adds authentication (verify sender), encryption (privacy), and access control. v2c uses plaintext community strings.",
+    "hints": [
+      "Security features"
+    ]
+  },
+  {
+    "id": "q-noc-snmp-04",
+    "topic_id": "snmp-monitoring",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What is an OID in SNMP?",
+    "correct_answers": [
+      "object identifier",
+      "mib tree",
+      "numeric path",
+      "identify variable"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "An OID (Object Identifier) is a numeric path in the MIB tree that uniquely identifies a managed object (e.g., 1.3.6.1.2.1.1.1 = sysDescr).",
+    "hints": [
+      "A numeric address in the MIB"
+    ]
+  },
+  {
+    "id": "q-noc-syslog-01",
+    "topic_id": "syslog-monitoring",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What are the syslog severity levels from most to least severe?",
+    "correct_answers": [
+      "emergency alert critical error warning notice info debug",
+      "0 1 2 3 4 5 6 7"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Syslog severities: 0-Emergency, 1-Alert, 2-Critical, 3-Error, 4-Warning, 5-Notice, 6-Info, 7-Debug.",
+    "hints": [
+      "8 levels, 0 is worst"
+    ]
+  },
+  {
+    "id": "q-noc-syslog-02",
+    "topic_id": "syslog-monitoring",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What port does syslog use by default?",
+    "correct_answers": [
+      "514",
+      "udp 514"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Syslog uses UDP port 514 by default. Syslog over TLS uses TCP port 6514.",
+    "hints": [
+      "UDP by default"
+    ]
+  },
+  {
+    "id": "q-noc-netflow-01",
+    "topic_id": "netflow",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What information does a NetFlow record contain?",
+    "correct_answers": [
+      "source ip",
+      "destination ip",
+      "port",
+      "protocol",
+      "bytes",
+      "packets"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NetFlow records contain: source/dest IP, source/dest port, protocol, byte count, packet count, timestamps, and interface info.",
+    "hints": [
+      "The 5-tuple plus more"
+    ]
+  },
+  {
+    "id": "q-noc-netflow-02",
+    "topic_id": "netflow",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "You need to identify which application is consuming the most bandwidth. What tool/protocol helps?",
+    "correct_answers": [
+      "netflow",
+      "sflow",
+      "ipfix",
+      "flow analysis"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use NetFlow/sFlow/IPFIX to analyze traffic flows by application (port), source, destination, and volume.",
+    "hints": [
+      "Flow-based analysis"
+    ]
+  },
+  {
+    "id": "q-noc-troubleshoot-01",
+    "topic_id": "network-troubleshooting",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the first step in network troubleshooting methodology?",
+    "correct_answers": [
+      "identify",
+      "define problem",
+      "gather information",
+      "symptoms"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Step 1: Identify/define the problem \u2014 gather symptoms, affected users, scope, and timeline.",
+    "hints": [
+      "Understand what's wrong first"
+    ]
+  },
+  {
+    "id": "q-noc-troubleshoot-02",
+    "topic_id": "network-troubleshooting",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What command tests Layer 3 connectivity to a remote host?",
+    "correct_answers": [
+      "ping",
+      "traceroute",
+      "tracert"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use ping to test basic IP connectivity (ICMP echo request/reply).",
+    "hints": [
+      "The most basic connectivity test"
+    ]
+  },
+  {
+    "id": "q-noc-troubleshoot-03",
+    "topic_id": "network-troubleshooting",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What command shows the path packets take to a destination?",
+    "correct_answers": [
+      "traceroute",
+      "tracert",
+      "mtr"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "traceroute (Linux) / tracert (Windows) shows each hop along the path using incrementing TTL values.",
+    "hints": [
+      "Shows each router along the way"
+    ]
+  },
+  {
+    "id": "q-noc-troubleshoot-04",
+    "topic_id": "network-troubleshooting",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "Users report intermittent connectivity. Ping shows 5% packet loss. What do you check?",
+    "correct_answers": [
+      "interface errors",
+      "crc",
+      "duplex mismatch",
+      "cable",
+      "congestion",
+      "buffer"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Check: interface error counters (CRC, collisions), duplex mismatch, cable issues, buffer overflows, QoS drops, and congestion.",
+    "hints": [
+      "Look at interface statistics"
+    ]
+  },
+  {
+    "id": "q-noc-capacity-01",
+    "topic_id": "capacity-planning",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "At what utilization percentage should you plan for bandwidth upgrades?",
+    "correct_answers": [
+      "70",
+      "80",
+      "70-80",
+      "threshold"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Plan upgrades when sustained utilization reaches 70-80%. This leaves headroom for bursts and growth.",
+    "hints": [
+      "Leave room for growth"
+    ]
+  },
+  {
+    "id": "q-noc-grafana-01",
+    "topic_id": "grafana",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is Grafana primarily used for?",
+    "correct_answers": [
+      "visualization",
+      "dashboards",
+      "monitoring",
+      "graphs",
+      "metrics"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Grafana is a visualization and dashboarding tool for time-series metrics from sources like Prometheus, InfluxDB, etc.",
+    "hints": [
+      "Pretty graphs and dashboards"
+    ]
+  },
+  {
+    "id": "q-noc-prometheus-01",
+    "topic_id": "prometheus",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "How does Prometheus collect metrics?",
+    "correct_answers": [
+      "pull",
+      "scrape",
+      "http",
+      "pull model"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Prometheus uses a pull model \u2014 it scrapes metrics from HTTP endpoints exposed by targets at configured intervals.",
+    "hints": [
+      "It goes and gets the data"
+    ]
+  },
+  {
+    "id": "q-noc-prometheus-02",
+    "topic_id": "prometheus",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What query language does Prometheus use?",
+    "correct_answers": [
+      "promql"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Prometheus uses PromQL (Prometheus Query Language) for querying time-series data.",
+    "hints": [
+      "Prom..."
+    ]
+  },
+  {
+    "id": "q-noc-zabbix-01",
+    "topic_id": "zabbix",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What are the main components of a Zabbix deployment?",
+    "correct_answers": [
+      "server",
+      "agent",
+      "frontend",
+      "database",
+      "proxy"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Zabbix has: Server (processes data), Agent (collects on hosts), Frontend (web UI), Database (stores data), and optional Proxy.",
+    "hints": [
+      "Server, agent, and web interface"
+    ]
+  },
+  {
+    "id": "q-noc-change-01",
+    "topic_id": "change-mgmt",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What are the key elements of a change request?",
+    "correct_answers": [
+      "description",
+      "impact",
+      "rollback",
+      "schedule",
+      "approval",
+      "risk"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Change request includes: description of change, business justification, risk assessment, impact analysis, rollback plan, schedule, and approvals.",
+    "hints": [
+      "Plan for what could go wrong"
+    ]
+  },
+  {
+    "id": "q-noc-change-02",
+    "topic_id": "change-mgmt",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "A change caused an outage. The rollback plan doesn't work. What do you do?",
+    "correct_answers": [
+      "escalate",
+      "incident",
+      "bridge call",
+      "war room",
+      "vendor"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Declare an incident, escalate immediately, open a bridge/war room, engage all relevant teams and vendors, communicate to stakeholders.",
+    "hints": [
+      "This is now an incident"
+    ]
+  },
+  {
+    "id": "q-noc-doc-01",
+    "topic_id": "documentation",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What should a network runbook contain?",
+    "correct_answers": [
+      "procedures",
+      "steps",
+      "troubleshooting",
+      "escalation",
+      "contacts"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Runbooks contain: step-by-step procedures, troubleshooting guides, escalation paths, contact lists, and decision trees for common scenarios.",
+    "hints": [
+      "Step-by-step guides for operators"
+    ]
+  },
+  {
+    "id": "q-noc-baseline-01",
+    "topic_id": "baselining",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a network baseline and why is it important?",
+    "correct_answers": [
+      "normal behavior",
+      "reference",
+      "compare",
+      "deviation",
+      "typical"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A baseline documents normal network behavior (bandwidth, latency, errors). It's the reference point for detecting anomalies and planning capacity.",
+    "hints": [
+      "What does normal look like?"
+    ]
+  }
+]

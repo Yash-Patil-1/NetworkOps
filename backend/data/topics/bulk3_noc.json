@@ -1,0 +1,413 @@
+[
+  {
+    "id": "alerting-thresholds",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Alerting & Thresholds",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Alerting notifies NOC staff when metrics exceed defined thresholds.",
+      "why": "Without alerting, issues go unnoticed until users complain.",
+      "how": "Define thresholds: Warning 70%, Critical 90%. Channels: email, Slack, PagerDuty.",
+      "when": "Set alerts for all critical infrastructure. Tune to reduce false positives.",
+      "key_concepts": [
+        "Threshold levels",
+        "Escalation policies",
+        "Alert fatigue",
+        "Acknowledgment"
+      ],
+      "configuration": "# Prometheus alert\n- alert: HighCPU\n  expr: node_cpu_usage > 90\n  for: 5m",
+      "troubleshooting": [
+        "Check alert history",
+        "Verify threshold values",
+        "Review escalation path"
+      ]
+    },
+    "related_topics": [
+      "snmp-monitoring"
+    ],
+    "tags": [
+      "alerting",
+      "thresholds",
+      "monitoring"
+    ]
+  },
+  {
+    "id": "incident-mgmt",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "NOC Incident Management",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Structured process for detecting, classifying, and resolving network incidents.",
+      "why": "Without process, incidents are handled inconsistently leading to longer outages.",
+      "how": "Lifecycle: Detection \u2192 Classification (P1-P4) \u2192 Notification \u2192 Investigation \u2192 Resolution \u2192 Post-mortem.",
+      "when": "Follow for every incident. P1/P2 require immediate response.",
+      "key_concepts": [
+        "Severity classification",
+        "Escalation matrix",
+        "MTTR",
+        "Post-mortem"
+      ],
+      "configuration": "# Severity levels\nP1: Total outage (respond immediately)\nP2: Major degradation (respond <15min)\nP3: Minor impact (respond <1hr)\nP4: Informational",
+      "troubleshooting": [
+        "Check monitoring dashboards",
+        "Review recent changes",
+        "Isolate affected segment"
+      ]
+    },
+    "related_topics": [
+      "network-troubleshooting"
+    ],
+    "tags": [
+      "incident",
+      "management",
+      "severity",
+      "response"
+    ]
+  },
+  {
+    "id": "change-mgmt",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Network Change Management",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Formal process for planning, approving, and implementing network changes.",
+      "why": "Uncontrolled changes are the #1 cause of outages.",
+      "how": "Process: Request \u2192 Review (CAB) \u2192 Schedule \u2192 Implement \u2192 Verify \u2192 Close.",
+      "when": "Every network change goes through this process.",
+      "key_concepts": [
+        "CAB",
+        "Maintenance window",
+        "Rollback plan",
+        "Risk assessment"
+      ],
+      "configuration": "# Change types\nStandard: Pre-approved, low risk\nNormal: CAB approval required\nEmergency: Expedited, post-review",
+      "troubleshooting": [
+        "Verify change was successful",
+        "Check for side effects",
+        "Compare before/after configs"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "change-management",
+      "cab",
+      "rollback"
+    ]
+  },
+  {
+    "id": "rca-analysis",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Root Cause Analysis",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Systematic investigation to identify the fundamental cause of an incident.",
+      "why": "Fixing symptoms without root cause means problems recur.",
+      "how": "Methods: 5 Whys, Fishbone diagram, Timeline analysis, Fault tree.",
+      "when": "Perform RCA for every P1/P2 incident.",
+      "key_concepts": [
+        "5 Whys",
+        "Fishbone diagram",
+        "Timeline",
+        "Contributing factors"
+      ],
+      "configuration": "# 5 Whys Example\n1. Why outage? Core switch failed\n2. Why? CPU 100%\n3. Why? STP loop\n4. Why? Unauthorized switch\n5. Root cause: No port security",
+      "troubleshooting": [
+        "Gather all logs",
+        "Build timeline",
+        "Interview staff",
+        "Identify all factors"
+      ]
+    },
+    "related_topics": [
+      "incident-mgmt"
+    ],
+    "tags": [
+      "rca",
+      "root-cause",
+      "investigation",
+      "5-whys"
+    ]
+  },
+  {
+    "id": "sla-mgmt",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "SLA Management",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Service Level Agreements define measurable targets for availability and performance.",
+      "why": "SLAs set expectations and drive investment decisions.",
+      "how": "Metrics: 99.9% (8.76hr downtime/yr), 99.99% (52.6min/yr). MTTR, latency, packet loss.",
+      "when": "Define SLAs for all critical services. Monitor continuously.",
+      "key_concepts": [
+        "Availability nines",
+        "MTTR/MTBF",
+        "Latency targets",
+        "Reporting"
+      ],
+      "configuration": "# SLA targets\n99.9% = 8.76 hours downtime/year\n99.99% = 52.6 minutes/year\n99.999% = 5.26 minutes/year",
+      "troubleshooting": [
+        "Check SLA dashboard",
+        "Review incident impact",
+        "Calculate availability"
+      ]
+    },
+    "related_topics": [
+      "snmp-monitoring"
+    ],
+    "tags": [
+      "sla",
+      "availability",
+      "metrics",
+      "targets"
+    ]
+  },
+  {
+    "id": "documentation",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Network Documentation",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Maintaining accurate documentation of topology, configs, IPs, and procedures.",
+      "why": "Without docs, troubleshooting takes longer and DR is impossible.",
+      "how": "Essential: Network diagrams, IPAM, device inventory, config backups, SOPs, runbooks.",
+      "when": "Document everything. Update on every change. Review quarterly.",
+      "key_concepts": [
+        "Diagrams",
+        "IPAM",
+        "Inventory",
+        "Config backups",
+        "SOPs",
+        "Runbooks"
+      ],
+      "configuration": "# Tools\n- NetBox (IPAM + inventory)\n- draw.io (diagrams)\n- Oxidized (config backup)\n- Wiki (procedures)",
+      "troubleshooting": [
+        "Is documentation current?",
+        "Check last update",
+        "Verify IP assignments"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "documentation",
+      "diagrams",
+      "ipam",
+      "runbooks"
+    ]
+  },
+  {
+    "id": "baselining",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Performance Baselining",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Establishing normal metrics to detect anomalies and plan capacity.",
+      "why": "Without baselines, you cannot distinguish normal from abnormal.",
+      "how": "Process: Identify metrics \u2192 Collect 30+ days \u2192 Calculate avg/peak/95th \u2192 Document \u2192 Set thresholds.",
+      "when": "Baseline all critical links. Use 95th percentile for capacity planning.",
+      "key_concepts": [
+        "95th percentile",
+        "Average vs Peak",
+        "Seasonal patterns",
+        "Anomaly detection"
+      ],
+      "configuration": "# Key metrics to baseline\n- WAN utilization (bps)\n- Router CPU/memory\n- Interface errors\n- Latency",
+      "troubleshooting": [
+        "Compare current to baseline",
+        "Look for deviations",
+        "Check if baseline outdated"
+      ]
+    },
+    "related_topics": [
+      "capacity-planning"
+    ],
+    "tags": [
+      "baseline",
+      "performance",
+      "anomaly",
+      "metrics"
+    ]
+  },
+  {
+    "id": "grafana",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Grafana Dashboards",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Open-source visualization platform for real-time monitoring dashboards.",
+      "why": "Dashboards provide at-a-glance visibility into network health.",
+      "how": "Components: Data sources (Prometheus, InfluxDB), Panels (graphs, gauges), Variables, Alerts.",
+      "when": "Create dashboards for: NOC overview, per-site status, WAN health.",
+      "key_concepts": [
+        "Data sources",
+        "Panel types",
+        "Variables",
+        "Alert rules",
+        "Organization"
+      ],
+      "configuration": "# Prometheus query for bandwidth\nrate(ifHCInOctets[5m]) * 8",
+      "troubleshooting": [
+        "Check data source connectivity",
+        "Verify query syntax",
+        "Check time range"
+      ]
+    },
+    "related_topics": [
+      "prometheus"
+    ],
+    "tags": [
+      "grafana",
+      "dashboard",
+      "visualization"
+    ]
+  },
+  {
+    "id": "prometheus",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Prometheus Monitoring",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Open-source monitoring with pull-based collection, time-series storage, and PromQL.",
+      "why": "Standard for modern infrastructure monitoring.",
+      "how": "Architecture: Server (scrapes), Exporters (expose metrics), PromQL (query), Alertmanager (alerts).",
+      "when": "Use for server, container, and network monitoring (via SNMP exporter).",
+      "key_concepts": [
+        "Pull-based",
+        "Exporters",
+        "PromQL",
+        "Alertmanager",
+        "Service discovery"
+      ],
+      "configuration": "# prometheus.yml\nscrape_configs:\n  - job_name: network\n    static_configs:\n      - targets: [snmp-exporter:9116]",
+      "troubleshooting": [
+        "Check target status",
+        "Verify exporter running",
+        "Test PromQL"
+      ]
+    },
+    "related_topics": [
+      "grafana"
+    ],
+    "tags": [
+      "prometheus",
+      "metrics",
+      "monitoring",
+      "promql"
+    ]
+  },
+  {
+    "id": "zabbix",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Zabbix Monitoring",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Enterprise monitoring supporting SNMP, agents, and custom checks with built-in alerting.",
+      "why": "Widely used in enterprise NOCs for comprehensive monitoring.",
+      "how": "Components: Server, Agent, Proxy, Templates, Triggers, Actions.",
+      "when": "Use for enterprise network and server monitoring.",
+      "key_concepts": [
+        "Templates",
+        "Triggers",
+        "Auto-discovery",
+        "SNMP",
+        "Agent-based"
+      ],
+      "configuration": "# Zabbix SNMP item\nOID: 1.3.6.1.2.1.2.2.1.10 (ifInOctets)\nUpdate: 60s",
+      "troubleshooting": [
+        "Check host availability",
+        "Verify SNMP community",
+        "Review triggers"
+      ]
+    },
+    "related_topics": [
+      "snmp-monitoring"
+    ],
+    "tags": [
+      "zabbix",
+      "monitoring",
+      "enterprise",
+      "templates"
+    ]
+  },
+  {
+    "id": "librenms",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "LibreNMS",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Open-source network monitoring with auto-discovery, alerting, and SNMP polling.",
+      "why": "Free alternative to commercial NMS with strong community support.",
+      "how": "Features: Auto-discovery, SNMP polling, alerting, API, plugins, distributed polling.",
+      "when": "Use LibreNMS for budget-friendly network monitoring with good SNMP support.",
+      "key_concepts": [
+        "Auto-discovery",
+        "SNMP polling",
+        "Alerting",
+        "API",
+        "Distributed polling"
+      ],
+      "configuration": "# Add device\nlnms device:add 192.168.1.1 --v2c --community public",
+      "troubleshooting": [
+        "Check device polling",
+        "Verify SNMP access",
+        "Review alert rules"
+      ]
+    },
+    "related_topics": [
+      "snmp-monitoring"
+    ],
+    "tags": [
+      "librenms",
+      "monitoring",
+      "open-source",
+      "snmp"
+    ]
+  },
+  {
+    "id": "netbox-ipam",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "NetBox (IPAM/DCIM)",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Open-source IP address management and data center infrastructure management tool.",
+      "why": "Single source of truth for network documentation \u2014 IPs, devices, circuits, racks.",
+      "how": "Features: IPAM, device inventory, rack layouts, circuits, VLANs, API, webhooks, custom fields.",
+      "when": "Use NetBox as the authoritative source for all network documentation.",
+      "key_concepts": [
+        "IPAM",
+        "Device inventory",
+        "Rack layouts",
+        "API",
+        "Custom fields",
+        "Webhooks"
+      ],
+      "configuration": "# NetBox API\ncurl -H \"Authorization: Token abc123\" \\n  https://netbox.example.com/api/ipam/ip-addresses/",
+      "troubleshooting": [
+        "Check IP conflicts",
+        "Verify device records",
+        "Review VLAN assignments"
+      ]
+    },
+    "related_topics": [
+      "documentation"
+    ],
+    "tags": [
+      "netbox",
+      "ipam",
+      "inventory",
+      "documentation",
+      "dcim"
+    ]
+  }
+]

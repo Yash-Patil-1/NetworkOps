@@ -1,0 +1,172 @@
+[
+  {
+    "id": "transit-gw",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "AWS Transit Gateway",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Hub connecting multiple VPCs and on-premises through single gateway.",
+      "why": "Without TGW, connecting 10 VPCs needs 45 peering connections.",
+      "how": "Architecture: TGW as regional router, VPC attachments, route tables, cross-region peering.",
+      "when": "Use when connecting 3+ VPCs or need centralized routing.",
+      "key_concepts": [
+        "Hub-and-spoke",
+        "Route tables",
+        "Attachments",
+        "Cross-region"
+      ],
+      "configuration": "resource \"aws_ec2_transit_gateway\" \"main\" {}",
+      "troubleshooting": [
+        "Check route tables",
+        "Verify attachments",
+        "Check propagation"
+      ]
+    },
+    "related_topics": [
+      "aws-vpc"
+    ],
+    "tags": [
+      "transit-gateway",
+      "aws",
+      "hub",
+      "multi-vpc"
+    ]
+  },
+  {
+    "id": "nacl",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "AWS NACLs",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Stateless subnet-level firewalls. Must allow return traffic explicitly.",
+      "why": "Additional defense layer beyond Security Groups.",
+      "how": "Stateless, rule numbering, explicit deny, subnet-level. Must allow ephemeral ports for return traffic.",
+      "when": "Use as second layer. Keep rules simple.",
+      "key_concepts": [
+        "Stateless",
+        "Rule numbering",
+        "Explicit deny",
+        "Ephemeral ports"
+      ],
+      "configuration": "# Allow HTTPS + return traffic\nInbound: 100 ALLOW TCP 443 0.0.0.0/0\nOutbound: 100 ALLOW TCP 1024-65535 0.0.0.0/0",
+      "troubleshooting": [
+        "Check rule order",
+        "Remember ephemeral ports",
+        "Check both directions"
+      ]
+    },
+    "related_topics": [
+      "aws-security-groups"
+    ],
+    "tags": [
+      "nacl",
+      "aws",
+      "stateless",
+      "subnet"
+    ]
+  },
+  {
+    "id": "gcp-vpc-net",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "GCP VPC",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Global VPC with regional subnets \u2014 no peering needed between regions.",
+      "why": "Simplifies multi-region deployments.",
+      "how": "Differences: Global VPC, priority-based firewall rules, Shared VPC, Private Google Access.",
+      "when": "Use for global applications and multi-region deployments.",
+      "key_concepts": [
+        "Global VPC",
+        "Regional subnets",
+        "Priority firewall",
+        "Shared VPC"
+      ],
+      "configuration": "gcloud compute networks create my-vpc --subnet-mode=custom",
+      "troubleshooting": [
+        "Check firewall priorities",
+        "Verify subnet ranges",
+        "Check routes"
+      ]
+    },
+    "related_topics": [
+      "aws-vpc"
+    ],
+    "tags": [
+      "gcp",
+      "vpc",
+      "global",
+      "cloud"
+    ]
+  },
+  {
+    "id": "cloud-lb",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "Cloud Load Balancing",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Distributes traffic across instances for HA and scalability.",
+      "why": "Prevents single points of failure and enables horizontal scaling.",
+      "how": "Types: ALB (Layer 7, HTTP), NLB (Layer 4, TCP/UDP). Features: health checks, auto-scaling, SSL termination.",
+      "when": "Use ALB for web apps, NLB for non-HTTP.",
+      "key_concepts": [
+        "Layer 4 vs 7",
+        "Health checks",
+        "Target groups",
+        "SSL termination"
+      ],
+      "configuration": "resource \"aws_lb\" \"web\" {\n  load_balancer_type = \"application\"\n}",
+      "troubleshooting": [
+        "Check target health",
+        "Verify listeners",
+        "Check security groups"
+      ]
+    },
+    "related_topics": [
+      "aws-vpc"
+    ],
+    "tags": [
+      "load-balancer",
+      "cloud",
+      "scaling",
+      "availability"
+    ]
+  },
+  {
+    "id": "vpc-peering-topic",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "VPC Peering",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Connects two VPCs for private communication without internet.",
+      "why": "Enables shared services and cross-account access.",
+      "how": "Non-transitive, no CIDR overlap, cross-account supported, route table entries required both sides.",
+      "when": "Use for simple 2-VPC connections. Use TGW for 3+.",
+      "key_concepts": [
+        "Non-transitive",
+        "No CIDR overlap",
+        "Cross-account",
+        "Route updates required"
+      ],
+      "configuration": "resource \"aws_vpc_peering_connection\" \"peer\" {\n  vpc_id = aws_vpc.a.id\n  peer_vpc_id = aws_vpc.b.id\n}",
+      "troubleshooting": [
+        "Check peering status",
+        "Verify routes both sides",
+        "Check security groups"
+      ]
+    },
+    "related_topics": [
+      "aws-vpc"
+    ],
+    "tags": [
+      "peering",
+      "vpc",
+      "connection",
+      "private"
+    ]
+  }
+]

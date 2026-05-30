@@ -1,0 +1,198 @@
+[
+  {
+    "id": "python-netmiko",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Python + Netmiko",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Netmiko is a Python library that simplifies SSH connections to network devices. It handles device-specific quirks (prompts, paging, timing) so you can focus on commands.",
+      "why": "Manual CLI configuration doesn't scale. With 100+ devices, automation is essential. Netmiko makes it easy to connect, send commands, and parse output programmatically.",
+      "how": "Netmiko workflow:\n1. Define device connection parameters\n2. Establish SSH connection\n3. Send commands (show or config)\n4. Parse output\n5. Disconnect\n\nSupports: Cisco IOS/NX-OS, Juniper, Arista, Palo Alto, and 50+ platforms.",
+      "when": "Use Netmiko for: bulk configuration changes, automated backups, compliance checks, information gathering across many devices.",
+      "key_concepts": [
+        "ConnectHandler",
+        "send_command (show)",
+        "send_config_set (config mode)",
+        "Device types",
+        "TextFSM parsing",
+        "Exception handling"
+      ],
+      "configuration": "from netmiko import ConnectHandler\n\ndevice = {\n    'device_type': 'cisco_ios',\n    'host': '192.168.1.1',\n    'username': 'admin',\n    'password': 'cisco123',\n}\n\nwith ConnectHandler(**device) as conn:\n    output = conn.send_command('show ip int brief')\n    print(output)\n    \n    # Config change\n    commands = ['interface lo0', 'ip address 1.1.1.1 255.255.255.255']\n    conn.send_config_set(commands)",
+      "troubleshooting": [
+        "Connection timeout \u2192 check SSH access",
+        "Authentication failed \u2192 verify credentials",
+        "Command timeout \u2192 increase timeout parameter",
+        "Wrong device_type \u2192 check platform"
+      ]
+    },
+    "related_topics": [
+      "python-basics"
+    ],
+    "tags": [
+      "netmiko",
+      "python",
+      "ssh",
+      "automation",
+      "cisco"
+    ]
+  },
+  {
+    "id": "ansible-network",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Ansible for Network Automation",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Ansible is an agentless automation tool that uses YAML playbooks to configure network devices. It connects via SSH/NETCONF and executes tasks declaratively.",
+      "why": "Ansible provides idempotent, repeatable network configuration. Write once, run on hundreds of devices. No agent installation needed \u2014 works with existing SSH access.",
+      "how": "Ansible components:\n- Inventory: List of devices\n- Playbook: YAML file defining tasks\n- Modules: cisco.ios.ios_config, junipernetworks.junos.junos_config, etc.\n- Roles: Reusable task collections\n\nExecution: ansible-playbook \u2192 connects to devices \u2192 executes modules \u2192 reports results.",
+      "when": "Use Ansible for: standardized configurations, compliance enforcement, bulk changes, network provisioning, and configuration backup.",
+      "key_concepts": [
+        "Playbooks (YAML)",
+        "Inventory",
+        "Modules (ios_config, ios_command)",
+        "Idempotency",
+        "Roles",
+        "Jinja2 templates",
+        "ansible-vault (secrets)"
+      ],
+      "configuration": "# inventory.yml\nall:\n  children:\n    switches:\n      hosts:\n        sw1:\n          ansible_host: 192.168.1.10\n          ansible_network_os: cisco.ios.ios\n\n# playbook.yml\n- name: Configure NTP\n  hosts: switches\n  gather_facts: no\n  tasks:\n    - name: Set NTP server\n      cisco.ios.ios_config:\n        lines:\n          - ntp server 10.0.0.5",
+      "troubleshooting": [
+        "ansible-playbook -vvv (verbose)",
+        "Check SSH connectivity first",
+        "Verify ansible_network_os",
+        "Use --check for dry run",
+        "Check module documentation"
+      ]
+    },
+    "related_topics": [
+      "python-netmiko"
+    ],
+    "tags": [
+      "ansible",
+      "automation",
+      "playbook",
+      "yaml",
+      "idempotent"
+    ]
+  },
+  {
+    "id": "terraform-network",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Terraform for Network Infrastructure",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Terraform is an Infrastructure as Code (IaC) tool that provisions and manages network infrastructure declaratively. Define desired state, Terraform makes it happen.",
+      "why": "Terraform enables version-controlled, repeatable infrastructure. Network changes go through code review, testing, and CI/CD \u2014 just like application code.",
+      "how": "Terraform workflow:\n1. Write: Define resources in .tf files (HCL)\n2. Plan: terraform plan (preview changes)\n3. Apply: terraform apply (make changes)\n4. State: Terraform tracks current state\n\nProviders: AWS, Azure, GCP, Palo Alto, Cisco, F5, etc.",
+      "when": "Use Terraform for: cloud network provisioning (VPCs, subnets, firewalls), firewall rule management, DNS management, and any infrastructure that has an API.",
+      "key_concepts": [
+        "HCL (HashiCorp Configuration Language)",
+        "State file",
+        "Plan \u2192 Apply workflow",
+        "Providers",
+        "Modules (reusable)",
+        "Remote state (S3, Terraform Cloud)"
+      ],
+      "configuration": "# main.tf\nprovider \"aws\" {\n  region = \"us-east-1\"\n}\n\nresource \"aws_vpc\" \"main\" {\n  cidr_block = \"10.0.0.0/16\"\n  tags = { Name = \"production\" }\n}\n\nresource \"aws_subnet\" \"web\" {\n  vpc_id     = aws_vpc.main.id\n  cidr_block = \"10.0.1.0/24\"\n}\n\n# Commands:\n# terraform init\n# terraform plan\n# terraform apply",
+      "troubleshooting": [
+        "terraform plan (preview before apply)",
+        "terraform state list (check state)",
+        "terraform import (import existing)",
+        "Check provider documentation",
+        "State lock issues \u2192 check backend"
+      ]
+    },
+    "related_topics": [
+      "aws-vpc",
+      "azure-vnet"
+    ],
+    "tags": [
+      "terraform",
+      "iac",
+      "infrastructure",
+      "declarative",
+      "automation"
+    ]
+  },
+  {
+    "id": "netconf-yang",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "NETCONF and YANG",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "NETCONF is a network management protocol (RFC 6241) that uses XML over SSH. YANG is the data modeling language that defines the structure of configuration and state data.",
+      "why": "CLI scraping is fragile \u2014 output format changes break scripts. NETCONF/YANG provides structured, programmatic access to device configuration with transaction support (commit/rollback).",
+      "how": "NETCONF operations:\n- get-config: Retrieve configuration\n- edit-config: Modify configuration\n- commit: Apply changes (candidate \u2192 running)\n- lock/unlock: Prevent concurrent changes\n\nYANG models define: containers, lists, leaves, types, constraints. Models are vendor-specific or standard (OpenConfig, IETF).",
+      "when": "Use NETCONF/YANG for: programmatic configuration management, when you need transactions (commit/rollback), or when working with modern network devices that support it.",
+      "key_concepts": [
+        "XML-based protocol",
+        "SSH transport (port 830)",
+        "YANG data models",
+        "Candidate vs Running config",
+        "Commit/Rollback",
+        "OpenConfig models"
+      ],
+      "configuration": "# Python ncclient\nfrom ncclient import manager\n\nwith manager.connect(\n    host='192.168.1.1',\n    port=830,\n    username='admin',\n    password='cisco',\n    hostkey_verify=False\n) as m:\n    config = m.get_config(source='running')\n    print(config)",
+      "troubleshooting": [
+        "Check port 830 (SSH subsystem)",
+        "Verify YANG model support",
+        "Use pyang to validate models",
+        "Check device NETCONF capabilities"
+      ]
+    },
+    "related_topics": [
+      "python-netmiko",
+      "ansible-network"
+    ],
+    "tags": [
+      "netconf",
+      "yang",
+      "xml",
+      "programmatic",
+      "structured"
+    ]
+  },
+  {
+    "id": "rest-api-network",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "REST APIs for Network Devices",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Many modern network devices expose REST APIs for programmatic management. Send HTTP requests (GET/POST/PUT/DELETE) to configure and monitor devices.",
+      "why": "REST APIs are the standard for modern automation. They're language-agnostic, well-documented, and integrate easily with CI/CD pipelines and orchestration tools.",
+      "how": "Common patterns:\n- GET /api/interfaces \u2192 list interfaces\n- POST /api/vlans \u2192 create VLAN\n- PUT /api/vlans/10 \u2192 update VLAN 10\n- DELETE /api/vlans/10 \u2192 remove VLAN 10\n\nAuthentication: Token-based, API keys, or OAuth.\nFormat: JSON (usually).",
+      "when": "Use REST APIs when: device supports it (Cisco DNA Center, Meraki, Palo Alto, F5), building integrations, or creating custom dashboards.",
+      "key_concepts": [
+        "HTTP methods (GET/POST/PUT/DELETE)",
+        "JSON payloads",
+        "Authentication (tokens, API keys)",
+        "Status codes (200, 201, 400, 401, 404)",
+        "Pagination",
+        "Rate limiting"
+      ],
+      "configuration": "import requests\n\n# Cisco DNA Center example\nurl = 'https://dnac.example.com/dna/intent/api/v1/network-device'\nheaders = {'X-Auth-Token': token, 'Content-Type': 'application/json'}\n\nresponse = requests.get(url, headers=headers, verify=False)\ndevices = response.json()['response']\n\nfor device in devices:\n    print(f\"{device['hostname']}: {device['managementIpAddress']}\")",
+      "troubleshooting": [
+        "Check authentication token",
+        "Verify API endpoint URL",
+        "Check HTTP status code",
+        "Review API documentation",
+        "Use Postman for testing"
+      ]
+    },
+    "related_topics": [
+      "python-netmiko"
+    ],
+    "tags": [
+      "api",
+      "rest",
+      "http",
+      "json",
+      "programmatic"
+    ]
+  }
+]

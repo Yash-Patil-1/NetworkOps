@@ -1,0 +1,8 @@
+[
+  {"id": "fundamentals", "name": "Networking Fundamentals", "description": "OSI, TCP/IP, DNS, DHCP, subnetting, VLANs, and core protocols.", "icon": "network"},
+  {"id": "network_engineering", "name": "Network Engineering", "description": "OSPF, BGP, MPLS, STP, HA design, and enterprise architecture.", "icon": "server"},
+  {"id": "noc_operations", "name": "NOC Operations", "description": "Monitoring, alerting, troubleshooting, capacity planning, and RCA.", "icon": "monitor"},
+  {"id": "network_security", "name": "Network Security", "description": "Firewalls, IDS/IPS, segmentation, Zero Trust, VPN, and packet analysis.", "icon": "shield"},
+  {"id": "cloud_networking", "name": "Cloud Networking", "description": "AWS VPC, Azure VNet, GCP VPC, hybrid connectivity, and cloud security.", "icon": "cloud"},
+  {"id": "network_automation", "name": "Network Automation", "description": "Python, Ansible, Terraform, Netmiko, APIs, and Infrastructure as Code.", "icon": "code"}
+]

@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@theme {
+  --color-void: #080808; --color-midnight: #101010; --color-carbon: #333333;
+  --color-ash: #949494; --color-polar: #F3F3F3; --color-amber: #E7C59A; --color-green: #00AC5C; --color-red: #E74C3C;
+  --font-sans: "Inter", system-ui, sans-serif; --font-mono: "JetBrains Mono", monospace;
+  --radius-default: 8px; --radius-tag: 20px;
+  --animate-fade-in: fade-in 0.3s ease-out forwards;
+  @keyframes fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+}
+@layer base { * { border-color: #333; } body { background: var(--color-midnight); color: var(--color-polar); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; } }
+@utility card { background: var(--color-midnight); border: 1px solid var(--color-carbon); border-radius: var(--radius-default); padding: 1.5rem; }
+@utility btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.25rem; border-radius: var(--radius-default); background: var(--color-amber); color: var(--color-midnight); font-weight: 700; font-size: 0.875rem; &:hover { opacity: 0.85; } }
+@utility btn-ghost { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.25rem; border-radius: var(--radius-default); border: 1px solid var(--color-carbon); color: var(--color-polar); font-size: 0.875rem; &:hover { border-color: var(--color-ash); } }
+@utility input-field { width: 100%; background: var(--color-void); border: 1px solid var(--color-carbon); border-radius: var(--radius-default); padding: 0.625rem 1rem; color: var(--color-polar); font-size: 0.875rem; &::placeholder { color: var(--color-ash); } &:focus { outline: none; border-color: var(--color-amber); } }
+@utility tag-amber { display: inline-flex; padding: 0.2rem 0.6rem; border-radius: var(--radius-tag); border: 1px solid var(--color-amber); color: var(--color-amber); font-family: var(--font-mono); font-size: 0.7rem; }
+@utility tag-green { display: inline-flex; padding: 0.2rem 0.6rem; border-radius: var(--radius-tag); border: 1px solid var(--color-green); color: var(--color-green); font-family: var(--font-mono); font-size: 0.7rem; }
+@utility nav-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; border-radius: var(--radius-default); color: var(--color-ash); font-size: 0.875rem; &:hover { color: var(--color-polar); background: rgba(255,255,255,0.03); } }
+@utility nav-active { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; border-radius: var(--radius-default); color: var(--color-amber); font-size: 0.875rem; background: rgba(231,197,154,0.05); }
+::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }

@@ -1,0 +1,201 @@
+[
+  {
+    "id": "static-routing",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "Static Routing",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Static routes are manually configured routes that tell a router where to send traffic for specific destinations. They don't change automatically.",
+      "why": "Static routes are simple, predictable, and use no bandwidth for routing protocol updates. Used for: default routes, stub networks, and small networks.",
+      "how": "A static route specifies:\n- Destination network\n- Next-hop IP or exit interface\n\nThe router checks its routing table for the most specific match and forwards accordingly. Static routes have AD (Administrative Distance) of 1 \u2014 preferred over dynamic routes.",
+      "when": "Use static routes for: default route to ISP, small networks (<5 routers), stub networks with single exit, and backup routes (floating static).",
+      "key_concepts": [
+        "Next-hop vs exit interface",
+        "Administrative Distance (AD=1)",
+        "Default route (0.0.0.0/0)",
+        "Floating static (higher AD for backup)",
+        "Recursive lookup",
+        "Directly connected"
+      ],
+      "configuration": "! Default route\nip route 0.0.0.0 0.0.0.0 203.0.113.1\n\n! Specific network\nip route 10.0.0.0 255.255.255.0 192.168.1.2\n\n! Floating static (backup, AD=200)\nip route 10.0.0.0 255.255.255.0 192.168.2.2 200",
+      "troubleshooting": [
+        "show ip route static",
+        "show ip route <destination>",
+        "Verify next-hop is reachable",
+        "Check for recursive routing",
+        "ping next-hop"
+      ]
+    },
+    "related_topics": [
+      "ospf-fundamentals",
+      "ipv4-addressing"
+    ],
+    "tags": [
+      "static",
+      "routing",
+      "default-route",
+      "manual",
+      "simple"
+    ]
+  },
+  {
+    "id": "eigrp-basics",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "EIGRP Basics",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "EIGRP (Enhanced Interior Gateway Routing Protocol) is a Cisco advanced distance-vector routing protocol. It uses DUAL algorithm for fast convergence and supports unequal-cost load balancing.",
+      "why": "EIGRP is widely used in Cisco environments. It's simpler to configure than OSPF, converges faster, and supports unequal-cost load balancing (unique feature).",
+      "how": "EIGRP uses:\n- Successor: Best route (in routing table)\n- Feasible Successor: Backup route (pre-calculated)\n- DUAL algorithm: Guarantees loop-free paths\n- Composite metric: Bandwidth + Delay (default)\n\nIf successor fails, feasible successor is instantly promoted \u2014 no recalculation needed.",
+      "when": "Use EIGRP in Cisco-only environments where simplicity and fast convergence are priorities. Not suitable for multi-vendor networks (use OSPF instead).",
+      "key_concepts": [
+        "DUAL algorithm",
+        "Successor / Feasible Successor",
+        "Composite metric (BW + Delay)",
+        "Feasibility Condition",
+        "Unequal-cost load balancing (variance)",
+        "Named EIGRP (modern config)"
+      ],
+      "configuration": "! Classic EIGRP\nrouter eigrp 100\n network 10.0.0.0\n network 192.168.1.0\n no auto-summary\n!\n! Named EIGRP (modern)\nrouter eigrp ENTERPRISE\n address-family ipv4 unicast autonomous-system 100\n  network 10.0.0.0 0.0.0.255\n  af-interface default\n   passive-interface",
+      "troubleshooting": [
+        "show ip eigrp neighbors",
+        "show ip eigrp topology",
+        "show ip route eigrp",
+        "debug eigrp packets"
+      ]
+    },
+    "related_topics": [
+      "ospf-fundamentals",
+      "static-routing"
+    ],
+    "tags": [
+      "eigrp",
+      "routing",
+      "cisco",
+      "dual",
+      "fast-convergence"
+    ]
+  },
+  {
+    "id": "mpls-basics",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "MPLS Basics",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "MPLS (Multiprotocol Label Switching) forwards packets using labels instead of IP lookups. It creates Label Switched Paths (LSPs) through the network for faster forwarding and traffic engineering.",
+      "why": "MPLS enables: VPN services (L3VPN, L2VPN), traffic engineering, fast failover, and QoS. It's the backbone technology for service provider networks.",
+      "how": "MPLS process:\n1. Ingress router (LER) adds label to packet\n2. Core routers (LSR) swap labels and forward\n3. Egress router (LER) removes label and routes normally\n\nLabel Distribution Protocol (LDP) distributes labels between routers. Labels are 32-bit, inserted between L2 and L3 headers.",
+      "when": "MPLS is used by service providers and large enterprises for: WAN connectivity, VPN services, traffic engineering, and fast reroute.",
+      "key_concepts": [
+        "Labels (32-bit)",
+        "LSP (Label Switched Path)",
+        "LER (Label Edge Router)",
+        "LSR (Label Switch Router)",
+        "LDP (Label Distribution Protocol)",
+        "Push/Swap/Pop operations"
+      ],
+      "configuration": "! Enable MPLS\nmpls ip\nmpls label protocol ldp\n!\ninterface GigabitEthernet0/0\n mpls ip\n!\n! Verify\nshow mpls interfaces\nshow mpls ldp neighbor\nshow mpls forwarding-table",
+      "troubleshooting": [
+        "show mpls ldp neighbor",
+        "show mpls forwarding-table",
+        "show mpls interfaces",
+        "debug mpls ldp",
+        "traceroute with MPLS labels"
+      ]
+    },
+    "related_topics": [
+      "ospf-fundamentals",
+      "bgp-fundamentals"
+    ],
+    "tags": [
+      "mpls",
+      "labels",
+      "service-provider",
+      "vpn",
+      "traffic-engineering"
+    ]
+  },
+  {
+    "id": "vxlan-basics",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "VXLAN Basics",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "VXLAN (Virtual Extensible LAN) extends Layer 2 networks over Layer 3 infrastructure using UDP encapsulation. It supports up to 16 million segments (vs VLAN's 4096 limit).",
+      "why": "Traditional VLANs are limited to 4096 IDs and can't span L3 boundaries. VXLAN solves both problems \u2014 essential for data center fabrics and multi-tenant environments.",
+      "how": "VXLAN encapsulates L2 frames in UDP (port 4789):\n- Original frame \u2192 VXLAN header (VNI) \u2192 UDP \u2192 IP \u2192 Outer Ethernet\n\nVTEP (VXLAN Tunnel Endpoint): Device that encapsulates/decapsulates.\nVNI (VXLAN Network Identifier): 24-bit ID (16M segments).\nBGP EVPN: Control plane for VXLAN (replaces flood-and-learn).",
+      "when": "Use VXLAN in: data center fabrics (leaf-spine), multi-tenant environments, DCI (Data Center Interconnect), and anywhere you need L2 extension over L3.",
+      "key_concepts": [
+        "VNI (24-bit, 16M segments)",
+        "VTEP (Tunnel Endpoint)",
+        "UDP port 4789",
+        "BGP EVPN (control plane)",
+        "Leaf-Spine architecture",
+        "Overlay/Underlay"
+      ],
+      "configuration": "! NX-OS VXLAN\nfeature nv overlay\nfeature vn-segment-vlan-based\n!\nvlan 100\n vn-segment 10100\n!\ninterface nve1\n source-interface loopback0\n member vni 10100\n  mcast-group 239.1.1.1",
+      "troubleshooting": [
+        "show nve peers",
+        "show nve vni",
+        "show vxlan interface",
+        "show bgp l2vpn evpn"
+      ]
+    },
+    "related_topics": [
+      "vlans",
+      "ospf-fundamentals"
+    ],
+    "tags": [
+      "vxlan",
+      "overlay",
+      "data-center",
+      "fabric",
+      "scalability"
+    ]
+  },
+  {
+    "id": "sd-wan",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "SD-WAN Basics",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "SD-WAN (Software-Defined WAN) separates the control plane from the data plane in WAN networks. It enables centralized management, application-aware routing, and use of multiple transport types.",
+      "why": "Traditional WAN (MPLS) is expensive and inflexible. SD-WAN uses cheaper internet links, provides application-level policies, and enables rapid deployment of new sites.",
+      "how": "SD-WAN architecture:\n- Orchestrator: Central management/policy\n- Controller: Control plane (routing decisions)\n- Edge devices: Data plane (at each site)\n\nFeatures: Application-aware routing, link quality monitoring, automatic failover, zero-touch provisioning, encryption over any transport.",
+      "when": "Use SD-WAN for: multi-site WAN, replacing expensive MPLS, application-based routing, and when you need centralized WAN management.",
+      "key_concepts": [
+        "Centralized management",
+        "Application-aware routing",
+        "Multiple transports (MPLS + Internet)",
+        "Zero-touch provisioning",
+        "Encryption",
+        "SLA-based path selection"
+      ],
+      "configuration": "# Conceptual (varies by vendor)\n# Cisco SD-WAN (vManage)\n# Policy: Route Office365 via Internet\n# Policy: Route SAP via MPLS\n# Policy: Failover to backup if latency > 100ms",
+      "troubleshooting": [
+        "Check tunnel status",
+        "Verify application classification",
+        "Monitor link SLA metrics",
+        "Check policy application",
+        "Review orchestrator dashboard"
+      ]
+    },
+    "related_topics": [
+      "vpn-ipsec",
+      "bgp-fundamentals",
+      "qos-basics"
+    ],
+    "tags": [
+      "sd-wan",
+      "wan",
+      "software-defined",
+      "application-aware",
+      "centralized"
+    ]
+  }
+]

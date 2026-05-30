@@ -1,0 +1,199 @@
+[
+  {
+    "id": "firewall-fundamentals",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "Firewall Fundamentals",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Firewalls control traffic flow between network zones based on rules. They inspect packets and allow/deny based on source, destination, port, protocol, and state.",
+      "why": "Firewalls are the primary network security control. They enforce the principle of least privilege at the network level \u2014 only explicitly allowed traffic passes.",
+      "how": "Types:\n- Packet filter: Stateless, checks individual packets\n- Stateful: Tracks connection state, allows return traffic\n- NGFW: Adds application awareness, IPS, URL filtering\n\nRule processing: Top-down, first match wins. Implicit deny at bottom.",
+      "when": "Deploy firewalls at: internet edge, between security zones, in front of sensitive servers, between departments. Always default deny.",
+      "key_concepts": [
+        "Stateful inspection",
+        "Rule order (top-down, first match)",
+        "Implicit deny",
+        "Zones (trust levels)",
+        "NAT on firewall",
+        "Application awareness (NGFW)"
+      ],
+      "configuration": "! Cisco ASA example\naccess-list OUTSIDE_IN permit tcp any host 203.0.113.10 eq 443\naccess-list OUTSIDE_IN deny ip any any log\n!\naccess-group OUTSIDE_IN in interface outside",
+      "troubleshooting": [
+        "show access-list (hit counts)",
+        "show conn (active connections)",
+        "packet-tracer (ASA simulation)",
+        "show logging | include denied"
+      ]
+    },
+    "related_topics": [
+      "nat-pat",
+      "vlans",
+      "network-troubleshooting"
+    ],
+    "tags": [
+      "firewall",
+      "rules",
+      "stateful",
+      "security",
+      "zones"
+    ]
+  },
+  {
+    "id": "ids-ips",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "IDS/IPS (Intrusion Detection/Prevention)",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "IDS detects malicious activity and alerts. IPS detects AND blocks malicious activity inline. Both use signatures and anomaly detection.",
+      "why": "Firewalls allow/deny based on ports \u2014 they can't inspect payload content. IDS/IPS examines packet contents for exploit signatures, malware, and anomalous behavior.",
+      "how": "Deployment:\n- IDS: Passive (mirror/SPAN port) \u2014 detects and alerts only\n- IPS: Inline \u2014 detects and blocks in real-time\n\nDetection methods:\n- Signature-based: Known attack patterns\n- Anomaly-based: Deviations from baseline\n- Policy-based: Violations of defined rules",
+      "when": "Deploy IDS/IPS at network boundaries, in front of critical servers, and between security zones. Use IPS inline for active protection, IDS for monitoring-only.",
+      "key_concepts": [
+        "Inline (IPS) vs Passive (IDS)",
+        "Signatures",
+        "Anomaly detection",
+        "False positives/negatives",
+        "Tuning",
+        "SPAN/TAP for IDS"
+      ],
+      "configuration": "# Suricata IPS (inline)\nsuricata -c /etc/suricata/suricata.yaml -i eth0 --af-packet\n\n# Snort IDS\nsnort -c /etc/snort/snort.conf -i eth0 -A alert_fast",
+      "troubleshooting": [
+        "Check alert logs",
+        "Verify signatures are updated",
+        "Monitor false positive rate",
+        "Test with known exploit (safely)"
+      ]
+    },
+    "related_topics": [
+      "firewall-fundamentals",
+      "syslog-monitoring"
+    ],
+    "tags": [
+      "ids",
+      "ips",
+      "intrusion",
+      "detection",
+      "prevention",
+      "signatures"
+    ]
+  },
+  {
+    "id": "vpn-ipsec",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "VPN \u2014 IPSec",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "IPSec VPN creates encrypted tunnels between sites (site-to-site) or between remote users and the network (remote access). Provides confidentiality, integrity, and authentication.",
+      "why": "Data traversing the internet is vulnerable to interception. IPSec VPN encrypts all traffic between endpoints, creating a secure channel over untrusted networks.",
+      "how": "IPSec phases:\nPhase 1 (IKE): Authenticate peers, establish secure channel\n- Main Mode or Aggressive Mode\n- Negotiate: encryption, hash, DH group, auth method\n\nPhase 2 (IPSec SA): Negotiate data encryption\n- ESP (Encapsulating Security Payload): Encrypts + authenticates\n- AH (Authentication Header): Authenticates only\n\nModes: Tunnel (entire packet encrypted) vs Transport (payload only).",
+      "when": "Use IPSec for: site-to-site connectivity over internet, remote access VPN, encrypting traffic between cloud and on-premises.",
+      "key_concepts": [
+        "IKE Phase 1 and Phase 2",
+        "ESP vs AH",
+        "Tunnel vs Transport mode",
+        "Pre-shared key vs Certificate",
+        "Perfect Forward Secrecy (PFS)",
+        "SA (Security Association)"
+      ],
+      "configuration": "! Cisco Site-to-Site VPN\ncrypto isakmp policy 10\n encryption aes 256\n hash sha256\n authentication pre-share\n group 14\ncrypto isakmp key SECRET address 203.0.113.1\n!\ncrypto ipsec transform-set AES-SHA esp-aes 256 esp-sha256-hmac\ncrypto map VPN 10 ipsec-isakmp\n set peer 203.0.113.1\n set transform-set AES-SHA\n match address VPN-TRAFFIC",
+      "troubleshooting": [
+        "show crypto isakmp sa",
+        "show crypto ipsec sa",
+        "debug crypto isakmp",
+        "debug crypto ipsec"
+      ]
+    },
+    "related_topics": [
+      "firewall-fundamentals",
+      "nat-pat"
+    ],
+    "tags": [
+      "vpn",
+      "ipsec",
+      "encryption",
+      "tunnel",
+      "site-to-site"
+    ]
+  },
+  {
+    "id": "network-segmentation",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "Network Segmentation",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Network segmentation divides a network into isolated zones with controlled access between them. Each zone has its own security policy.",
+      "why": "Flat networks allow lateral movement \u2014 once an attacker gets in, they can reach everything. Segmentation limits blast radius and enforces least privilege at the network level.",
+      "how": "Implementation methods:\n- VLANs + inter-VLAN firewall rules\n- Physical separation\n- Microsegmentation (host-based)\n- Zero Trust Network Access (ZTNA)\n\nCommon zones: DMZ, Internal, Management, Guest, IoT, PCI CDE.",
+      "when": "Segment when: you have different trust levels, compliance requirements (PCI CDE), IoT devices, guest access, or want to limit breach impact.",
+      "key_concepts": [
+        "Zones and trust levels",
+        "DMZ architecture",
+        "Microsegmentation",
+        "Zero Trust",
+        "Least privilege networking",
+        "East-West traffic control"
+      ],
+      "configuration": "! Inter-VLAN firewall (on L3 switch or firewall)\naccess-list 101 permit tcp 10.0.10.0 0.0.0.255 10.0.20.0 0.0.0.255 eq 443\naccess-list 101 deny ip 10.0.10.0 0.0.0.255 10.0.20.0 0.0.0.255\naccess-list 101 permit ip any any",
+      "troubleshooting": [
+        "Verify traffic is being filtered between zones",
+        "Check ACL hit counts",
+        "Test connectivity between zones",
+        "Review firewall logs for denied traffic"
+      ]
+    },
+    "related_topics": [
+      "vlans",
+      "firewall-fundamentals"
+    ],
+    "tags": [
+      "segmentation",
+      "zones",
+      "isolation",
+      "lateral-movement",
+      "zero-trust"
+    ]
+  },
+  {
+    "id": "802-1x",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "802.1X (Network Access Control)",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "802.1X is a port-based network access control standard. Devices must authenticate before getting network access. Unauthenticated devices are blocked or placed in a guest VLAN.",
+      "why": "Without 802.1X, anyone who plugs into a network port gets access. 802.1X ensures only authorized devices and users can access the network \u2014 essential for zero trust.",
+      "how": "Components:\n- Supplicant: Client device requesting access\n- Authenticator: Switch port enforcing access\n- Authentication Server: RADIUS server (validates credentials)\n\nProcess: Device connects \u2192 switch challenges \u2192 device provides credentials \u2192 RADIUS validates \u2192 switch grants/denies access.",
+      "when": "Implement 802.1X on all access ports in secure environments. Use for: corporate wired access, wireless (WPA2-Enterprise), and IoT device authentication.",
+      "key_concepts": [
+        "Supplicant/Authenticator/Auth Server",
+        "RADIUS",
+        "EAP methods (PEAP, EAP-TLS)",
+        "Dynamic VLAN assignment",
+        "MAB (MAC Authentication Bypass)",
+        "Guest VLAN for failures"
+      ],
+      "configuration": "! Switch port 802.1X\naaa new-model\naaa authentication dot1x default group radius\n!\ninterface GigabitEthernet0/1\n switchport mode access\n authentication port-control auto\n dot1x pae authenticator\n authentication host-mode multi-auth",
+      "troubleshooting": [
+        "show authentication sessions",
+        "show dot1x all",
+        "test aaa group radius",
+        "debug dot1x all"
+      ]
+    },
+    "related_topics": [
+      "vlans",
+      "firewall-fundamentals"
+    ],
+    "tags": [
+      "802.1x",
+      "nac",
+      "authentication",
+      "radius",
+      "port-security"
+    ]
+  }
+]

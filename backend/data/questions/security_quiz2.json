@@ -1,0 +1,612 @@
+[
+  {
+    "id": "q-sec2-fw-05",
+    "topic_id": "firewall-fundamentals",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is a next-generation firewall (NGFW)?",
+    "correct_answers": [
+      "application awareness",
+      "deep inspection",
+      "ips",
+      "user identity",
+      "layer 7"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NGFW adds: application awareness (identify apps regardless of port), integrated IPS, user identity, TLS inspection, and threat intelligence.",
+    "hints": [
+      "More than port/protocol filtering"
+    ]
+  },
+  {
+    "id": "q-sec2-fw-06",
+    "topic_id": "firewall-fundamentals",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "You need to allow Zoom but block other video apps on port 443. What firewall feature?",
+    "correct_answers": [
+      "application control",
+      "app-id",
+      "deep packet inspection",
+      "application awareness"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Application-aware firewalls (NGFW) can identify specific applications within encrypted traffic using App-ID/DPI, regardless of port.",
+    "hints": [
+      "Need to see inside the traffic"
+    ]
+  },
+  {
+    "id": "q-sec2-vpn-04",
+    "topic_id": "vpn-ipsec",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What are the default IKEv2 ports?",
+    "correct_answers": [
+      "500",
+      "4500",
+      "udp 500",
+      "udp 4500"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "IKEv2 uses UDP 500 for initial negotiation and UDP 4500 for NAT-Traversal (NAT-T).",
+    "hints": [
+      "Two UDP ports"
+    ]
+  },
+  {
+    "id": "q-sec2-vpn-05",
+    "topic_id": "ssl-vpn2",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the advantage of SSL VPN over IPsec VPN for remote users?",
+    "correct_answers": [
+      "no client",
+      "browser",
+      "any network",
+      "port 443",
+      "firewall friendly"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SSL VPN works through any firewall (uses port 443), often needs no client software (browser-based), and works from any network including restrictive ones.",
+    "hints": [
+      "Works everywhere"
+    ]
+  },
+  {
+    "id": "q-sec2-zt-03",
+    "topic_id": "zero-trust",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "A user is on the corporate network but their device fails a health check. What happens in Zero Trust?",
+    "correct_answers": [
+      "deny",
+      "block",
+      "quarantine",
+      "no access",
+      "remediate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Zero Trust denies/limits access regardless of network location. The device is quarantined or given limited access until it passes the health check.",
+    "hints": [
+      "Location doesn't grant trust"
+    ]
+  },
+  {
+    "id": "q-sec2-forensics-01",
+    "topic_id": "forensics",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the first step in network forensics?",
+    "correct_answers": [
+      "preserve",
+      "capture",
+      "evidence",
+      "don't modify",
+      "chain of custody"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "First step: preserve evidence. Capture traffic/logs without modifying them. Establish chain of custody documentation.",
+    "hints": [
+      "Don't contaminate evidence"
+    ]
+  },
+  {
+    "id": "q-sec2-forensics-02",
+    "topic_id": "forensics",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "What tcpdump command captures full packets to a file for forensic analysis?",
+    "correct_answers": [
+      "tcpdump -i",
+      "tcpdump -w",
+      "-s 0",
+      "capture file"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'tcpdump -i <iface> -s 0 -w capture.pcap' (-s 0 captures full packets, -w writes to file).",
+    "hints": [
+      "Full packets to file"
+    ]
+  },
+  {
+    "id": "q-sec2-honeypot-01",
+    "topic_id": "honeypots",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a honeypot in network security?",
+    "correct_answers": [
+      "decoy",
+      "trap",
+      "fake system",
+      "attract attackers",
+      "detect"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A honeypot is a decoy system designed to attract attackers. Any interaction with it is suspicious since legitimate users have no reason to access it.",
+    "hints": [
+      "A trap for attackers"
+    ]
+  },
+  {
+    "id": "q-sec2-ndr-01",
+    "topic_id": "ndr",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is NDR (Network Detection and Response)?",
+    "correct_answers": [
+      "network traffic analysis",
+      "detect threats",
+      "behavioral",
+      "ml",
+      "anomaly"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NDR analyzes network traffic using behavioral analytics and ML to detect threats that bypass traditional security tools (IDS, firewall).",
+    "hints": [
+      "AI-powered network monitoring"
+    ]
+  },
+  {
+    "id": "q-sec2-port-01",
+    "topic_id": "port-sec",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What Cisco command limits a switch port to one MAC address?",
+    "correct_answers": [
+      "switchport port-security",
+      "port-security maximum 1",
+      "switchport port-security maximum"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'switchport port-security' and 'switchport port-security maximum 1' to limit to one MAC address.",
+    "hints": [
+      "switchport port-security"
+    ]
+  },
+  {
+    "id": "q-sec2-port-02",
+    "topic_id": "port-sec",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What are the port-security violation modes?",
+    "correct_answers": [
+      "protect",
+      "restrict",
+      "shutdown"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Violation modes: Protect (drop silently), Restrict (drop + log), Shutdown (disable port + log). Shutdown is default.",
+    "hints": [
+      "Three modes of response"
+    ]
+  },
+  {
+    "id": "q-sec2-dhcp-snoop-01",
+    "topic_id": "dhcp-snoop",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "How does DHCP snooping prevent rogue DHCP servers?",
+    "correct_answers": [
+      "trusted",
+      "untrusted",
+      "only trusted ports",
+      "block offers"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "DHCP snooping marks ports as trusted (where legitimate DHCP server connects) or untrusted. DHCP offers from untrusted ports are dropped.",
+    "hints": [
+      "Trust only the real server's port"
+    ]
+  },
+  {
+    "id": "q-sec2-bgp-sec-01",
+    "topic_id": "bgp-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is BGP hijacking and how is RPKI used to prevent it?",
+    "correct_answers": [
+      "announce prefix",
+      "steal routes",
+      "origin validation",
+      "roa",
+      "certificate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "BGP hijacking: announcing someone else's prefixes to steal traffic. RPKI uses ROAs (Route Origin Authorizations) to cryptographically validate the legitimate origin AS.",
+    "hints": [
+      "Validate who can announce what"
+    ]
+  },
+  {
+    "id": "q-sec2-sdwan-01",
+    "topic_id": "sdwan-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What security features does SD-WAN typically include?",
+    "correct_answers": [
+      "encryption",
+      "segmentation",
+      "firewall",
+      "zero trust",
+      "ipsec"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SD-WAN security: IPsec encryption on all links, micro-segmentation, integrated NGFW, zero-trust access, and centralized policy management.",
+    "hints": [
+      "Built-in security"
+    ]
+  },
+  {
+    "id": "q-sec2-radius-01",
+    "topic_id": "radius-tacacs2",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between RADIUS and TACACS+?",
+    "correct_answers": [
+      "udp vs tcp",
+      "combined vs separate",
+      "cisco",
+      "authentication authorization"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "RADIUS: UDP, combines auth+authz, encrypts only password. TACACS+: TCP, separates AAA functions, encrypts entire payload. TACACS+ is more granular.",
+    "hints": [
+      "One encrypts everything"
+    ]
+  },
+  {
+    "id": "q-sec2-ids-04",
+    "topic_id": "ids-ips",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a false positive vs false negative in IDS?",
+    "correct_answers": [
+      "alert no attack",
+      "miss real attack",
+      "wrong alert",
+      "undetected"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "False positive: alert fires but no real attack (noise). False negative: real attack occurs but no alert (missed). False negatives are more dangerous.",
+    "hints": [
+      "Wrong alert vs missed attack"
+    ]
+  },
+  {
+    "id": "q-sec2-seg-03",
+    "topic_id": "seg-patterns",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is the difference between north-south and east-west traffic?",
+    "correct_answers": [
+      "in-out vs lateral",
+      "client-server vs server-server",
+      "perimeter vs internal"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "North-south: traffic entering/leaving the network (client to server). East-west: lateral traffic between servers/workloads within the data center.",
+    "hints": [
+      "In/out vs lateral"
+    ]
+  },
+  {
+    "id": "q-sec2-ips-tune-01",
+    "topic_id": "ips-tuning",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "Your IPS blocks a legitimate application update. How do you handle it?",
+    "correct_answers": [
+      "exception",
+      "whitelist",
+      "tune rule",
+      "bypass",
+      "custom rule"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Create a specific exception/whitelist for the known-good traffic pattern. Don't disable the entire rule \u2014 create a targeted bypass.",
+    "hints": [
+      "Targeted exception, not disable"
+    ]
+  },
+  {
+    "id": "q-sec2-encrypt-01",
+    "topic_id": "net-encryption",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is MACsec (802.1AE)?",
+    "correct_answers": [
+      "layer 2 encryption",
+      "hop-by-hop",
+      "ethernet encryption",
+      "link encryption"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "MACsec (802.1AE) provides Layer 2 hop-by-hop encryption between directly connected devices. Encrypts Ethernet frames on the wire.",
+    "hints": [
+      "Layer 2 encryption"
+    ]
+  },
+  {
+    "id": "q-sec2-waf-02",
+    "topic_id": "waf",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "A WAF is blocking legitimate API requests containing SQL keywords. How do you fix it?",
+    "correct_answers": [
+      "whitelist",
+      "exception",
+      "custom rule",
+      "learning mode",
+      "tune"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Create exceptions for the specific API endpoint, use learning mode to understand normal traffic patterns, or write custom rules that are more precise.",
+    "hints": [
+      "Targeted exceptions"
+    ]
+  },
+  {
+    "id": "q-sec2-packet-03",
+    "topic_id": "packet-analysis",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "What Wireshark filter shows TCP retransmissions?",
+    "correct_answers": [
+      "tcp.analysis.retransmission",
+      "tcp.analysis.fast_retransmission"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'tcp.analysis.retransmission' to find retransmitted packets indicating network issues.",
+    "hints": [
+      "tcp.analysis..."
+    ]
+  },
+  {
+    "id": "q-sec2-packet-04",
+    "topic_id": "packet-analysis",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "You see many SYN packets to port 445 from one source with no SYN-ACK responses. What is this?",
+    "correct_answers": [
+      "port scan",
+      "syn scan",
+      "reconnaissance",
+      "scanning"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "This is a SYN scan (half-open scan) \u2014 reconnaissance activity probing for open SMB ports. The scanner sends SYN but never completes the handshake.",
+    "hints": [
+      "Incomplete handshakes to one port"
+    ]
+  },
+  {
+    "id": "q-sec2-nac-02",
+    "topic_id": "nac",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "A contractor plugs their personal laptop into the network. What should NAC do?",
+    "correct_answers": [
+      "quarantine",
+      "guest vlan",
+      "restrict",
+      "deny",
+      "remediation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NAC should: detect unknown device, check compliance (fails \u2014 no corporate agent), place in quarantine/guest VLAN with limited access or deny entirely.",
+    "hints": [
+      "Unknown device = restricted"
+    ]
+  },
+  {
+    "id": "q-sec2-802-02",
+    "topic_id": "802-1x",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What happens if the RADIUS server is unreachable during 802.1X authentication?",
+    "correct_answers": [
+      "critical vlan",
+      "fail open",
+      "fail closed",
+      "inaccessible auth bypass"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Depends on config: fail-open (allow access to critical VLAN), fail-closed (deny all access). Most deployments use a critical VLAN for essential services.",
+    "hints": [
+      "What if auth is down?"
+    ]
+  },
+  {
+    "id": "q-sec2-wireless-03",
+    "topic_id": "wireless-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is the difference between WPA2-Personal and WPA2-Enterprise?",
+    "correct_answers": [
+      "psk vs radius",
+      "shared key vs individual",
+      "pre-shared vs 802.1x"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Personal uses a Pre-Shared Key (same for everyone). Enterprise uses 802.1X/RADIUS with individual credentials per user \u2014 more secure and auditable.",
+    "hints": [
+      "Shared key vs individual auth"
+    ]
+  },
+  {
+    "id": "q-sec2-tls-03",
+    "topic_id": "tls-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is certificate pinning?",
+    "correct_answers": [
+      "specific certificate",
+      "expected cert",
+      "prevent mitm",
+      "trust only known",
+      "bypass ca"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Certificate pinning hardcodes the expected certificate/public key in the application, preventing MITM attacks even if a CA is compromised.",
+    "hints": [
+      "Trust only the specific cert you expect"
+    ]
+  },
+  {
+    "id": "q-sec2-dns-03",
+    "topic_id": "dns-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is DNS over HTTPS (DoH)?",
+    "correct_answers": [
+      "encrypted dns",
+      "port 443",
+      "privacy",
+      "prevent snooping",
+      "https"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "DoH encrypts DNS queries inside HTTPS (port 443), preventing ISPs and network operators from seeing DNS queries. Improves privacy but complicates network security monitoring.",
+    "hints": [
+      "DNS inside HTTPS"
+    ]
+  },
+  {
+    "id": "q-sec2-siem-03",
+    "topic_id": "siem",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "What is a SIEM use case for detecting brute force attacks?",
+    "correct_answers": [
+      "multiple failed",
+      "threshold",
+      "same source",
+      "login failures",
+      "count"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Rule: alert when >5 failed login attempts from same source IP within 5 minutes. Correlate across multiple systems for distributed attacks.",
+    "hints": [
+      "Count failures from same source"
+    ]
+  },
+  {
+    "id": "q-sec2-microseg-02",
+    "topic_id": "microseg",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What technology enables microsegmentation in virtualized environments?",
+    "correct_answers": [
+      "nsx",
+      "distributed firewall",
+      "hypervisor",
+      "software-defined",
+      "aci"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "VMware NSX, Cisco ACI, or cloud security groups provide distributed firewalls at the hypervisor/workload level for microsegmentation.",
+    "hints": [
+      "Software-defined at the hypervisor"
+    ]
+  },
+  {
+    "id": "q-sec2-ikev2-01",
+    "topic_id": "ikev2",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What advantages does IKEv2 have over IKEv1?",
+    "correct_answers": [
+      "fewer messages",
+      "mobike",
+      "nat-t built-in",
+      "faster",
+      "reliable"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "IKEv2: fewer messages (4 vs 9), built-in NAT-T, MOBIKE (seamless roaming), more reliable, and simpler configuration.",
+    "hints": [
+      "Faster and more features"
+    ]
+  }
+]

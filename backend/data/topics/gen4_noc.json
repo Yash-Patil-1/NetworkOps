@@ -1,0 +1,386 @@
+[
+  {
+    "id": "nagios-mon",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Nagios",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Open-source monitoring for hosts and services.",
+      "why": "Legacy but widely deployed in enterprises.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Host checks",
+        "Service checks",
+        "Plugins",
+        "Notifications"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "nagios",
+      "monitoring"
+    ]
+  },
+  {
+    "id": "snmp-traps2",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "SNMP Traps",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Async notifications from devices to NMS.",
+      "why": "Immediate notification vs polling delay.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Trap vs Inform",
+        "Trap receiver",
+        "OID mapping"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "snmp",
+      "traps",
+      "async"
+    ]
+  },
+  {
+    "id": "config-backup",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Automated Config Backup",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Auto-backup device configs on schedule.",
+      "why": "Manual backups get forgotten.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Oxidized",
+        "RANCID",
+        "Git",
+        "Scheduling"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "backup",
+      "config",
+      "automated"
+    ]
+  },
+  {
+    "id": "forecasting",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Capacity Forecasting",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Predicting future needs from trends.",
+      "why": "Prevents resource exhaustion.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Linear regression",
+        "Growth rate",
+        "Lead time"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "forecasting",
+      "capacity"
+    ]
+  },
+  {
+    "id": "runbooks2",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "NOC Runbooks",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Step-by-step incident procedures.",
+      "why": "Ensures consistent handling.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Procedures",
+        "Decision trees",
+        "Escalation"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "runbooks",
+      "procedures"
+    ]
+  },
+  {
+    "id": "correlation",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Event Correlation",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Relating events to find root cause.",
+      "why": "Single events are noise; correlated reveal problems.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Temporal",
+        "Topological",
+        "Rule-based"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "correlation",
+      "events"
+    ]
+  },
+  {
+    "id": "weathermap",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Network Weather Maps",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Visual utilization on topology.",
+      "why": "Instant visual network status.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Topology overlay",
+        "Color coding",
+        "Real-time"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "weathermap",
+      "visualization"
+    ]
+  },
+  {
+    "id": "oncall",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "On-Call Management",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "24/7 coverage with rotations.",
+      "why": "Networks run 24/7.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Rotation",
+        "Escalation",
+        "Response SLA"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "on-call",
+      "rotation"
+    ]
+  },
+  {
+    "id": "maint-window",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Maintenance Windows",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Scheduled change periods.",
+      "why": "Minimize business impact.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Scheduling",
+        "Communication",
+        "Freeze periods"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "maintenance",
+      "window"
+    ]
+  },
+  {
+    "id": "vendor-mgmt",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Vendor/ISP Management",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Managing ISP relationships.",
+      "why": "Need contacts when links fail.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Circuit IDs",
+        "Escalation",
+        "SLA tracking"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "vendor",
+      "isp"
+    ]
+  },
+  {
+    "id": "dr-network",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Network DR",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Recovery after major failures.",
+      "why": "Without DR, recovery is chaotic.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "DR site",
+        "Failover",
+        "RTO/RPO",
+        "Testing"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "disaster-recovery",
+      "failover"
+    ]
+  },
+  {
+    "id": "inventory-mgmt",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Inventory Management",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Tracking all network assets.",
+      "why": "Can't manage what you don't know.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Asset tracking",
+        "EOL",
+        "Warranty",
+        "Location"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "inventory",
+      "assets"
+    ]
+  },
+  {
+    "id": "log-techniques",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Log Analysis Techniques",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Efficiently analyzing large log volumes.",
+      "why": "Extract actionable insights from noise.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Pattern matching",
+        "Regex",
+        "Aggregation",
+        "Timeline"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "logs",
+      "analysis"
+    ]
+  }
+]

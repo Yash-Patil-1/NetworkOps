@@ -1,0 +1,529 @@
+[
+  {
+    "id": "q-auto-ansible-01",
+    "topic_id": "ansible-network",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is Ansible and why is it popular for network automation?",
+    "correct_answers": [
+      "agentless",
+      "ssh",
+      "yaml",
+      "playbook",
+      "no agent"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Ansible is agentless (uses SSH/NETCONF), uses YAML playbooks, and has extensive network modules. No software needed on network devices.",
+    "hints": [
+      "No agent required"
+    ]
+  },
+  {
+    "id": "q-auto-ansible-02",
+    "topic_id": "ansible-network",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What is the basic structure of an Ansible playbook?",
+    "correct_answers": [
+      "hosts",
+      "tasks",
+      "name",
+      "module",
+      "play"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A playbook contains plays with: hosts (targets), tasks (actions using modules), and optional vars, handlers, roles.",
+    "hints": [
+      "Hosts and tasks"
+    ]
+  },
+  {
+    "id": "q-auto-ansible-03",
+    "topic_id": "ansible-network",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What Ansible module configures Cisco IOS devices?",
+    "correct_answers": [
+      "ios_config",
+      "cisco.ios.ios_config",
+      "ios_command"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use cisco.ios.ios_config for configuration changes and cisco.ios.ios_command for show commands.",
+    "hints": [
+      "ios_config or ios_command"
+    ]
+  },
+  {
+    "id": "q-auto-ansible-04",
+    "topic_id": "ansible-network",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "You need to push the same VLAN config to 500 switches. What Ansible feature helps?",
+    "correct_answers": [
+      "inventory",
+      "group",
+      "loop",
+      "template",
+      "jinja2",
+      "role"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use inventory groups, Jinja2 templates for device-specific configs, and roles for reusable automation. Ansible handles parallel execution.",
+    "hints": [
+      "Groups and templates"
+    ]
+  },
+  {
+    "id": "q-auto-terraform-01",
+    "topic_id": "terraform-network",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is Terraform and what approach does it use?",
+    "correct_answers": [
+      "infrastructure as code",
+      "declarative",
+      "state",
+      "provider",
+      "iac"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Terraform is a declarative IaC tool. You define desired state, Terraform calculates and applies changes. Uses providers for different platforms.",
+    "hints": [
+      "Declare what you want, not how"
+    ]
+  },
+  {
+    "id": "q-auto-terraform-02",
+    "topic_id": "terraform-network",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is Terraform state and why is it important?",
+    "correct_answers": [
+      "track resources",
+      "current state",
+      "mapping",
+      "drift detection"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Terraform state maps your config to real resources. It tracks what exists, detects drift, and determines what changes are needed.",
+    "hints": [
+      "Tracks what's deployed"
+    ]
+  },
+  {
+    "id": "q-auto-terraform-03",
+    "topic_id": "terraform-network",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What command applies Terraform changes?",
+    "correct_answers": [
+      "terraform apply"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "'terraform apply' executes the planned changes to reach the desired state.",
+    "hints": [
+      "terraform ..."
+    ]
+  },
+  {
+    "id": "q-auto-netmiko-01",
+    "topic_id": "python-netmiko",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is Netmiko?",
+    "correct_answers": [
+      "python ssh",
+      "multi-vendor",
+      "network device",
+      "simplify paramiko"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Netmiko is a Python library that simplifies SSH connections to network devices. Supports multi-vendor (Cisco, Juniper, Arista, etc.).",
+    "hints": [
+      "Python SSH for network devices"
+    ]
+  },
+  {
+    "id": "q-auto-netmiko-02",
+    "topic_id": "python-netmiko",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What Netmiko method sends configuration commands?",
+    "correct_answers": [
+      "send_config_set",
+      "send_config"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use net_connect.send_config_set(['commands']) to push configuration commands to a device.",
+    "hints": [
+      "send_config_..."
+    ]
+  },
+  {
+    "id": "q-auto-netmiko-03",
+    "topic_id": "python-netmiko",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "Write a basic Netmiko connection dictionary for a Cisco switch.",
+    "correct_answers": [
+      "device_type",
+      "host",
+      "username",
+      "password",
+      "cisco_ios"
+    ],
+    "validation_type": "contains_all",
+    "required_keywords": [],
+    "explanation": "device = {'device_type': 'cisco_ios', 'host': '10.0.0.1', 'username': 'admin', 'password': 'pass'}",
+    "hints": [
+      "Four required keys"
+    ]
+  },
+  {
+    "id": "q-auto-netconf-01",
+    "topic_id": "netconf-yang",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is NETCONF and what port does it use?",
+    "correct_answers": [
+      "830",
+      "network configuration",
+      "xml",
+      "rpc",
+      "yang"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NETCONF is a network management protocol using XML/RPC over SSH (port 830). It uses YANG data models for structured configuration.",
+    "hints": [
+      "XML-based, port 830"
+    ]
+  },
+  {
+    "id": "q-auto-netconf-02",
+    "topic_id": "netconf-yang",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is YANG?",
+    "correct_answers": [
+      "data model",
+      "schema",
+      "structure",
+      "define configuration",
+      "modeling language"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "YANG is a data modeling language that defines the structure of configuration and operational data for NETCONF/RESTCONF.",
+    "hints": [
+      "Defines the data structure"
+    ]
+  },
+  {
+    "id": "q-auto-restapi-01",
+    "topic_id": "rest-api-network",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What HTTP methods are used in RESTful APIs for CRUD operations?",
+    "correct_answers": [
+      "get post put delete",
+      "get",
+      "post",
+      "put",
+      "delete"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "REST CRUD: GET (Read), POST (Create), PUT (Update/Replace), PATCH (Partial Update), DELETE (Remove).",
+    "hints": [
+      "HTTP verbs"
+    ]
+  },
+  {
+    "id": "q-auto-restapi-02",
+    "topic_id": "rest-api-network",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between PUT and PATCH?",
+    "correct_answers": [
+      "full replace vs partial",
+      "entire vs partial",
+      "complete vs subset"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "PUT replaces the entire resource. PATCH modifies only specified fields. PATCH is more efficient for small changes.",
+    "hints": [
+      "Full vs partial update"
+    ]
+  },
+  {
+    "id": "q-auto-jinja-01",
+    "topic_id": "jinja2",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is Jinja2 used for in network automation?",
+    "correct_answers": [
+      "template",
+      "config generation",
+      "variable substitution",
+      "dynamic config"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Jinja2 is a templating engine that generates device-specific configurations from templates + variables. Used with Ansible, Python, etc.",
+    "hints": [
+      "Templates with variables"
+    ]
+  },
+  {
+    "id": "q-auto-jinja-02",
+    "topic_id": "jinja2",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What syntax does Jinja2 use for variables?",
+    "correct_answers": [
+      "{{ }}",
+      "double curly",
+      "{{ variable }}"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Jinja2 uses {{ variable }} for variable substitution and {% %} for logic (loops, conditions).",
+    "hints": [
+      "Double curly braces"
+    ]
+  },
+  {
+    "id": "q-auto-git-01",
+    "topic_id": "git-configs",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "Why should network configurations be stored in Git?",
+    "correct_answers": [
+      "version control",
+      "history",
+      "rollback",
+      "audit",
+      "change tracking"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Git provides: version history, change tracking, rollback capability, audit trail, collaboration, and CI/CD integration for network configs.",
+    "hints": [
+      "Track changes over time"
+    ]
+  },
+  {
+    "id": "q-auto-git-02",
+    "topic_id": "git-configs",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "easy",
+    "question": "What Git command shows the history of changes?",
+    "correct_answers": [
+      "git log"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "'git log' shows commit history with authors, dates, and messages.",
+    "hints": [
+      "git ..."
+    ]
+  },
+  {
+    "id": "q-auto-cicd-01",
+    "topic_id": "cicd-network",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What does a CI/CD pipeline for network changes look like?",
+    "correct_answers": [
+      "lint",
+      "test",
+      "validate",
+      "deploy",
+      "approve",
+      "staging"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network CI/CD: Lint configs \u2192 Validate syntax \u2192 Test in lab/simulation \u2192 Peer review \u2192 Approve \u2192 Deploy to staging \u2192 Deploy to production.",
+    "hints": [
+      "Multiple validation stages"
+    ]
+  },
+  {
+    "id": "q-auto-cicd-02",
+    "topic_id": "cicd-network",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the benefit of CI/CD for network changes?",
+    "correct_answers": [
+      "automated testing",
+      "consistency",
+      "reduce errors",
+      "repeatable",
+      "validation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "CI/CD ensures: automated validation before deployment, consistent process, reduced human errors, audit trail, and easy rollback.",
+    "hints": [
+      "Automated validation"
+    ]
+  },
+  {
+    "id": "q-auto-napalm-01",
+    "topic_id": "napalm",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is NAPALM in network automation?",
+    "correct_answers": [
+      "network automation",
+      "multi-vendor",
+      "abstraction",
+      "get facts",
+      "config management"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NAPALM (Network Automation and Programmability Abstraction Layer with Multivendor support) provides a unified API for multi-vendor network device management.",
+    "hints": [
+      "Unified multi-vendor API"
+    ]
+  },
+  {
+    "id": "q-auto-napalm-02",
+    "topic_id": "napalm",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is NAPALM's 'compare_config' feature?",
+    "correct_answers": [
+      "diff",
+      "difference",
+      "candidate vs running",
+      "show changes",
+      "before apply"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "compare_config() shows the diff between candidate and running configuration before committing \u2014 like a dry-run for network changes.",
+    "hints": [
+      "See changes before applying"
+    ]
+  },
+  {
+    "id": "q-auto-nornir-01",
+    "topic_id": "nornir",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is Nornir and how does it differ from Ansible?",
+    "correct_answers": [
+      "python framework",
+      "code not yaml",
+      "programmatic",
+      "threading",
+      "python native"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Nornir is a Python automation framework. Unlike Ansible (YAML), Nornir uses pure Python, giving more flexibility and better performance with threading.",
+    "hints": [
+      "Python-native, not YAML"
+    ]
+  },
+  {
+    "id": "q-auto-scapy-01",
+    "topic_id": "python-scapy",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is Scapy used for?",
+    "correct_answers": [
+      "packet crafting",
+      "packet manipulation",
+      "custom packets",
+      "protocol testing"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Scapy is a Python library for crafting, sending, and analyzing network packets. Used for testing, scanning, and protocol development.",
+    "hints": [
+      "Craft custom packets"
+    ]
+  },
+  {
+    "id": "q-auto-testing-01",
+    "topic_id": "infra-testing",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is Batfish and what does it do?",
+    "correct_answers": [
+      "config analysis",
+      "offline",
+      "network verification",
+      "pre-deployment",
+      "simulation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Batfish analyzes network configurations offline to verify correctness, find bugs, and test changes before deployment \u2014 without touching live devices.",
+    "hints": [
+      "Analyze configs without deploying"
+    ]
+  },
+  {
+    "id": "q-auto-sot-01",
+    "topic_id": "sot",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a Source of Truth (SoT) in network automation?",
+    "correct_answers": [
+      "single source",
+      "authoritative",
+      "intended state",
+      "netbox",
+      "database"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A Source of Truth is the authoritative database defining the intended network state. Tools like NetBox serve as SoT for IP addresses, devices, and configurations.",
+    "hints": [
+      "The authoritative record"
+    ]
+  }
+]

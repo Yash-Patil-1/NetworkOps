@@ -1,0 +1,412 @@
+[
+  {
+    "id": "redistribution",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "Route Redistribution",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Sharing routes between protocols.",
+      "why": "Multi-protocol needs route sharing.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Seed metric",
+        "Route maps",
+        "Loop prevention"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "redistribution",
+      "routing"
+    ]
+  },
+  {
+    "id": "route-filter",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "Route Filtering",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Controlling advertised/accepted routes.",
+      "why": "Prevents route leaks.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Prefix lists",
+        "Route maps",
+        "AS-path filters"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "filtering",
+      "routes"
+    ]
+  },
+  {
+    "id": "campus-design",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "Campus Network Design",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Three-tier or collapsed core for LANs.",
+      "why": "Proper design ensures scalability.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Access",
+        "Distribution",
+        "Core",
+        "Collapsed"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "campus",
+      "design"
+    ]
+  },
+  {
+    "id": "dc-design",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "Data Center Design",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Leaf-spine for modern data centers.",
+      "why": "Three-tier doesn't scale for east-west.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Leaf-spine",
+        "ECMP",
+        "Oversubscription"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "datacenter",
+      "leaf-spine"
+    ]
+  },
+  {
+    "id": "wan-tech",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "WAN Technologies",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "MPLS, Metro Ethernet, broadband, SD-WAN.",
+      "why": "Understanding options for site connectivity.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "MPLS",
+        "Metro Ethernet",
+        "LTE/5G",
+        "SD-WAN"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "wan",
+      "connectivity"
+    ]
+  },
+  {
+    "id": "multicast",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "IP Multicast",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "One-to-many efficient delivery.",
+      "why": "Efficient for video/streaming.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "IGMP",
+        "PIM",
+        "RP",
+        "Multicast addresses"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "multicast",
+      "igmp"
+    ]
+  },
+  {
+    "id": "ipv6-route",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "IPv6 Routing",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "OSPFv3, MP-BGP for IPv6.",
+      "why": "IPv6 adoption requires routing knowledge.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "OSPFv3",
+        "MP-BGP",
+        "Link-local next-hops"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "ipv6",
+      "routing"
+    ]
+  },
+  {
+    "id": "gre",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "GRE Tunnels",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Point-to-point tunnels over IP.",
+      "why": "Connect non-contiguous networks.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Encapsulation",
+        "MTU",
+        "Recursive routing"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "gre",
+      "tunnel"
+    ]
+  },
+  {
+    "id": "pbr",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "Policy-Based Routing",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Route by source, protocol, not just destination.",
+      "why": "Traffic engineering beyond destination routing.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Route maps",
+        "Match criteria",
+        "Set next-hop"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "pbr",
+      "policy"
+    ]
+  },
+  {
+    "id": "redundancy-design",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "Redundancy Design",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "No single point of failure.",
+      "why": "Ensures continuity.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Dual-homed",
+        "Active/Standby",
+        "ECMP"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "redundancy",
+      "ha"
+    ]
+  },
+  {
+    "id": "qos-voice",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "QoS for VoIP",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Prioritizing voice traffic.",
+      "why": "Voice needs <150ms delay, <1% loss.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "EF marking",
+        "Priority queue",
+        "LLQ"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "qos",
+      "voip"
+    ]
+  },
+  {
+    "id": "rstp-mstp",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "RSTP/MSTP",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Fast STP convergence (1-2s).",
+      "why": "Classic STP takes 30-50s.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "RSTP roles",
+        "Edge ports",
+        "BPDU Guard"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "rstp",
+      "mstp",
+      "fast"
+    ]
+  },
+  {
+    "id": "dhcp-relay2",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "DHCP Relay",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Forward DHCP across subnets.",
+      "why": "Broadcasts don't cross routers.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "ip helper-address",
+        "Option 82"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "dhcp",
+      "relay"
+    ]
+  },
+  {
+    "id": "acls",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "Access Control Lists",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Packet filtering on routers.",
+      "why": "Basic network security building block.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Standard",
+        "Extended",
+        "Named",
+        "Wildcard masks"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "acl",
+      "filtering"
+    ]
+  }
+]

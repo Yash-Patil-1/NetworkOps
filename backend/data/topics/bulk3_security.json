@@ -1,0 +1,345 @@
+[
+  {
+    "id": "zero-trust",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "Zero Trust Architecture",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Assumes no implicit trust \u2014 every access request is verified regardless of location.",
+      "why": "Traditional perimeter fails when attackers get inside. Zero Trust limits lateral movement.",
+      "how": "Principles: Verify explicitly, Least privilege, Assume breach. Components: Identity, device health, microsegmentation.",
+      "when": "Implement when modernizing security or after a breach.",
+      "key_concepts": [
+        "Never trust always verify",
+        "Microsegmentation",
+        "Identity-centric",
+        "Continuous verification"
+      ],
+      "configuration": "# Zero Trust steps\n1. Identify protect surfaces\n2. Map transaction flows\n3. Build architecture\n4. Create policies\n5. Monitor",
+      "troubleshooting": [
+        "Verify identity for every access",
+        "Check microsegmentation",
+        "Monitor lateral movement"
+      ]
+    },
+    "related_topics": [
+      "network-segmentation"
+    ],
+    "tags": [
+      "zero-trust",
+      "architecture",
+      "identity"
+    ]
+  },
+  {
+    "id": "waf",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "WAF (Web Application Firewall)",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Protects web apps by filtering HTTP traffic \u2014 blocks SQLi, XSS, CSRF.",
+      "why": "Network firewalls cant inspect HTTP payload. WAF understands application protocols.",
+      "how": "Modes: Detection (log only), Prevention (block). Rules: Signature, Anomaly, Custom. Deploy as reverse proxy or cloud.",
+      "when": "Deploy in front of all public web applications.",
+      "key_concepts": [
+        "OWASP Core Rule Set",
+        "Detection vs Prevention",
+        "False positives",
+        "Virtual patching"
+      ],
+      "configuration": "# ModSecurity rule\nSecRuleEngine On\nSecRule ARGS \"@detectSQLi\" \"id:1,deny,status:403\"",
+      "troubleshooting": [
+        "Check WAF logs",
+        "Review false positives",
+        "Verify rules active"
+      ]
+    },
+    "related_topics": [
+      "firewall-fundamentals"
+    ],
+    "tags": [
+      "waf",
+      "web",
+      "application",
+      "firewall"
+    ]
+  },
+  {
+    "id": "ddos",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "DDoS Mitigation",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Detecting and filtering attack traffic while allowing legitimate users through.",
+      "why": "DDoS attacks can take down entire networks.",
+      "how": "Types: Volumetric (flood), Protocol (SYN flood), Application (HTTP flood). Mitigation: upstream filtering, rate limiting, scrubbing.",
+      "when": "Implement DDoS protection for all internet-facing services.",
+      "key_concepts": [
+        "Volumetric vs Protocol vs Application",
+        "Rate limiting",
+        "Blackhole routing",
+        "Scrubbing"
+      ],
+      "configuration": "# Rate limiting\niptables -A INPUT -p tcp --dport 80 -m limit --limit 100/s -j ACCEPT",
+      "troubleshooting": [
+        "Check bandwidth",
+        "Identify attack type",
+        "Enable upstream filtering"
+      ]
+    },
+    "related_topics": [
+      "firewall-fundamentals"
+    ],
+    "tags": [
+      "ddos",
+      "mitigation",
+      "flooding",
+      "availability"
+    ]
+  },
+  {
+    "id": "packet-analysis",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "Packet Analysis (Wireshark)",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Capturing and analyzing packets to troubleshoot and detect attacks.",
+      "why": "Packet captures show exactly whats happening on the wire.",
+      "how": "Workflow: Capture \u2192 Filter \u2192 Analyze \u2192 Export. Filters: ip.addr, tcp.port, http.request.",
+      "when": "Use when troubleshooting connectivity or investigating security incidents.",
+      "key_concepts": [
+        "Capture vs Display filters",
+        "Follow TCP Stream",
+        "Protocol dissectors",
+        "Timing analysis"
+      ],
+      "configuration": "# tcpdump capture\ntcpdump -i eth0 -w capture.pcap host 10.0.0.1 and port 443",
+      "troubleshooting": [
+        "Check retransmissions",
+        "Look at TCP handshake",
+        "Filter for errors"
+      ]
+    },
+    "related_topics": [
+      "tcp-protocol"
+    ],
+    "tags": [
+      "wireshark",
+      "packets",
+      "capture",
+      "analysis"
+    ]
+  },
+  {
+    "id": "dns-security",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "DNS Security",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Securing DNS against poisoning, tunneling, and using DNS for security filtering.",
+      "why": "DNS is critical \u2014 if it fails everything fails. Also abused for exfiltration and C2.",
+      "how": "Threats: Cache poisoning, DNS tunneling, DDoS amplification. Protections: DNSSEC, filtering, monitoring.",
+      "when": "Implement DNS security for all networks. Monitor for anomalies.",
+      "key_concepts": [
+        "DNSSEC",
+        "DNS filtering",
+        "Tunneling detection",
+        "Response Rate Limiting"
+      ],
+      "configuration": "# DNS filtering\nBlock: malware.example.com\nBlock: c2.evil.com\nAlert: high query volume to single domain",
+      "troubleshooting": [
+        "Check DNS resolution",
+        "Monitor query volume",
+        "Look for tunneling"
+      ]
+    },
+    "related_topics": [
+      "dns-fundamentals"
+    ],
+    "tags": [
+      "dns",
+      "security",
+      "filtering",
+      "tunneling"
+    ]
+  },
+  {
+    "id": "tls-security",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "TLS Security",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Proper TLS configuration prevents eavesdropping and impersonation.",
+      "why": "Weak TLS exposes data to interception.",
+      "how": "Best practices: TLS 1.2+ only, strong ciphers (AES-GCM), HSTS, certificate management.",
+      "when": "Configure TLS on all services. Disable weak protocols.",
+      "key_concepts": [
+        "TLS 1.2/1.3",
+        "Cipher suites",
+        "HSTS",
+        "PFS",
+        "Certificate transparency"
+      ],
+      "configuration": "# Nginx TLS\nssl_protocols TLSv1.2 TLSv1.3;\nssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256;",
+      "troubleshooting": [
+        "testssl.sh",
+        "Check cert expiry",
+        "Verify cipher strength"
+      ]
+    },
+    "related_topics": [
+      "http-https"
+    ],
+    "tags": [
+      "tls",
+      "ssl",
+      "encryption",
+      "certificates"
+    ]
+  },
+  {
+    "id": "forensics",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "Network Forensics",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Collecting and analyzing network evidence for incident investigation.",
+      "why": "Answers: what happened, when, how, and what was affected.",
+      "how": "Sources: PCAP, NetFlow, firewall logs, DNS logs, proxy logs. Process: Collect \u2192 Analyze \u2192 Document \u2192 Report.",
+      "when": "Perform during/after security incidents. Preserve evidence integrity.",
+      "key_concepts": [
+        "Chain of custody",
+        "PCAP analysis",
+        "Timeline reconstruction",
+        "IOC extraction"
+      ],
+      "configuration": "# Forensic capture\ntcpdump -i eth0 -w evidence.pcap -C 100 -W 10",
+      "troubleshooting": [
+        "Preserve originals",
+        "Build timeline",
+        "Extract IOCs",
+        "Correlate logs"
+      ]
+    },
+    "related_topics": [
+      "packet-analysis"
+    ],
+    "tags": [
+      "forensics",
+      "investigation",
+      "evidence",
+      "incident"
+    ]
+  },
+  {
+    "id": "nac",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "NAC Implementation",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Ensures only authorized, compliant devices can access the network.",
+      "why": "Prevents rogue devices and unpatched systems from network access.",
+      "how": "Components: 802.1X + RADIUS + posture assessment. Non-compliant \u2192 quarantine VLAN.",
+      "when": "Implement on all access ports. Start monitor mode then enforce.",
+      "key_concepts": [
+        "802.1X",
+        "Posture assessment",
+        "Remediation VLAN",
+        "Guest access",
+        "Profiling"
+      ],
+      "configuration": "# NAC flow\n1. Device connects\n2. 802.1X auth\n3. Posture check\n4. Compliant \u2192 production\n5. Non-compliant \u2192 remediation",
+      "troubleshooting": [
+        "Check auth status",
+        "Verify posture policy",
+        "Review quarantine"
+      ]
+    },
+    "related_topics": [
+      "802-1x"
+    ],
+    "tags": [
+      "nac",
+      "access-control",
+      "compliance",
+      "posture"
+    ]
+  },
+  {
+    "id": "siem",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "SIEM for Networks",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Correlates logs from multiple sources to detect threats.",
+      "why": "Individual logs show fragments. SIEM correlates to detect advanced threats.",
+      "how": "Capabilities: Collection, normalization, correlation, alerting, investigation, reporting.",
+      "when": "Feed: firewalls, IDS, DNS, DHCP, AD, VPN, proxy logs.",
+      "key_concepts": [
+        "Log sources",
+        "Correlation rules",
+        "Use cases",
+        "Alert tuning",
+        "Investigation"
+      ],
+      "configuration": "# Splunk search\nindex=firewall action=denied | stats count by src_ip | where count > 100",
+      "troubleshooting": [
+        "Check log ingestion",
+        "Verify correlation rules",
+        "Review alert volume"
+      ]
+    },
+    "related_topics": [
+      "syslog-monitoring"
+    ],
+    "tags": [
+      "siem",
+      "correlation",
+      "detection",
+      "logs"
+    ]
+  },
+  {
+    "id": "microseg",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "Microsegmentation",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Security policies at workload level \u2014 controlling east-west traffic.",
+      "why": "Traditional segmentation is too coarse. Microsegmentation stops lateral movement.",
+      "how": "Approaches: Host-based firewalls, hypervisor-based (NSX), agent-based (Illumio), cloud-native (SGs).",
+      "when": "Implement for critical applications and compliance requirements.",
+      "key_concepts": [
+        "East-west control",
+        "Workload policies",
+        "Default deny",
+        "Application mapping"
+      ],
+      "configuration": "# Policy example\nWeb \u2192 App: TCP 8080 only\nApp \u2192 DB: TCP 3306 only\nDeny all other east-west",
+      "troubleshooting": [
+        "Map dependencies first",
+        "Start in monitor mode",
+        "Gradually enforce"
+      ]
+    },
+    "related_topics": [
+      "network-segmentation"
+    ],
+    "tags": [
+      "microsegmentation",
+      "east-west",
+      "workload",
+      "granular"
+    ]
+  }
+]

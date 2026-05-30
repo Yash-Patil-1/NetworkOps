@@ -1,0 +1,597 @@
+[
+  {
+    "id": "q-sec-fw-01",
+    "topic_id": "firewall-fundamentals",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the difference between a stateful and stateless firewall?",
+    "correct_answers": [
+      "track connections",
+      "state table",
+      "session",
+      "remember"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Stateful firewalls track connection state (SYN, established, etc.) and allow return traffic automatically. Stateless firewalls evaluate each packet independently.",
+    "hints": [
+      "One remembers, one doesn't"
+    ]
+  },
+  {
+    "id": "q-sec-fw-02",
+    "topic_id": "firewall-fundamentals",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the default firewall rule philosophy?",
+    "correct_answers": [
+      "deny all",
+      "implicit deny",
+      "default deny",
+      "block all"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Default deny (implicit deny all) \u2014 block everything not explicitly permitted. This is the most secure approach.",
+    "hints": [
+      "Block by default"
+    ]
+  },
+  {
+    "id": "q-sec-fw-03",
+    "topic_id": "firewall-fundamentals",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "In iptables, what command allows incoming SSH traffic?",
+    "correct_answers": [
+      "iptables -A INPUT -p tcp --dport 22 -j ACCEPT",
+      "INPUT",
+      "dport 22",
+      "ACCEPT"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'iptables -A INPUT -p tcp --dport 22 -j ACCEPT' to allow inbound SSH.",
+    "hints": [
+      "INPUT chain, port 22, ACCEPT"
+    ]
+  },
+  {
+    "id": "q-sec-fw-04",
+    "topic_id": "firewall-fundamentals",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "You need to allow internal users to browse the web but block incoming connections. What firewall approach?",
+    "correct_answers": [
+      "stateful",
+      "allow established",
+      "outbound allow",
+      "return traffic"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use stateful inspection: allow outbound HTTP/HTTPS, and the stateful engine automatically allows return traffic. Block all unsolicited inbound.",
+    "hints": [
+      "Allow out, track state"
+    ]
+  },
+  {
+    "id": "q-sec-ids-01",
+    "topic_id": "ids-ips",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the difference between IDS and IPS?",
+    "correct_answers": [
+      "detect vs prevent",
+      "inline vs passive",
+      "block vs alert",
+      "monitor vs stop"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "IDS detects and alerts (passive/out-of-band). IPS detects and blocks (inline, can drop packets).",
+    "hints": [
+      "One watches, one acts"
+    ]
+  },
+  {
+    "id": "q-sec-ids-02",
+    "topic_id": "ids-ips",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between signature-based and anomaly-based detection?",
+    "correct_answers": [
+      "known vs unknown",
+      "pattern vs baseline",
+      "signature vs behavior",
+      "database vs learning"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Signature-based matches known attack patterns (fast, no false positives for known attacks). Anomaly-based detects deviations from normal (catches unknown attacks, more false positives).",
+    "hints": [
+      "Known patterns vs learned behavior"
+    ]
+  },
+  {
+    "id": "q-sec-ids-03",
+    "topic_id": "ids-ips",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "Your IPS is dropping legitimate traffic (false positives). How do you address this?",
+    "correct_answers": [
+      "tune",
+      "whitelist",
+      "exception",
+      "threshold",
+      "sensitivity"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Tune IPS rules: create exceptions for known-good traffic, adjust sensitivity thresholds, whitelist trusted sources, and move problematic rules to alert-only mode.",
+    "hints": [
+      "Adjust sensitivity"
+    ]
+  },
+  {
+    "id": "q-sec-vpn-01",
+    "topic_id": "vpn-ipsec",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What are the two modes of IPsec?",
+    "correct_answers": [
+      "transport",
+      "tunnel",
+      "transport mode",
+      "tunnel mode"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Transport mode: encrypts only payload (host-to-host). Tunnel mode: encrypts entire original packet and adds new IP header (site-to-site VPN).",
+    "hints": [
+      "One encrypts payload, one encrypts everything"
+    ]
+  },
+  {
+    "id": "q-sec-vpn-02",
+    "topic_id": "vpn-ipsec",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between ESP and AH in IPsec?",
+    "correct_answers": [
+      "encryption",
+      "authentication only",
+      "esp encrypts",
+      "ah authenticates"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "ESP provides encryption + authentication. AH provides authentication only (no encryption). ESP is used in almost all modern deployments.",
+    "hints": [
+      "One encrypts, one only authenticates"
+    ]
+  },
+  {
+    "id": "q-sec-vpn-03",
+    "topic_id": "vpn-ipsec",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What are IKE Phase 1 and Phase 2?",
+    "correct_answers": [
+      "sa",
+      "security association",
+      "isakmp",
+      "ipsec sa",
+      "management",
+      "data"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Phase 1 (ISAKMP SA): authenticates peers and establishes encrypted management tunnel. Phase 2 (IPsec SA): negotiates encryption for actual data traffic.",
+    "hints": [
+      "Two phases: management then data"
+    ]
+  },
+  {
+    "id": "q-sec-zt-01",
+    "topic_id": "zero-trust",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the core principle of Zero Trust?",
+    "correct_answers": [
+      "never trust always verify",
+      "verify explicitly",
+      "no implicit trust",
+      "assume breach"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Zero Trust: Never trust, always verify. No implicit trust based on network location. Verify every access request regardless of source.",
+    "hints": [
+      "Trust nothing by default"
+    ]
+  },
+  {
+    "id": "q-sec-zt-02",
+    "topic_id": "zero-trust",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What are the key pillars of a Zero Trust architecture?",
+    "correct_answers": [
+      "identity",
+      "device",
+      "network",
+      "application",
+      "data",
+      "visibility"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Zero Trust pillars: Identity verification, Device health, Network segmentation, Application access, Data protection, and Visibility/Analytics.",
+    "hints": [
+      "Multiple pillars, not just network"
+    ]
+  },
+  {
+    "id": "q-sec-seg-01",
+    "topic_id": "network-segmentation",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is network segmentation and why is it important?",
+    "correct_answers": [
+      "divide",
+      "isolate",
+      "separate",
+      "limit blast radius",
+      "contain"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network segmentation divides the network into isolated zones to limit lateral movement, contain breaches, and enforce access policies between segments.",
+    "hints": [
+      "Divide and conquer"
+    ]
+  },
+  {
+    "id": "q-sec-seg-02",
+    "topic_id": "network-segmentation",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "An attacker compromised a workstation. How does proper segmentation limit damage?",
+    "correct_answers": [
+      "can't reach servers",
+      "lateral movement blocked",
+      "firewall between",
+      "acl",
+      "different vlan"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Segmentation prevents the attacker from reaching servers/critical systems directly. Firewalls/ACLs between segments block unauthorized lateral movement.",
+    "hints": [
+      "Walls between zones"
+    ]
+  },
+  {
+    "id": "q-sec-ddos-01",
+    "topic_id": "ddos",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What are the three main categories of DDoS attacks?",
+    "correct_answers": [
+      "volumetric",
+      "protocol",
+      "application",
+      "layer 3",
+      "layer 4",
+      "layer 7"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "DDoS categories: Volumetric (flood bandwidth), Protocol (exploit protocol weaknesses like SYN flood), Application (target L7 like HTTP floods).",
+    "hints": [
+      "Three layers of attack"
+    ]
+  },
+  {
+    "id": "q-sec-ddos-02",
+    "topic_id": "ddos",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "Your web server is under a SYN flood attack. What immediate mitigation steps do you take?",
+    "correct_answers": [
+      "syn cookies",
+      "rate limit",
+      "blackhole",
+      "scrubbing",
+      "increase backlog"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Enable SYN cookies, increase TCP backlog queue, implement rate limiting, engage DDoS scrubbing service, or blackhole the attack traffic.",
+    "hints": [
+      "Multiple defenses needed"
+    ]
+  },
+  {
+    "id": "q-sec-tls-01",
+    "topic_id": "tls-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the minimum TLS version considered secure today?",
+    "correct_answers": [
+      "1.2",
+      "tls 1.2",
+      "1.3",
+      "tls 1.3"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "TLS 1.2 is the minimum acceptable version. TLS 1.3 is preferred. TLS 1.0 and 1.1 are deprecated.",
+    "hints": [
+      "1.0 and 1.1 are dead"
+    ]
+  },
+  {
+    "id": "q-sec-tls-02",
+    "topic_id": "tls-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is Perfect Forward Secrecy (PFS) and why does it matter?",
+    "correct_answers": [
+      "ephemeral",
+      "session key",
+      "compromise",
+      "past sessions",
+      "dhe",
+      "ecdhe"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "PFS uses ephemeral keys (DHE/ECDHE) so compromising the server's private key doesn't decrypt past sessions. Each session has unique keys.",
+    "hints": [
+      "Past sessions stay safe"
+    ]
+  },
+  {
+    "id": "q-sec-dns-01",
+    "topic_id": "dns-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is DNS poisoning/spoofing?",
+    "correct_answers": [
+      "fake response",
+      "wrong ip",
+      "redirect",
+      "malicious answer",
+      "cache"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "DNS poisoning injects false DNS responses into a resolver's cache, redirecting users to malicious servers.",
+    "hints": [
+      "Fake DNS answers"
+    ]
+  },
+  {
+    "id": "q-sec-dns-02",
+    "topic_id": "dns-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "How does DNSSEC prevent DNS spoofing?",
+    "correct_answers": [
+      "digital signature",
+      "sign",
+      "verify",
+      "authenticate",
+      "chain of trust"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "DNSSEC adds digital signatures to DNS records. Resolvers verify signatures using a chain of trust from the root, ensuring responses are authentic.",
+    "hints": [
+      "Cryptographic signatures on DNS"
+    ]
+  },
+  {
+    "id": "q-sec-nac-01",
+    "topic_id": "nac",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is Network Access Control (NAC)?",
+    "correct_answers": [
+      "authenticate before access",
+      "device compliance",
+      "posture check",
+      "admission"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NAC authenticates devices and checks their security posture (patches, AV, compliance) before granting network access.",
+    "hints": [
+      "Check before you connect"
+    ]
+  },
+  {
+    "id": "q-sec-802-01",
+    "topic_id": "802-1x",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What are the three roles in 802.1X authentication?",
+    "correct_answers": [
+      "supplicant authenticator server",
+      "client switch radius",
+      "supplicant, authenticator, authentication server"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "802.1X roles: Supplicant (client), Authenticator (switch/AP), Authentication Server (RADIUS).",
+    "hints": [
+      "Three parties involved"
+    ]
+  },
+  {
+    "id": "q-sec-wireless-01",
+    "topic_id": "wireless-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the most secure WiFi authentication for enterprise?",
+    "correct_answers": [
+      "wpa3 enterprise",
+      "wpa2 enterprise",
+      "802.1x",
+      "eap-tls"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "WPA3-Enterprise with EAP-TLS (certificate-based) is the most secure. WPA2-Enterprise with 802.1X is also acceptable.",
+    "hints": [
+      "Enterprise mode with certificates"
+    ]
+  },
+  {
+    "id": "q-sec-wireless-02",
+    "topic_id": "wireless-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is a rogue access point and how do you detect it?",
+    "correct_answers": [
+      "unauthorized ap",
+      "wids",
+      "wireless ids",
+      "scanning",
+      "unauthorized"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A rogue AP is an unauthorized access point on your network. Detect with WIDS (Wireless IDS), periodic scanning, and NAC that blocks unknown devices.",
+    "hints": [
+      "Unauthorized wireless"
+    ]
+  },
+  {
+    "id": "q-sec-packet-01",
+    "topic_id": "packet-analysis",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What Wireshark display filter shows only HTTP POST requests?",
+    "correct_answers": [
+      "http.request.method == POST",
+      "http.request.method==POST",
+      "http.request.method == \"POST\""
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'http.request.method == POST' to filter for HTTP POST requests in Wireshark.",
+    "hints": [
+      "http.request.method"
+    ]
+  },
+  {
+    "id": "q-sec-packet-02",
+    "topic_id": "packet-analysis",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What tcpdump command captures traffic on port 443?",
+    "correct_answers": [
+      "tcpdump -i",
+      "port 443",
+      "tcpdump port 443"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'tcpdump -i <interface> port 443' to capture HTTPS traffic.",
+    "hints": [
+      "tcpdump with port filter"
+    ]
+  },
+  {
+    "id": "q-sec-siem-01",
+    "topic_id": "siem",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a SIEM and what does it do?",
+    "correct_answers": [
+      "security information event management",
+      "correlate",
+      "log",
+      "alert",
+      "centralize"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SIEM (Security Information and Event Management) centralizes logs, correlates events, detects threats, and generates alerts.",
+    "hints": [
+      "Centralize and correlate security data"
+    ]
+  },
+  {
+    "id": "q-sec-siem-02",
+    "topic_id": "siem",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is the difference between a SIEM rule and a SIEM correlation?",
+    "correct_answers": [
+      "single event vs multiple",
+      "pattern",
+      "combine",
+      "sequence",
+      "multiple sources"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A rule triggers on a single event type. Correlation combines multiple events across sources/time to detect complex attack patterns.",
+    "hints": [
+      "One event vs pattern of events"
+    ]
+  },
+  {
+    "id": "q-sec-microseg-01",
+    "topic_id": "microseg",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is microsegmentation and how does it differ from traditional segmentation?",
+    "correct_answers": [
+      "workload level",
+      "application",
+      "granular",
+      "east-west",
+      "per-vm"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Microsegmentation applies security policies at the workload/application level (per-VM, per-container) rather than at network boundaries. Controls east-west traffic.",
+    "hints": [
+      "More granular than VLANs"
+    ]
+  }
+]

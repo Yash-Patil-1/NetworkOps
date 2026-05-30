@@ -1,0 +1,294 @@
+[
+  {
+    "id": "ikev2",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "IKEv2 VPN",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Modern VPN with fast reconnection.",
+      "why": "Preferred for modern VPNs.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "MOBIKE",
+        "EAP",
+        "Dead peer detection"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "ikev2",
+      "vpn"
+    ]
+  },
+  {
+    "id": "ssl-vpn2",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "SSL/TLS VPN",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "VPN using TLS \u2014 works through firewalls.",
+      "why": "Works anywhere HTTPS works.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Clientless",
+        "Full tunnel",
+        "Split tunnel"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "ssl-vpn",
+      "remote"
+    ]
+  },
+  {
+    "id": "seg-patterns",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "Segmentation Patterns",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "DMZ, three-zone, micro-perimeter.",
+      "why": "Proper design limits blast radius.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "DMZ",
+        "Three-zone",
+        "PCI CDE isolation"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "segmentation",
+      "patterns"
+    ]
+  },
+  {
+    "id": "ips-tuning",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "IPS Tuning",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Balance detection vs false positives.",
+      "why": "Out-of-box IPS is too noisy.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Signature tuning",
+        "Thresholds",
+        "Exclusions"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "ips",
+      "tuning"
+    ]
+  },
+  {
+    "id": "net-encryption",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "Network Encryption",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "MACsec, IPsec, WireGuard.",
+      "why": "Protect data in transit.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "MACsec",
+        "IPsec",
+        "WireGuard",
+        "Key management"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "encryption",
+      "transit"
+    ]
+  },
+  {
+    "id": "ndr",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "Network Detection & Response",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Behavioral threat detection.",
+      "why": "Catches unknown threats signatures miss.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "NDR",
+        "Behavioral analytics",
+        "ML-based"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "ndr",
+      "detection"
+    ]
+  },
+  {
+    "id": "honeypots",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "Honeypots/Deception",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Fake services to detect attackers.",
+      "why": "Zero false positives.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Honeypots",
+        "Canary tokens",
+        "Early warning"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "deception",
+      "honeypot"
+    ]
+  },
+  {
+    "id": "radius-tacacs2",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "RADIUS & TACACS+",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Centralized AAA protocols.",
+      "why": "Consistent access control.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "RADIUS",
+        "TACACS+",
+        "AAA model"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "radius",
+      "tacacs",
+      "aaa"
+    ]
+  },
+  {
+    "id": "port-sec",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "Port Security",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Limit MACs per switch port.",
+      "why": "Prevent rogue devices.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "MAC limiting",
+        "Sticky MAC",
+        "Violation modes"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "port-security",
+      "mac"
+    ]
+  },
+  {
+    "id": "dhcp-snoop",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "DHCP Snooping",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Block rogue DHCP servers.",
+      "why": "Prevent MITM via rogue DHCP.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Trusted/untrusted",
+        "Binding table",
+        "DAI"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "dhcp-snooping",
+      "layer2"
+    ]
+  }
+]

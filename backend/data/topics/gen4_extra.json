@@ -1,0 +1,378 @@
+[
+  {
+    "id": "wireless-standards",
+    "domain": "fundamentals",
+    "phase": 1,
+    "name": "Wireless Standards (802.11)",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "WiFi standards \u2014 802.11a/b/g/n/ac/ax defining speeds, frequencies, and features.",
+      "why": "WiFi is everywhere. Understanding standards helps troubleshoot and design wireless networks.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "802.11ac (WiFi 5)",
+        "802.11ax (WiFi 6)",
+        "2.4GHz vs 5GHz",
+        "Channel width",
+        "MIMO"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "wireless",
+      "wifi",
+      "802.11",
+      "standards"
+    ]
+  },
+  {
+    "id": "wireless-security",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "Wireless Security",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Securing WiFi \u2014 WPA3, 802.1X enterprise, rogue AP detection.",
+      "why": "Wireless is inherently less secure than wired. Proper security is critical.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "WPA3",
+        "802.1X Enterprise",
+        "Rogue AP detection",
+        "WIDS/WIPS"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "wireless",
+      "security",
+      "wpa3",
+      "enterprise"
+    ]
+  },
+  {
+    "id": "snmp-v3",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "SNMPv3 Security",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Secure SNMP with authentication and encryption \u2014 replacing insecure v1/v2c.",
+      "why": "SNMPv1/v2c sends community strings in plaintext. v3 adds real security.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Authentication (SHA)",
+        "Encryption (AES)",
+        "User-based security",
+        "Context"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "snmpv3",
+      "secure",
+      "authentication",
+      "encryption"
+    ]
+  },
+  {
+    "id": "bgp-security",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "BGP Security",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Securing BGP \u2014 RPKI, prefix filtering, route origin validation.",
+      "why": "BGP hijacking can redirect internet traffic. Security is critical.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "RPKI",
+        "ROA",
+        "Prefix filtering",
+        "AS-path filtering",
+        "BGPsec"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "bgp",
+      "security",
+      "rpki",
+      "hijacking"
+    ]
+  },
+  {
+    "id": "sdwan-security",
+    "domain": "network_security",
+    "phase": 4,
+    "name": "SD-WAN Security",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Security features in SD-WAN \u2014 encryption, segmentation, NGFW integration.",
+      "why": "SD-WAN uses internet links. Security must be built-in.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Encryption",
+        "Segmentation",
+        "NGFW",
+        "Zero Trust"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "sd-wan",
+      "security",
+      "encryption"
+    ]
+  },
+  {
+    "id": "cloud-interconnect",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "Multi-Cloud Networking",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Connecting multiple cloud providers \u2014 AWS + Azure + GCP.",
+      "why": "Many enterprises use multiple clouds. Interconnection is complex.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Transit solutions",
+        "Megaport/Equinix",
+        "BGP peering",
+        "Latency"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "multi-cloud",
+      "interconnect",
+      "hybrid"
+    ]
+  },
+  {
+    "id": "kubernetes-networking",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "Kubernetes Networking",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Pod networking, Services, Ingress, Network Policies in K8s.",
+      "why": "K8s networking is complex. Understanding is essential for cloud-native.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Pod network",
+        "Services (ClusterIP/NodePort/LB)",
+        "Ingress",
+        "Network Policies",
+        "CNI"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "kubernetes",
+      "pods",
+      "services",
+      "ingress"
+    ]
+  },
+  {
+    "id": "python-scapy",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Scapy (Packet Crafting)",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Python library for crafting, sending, and analyzing network packets.",
+      "why": "Build custom packets for testing, analysis, and security research.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Packet crafting",
+        "Sniffing",
+        "Protocol dissection",
+        "Custom protocols"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "scapy",
+      "packets",
+      "crafting",
+      "python"
+    ]
+  },
+  {
+    "id": "network-simulation",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Network Simulation (GNS3/EVE-NG)",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Virtual network labs for testing configurations before production.",
+      "why": "Test changes safely without risking production.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "GNS3",
+        "EVE-NG",
+        "Virtual routers",
+        "Lab topology"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "simulation",
+      "lab",
+      "gns3",
+      "testing"
+    ]
+  },
+  {
+    "id": "streaming-telemetry",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Streaming Telemetry",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Push-based real-time data from devices \u2014 replacing SNMP polling.",
+      "why": "SNMP polling has delay. Telemetry pushes data in real-time.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "gNMI",
+        "gRPC",
+        "Model-driven",
+        "Push-based",
+        "OpenConfig"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "telemetry",
+      "streaming",
+      "gnmi",
+      "real-time"
+    ]
+  },
+  {
+    "id": "network-observability",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Network Observability",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Beyond monitoring \u2014 understanding WHY systems behave as they do.",
+      "why": "Monitoring tells you something is wrong. Observability tells you why.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Metrics",
+        "Logs",
+        "Traces",
+        "Correlation",
+        "Context"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "observability",
+      "metrics",
+      "logs",
+      "traces"
+    ]
+  },
+  {
+    "id": "aci-nsx",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "SDN (ACI/NSX)",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Software-Defined Networking \u2014 centralized control plane for network management.",
+      "why": "SDN separates control from data plane. Enables programmable networks.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Controller",
+        "Overlay",
+        "Policy-based",
+        "Automation",
+        "Intent-based"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "sdn",
+      "aci",
+      "nsx",
+      "software-defined"
+    ]
+  }
+]

@@ -1,0 +1,578 @@
+[
+  {
+    "id": "q-eng2-hsrp-01",
+    "topic_id": "hsrp-vrrp",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is HSRP used for?",
+    "correct_answers": [
+      "gateway redundancy",
+      "first hop",
+      "failover",
+      "virtual ip",
+      "default gateway"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "HSRP (Hot Standby Router Protocol) provides first-hop gateway redundancy. Multiple routers share a virtual IP \u2014 if active fails, standby takes over.",
+    "hints": [
+      "Redundant default gateway"
+    ]
+  },
+  {
+    "id": "q-eng2-hsrp-02",
+    "topic_id": "hsrp-vrrp",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between HSRP and VRRP?",
+    "correct_answers": [
+      "cisco vs standard",
+      "proprietary vs open",
+      "hsrp cisco",
+      "vrrp rfc"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "HSRP is Cisco proprietary. VRRP is an open standard (RFC 5798). Functionally similar \u2014 both provide gateway redundancy.",
+    "hints": [
+      "One is Cisco-only"
+    ]
+  },
+  {
+    "id": "q-eng2-ether-01",
+    "topic_id": "etherchannel",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is EtherChannel/Link Aggregation?",
+    "correct_answers": [
+      "bundle links",
+      "combine",
+      "lacp",
+      "port-channel",
+      "bandwidth"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "EtherChannel bundles multiple physical links into one logical link for increased bandwidth and redundancy.",
+    "hints": [
+      "Combine multiple links"
+    ]
+  },
+  {
+    "id": "q-eng2-ether-02",
+    "topic_id": "etherchannel",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What protocol negotiates EtherChannel dynamically?",
+    "correct_answers": [
+      "lacp",
+      "pagp",
+      "802.3ad"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "LACP (802.3ad) is the standard protocol. PAgP is Cisco proprietary. Both negotiate link aggregation dynamically.",
+    "hints": [
+      "Standard protocol for bundling"
+    ]
+  },
+  {
+    "id": "q-eng2-qos-01",
+    "topic_id": "qos-basics",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What are the three main QoS mechanisms?",
+    "correct_answers": [
+      "classification",
+      "queuing",
+      "policing",
+      "shaping",
+      "marking"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "QoS mechanisms: Classification/Marking (identify traffic), Queuing/Scheduling (prioritize), Policing/Shaping (rate limit).",
+    "hints": [
+      "Identify, prioritize, limit"
+    ]
+  },
+  {
+    "id": "q-eng2-qos-02",
+    "topic_id": "qos-basics",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is the difference between policing and shaping?",
+    "correct_answers": [
+      "drop vs buffer",
+      "hard vs soft",
+      "discard vs delay",
+      "immediate vs queue"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Policing drops excess traffic immediately (hard limit). Shaping buffers excess traffic and sends it later (smooths bursts). Shaping adds latency.",
+    "hints": [
+      "Drop vs delay"
+    ]
+  },
+  {
+    "id": "q-eng2-static-01",
+    "topic_id": "static-routing",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "easy",
+    "question": "What is the administrative distance of a static route?",
+    "correct_answers": [
+      "1"
+    ],
+    "validation_type": "exact",
+    "required_keywords": [],
+    "explanation": "Static routes have AD 1 (most trusted after directly connected routes at AD 0).",
+    "hints": [
+      "Very trusted"
+    ]
+  },
+  {
+    "id": "q-eng2-static-02",
+    "topic_id": "static-routing",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What Cisco command creates a default static route?",
+    "correct_answers": [
+      "ip route 0.0.0.0 0.0.0.0"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "'ip route 0.0.0.0 0.0.0.0 <next-hop>' creates a default route (gateway of last resort).",
+    "hints": [
+      "Route to everywhere"
+    ]
+  },
+  {
+    "id": "q-eng2-mpls-01",
+    "topic_id": "mpls-basics",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is MPLS and what problem does it solve?",
+    "correct_answers": [
+      "label switching",
+      "fast forwarding",
+      "between layer 2 and 3",
+      "traffic engineering"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "MPLS uses labels for fast packet forwarding (between L2 and L3). Enables traffic engineering, VPNs, and QoS without complex routing lookups.",
+    "hints": [
+      "Labels instead of IP lookups"
+    ]
+  },
+  {
+    "id": "q-eng2-mpls-02",
+    "topic_id": "mpls-basics",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is an MPLS LSP?",
+    "correct_answers": [
+      "label switched path",
+      "path through network",
+      "ingress to egress",
+      "tunnel"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "LSP (Label Switched Path) is the path a labeled packet takes through the MPLS network from ingress to egress router.",
+    "hints": [
+      "The path labels create"
+    ]
+  },
+  {
+    "id": "q-eng2-vxlan-01",
+    "topic_id": "vxlan-basics",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is VXLAN and why is it needed?",
+    "correct_answers": [
+      "overlay",
+      "extend layer 2",
+      "4096 vlan limit",
+      "encapsulate",
+      "data center"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "VXLAN extends Layer 2 over Layer 3 using UDP encapsulation. Overcomes the 4096 VLAN limit (VXLAN has 16M VNIs) for large data centers.",
+    "hints": [
+      "Overcome VLAN limits"
+    ]
+  },
+  {
+    "id": "q-eng2-sdwan-01",
+    "topic_id": "sd-wan",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is SD-WAN?",
+    "correct_answers": [
+      "software defined wan",
+      "centralized control",
+      "multiple links",
+      "overlay",
+      "application-aware"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SD-WAN uses software-defined networking for WAN, providing centralized control, application-aware routing across multiple links (MPLS, broadband, LTE).",
+    "hints": [
+      "Software-defined WAN management"
+    ]
+  },
+  {
+    "id": "q-eng2-sdwan-02",
+    "topic_id": "sd-wan",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What advantages does SD-WAN have over traditional WAN?",
+    "correct_answers": [
+      "cost",
+      "agility",
+      "application awareness",
+      "centralized",
+      "multiple transports"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SD-WAN: lower cost (use broadband), application-aware routing, centralized management, transport independence, faster deployment, and built-in encryption.",
+    "hints": [
+      "Cheaper and smarter"
+    ]
+  },
+  {
+    "id": "q-eng2-redist-01",
+    "topic_id": "redistribution",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is route redistribution and when is it needed?",
+    "correct_answers": [
+      "between protocols",
+      "ospf to bgp",
+      "different routing",
+      "exchange routes"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Redistribution shares routes between different routing protocols (e.g., OSPF into BGP). Needed when merging networks or using multiple protocols.",
+    "hints": [
+      "Share routes between protocols"
+    ]
+  },
+  {
+    "id": "q-eng2-redist-02",
+    "topic_id": "redistribution",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "After redistributing OSPF into EIGRP, you see a routing loop. What's the likely cause?",
+    "correct_answers": [
+      "mutual redistribution",
+      "feedback",
+      "route filter",
+      "missing filter"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Mutual redistribution without proper filtering causes routes to be re-imported back into the original protocol. Use route-maps/tags to prevent feedback loops.",
+    "hints": [
+      "Routes coming back around"
+    ]
+  },
+  {
+    "id": "q-eng2-campus-01",
+    "topic_id": "campus-design",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What are the three layers of the campus network design model?",
+    "correct_answers": [
+      "access distribution core",
+      "access",
+      "distribution",
+      "core"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Three-tier campus: Access (user ports), Distribution (policy/routing), Core (high-speed backbone). Small networks may collapse distribution into core.",
+    "hints": [
+      "Three tiers"
+    ]
+  },
+  {
+    "id": "q-eng2-dc-01",
+    "topic_id": "dc-design",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is a spine-leaf data center architecture?",
+    "correct_answers": [
+      "two tier",
+      "every leaf connects to every spine",
+      "non-blocking",
+      "clos"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Spine-leaf: every leaf switch connects to every spine switch. Provides consistent latency, non-blocking fabric, and easy horizontal scaling.",
+    "hints": [
+      "Every leaf to every spine"
+    ]
+  },
+  {
+    "id": "q-eng2-dc-02",
+    "topic_id": "dc-design",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "Why is spine-leaf preferred over three-tier in modern data centers?",
+    "correct_answers": [
+      "east-west",
+      "consistent latency",
+      "scalable",
+      "non-blocking",
+      "predictable"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Spine-leaf handles east-west traffic better (server-to-server), provides consistent 2-hop latency, scales horizontally, and is non-blocking.",
+    "hints": [
+      "Optimized for server-to-server"
+    ]
+  },
+  {
+    "id": "q-eng2-wan-01",
+    "topic_id": "wan-tech",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What WAN technologies are commonly used today?",
+    "correct_answers": [
+      "mpls",
+      "broadband",
+      "lte",
+      "5g",
+      "sd-wan",
+      "dedicated"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Modern WAN: MPLS (reliable), broadband (cheap), LTE/5G (backup/remote), SD-WAN (overlay), and dedicated circuits (critical sites).",
+    "hints": [
+      "Multiple options"
+    ]
+  },
+  {
+    "id": "q-eng2-multicast-01",
+    "topic_id": "multicast",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the multicast IP address range?",
+    "correct_answers": [
+      "224.0.0.0",
+      "239.255.255.255",
+      "224",
+      "class d"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Multicast uses 224.0.0.0 to 239.255.255.255 (Class D). 224.0.0.x is link-local, 239.x.x.x is administratively scoped.",
+    "hints": [
+      "Class D range"
+    ]
+  },
+  {
+    "id": "q-eng2-ipv6r-01",
+    "topic_id": "ipv6-route",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the IPv6 link-local address prefix?",
+    "correct_answers": [
+      "fe80",
+      "fe80::/10"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "IPv6 link-local addresses use fe80::/10 prefix. Auto-configured on every interface, used for neighbor discovery and routing protocol communication.",
+    "hints": [
+      "fe80"
+    ]
+  },
+  {
+    "id": "q-eng2-gre-01",
+    "topic_id": "gre",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is GRE tunneling?",
+    "correct_answers": [
+      "encapsulate",
+      "generic routing encapsulation",
+      "tunnel",
+      "protocol 47"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "GRE encapsulates packets inside IP packets to create point-to-point tunnels. Supports any protocol, but adds no encryption (often paired with IPsec).",
+    "hints": [
+      "Encapsulate anything in IP"
+    ]
+  },
+  {
+    "id": "q-eng2-pbr-01",
+    "topic_id": "pbr",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is Policy-Based Routing (PBR)?",
+    "correct_answers": [
+      "route by policy",
+      "not destination",
+      "source-based",
+      "match criteria",
+      "override routing table"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "PBR routes traffic based on criteria other than destination (source IP, protocol, port) \u2014 overrides the normal routing table.",
+    "hints": [
+      "Route by rules, not just destination"
+    ]
+  },
+  {
+    "id": "q-eng2-acl-01",
+    "topic_id": "acls",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What is the difference between standard and extended ACLs?",
+    "correct_answers": [
+      "source only vs source+dest",
+      "standard source",
+      "extended port protocol"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Standard ACLs filter by source IP only. Extended ACLs filter by source, destination, protocol, and port numbers.",
+    "hints": [
+      "Standard is simpler"
+    ]
+  },
+  {
+    "id": "q-eng2-acl-02",
+    "topic_id": "acls",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "Where should you place an extended ACL?",
+    "correct_answers": [
+      "close to source",
+      "near source",
+      "as close to source as possible"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Place extended ACLs close to the source to block unwanted traffic early and save bandwidth on intermediate links.",
+    "hints": [
+      "Block early"
+    ]
+  },
+  {
+    "id": "q-eng2-redundancy-01",
+    "topic_id": "redundancy-design",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is the difference between active-active and active-passive redundancy?",
+    "correct_answers": [
+      "both active vs one standby",
+      "load sharing vs failover",
+      "utilize both vs waste one"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Active-active: both devices handle traffic (load sharing). Active-passive: standby is idle until failover. Active-active uses resources better but is more complex.",
+    "hints": [
+      "Both working vs one waiting"
+    ]
+  },
+  {
+    "id": "q-eng2-rstp-01",
+    "topic_id": "rstp-mstp",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "How does RSTP improve on classic STP?",
+    "correct_answers": [
+      "faster convergence",
+      "seconds vs 50",
+      "proposal agreement",
+      "edge ports"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "RSTP converges in seconds (vs 50s for STP) using proposal/agreement mechanism, edge ports (like PortFast), and fewer port states.",
+    "hints": [
+      "Much faster"
+    ]
+  },
+  {
+    "id": "q-eng2-dhcpr-01",
+    "topic_id": "dhcp-relay2",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What Cisco command configures DHCP relay on an interface?",
+    "correct_answers": [
+      "ip helper-address"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "'ip helper-address <DHCP-server-IP>' on the gateway interface forwards DHCP broadcasts as unicast to the server.",
+    "hints": [
+      "ip helper-address"
+    ]
+  },
+  {
+    "id": "q-eng2-qosv-01",
+    "topic_id": "qos-voice",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What QoS requirements does VoIP have?",
+    "correct_answers": [
+      "150ms latency",
+      "30ms jitter",
+      "1% loss",
+      "priority queue",
+      "ef"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "VoIP needs: <150ms one-way latency, <30ms jitter, <1% packet loss. Use EF (Expedited Forwarding) DSCP marking and priority queuing.",
+    "hints": [
+      "Strict latency and loss requirements"
+    ]
+  }
+]

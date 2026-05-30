@@ -1,0 +1,294 @@
+[
+  {
+    "id": "jinja2",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Jinja2 Templates",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Config generation from variables.",
+      "why": "Eliminate repetitive config writing.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Variables",
+        "Loops",
+        "Conditionals",
+        "Filters"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "jinja2",
+      "templates"
+    ]
+  },
+  {
+    "id": "textfsm",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "TextFSM Parsing",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Parse CLI output to structured data.",
+      "why": "Automation needs structured data.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Templates",
+        "State machine",
+        "NTC-templates"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "textfsm",
+      "parsing"
+    ]
+  },
+  {
+    "id": "paramiko2",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Paramiko SSH",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Low-level Python SSH library.",
+      "why": "Foundation for Netmiko.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "SSH connection",
+        "Command execution",
+        "SFTP"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "paramiko",
+      "ssh"
+    ]
+  },
+  {
+    "id": "openapi",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "OpenAPI/Swagger",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "API documentation standard.",
+      "why": "Good docs enable faster integration.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "OpenAPI spec",
+        "Swagger UI",
+        "Schemas"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "api",
+      "swagger"
+    ]
+  },
+  {
+    "id": "event-driven",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Event-Driven Automation",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Trigger automation on events.",
+      "why": "Instant response without humans.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Event sources",
+        "Triggers",
+        "StackStorm"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "event-driven",
+      "reactive"
+    ]
+  },
+  {
+    "id": "batfish2",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Batfish Analysis",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Offline config analysis.",
+      "why": "Test changes before production.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Config analysis",
+        "Policy verification",
+        "What-if"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "batfish",
+      "offline"
+    ]
+  },
+  {
+    "id": "ansible-roles2",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Ansible Roles",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Reusable automation units.",
+      "why": "Code reuse across projects.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Role structure",
+        "Galaxy",
+        "Dependencies"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "ansible",
+      "roles"
+    ]
+  },
+  {
+    "id": "sot",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Source of Truth",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "NetBox as authoritative data source.",
+      "why": "Automation needs accurate data.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "NetBox",
+        "Intended state",
+        "API-driven"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "source-of-truth",
+      "netbox"
+    ]
+  },
+  {
+    "id": "config-compliance2",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Config Compliance",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Auto-check configs against standards.",
+      "why": "Manual checking doesn't scale.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Compliance rules",
+        "Deviation reporting",
+        "Audit"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "compliance",
+      "standards"
+    ]
+  },
+  {
+    "id": "net-as-code",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Network as Code",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Entire network as version-controlled code.",
+      "why": "Reproducible, testable infrastructure.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "GitOps",
+        "Declarative",
+        "Idempotent",
+        "CI/CD"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "network-as-code",
+      "gitops"
+    ]
+  }
+]

@@ -1,0 +1,198 @@
+[
+  {
+    "id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "OSPF Fundamentals",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "OSPF (Open Shortest Path First) is a link-state routing protocol that uses Dijkstra's SPF algorithm to calculate the shortest path to every destination.",
+      "why": "OSPF is the most widely used IGP in enterprise networks. It provides fast convergence, scalability through areas, and supports VLSM/CIDR. Required knowledge for CCNA/CCNP.",
+      "how": "OSPF process:\n1. Discover neighbors (Hello packets, multicast 224.0.0.5)\n2. Exchange LSAs (Link-State Advertisements)\n3. Build LSDB (Link-State Database)\n4. Run SPF algorithm (Dijkstra)\n5. Install best routes in routing table\n\nNeighbor states: Down \u2192 Init \u2192 2-Way \u2192 ExStart \u2192 Exchange \u2192 Loading \u2192 Full",
+      "when": "Use OSPF for enterprise networks needing fast convergence, hierarchical design (areas), and vendor interoperability. Not ideal for very large flat networks (use areas).",
+      "key_concepts": [
+        "Areas (backbone Area 0)",
+        "LSA types (1-7)",
+        "DR/BDR election",
+        "SPF algorithm",
+        "Hello/Dead timers (10/40)",
+        "Cost metric (reference BW / interface BW)"
+      ],
+      "configuration": "router ospf 1\n router-id 1.1.1.1\n network 10.0.0.0 0.0.0.255 area 0\n network 192.168.1.0 0.0.0.255 area 1\n passive-interface GigabitEthernet0/0",
+      "troubleshooting": [
+        "show ip ospf neighbor",
+        "show ip ospf database",
+        "show ip ospf interface",
+        "show ip route ospf",
+        "debug ip ospf adj"
+      ]
+    },
+    "related_topics": [
+      "bgp-fundamentals",
+      "subnetting",
+      "ipv4-addressing"
+    ],
+    "tags": [
+      "ospf",
+      "routing",
+      "igp",
+      "link-state",
+      "spf"
+    ]
+  },
+  {
+    "id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "BGP Fundamentals",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "BGP (Border Gateway Protocol) is the routing protocol of the internet. It exchanges routing information between autonomous systems (AS) and makes path selection decisions based on policies.",
+      "why": "BGP is what makes the internet work. Every ISP, cloud provider, and large enterprise uses BGP. Understanding BGP is essential for network engineering roles and internet connectivity.",
+      "how": "BGP is a path-vector protocol:\n1. Establish TCP session (port 179) between peers\n2. Exchange full routing table (initial)\n3. Send incremental updates only\n4. Select best path using attributes (AS-Path, Local Pref, MED, etc.)\n\nTypes: eBGP (between AS) and iBGP (within AS).",
+      "when": "Use BGP for: internet connectivity (ISP peering), multi-homed networks, large enterprise WAN, cloud connectivity (AWS/Azure). Not for internal routing (use OSPF/EIGRP).",
+      "key_concepts": [
+        "Autonomous System (AS)",
+        "eBGP vs iBGP",
+        "Path attributes (AS-Path, Local Pref, MED, Weight)",
+        "Best path selection",
+        "Route filtering",
+        "Peering vs Transit"
+      ],
+      "configuration": "router bgp 65001\n neighbor 203.0.113.1 remote-as 65002\n network 10.0.0.0 mask 255.255.255.0\n!\n! Route filtering\nip prefix-list ALLOWED permit 10.0.0.0/8 le 24\nroute-map FILTER permit 10\n match ip address prefix-list ALLOWED",
+      "troubleshooting": [
+        "show ip bgp summary",
+        "show ip bgp",
+        "show ip bgp neighbors",
+        "show ip bgp rib-failure"
+      ]
+    },
+    "related_topics": [
+      "ospf-fundamentals"
+    ],
+    "tags": [
+      "bgp",
+      "routing",
+      "internet",
+      "autonomous-system",
+      "path-vector"
+    ]
+  },
+  {
+    "id": "hsrp-vrrp",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "HSRP/VRRP (First Hop Redundancy)",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "HSRP and VRRP provide gateway redundancy \u2014 if the primary router fails, a backup takes over the virtual IP seamlessly. Clients never need to change their default gateway.",
+      "why": "A single router as default gateway is a single point of failure. FHRP ensures continuous connectivity even when a router fails \u2014 essential for high availability.",
+      "how": "HSRP/VRRP create a virtual IP shared between routers:\n- Active/Master router responds to the virtual IP\n- Standby/Backup monitors via hello packets\n- If Active fails, Standby takes over (typically 3-10 seconds)\n- Clients configured with virtual IP as gateway\n\nHSRP: Cisco proprietary. VRRP: Open standard (RFC 5798).",
+      "when": "Use FHRP whenever you have redundant routers/L3 switches serving as default gateways. Required for any HA network design.",
+      "key_concepts": [
+        "Virtual IP (VIP)",
+        "Active/Standby (HSRP) or Master/Backup (VRRP)",
+        "Priority (higher = preferred)",
+        "Preemption",
+        "Hello/Hold timers",
+        "Interface tracking"
+      ],
+      "configuration": "! HSRP\ninterface Vlan10\n ip address 10.0.10.2 255.255.255.0\n standby 1 ip 10.0.10.1\n standby 1 priority 110\n standby 1 preempt\n standby 1 track GigabitEthernet0/0",
+      "troubleshooting": [
+        "show standby",
+        "show standby brief",
+        "show vrrp",
+        "debug standby"
+      ]
+    },
+    "related_topics": [
+      "ospf-fundamentals",
+      "stp-protocol"
+    ],
+    "tags": [
+      "hsrp",
+      "vrrp",
+      "redundancy",
+      "gateway",
+      "high-availability"
+    ]
+  },
+  {
+    "id": "etherchannel",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "EtherChannel (Link Aggregation)",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "EtherChannel bundles multiple physical links into one logical link, providing increased bandwidth and redundancy without STP blocking the extra links.",
+      "why": "STP blocks redundant links. EtherChannel tricks STP into seeing multiple links as one, so all links are active. Doubles/triples bandwidth while providing failover.",
+      "how": "Negotiation protocols:\n- LACP (802.3ad): Open standard, preferred\n- PAgP: Cisco proprietary\n- Static: No negotiation (not recommended)\n\nAll member links must have same speed, duplex, VLAN, and trunk settings.",
+      "when": "Use EtherChannel between switches, between switch and server, or between switch and router when you need more bandwidth than a single link provides.",
+      "key_concepts": [
+        "LACP (active/passive)",
+        "PAgP (desirable/auto)",
+        "Load balancing (src-mac, dst-mac, src-dst-ip)",
+        "All links must match settings",
+        "Port-channel interface",
+        "Maximum 8 links per channel"
+      ],
+      "configuration": "! LACP EtherChannel\ninterface range GigabitEthernet0/1-2\n channel-group 1 mode active\n!\ninterface Port-channel1\n switchport mode trunk",
+      "troubleshooting": [
+        "show etherchannel summary",
+        "show etherchannel port-channel",
+        "show lacp neighbor",
+        "show pagp neighbor"
+      ]
+    },
+    "related_topics": [
+      "stp-protocol",
+      "vlans"
+    ],
+    "tags": [
+      "etherchannel",
+      "lacp",
+      "aggregation",
+      "bandwidth",
+      "redundancy"
+    ]
+  },
+  {
+    "id": "qos-basics",
+    "domain": "network_engineering",
+    "phase": 2,
+    "name": "QoS (Quality of Service)",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "QoS prioritizes certain traffic types over others when network congestion occurs. It ensures critical applications (voice, video) get bandwidth while less important traffic waits.",
+      "why": "Without QoS, all traffic is treated equally. During congestion, voice calls drop, video freezes, and critical apps slow down. QoS ensures business-critical traffic always gets through.",
+      "how": "QoS mechanisms:\n1. Classification: Identify traffic (DSCP, ACL, NBAR)\n2. Marking: Tag packets with priority (DSCP values)\n3. Queuing: Place in priority queues\n4. Scheduling: Serve queues (strict priority, weighted fair)\n5. Policing/Shaping: Limit bandwidth\n\nTrust boundaries: Where markings are accepted.",
+      "when": "Implement QoS when: running VoIP, video conferencing, or any real-time application over a shared network. Also for WAN links with limited bandwidth.",
+      "key_concepts": [
+        "DSCP (Differentiated Services Code Point)",
+        "Classification and Marking",
+        "Queuing (LLQ, CBWFQ)",
+        "Policing vs Shaping",
+        "Trust boundary",
+        "EF (Expedited Forwarding) for voice"
+      ],
+      "configuration": "! Classify and mark voice\nclass-map match-all VOICE\n match protocol rtp\npolicy-map QOS-POLICY\n class VOICE\n  priority 256\n class class-default\n  fair-queue\n!\ninterface GigabitEthernet0/0\n service-policy output QOS-POLICY",
+      "troubleshooting": [
+        "show policy-map interface",
+        "show class-map",
+        "show mls qos interface",
+        "show queuing"
+      ]
+    },
+    "related_topics": [
+      "vlans",
+      "ospf-fundamentals"
+    ],
+    "tags": [
+      "qos",
+      "priority",
+      "voice",
+      "bandwidth",
+      "congestion"
+    ]
+  }
+]

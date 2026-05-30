@@ -1,0 +1,566 @@
+[
+  {
+    "id": "q-auto2-ansible-05",
+    "topic_id": "ansible-network",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "What Ansible keyword runs a task only when a condition is true?",
+    "correct_answers": [
+      "when",
+      "when:"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'when: condition' to conditionally execute tasks. E.g., 'when: ansible_os_family == \"Cisco\"'.",
+    "hints": [
+      "Conditional execution"
+    ]
+  },
+  {
+    "id": "q-auto2-ansible-06",
+    "topic_id": "ansible-network",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is an Ansible role?",
+    "correct_answers": [
+      "reusable",
+      "organized",
+      "directory structure",
+      "tasks vars templates"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A role is a reusable, organized unit of automation with a standard directory structure (tasks/, vars/, templates/, handlers/).",
+    "hints": [
+      "Organized and reusable"
+    ]
+  },
+  {
+    "id": "q-auto2-ansible-07",
+    "topic_id": "ansible-roles2",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is Ansible Galaxy?",
+    "correct_answers": [
+      "community roles",
+      "share",
+      "download",
+      "repository",
+      "marketplace"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Ansible Galaxy is a repository for sharing and downloading community-created roles. Install with 'ansible-galaxy install <role>'.",
+    "hints": [
+      "Community sharing platform"
+    ]
+  },
+  {
+    "id": "q-auto2-terraform-04",
+    "topic_id": "terraform-network",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What command shows what Terraform will change without applying?",
+    "correct_answers": [
+      "terraform plan"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "'terraform plan' shows the execution plan \u2014 what will be created, modified, or destroyed \u2014 without making changes.",
+    "hints": [
+      "Preview changes"
+    ]
+  },
+  {
+    "id": "q-auto2-terraform-05",
+    "topic_id": "terraform-network",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is Terraform remote state and why use it?",
+    "correct_answers": [
+      "shared",
+      "team",
+      "locking",
+      "s3",
+      "backend",
+      "collaboration"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Remote state stores Terraform state in a shared backend (S3, Azure Blob). Enables team collaboration and state locking to prevent conflicts.",
+    "hints": [
+      "Shared state for teams"
+    ]
+  },
+  {
+    "id": "q-auto2-netmiko-04",
+    "topic_id": "python-netmiko",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "How do you handle enable mode in Netmiko?",
+    "correct_answers": [
+      "secret",
+      "enable",
+      "net_connect.enable()"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Add 'secret': 'enable_pass' to the device dict, then call net_connect.enable() to enter privileged mode.",
+    "hints": [
+      "secret key and enable() method"
+    ]
+  },
+  {
+    "id": "q-auto2-paramiko-01",
+    "topic_id": "paramiko2",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is Paramiko?",
+    "correct_answers": [
+      "python ssh",
+      "low-level",
+      "ssh library",
+      "transport"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Paramiko is a low-level Python SSH library. Netmiko is built on top of it, adding network device-specific handling.",
+    "hints": [
+      "Low-level SSH, Netmiko's foundation"
+    ]
+  },
+  {
+    "id": "q-auto2-textfsm-01",
+    "topic_id": "textfsm",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is TextFSM used for?",
+    "correct_answers": [
+      "parse output",
+      "structured data",
+      "cli output",
+      "template",
+      "unstructured to structured"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "TextFSM parses unstructured CLI output (show commands) into structured data (lists/dicts) using templates.",
+    "hints": [
+      "Turn CLI text into data"
+    ]
+  },
+  {
+    "id": "q-auto2-textfsm-02",
+    "topic_id": "textfsm",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "You need to extract interface names and IPs from 'show ip interface brief' output. What tool?",
+    "correct_answers": [
+      "textfsm",
+      "ntc-templates",
+      "genie",
+      "parse"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use TextFSM with NTC-templates (pre-built templates for common show commands) to parse the output into structured data.",
+    "hints": [
+      "Pre-built parsing templates exist"
+    ]
+  },
+  {
+    "id": "q-auto2-openapi-01",
+    "topic_id": "openapi",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is OpenAPI/Swagger?",
+    "correct_answers": [
+      "api specification",
+      "document",
+      "rest api",
+      "schema",
+      "definition"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "OpenAPI (formerly Swagger) is a specification for documenting REST APIs \u2014 defines endpoints, parameters, responses, and authentication.",
+    "hints": [
+      "API documentation standard"
+    ]
+  },
+  {
+    "id": "q-auto2-event-01",
+    "topic_id": "event-driven",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is event-driven network automation?",
+    "correct_answers": [
+      "react to events",
+      "trigger",
+      "webhook",
+      "streaming",
+      "automatic response"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Event-driven automation reacts to network events (link down, threshold breach) automatically triggering remediation without human intervention.",
+    "hints": [
+      "React automatically to events"
+    ]
+  },
+  {
+    "id": "q-auto2-batfish-01",
+    "topic_id": "batfish2",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "Before pushing a config change, you want to verify it won't break routing. What tool?",
+    "correct_answers": [
+      "batfish",
+      "simulation",
+      "offline analysis",
+      "pre-deployment"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use Batfish to analyze the proposed config offline \u2014 it simulates routing and can verify reachability, loops, and policy compliance before deployment.",
+    "hints": [
+      "Simulate before deploying"
+    ]
+  },
+  {
+    "id": "q-auto2-compliance-01",
+    "topic_id": "config-compliance2",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is configuration compliance checking?",
+    "correct_answers": [
+      "compare to standard",
+      "drift",
+      "desired state",
+      "baseline",
+      "deviation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Configuration compliance verifies device configs match the desired standard/baseline. Detects drift (unauthorized changes) and non-compliance.",
+    "hints": [
+      "Does reality match the standard?"
+    ]
+  },
+  {
+    "id": "q-auto2-nac-01",
+    "topic_id": "net-as-code",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What does 'Network as Code' mean?",
+    "correct_answers": [
+      "define network in code",
+      "version control",
+      "declarative",
+      "reproducible",
+      "git"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network as Code: define entire network infrastructure in code (YAML, HCL, Python), version-controlled in Git, tested via CI/CD, and deployed automatically.",
+    "hints": [
+      "Everything defined in code"
+    ]
+  },
+  {
+    "id": "q-auto2-sim-01",
+    "topic_id": "network-simulation",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What tools can simulate network topologies for testing?",
+    "correct_answers": [
+      "gns3",
+      "eve-ng",
+      "containerlab",
+      "cml",
+      "packet tracer"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "GNS3, EVE-NG, Containerlab, Cisco CML, and Packet Tracer can simulate network topologies for testing automation and changes.",
+    "hints": [
+      "Virtual labs"
+    ]
+  },
+  {
+    "id": "q-auto2-git-03",
+    "topic_id": "git-configs",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What Git command creates a new branch?",
+    "correct_answers": [
+      "git checkout -b",
+      "git branch",
+      "git switch -c"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'git checkout -b <branch>' or 'git switch -c <branch>' to create and switch to a new branch.",
+    "hints": [
+      "checkout -b or switch -c"
+    ]
+  },
+  {
+    "id": "q-auto2-git-04",
+    "topic_id": "git-configs",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is a Git merge conflict in network config context?",
+    "correct_answers": [
+      "two changes same line",
+      "conflicting edits",
+      "manual resolution",
+      "both modified"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A merge conflict occurs when two branches modify the same config section differently. Requires manual resolution to decide which change wins.",
+    "hints": [
+      "Two people changed the same thing"
+    ]
+  },
+  {
+    "id": "q-auto2-jinja-03",
+    "topic_id": "jinja2",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "How do you write a for loop in Jinja2?",
+    "correct_answers": [
+      "{% for",
+      "{% endfor",
+      "for item in",
+      "{% for item in list %}"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "{% for item in list %}\n  {{ item }}\n{% endfor %} \u2014 iterates over a list and renders each item.",
+    "hints": [
+      "{% for ... %}"
+    ]
+  },
+  {
+    "id": "q-auto2-napalm-03",
+    "topic_id": "napalm",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What NAPALM method applies and commits configuration?",
+    "correct_answers": [
+      "load_merge_candidate",
+      "commit_config",
+      "load_replace"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "load_merge_candidate() or load_replace_candidate() loads config, then commit_config() applies it.",
+    "hints": [
+      "Load then commit"
+    ]
+  },
+  {
+    "id": "q-auto2-nornir-02",
+    "topic_id": "nornir",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is Nornir's inventory system?",
+    "correct_answers": [
+      "hosts groups defaults",
+      "yaml",
+      "structured",
+      "host vars"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Nornir inventory uses hosts.yaml (devices), groups.yaml (shared settings), and defaults.yaml (global defaults) for structured device management.",
+    "hints": [
+      "YAML-based inventory"
+    ]
+  },
+  {
+    "id": "q-auto2-scapy-02",
+    "topic_id": "python-scapy",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "How do you send a ping with Scapy?",
+    "correct_answers": [
+      "sr1(IP(dst=",
+      "ICMP",
+      "send",
+      "sr1"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "sr1(IP(dst='target')/ICMP()) sends one ICMP echo request and waits for a reply.",
+    "hints": [
+      "sr1 with IP and ICMP layers"
+    ]
+  },
+  {
+    "id": "q-auto2-restapi-03",
+    "topic_id": "rest-api-network",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is an API token/key used for?",
+    "correct_answers": [
+      "authentication",
+      "identify",
+      "authorize",
+      "access control"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "API tokens authenticate and identify the caller, controlling access to API resources without sending username/password with each request.",
+    "hints": [
+      "Proves who you are"
+    ]
+  },
+  {
+    "id": "q-auto2-restapi-04",
+    "topic_id": "rest-api-network",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What HTTP status code means 'Created' (successful POST)?",
+    "correct_answers": [
+      "201"
+    ],
+    "validation_type": "exact",
+    "required_keywords": [],
+    "explanation": "HTTP 201 Created indicates a POST request successfully created a new resource.",
+    "hints": [
+      "2xx success, but not 200"
+    ]
+  },
+  {
+    "id": "q-auto2-cicd-03",
+    "topic_id": "cicd-network",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is 'canary deployment' for network changes?",
+    "correct_answers": [
+      "partial rollout",
+      "one device first",
+      "test subset",
+      "gradual",
+      "validate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Canary deployment applies changes to a small subset of devices first, validates success, then rolls out to the rest. Limits blast radius of bad changes.",
+    "hints": [
+      "Test on a few before all"
+    ]
+  },
+  {
+    "id": "q-auto2-sot-02",
+    "topic_id": "sot",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "Your automation script and the actual device config differ. Which is correct?",
+    "correct_answers": [
+      "source of truth",
+      "sot",
+      "intended state",
+      "automation",
+      "declared state"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "The Source of Truth (intended state) is correct. The device has drifted. Automation should remediate the device to match the SoT.",
+    "hints": [
+      "The declared state wins"
+    ]
+  },
+  {
+    "id": "q-auto2-testing-02",
+    "topic_id": "infra-testing",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is 'infrastructure testing' for networks?",
+    "correct_answers": [
+      "validate config",
+      "verify connectivity",
+      "automated checks",
+      "pytest",
+      "robot"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Infrastructure testing: automated verification that network state matches intent \u2014 ping tests, route checks, config validation using pytest/Robot Framework.",
+    "hints": [
+      "Automated verification"
+    ]
+  },
+  {
+    "id": "q-auto2-netconf-03",
+    "topic_id": "netconf-yang",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What operations does NETCONF support?",
+    "correct_answers": [
+      "get",
+      "get-config",
+      "edit-config",
+      "copy-config",
+      "delete-config",
+      "lock"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NETCONF operations: get, get-config, edit-config, copy-config, delete-config, lock, unlock, close-session, kill-session.",
+    "hints": [
+      "CRUD-like operations"
+    ]
+  },
+  {
+    "id": "q-auto2-ansible-08",
+    "topic_id": "ansible-network",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is Ansible's 'check mode' (dry run)?",
+    "correct_answers": [
+      "--check",
+      "no changes",
+      "simulate",
+      "preview",
+      "what-if"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "'ansible-playbook --check' simulates execution without making changes. Shows what would change (like terraform plan).",
+    "hints": [
+      "Preview without applying"
+    ]
+  }
+]

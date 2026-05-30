@@ -1,0 +1,207 @@
+[
+  {
+    "id": "aws-vpc",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "AWS VPC",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Amazon VPC (Virtual Private Cloud) is an isolated virtual network in AWS where you launch resources. You control IP ranges, subnets, route tables, and gateways.",
+      "why": "VPC is the foundation of all AWS networking. Every EC2 instance, RDS database, and Lambda function runs inside a VPC. Understanding VPC design is essential for cloud engineers.",
+      "how": "VPC components:\n- CIDR block (e.g., 10.0.0.0/16)\n- Subnets (public + private, across AZs)\n- Internet Gateway (public internet access)\n- NAT Gateway (private subnet outbound)\n- Route Tables (control traffic flow)\n- Security Groups (instance-level firewall)\n- NACLs (subnet-level firewall)",
+      "when": "Every AWS deployment needs VPC design. Plan subnets for: public (web), private (app), data (DB), management. Use multiple AZs for HA.",
+      "key_concepts": [
+        "CIDR block",
+        "Public vs Private subnets",
+        "Internet Gateway",
+        "NAT Gateway",
+        "Route Tables",
+        "Security Groups vs NACLs",
+        "Availability Zones"
+      ],
+      "configuration": "# Terraform VPC\nresource \"aws_vpc\" \"main\" {\n  cidr_block = \"10.0.0.0/16\"\n  enable_dns_hostnames = true\n}\n\nresource \"aws_subnet\" \"public\" {\n  vpc_id     = aws_vpc.main.id\n  cidr_block = \"10.0.1.0/24\"\n  availability_zone = \"us-east-1a\"\n  map_public_ip_on_launch = true\n}",
+      "troubleshooting": [
+        "VPC Flow Logs",
+        "Check route tables",
+        "Verify Security Group rules",
+        "Check NACL rules (stateless!)",
+        "Verify IGW attached"
+      ]
+    },
+    "related_topics": [
+      "subnetting",
+      "nat-pat",
+      "firewall-fundamentals"
+    ],
+    "tags": [
+      "aws",
+      "vpc",
+      "cloud",
+      "subnets",
+      "security-groups"
+    ]
+  },
+  {
+    "id": "aws-security-groups",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "AWS Security Groups",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Security Groups are virtual firewalls for EC2 instances. They control inbound and outbound traffic at the instance level. They are stateful \u2014 return traffic is automatically allowed.",
+      "why": "Security Groups are the primary network security control in AWS. Misconfigured SGs (0.0.0.0/0 on SSH) are one of the most common cloud security findings.",
+      "how": "Rules specify: Protocol, Port range, Source/Destination (IP or another SG).\n\nKey behaviors:\n- Default: deny all inbound, allow all outbound\n- Stateful: if inbound allowed, response automatically allowed\n- Can reference other SGs (e.g., allow from web-sg to app-sg)\n- Changes take effect immediately",
+      "when": "Configure SGs for every resource. Follow least privilege \u2014 only allow required ports from required sources. Never use 0.0.0.0/0 for management ports.",
+      "key_concepts": [
+        "Stateful (vs NACLs which are stateless)",
+        "Default deny inbound",
+        "Allow all outbound (default)",
+        "Reference other SGs",
+        "No deny rules (only allow)",
+        "Applied at instance level"
+      ],
+      "configuration": "# Terraform Security Group\nresource \"aws_security_group\" \"web\" {\n  vpc_id = aws_vpc.main.id\n  \n  ingress {\n    from_port   = 443\n    to_port     = 443\n    protocol    = \"tcp\"\n    cidr_blocks = [\"0.0.0.0/0\"]\n  }\n  \n  ingress {\n    from_port       = 22\n    to_port         = 22\n    protocol        = \"tcp\"\n    security_groups = [aws_security_group.bastion.id]\n  }\n}",
+      "troubleshooting": [
+        "Check inbound rules allow traffic",
+        "Verify source IP/SG reference",
+        "Remember: no deny rules possible",
+        "Check if instance is in correct SG",
+        "VPC Flow Logs show denied traffic"
+      ]
+    },
+    "related_topics": [
+      "aws-vpc",
+      "firewall-fundamentals"
+    ],
+    "tags": [
+      "aws",
+      "security-groups",
+      "firewall",
+      "stateful",
+      "cloud"
+    ]
+  },
+  {
+    "id": "aws-route-tables",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "AWS Route Tables",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Route tables control where network traffic is directed within a VPC. Each subnet is associated with a route table that determines how traffic flows.",
+      "why": "Without proper route tables, subnets can't reach the internet, other subnets, or on-premises networks. Route tables are how you make subnets 'public' or 'private'.",
+      "how": "Each route table has rules:\n- Destination: CIDR block\n- Target: Where to send (IGW, NAT GW, VPC Peering, TGW, local)\n\nPublic subnet: Route to 0.0.0.0/0 \u2192 Internet Gateway\nPrivate subnet: Route to 0.0.0.0/0 \u2192 NAT Gateway\nLocal route (VPC CIDR \u2192 local) is always present and can't be removed.",
+      "when": "Configure route tables when: creating subnets, setting up internet access, connecting VPCs, or establishing hybrid connectivity.",
+      "key_concepts": [
+        "Local route (automatic)",
+        "0.0.0.0/0 \u2192 IGW (public)",
+        "0.0.0.0/0 \u2192 NAT GW (private)",
+        "Subnet association",
+        "Most specific route wins",
+        "Main route table (default)"
+      ],
+      "configuration": "# Terraform Route Table\nresource \"aws_route_table\" \"public\" {\n  vpc_id = aws_vpc.main.id\n  route {\n    cidr_block = \"0.0.0.0/0\"\n    gateway_id = aws_internet_gateway.main.id\n  }\n}\n\nresource \"aws_route_table_association\" \"public\" {\n  subnet_id      = aws_subnet.public.id\n  route_table_id = aws_route_table.public.id\n}",
+      "troubleshooting": [
+        "Check subnet association",
+        "Verify default route target",
+        "Most specific route wins",
+        "Check if IGW/NAT GW exists",
+        "VPC Flow Logs for routing issues"
+      ]
+    },
+    "related_topics": [
+      "aws-vpc",
+      "subnetting"
+    ],
+    "tags": [
+      "aws",
+      "routing",
+      "route-table",
+      "internet",
+      "cloud"
+    ]
+  },
+  {
+    "id": "azure-vnet",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "Azure Virtual Network",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Azure VNet is the fundamental building block for private networks in Azure. Similar to AWS VPC \u2014 provides isolation, subnetting, and connectivity control.",
+      "why": "Every Azure resource that needs networking runs in a VNet. Understanding VNet design, NSGs, and connectivity options is essential for Azure cloud engineers.",
+      "how": "VNet components:\n- Address space (CIDR, e.g., 10.0.0.0/16)\n- Subnets (no public/private distinction \u2014 use NSGs)\n- NSGs (Network Security Groups \u2014 like AWS SGs but stateless at subnet level)\n- Route tables (UDRs \u2014 User Defined Routes)\n- VNet Peering (connect VNets)\n- VPN Gateway / ExpressRoute (hybrid)",
+      "when": "Every Azure deployment. Design subnets for: web tier, app tier, data tier, management. Use NSGs on every subnet.",
+      "key_concepts": [
+        "Address space",
+        "Subnets",
+        "NSGs (Network Security Groups)",
+        "UDR (User Defined Routes)",
+        "VNet Peering",
+        "Service Endpoints",
+        "Private Endpoints"
+      ],
+      "configuration": "# Azure CLI\naz network vnet create \\\n  --name MyVNet \\\n  --resource-group MyRG \\\n  --address-prefix 10.0.0.0/16 \\\n  --subnet-name WebSubnet \\\n  --subnet-prefix 10.0.1.0/24\n\naz network nsg create \\\n  --name WebNSG \\\n  --resource-group MyRG",
+      "troubleshooting": [
+        "Check NSG rules (both subnet and NIC level)",
+        "Verify effective routes",
+        "Network Watcher for diagnostics",
+        "Check service endpoints",
+        "IP flow verify tool"
+      ]
+    },
+    "related_topics": [
+      "aws-vpc",
+      "subnetting",
+      "firewall-fundamentals"
+    ],
+    "tags": [
+      "azure",
+      "vnet",
+      "cloud",
+      "nsg",
+      "networking"
+    ]
+  },
+  {
+    "id": "hybrid-connectivity",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "Hybrid Cloud Connectivity",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Hybrid connectivity connects on-premises networks to cloud VPCs/VNets. Options include VPN (over internet) and dedicated connections (Direct Connect, ExpressRoute).",
+      "why": "Most enterprises have existing on-premises infrastructure. Hybrid connectivity enables gradual cloud migration, disaster recovery, and keeping sensitive workloads on-premises.",
+      "how": "Options:\n- Site-to-Site VPN: Encrypted tunnel over internet (quick, cheap, limited bandwidth)\n- AWS Direct Connect / Azure ExpressRoute: Dedicated physical connection (expensive, high bandwidth, low latency)\n- Transit Gateway: Hub for connecting multiple VPCs and on-premises\n\nConsiderations: Bandwidth, latency, redundancy, cost, encryption.",
+      "when": "Use VPN for: dev/test, low-bandwidth needs, quick setup. Use Direct Connect/ExpressRoute for: production workloads, high bandwidth, low latency requirements.",
+      "key_concepts": [
+        "Site-to-Site VPN",
+        "Direct Connect / ExpressRoute",
+        "Transit Gateway",
+        "BGP for dynamic routing",
+        "Redundancy (dual tunnels)",
+        "Encryption requirements"
+      ],
+      "configuration": "# AWS Site-to-Site VPN (Terraform)\nresource \"aws_vpn_gateway\" \"main\" {\n  vpc_id = aws_vpc.main.id\n}\n\nresource \"aws_customer_gateway\" \"onprem\" {\n  bgp_asn    = 65000\n  ip_address = \"203.0.113.1\"\n  type       = \"ipsec.1\"\n}",
+      "troubleshooting": [
+        "Check VPN tunnel status",
+        "Verify BGP peering",
+        "Check route propagation",
+        "Monitor bandwidth utilization",
+        "Test failover"
+      ]
+    },
+    "related_topics": [
+      "aws-vpc",
+      "vpn-ipsec",
+      "bgp-fundamentals"
+    ],
+    "tags": [
+      "hybrid",
+      "vpn",
+      "direct-connect",
+      "expressroute",
+      "cloud"
+    ]
+  }
+]

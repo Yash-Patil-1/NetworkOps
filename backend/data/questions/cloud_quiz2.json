@@ -1,0 +1,501 @@
+[
+  {
+    "id": "q-cloud2-vpc-04",
+    "topic_id": "aws-vpc",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "You need instances in a private subnet to access the internet for updates. What do you use?",
+    "correct_answers": [
+      "nat gateway",
+      "nat instance",
+      "nat"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use a NAT Gateway (or NAT instance) in a public subnet. Private subnet routes 0.0.0.0/0 to the NAT Gateway.",
+    "hints": [
+      "Outbound only, no inbound"
+    ]
+  },
+  {
+    "id": "q-cloud2-sg-03",
+    "topic_id": "aws-security-groups",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "You reference another security group as a source in a rule. What does this mean?",
+    "correct_answers": [
+      "instances in that group",
+      "members",
+      "any instance with that sg"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "It allows traffic from any instance associated with the referenced security group \u2014 dynamic, no IP management needed.",
+    "hints": [
+      "Group membership, not IPs"
+    ]
+  },
+  {
+    "id": "q-cloud2-azure-02",
+    "topic_id": "azure-vnet",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is an Azure Network Security Group (NSG)?",
+    "correct_answers": [
+      "filter traffic",
+      "acl",
+      "allow deny",
+      "stateful",
+      "layer 4"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NSG filters traffic to/from Azure resources using stateful rules (like AWS Security Groups + NACLs combined). Applied to subnets or NICs.",
+    "hints": [
+      "Azure's traffic filter"
+    ]
+  },
+  {
+    "id": "q-cloud2-azure-03",
+    "topic_id": "azure-vnet",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is Azure ExpressRoute?",
+    "correct_answers": [
+      "dedicated connection",
+      "private",
+      "not internet",
+      "direct link"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "ExpressRoute provides a dedicated private connection from on-premises to Azure (like AWS Direct Connect). Bypasses public internet.",
+    "hints": [
+      "Azure's Direct Connect equivalent"
+    ]
+  },
+  {
+    "id": "q-cloud2-gcp-01",
+    "topic_id": "gcp-vpc-net",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "How does GCP VPC differ from AWS VPC?",
+    "correct_answers": [
+      "global",
+      "not regional",
+      "spans regions",
+      "global resource"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "GCP VPCs are global (span all regions automatically). AWS VPCs are regional. GCP subnets are regional within the global VPC.",
+    "hints": [
+      "GCP VPC is global"
+    ]
+  },
+  {
+    "id": "q-cloud2-gcp-02",
+    "topic_id": "gcp-vpc-net",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What are GCP firewall rules applied to?",
+    "correct_answers": [
+      "network",
+      "vpc",
+      "tags",
+      "service accounts"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "GCP firewall rules are applied at the VPC level and can target instances by network tags or service accounts.",
+    "hints": [
+      "Tags and service accounts"
+    ]
+  },
+  {
+    "id": "q-cloud2-hybrid-02",
+    "topic_id": "hybrid-connectivity",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is a hub-and-spoke network topology in cloud?",
+    "correct_answers": [
+      "central hub",
+      "shared services",
+      "transit",
+      "spokes connect to hub"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Hub-and-spoke: central hub VPC/VNet with shared services (firewall, DNS). Spoke VPCs peer/connect to hub. All traffic flows through hub for inspection.",
+    "hints": [
+      "Central point of control"
+    ]
+  },
+  {
+    "id": "q-cloud2-lb-03",
+    "topic_id": "cloud-lb",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "Your application needs to handle WebSocket connections. Which AWS load balancer?",
+    "correct_answers": [
+      "alb",
+      "application load balancer"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "ALB (Application Load Balancer) supports WebSocket connections natively at Layer 7.",
+    "hints": [
+      "Layer 7 protocol support"
+    ]
+  },
+  {
+    "id": "q-cloud2-lb-04",
+    "topic_id": "cloud-lb",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is cross-zone load balancing?",
+    "correct_answers": [
+      "distribute across az",
+      "all zones",
+      "even distribution",
+      "availability zones"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Cross-zone LB distributes traffic evenly across all registered targets in all enabled AZs, regardless of which AZ the traffic enters.",
+    "hints": [
+      "Balance across all zones"
+    ]
+  },
+  {
+    "id": "q-cloud2-dns-02",
+    "topic_id": "cloud-dns2",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a Route 53 alias record?",
+    "correct_answers": [
+      "aws-specific",
+      "point to aws resource",
+      "like cname",
+      "zone apex",
+      "free"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Alias records are AWS-specific DNS records that point to AWS resources (ELB, CloudFront, S3). Work at zone apex and are free.",
+    "hints": [
+      "AWS-specific, works at apex"
+    ]
+  },
+  {
+    "id": "q-cloud2-cdn-02",
+    "topic_id": "cdn",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "Users in Asia report slow loading of your US-hosted website. What helps?",
+    "correct_answers": [
+      "cdn",
+      "cloudfront",
+      "edge",
+      "cache",
+      "content delivery"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploy a CDN (CloudFront, Akamai) to cache content at edge locations in Asia, reducing latency from cross-ocean requests.",
+    "hints": [
+      "Serve from nearby"
+    ]
+  },
+  {
+    "id": "q-cloud2-container-02",
+    "topic_id": "container-net",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is a CNI plugin in Kubernetes?",
+    "correct_answers": [
+      "container network interface",
+      "networking",
+      "pod network",
+      "calico",
+      "flannel"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "CNI (Container Network Interface) plugins implement pod networking in Kubernetes. Examples: Calico, Flannel, Cilium, AWS VPC CNI.",
+    "hints": [
+      "Implements pod networking"
+    ]
+  },
+  {
+    "id": "q-cloud2-k8s-03",
+    "topic_id": "kubernetes-networking",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is a Kubernetes NetworkPolicy?",
+    "correct_answers": [
+      "pod firewall",
+      "restrict traffic",
+      "ingress egress",
+      "namespace",
+      "label selector"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NetworkPolicy is a Kubernetes resource that controls pod-to-pod traffic using label selectors. Like a firewall for pods.",
+    "hints": [
+      "Firewall rules for pods"
+    ]
+  },
+  {
+    "id": "q-cloud2-k8s-04",
+    "topic_id": "kubernetes-networking",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What Kubernetes Service type exposes a service externally with a cloud load balancer?",
+    "correct_answers": [
+      "loadbalancer",
+      "type: loadbalancer"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Service type LoadBalancer provisions a cloud provider's load balancer to expose the service externally.",
+    "hints": [
+      "Cloud LB integration"
+    ]
+  },
+  {
+    "id": "q-cloud2-private-02",
+    "topic_id": "private-ep",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is the difference between a gateway endpoint and an interface endpoint in AWS?",
+    "correct_answers": [
+      "route table vs eni",
+      "s3 dynamodb vs other",
+      "free vs cost"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Gateway endpoints: route table entry, free, only S3/DynamoDB. Interface endpoints: ENI with private IP, costs money, works with most AWS services.",
+    "hints": [
+      "Two types with different mechanisms"
+    ]
+  },
+  {
+    "id": "q-cloud2-fw-01",
+    "topic_id": "cloud-fw",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is AWS Network Firewall?",
+    "correct_answers": [
+      "managed firewall",
+      "vpc",
+      "stateful",
+      "ips",
+      "suricata"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "AWS Network Firewall is a managed stateful firewall service for VPCs with IPS capabilities (uses Suricata rules).",
+    "hints": [
+      "Managed VPC firewall"
+    ]
+  },
+  {
+    "id": "q-cloud2-mon-01",
+    "topic_id": "cloud-mon",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What AWS service monitors VPC network traffic?",
+    "correct_answers": [
+      "vpc flow logs",
+      "flow logs",
+      "cloudwatch"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "VPC Flow Logs capture IP traffic information for network interfaces in your VPC. Stored in CloudWatch Logs or S3.",
+    "hints": [
+      "Flow Logs"
+    ]
+  },
+  {
+    "id": "q-cloud2-mon-02",
+    "topic_id": "cloud-mon",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "You need to detect unusual traffic patterns in your VPC. What do you use?",
+    "correct_answers": [
+      "vpc flow logs",
+      "guardduty",
+      "traffic mirroring",
+      "anomaly detection"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use VPC Flow Logs for visibility, GuardDuty for automated threat detection, or Traffic Mirroring for deep packet inspection.",
+    "hints": [
+      "Multiple tools for different depths"
+    ]
+  },
+  {
+    "id": "q-cloud2-interconnect-01",
+    "topic_id": "cloud-interconnect",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is multi-cloud networking and why is it complex?",
+    "correct_answers": [
+      "multiple providers",
+      "different apis",
+      "connectivity",
+      "consistent policy"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Multi-cloud networking connects workloads across AWS/Azure/GCP. Complex due to: different APIs, overlapping IPs, inconsistent policies, and varied connectivity options.",
+    "hints": [
+      "Different clouds, different rules"
+    ]
+  },
+  {
+    "id": "q-cloud2-mesh-02",
+    "topic_id": "service-mesh2",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is mTLS in a service mesh?",
+    "correct_answers": [
+      "mutual tls",
+      "both sides authenticate",
+      "certificate",
+      "zero trust",
+      "service identity"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Mutual TLS: both client and server present certificates to authenticate each other. Service mesh automates mTLS between all services for zero-trust communication.",
+    "hints": [
+      "Both sides prove identity"
+    ]
+  },
+  {
+    "id": "q-cloud2-tgw-02",
+    "topic_id": "transit-gw",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is Transit Gateway peering?",
+    "correct_answers": [
+      "connect transit gateways",
+      "inter-region",
+      "cross-region",
+      "tgw to tgw"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "TGW peering connects Transit Gateways across regions or accounts, enabling inter-region VPC communication through a centralized hub.",
+    "hints": [
+      "Connect hubs together"
+    ]
+  },
+  {
+    "id": "q-cloud2-dc-03",
+    "topic_id": "direct-connect",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is a Direct Connect Gateway?",
+    "correct_answers": [
+      "multiple vpcs",
+      "multiple regions",
+      "single dx",
+      "global"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A DX Gateway allows a single Direct Connect connection to access VPCs in multiple regions, avoiding the need for separate connections per region.",
+    "hints": [
+      "One connection, many regions"
+    ]
+  },
+  {
+    "id": "q-cloud2-er-01",
+    "topic_id": "expressroute",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What are the ExpressRoute peering types?",
+    "correct_answers": [
+      "private",
+      "microsoft",
+      "azure private",
+      "azure microsoft"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "ExpressRoute peering: Private peering (access VNets), Microsoft peering (access Microsoft 365 and Azure public services).",
+    "hints": [
+      "Two peering types"
+    ]
+  },
+  {
+    "id": "q-cloud2-waf-02",
+    "topic_id": "cloud-waf2",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "You need to block requests from specific countries. What cloud service?",
+    "correct_answers": [
+      "waf",
+      "geo restriction",
+      "geo blocking",
+      "cloudfront"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use WAF geo-match conditions or CloudFront geo-restriction to block requests based on geographic location.",
+    "hints": [
+      "Geographic filtering"
+    ]
+  },
+  {
+    "id": "q-cloud2-rt-02",
+    "topic_id": "aws-route-tables",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "Traffic from a private subnet needs to go through a firewall appliance before reaching the internet. How?",
+    "correct_answers": [
+      "route to eni",
+      "route to firewall",
+      "appliance",
+      "transit gateway"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Route 0.0.0.0/0 to the firewall appliance's ENI (or Transit Gateway). Firewall then routes inspected traffic to NAT Gateway/IGW.",
+    "hints": [
+      "Route through the appliance"
+    ]
+  }
+]

@@ -1,0 +1,198 @@
+[
+  {
+    "id": "snmp-monitoring",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "SNMP Monitoring",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "SNMP (Simple Network Management Protocol) allows centralized monitoring of network devices. Managers poll agents for metrics (CPU, memory, interface stats, errors).",
+      "why": "SNMP is the foundation of network monitoring. Without it, you'd have to log into every device individually. SNMP enables dashboards, alerting, and capacity planning.",
+      "how": "Components:\n- Manager (monitoring server): Polls devices\n- Agent (on device): Responds with data\n- MIB (Management Information Base): Defines available metrics\n\nVersions: v1 (insecure), v2c (community strings), v3 (authentication + encryption).\nOperations: GET, SET, TRAP, INFORM.",
+      "when": "Use SNMP for monitoring all network infrastructure \u2014 routers, switches, firewalls, servers. Use v3 for security. Set up traps for immediate alerting.",
+      "key_concepts": [
+        "Community strings (v2c)",
+        "OIDs (Object Identifiers)",
+        "MIB tree",
+        "GET/SET/TRAP",
+        "Polling interval",
+        "SNMPv3 (auth + encryption)"
+      ],
+      "configuration": "! Enable SNMP on Cisco\nsnmp-server community public RO\nsnmp-server community private RW\nsnmp-server host 10.0.0.100 traps public\nsnmp-server enable traps\n!\n! SNMPv3 (secure)\nsnmp-server group MONITOR v3 priv\nsnmp-server user admin MONITOR v3 auth sha Pass123 priv aes 128 Key456",
+      "troubleshooting": [
+        "snmpwalk -v2c -c public <device> system",
+        "snmpget -v2c -c public <device> sysUpTime.0",
+        "show snmp (on device)",
+        "Check community string matches"
+      ]
+    },
+    "related_topics": [
+      "syslog-monitoring",
+      "netflow"
+    ],
+    "tags": [
+      "snmp",
+      "monitoring",
+      "polling",
+      "traps",
+      "nms"
+    ]
+  },
+  {
+    "id": "syslog-monitoring",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Syslog",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Syslog is a standard for sending log messages from network devices to a central log server. It provides a unified view of events across all infrastructure.",
+      "why": "Centralized logging is essential for troubleshooting, security monitoring, and compliance. Without syslog, logs are scattered across hundreds of devices.",
+      "how": "Syslog sends UDP (port 514) or TCP messages with:\n- Facility (source: kernel, auth, local0-7)\n- Severity (0=Emergency to 7=Debug)\n- Timestamp + hostname + message\n\nSeverity levels: 0-Emergency, 1-Alert, 2-Critical, 3-Error, 4-Warning, 5-Notice, 6-Informational, 7-Debug",
+      "when": "Configure syslog on ALL network devices. Send to central server (rsyslog, Graylog, ELK). Essential for troubleshooting and security monitoring.",
+      "key_concepts": [
+        "Severity levels (0-7)",
+        "Facilities",
+        "Central log server",
+        "UDP 514 (default)",
+        "TCP for reliability",
+        "Log retention"
+      ],
+      "configuration": "! Cisco syslog\nlogging host 10.0.0.100\nlogging trap informational\nlogging source-interface Loopback0\nservice timestamps log datetime msec\n!\n# Linux rsyslog\n*.* @10.0.0.100:514",
+      "troubleshooting": [
+        "show logging (Cisco)",
+        "tail -f /var/log/syslog (Linux)",
+        "logger 'test message' (send test)",
+        "Check UDP 514 connectivity"
+      ]
+    },
+    "related_topics": [
+      "snmp-monitoring"
+    ],
+    "tags": [
+      "syslog",
+      "logging",
+      "centralized",
+      "severity",
+      "events"
+    ]
+  },
+  {
+    "id": "netflow",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "NetFlow / sFlow / IPFIX",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "NetFlow exports metadata about network traffic flows (source, destination, ports, bytes, packets) to a collector for analysis. It answers: who is talking to whom, how much, and using what.",
+      "why": "NetFlow provides visibility into traffic patterns without capturing full packets. Essential for capacity planning, security monitoring, billing, and troubleshooting bandwidth issues.",
+      "how": "A flow = unique combination of: Src IP, Dst IP, Src Port, Dst Port, Protocol, ToS, Interface.\n\nDevice exports flow records to collector. Collector aggregates and visualizes.\n\nVersions: NetFlow v5 (fixed format), v9 (flexible), IPFIX (standard), sFlow (sampled).",
+      "when": "Enable NetFlow on WAN links, internet edges, and between security zones. Use for: bandwidth analysis, DDoS detection, anomaly detection, compliance.",
+      "key_concepts": [
+        "Flow = 5-tuple + interface",
+        "Export to collector",
+        "NetFlow v5/v9/IPFIX",
+        "sFlow (sampled)",
+        "Top talkers",
+        "Traffic analysis"
+      ],
+      "configuration": "! Cisco NetFlow v9\nflow exporter COLLECTOR\n destination 10.0.0.100\n transport udp 2055\nflow monitor MONITOR\n exporter COLLECTOR\n record netflow ipv4 original-input\ninterface GigabitEthernet0/0\n ip flow monitor MONITOR input",
+      "troubleshooting": [
+        "show flow monitor",
+        "show flow exporter",
+        "show ip cache flow (v5)",
+        "nfdump/nfsen for analysis"
+      ]
+    },
+    "related_topics": [
+      "snmp-monitoring",
+      "syslog-monitoring"
+    ],
+    "tags": [
+      "netflow",
+      "traffic",
+      "analysis",
+      "flows",
+      "visibility"
+    ]
+  },
+  {
+    "id": "network-troubleshooting",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Network Troubleshooting Methodology",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "A systematic approach to identifying and resolving network issues. Follow a structured methodology rather than random guessing.",
+      "why": "Without methodology, troubleshooting is inefficient and may miss the root cause. A structured approach saves time and ensures thorough investigation.",
+      "how": "OSI-based approach (bottom-up):\n1. Physical: Cable, link light, interface status\n2. Data Link: MAC table, VLAN, STP\n3. Network: IP config, routing, ARP\n4. Transport: Port connectivity, firewall\n5. Application: DNS, service config\n\nAlternative: Divide and conquer \u2014 start at Layer 3 (ping), go up or down based on result.",
+      "when": "Every time something breaks. Start with: 'What changed?' Then follow methodology.",
+      "key_concepts": [
+        "Bottom-up approach",
+        "Top-down approach",
+        "Divide and conquer",
+        "'What changed?'",
+        "Isolate the problem",
+        "Document findings"
+      ],
+      "configuration": "# Quick diagnostic sequence\nping <gateway>          # Layer 3 basic\ntraceroute <dest>       # Path analysis\nnslookup <domain>       # DNS (Layer 7)\ncurl -v http://<target> # Application\nss -tlnp               # Local services",
+      "troubleshooting": [
+        "Step 1: Can you ping the gateway?",
+        "Step 2: Can you ping beyond the gateway?",
+        "Step 3: Can you resolve DNS?",
+        "Step 4: Can you reach the service port?",
+        "Step 5: Is the application responding correctly?"
+      ]
+    },
+    "related_topics": [
+      "osi-model",
+      "tcp-ip-model",
+      "icmp-protocol"
+    ],
+    "tags": [
+      "troubleshooting",
+      "methodology",
+      "systematic",
+      "diagnosis",
+      "noc"
+    ]
+  },
+  {
+    "id": "capacity-planning",
+    "domain": "noc_operations",
+    "phase": 3,
+    "name": "Capacity Planning",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Capacity planning involves monitoring current resource utilization and predicting future needs to prevent performance degradation or outages.",
+      "why": "Running out of bandwidth, CPU, memory, or storage causes outages. Proactive capacity planning prevents surprises and enables budget planning for upgrades.",
+      "how": "Process:\n1. Baseline: Measure current utilization (avg, peak, 95th percentile)\n2. Trend: Analyze growth over time\n3. Forecast: Project when capacity will be exceeded\n4. Plan: Budget and schedule upgrades before hitting limits\n\nKey metrics: Bandwidth utilization, CPU/memory on devices, connection counts, storage growth.",
+      "when": "Review capacity monthly. Alert when utilization exceeds 70% sustained. Plan upgrades at 80% to allow lead time for procurement.",
+      "key_concepts": [
+        "Baseline measurement",
+        "95th percentile",
+        "Growth trending",
+        "Threshold alerting (70%/80%/90%)",
+        "Lead time for upgrades",
+        "Seasonal patterns"
+      ],
+      "configuration": "# Monitor interface utilization\nshow interfaces GigabitEthernet0/0 | include rate\n\n# SNMP OIDs for bandwidth\n# ifInOctets: 1.3.6.1.2.1.2.2.1.10\n# ifOutOctets: 1.3.6.1.2.1.2.2.1.16",
+      "troubleshooting": [
+        "show processes cpu history",
+        "show memory statistics",
+        "show interfaces (check utilization)",
+        "Grafana dashboards for trending"
+      ]
+    },
+    "related_topics": [
+      "snmp-monitoring",
+      "netflow"
+    ],
+    "tags": [
+      "capacity",
+      "planning",
+      "utilization",
+      "trending",
+      "growth"
+    ]
+  }
+]

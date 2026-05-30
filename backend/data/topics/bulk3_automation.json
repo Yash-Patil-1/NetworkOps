@@ -1,0 +1,173 @@
+[
+  {
+    "id": "nornir",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Nornir Framework",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Python automation framework with inventory management and multi-threaded task execution.",
+      "why": "Faster than Ansible for large-scale operations. Full programmatic control.",
+      "how": "Components: Inventory (YAML), Tasks (Python functions), Plugins (Netmiko, NAPALM), Results.",
+      "when": "Use when you need programmatic control or high performance.",
+      "key_concepts": [
+        "Inventory",
+        "Tasks",
+        "Plugins",
+        "Multi-threaded",
+        "Filtering"
+      ],
+      "configuration": "from nornir import InitNornir\nnr = InitNornir(config_file=\"config.yaml\")\nresult = nr.run(task=netmiko_send_command, command_string=\"show version\")",
+      "troubleshooting": [
+        "Check inventory",
+        "Verify connection plugin",
+        "Review exceptions"
+      ]
+    },
+    "related_topics": [
+      "python-netmiko"
+    ],
+    "tags": [
+      "nornir",
+      "python",
+      "framework",
+      "scale"
+    ]
+  },
+  {
+    "id": "napalm",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "NAPALM",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Unified API for multi-vendor network device management.",
+      "why": "Same code works across Cisco, Juniper, Arista \u2014 vendor-agnostic.",
+      "how": "Methods: get_facts(), get_interfaces(), load_merge_candidate(), compare_config(), commit_config().",
+      "when": "Use for multi-vendor environments needing config diff/rollback.",
+      "key_concepts": [
+        "Vendor abstraction",
+        "Getters",
+        "Config management",
+        "Diff and rollback"
+      ],
+      "configuration": "from napalm import get_network_driver\ndriver = get_network_driver(\"ios\")\ndevice = driver(\"192.168.1.1\", \"admin\", \"pass\")",
+      "troubleshooting": [
+        "Check supported platform",
+        "Verify SSH access",
+        "Test config diff"
+      ]
+    },
+    "related_topics": [
+      "python-netmiko"
+    ],
+    "tags": [
+      "napalm",
+      "multi-vendor",
+      "abstraction"
+    ]
+  },
+  {
+    "id": "git-configs",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Git for Network Configs",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Version control for network configurations \u2014 track changes, rollback, audit trail.",
+      "why": "Without version control, you cant answer: who changed what, when, why.",
+      "how": "Workflow: Backup to Git daily \u2192 Review changes \u2192 Track who \u2192 Rollback if needed. Tools: Oxidized, RANCID.",
+      "when": "Implement for all network devices. Automate daily backups.",
+      "key_concepts": [
+        "Version history",
+        "Diff",
+        "Blame",
+        "Branches",
+        "Automated backup"
+      ],
+      "configuration": "# Oxidized config\noutput:\n  default: git\n  git:\n    repo: /var/lib/oxidized/configs.git",
+      "troubleshooting": [
+        "git log",
+        "git diff HEAD~1",
+        "git blame"
+      ]
+    },
+    "related_topics": [
+      "ansible-network"
+    ],
+    "tags": [
+      "git",
+      "version-control",
+      "configs",
+      "backup"
+    ]
+  },
+  {
+    "id": "cicd-network",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "CI/CD for Networks",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Automated testing, validation, and deployment for network changes.",
+      "why": "Catches errors before production. Changes go through: lint \u2192 test \u2192 validate \u2192 deploy.",
+      "how": "Stages: Lint \u2192 Dry-run \u2192 Test \u2192 Approve \u2192 Deploy \u2192 Verify \u2192 Rollback.",
+      "when": "Implement for all network automation. Start with linting.",
+      "key_concepts": [
+        "Pipeline stages",
+        "Automated testing",
+        "Dry-run",
+        "Approval gates"
+      ],
+      "configuration": "# GitLab CI\nstages: [lint, plan, deploy]\nlint:\n  script: ansible-lint playbook.yml\nplan:\n  script: ansible-playbook --check --diff",
+      "troubleshooting": [
+        "Check pipeline status",
+        "Review dry-run",
+        "Verify post-deploy tests"
+      ]
+    },
+    "related_topics": [
+      "ansible-network"
+    ],
+    "tags": [
+      "ci-cd",
+      "pipeline",
+      "testing",
+      "deployment"
+    ]
+  },
+  {
+    "id": "infra-testing",
+    "domain": "network_automation",
+    "phase": 6,
+    "name": "Network Testing",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Automated testing of network state \u2014 verify configs, connectivity, compliance.",
+      "why": "Manual verification doesnt scale. Automated testing catches drift and misconfigs.",
+      "how": "Types: Unit (syntax), Integration (connectivity), Compliance (standards), Regression (no breakage). Tools: pyATS, Batfish, pytest.",
+      "when": "Implement for post-change verification and daily compliance.",
+      "key_concepts": [
+        "pyATS",
+        "Batfish",
+        "pytest",
+        "Compliance as Code"
+      ],
+      "configuration": "# pytest network test\ndef test_ospf():\n    output = device.send_command(\"show ip ospf neighbor\")\n    assert \"FULL\" in output",
+      "troubleshooting": [
+        "Run after every change",
+        "Check coverage",
+        "Review failures"
+      ]
+    },
+    "related_topics": [
+      "cicd-network"
+    ],
+    "tags": [
+      "testing",
+      "validation",
+      "compliance",
+      "automated"
+    ]
+  }
+]

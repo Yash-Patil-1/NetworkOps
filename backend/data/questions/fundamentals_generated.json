@@ -1,0 +1,1537 @@
+[
+  {
+    "id": "q-osi-02",
+    "topic_id": "osi-model",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the function of the Data Link layer (Layer 2)?",
+    "correct_answers": [
+      "framing",
+      "frame delivery",
+      "mac addressing",
+      "physical addressing"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Layer 2 handles framing, MAC addressing, and delivery on the local network segment.",
+    "hints": [
+      "Think about MAC addresses and switches"
+    ]
+  },
+  {
+    "id": "q-osi-03",
+    "topic_id": "osi-model",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Which layer handles end-to-end delivery and error recovery?",
+    "correct_answers": [
+      "transport",
+      "layer 4",
+      "4"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "The Transport layer (Layer 4) provides end-to-end delivery, flow control, and error recovery.",
+    "hints": [
+      "TCP and UDP live here"
+    ]
+  },
+  {
+    "id": "q-osi-04",
+    "topic_id": "osi-model",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "At which OSI layer does a switch primarily operate?",
+    "correct_answers": [
+      "layer 2",
+      "data link",
+      "2"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Switches operate at Layer 2 (Data Link) using MAC addresses to forward frames.",
+    "hints": [
+      "Switches use MAC address tables"
+    ]
+  },
+  {
+    "id": "q-osi-05",
+    "topic_id": "osi-model",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What PDU (Protocol Data Unit) is used at Layer 4?",
+    "correct_answers": [
+      "segment",
+      "segments"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Layer 4 uses segments (TCP) or datagrams (UDP) as its PDU.",
+    "hints": [
+      "Think TCP..."
+    ]
+  },
+  {
+    "id": "q-osi-06",
+    "topic_id": "osi-model",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What Wireshark display filter shows only traffic on a specific OSI Layer 4 port?",
+    "correct_answers": [
+      "tcp.port ==",
+      "tcp.port==",
+      "udp.port =="
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use tcp.port == <number> or udp.port == <number> to filter by Layer 4 port.",
+    "hints": [
+      "Wireshark uses dot notation for protocol fields"
+    ]
+  },
+  {
+    "id": "q-tcpip-01",
+    "topic_id": "tcp-ip-model",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "How many layers does the TCP/IP model have?",
+    "correct_answers": [
+      "4",
+      "four"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "The TCP/IP model has 4 layers: Network Access, Internet, Transport, Application.",
+    "hints": [
+      "Less than OSI"
+    ]
+  },
+  {
+    "id": "q-tcpip-02",
+    "topic_id": "tcp-ip-model",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "Which TCP/IP layer combines OSI layers 5, 6, and 7?",
+    "correct_answers": [
+      "application",
+      "application layer"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "The Application layer in TCP/IP combines Session, Presentation, and Application from OSI.",
+    "hints": [
+      "The top layer"
+    ]
+  },
+  {
+    "id": "q-tcpip-03",
+    "topic_id": "tcp-ip-model",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "A web browser initiates an HTTPS connection. At which TCP/IP layer does TLS encryption occur?",
+    "correct_answers": [
+      "application",
+      "transport"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "TLS operates between Transport and Application layers. In TCP/IP model, it's considered part of the Application layer.",
+    "hints": [
+      "Where does encryption happen?"
+    ]
+  },
+  {
+    "id": "q-tcpip-04",
+    "topic_id": "tcp-ip-model",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What protocol operates at the Internet layer of TCP/IP?",
+    "correct_answers": [
+      "ip",
+      "icmp",
+      "arp",
+      "internet protocol"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "IP, ICMP, and ARP operate at the Internet layer.",
+    "hints": [
+      "Think about addressing"
+    ]
+  },
+  {
+    "id": "q-tcpip-05",
+    "topic_id": "tcp-ip-model",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is the key difference between OSI and TCP/IP models in terms of practical implementation?",
+    "correct_answers": [
+      "tcp/ip is implemented",
+      "practical",
+      "real-world",
+      "actual protocols"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "TCP/IP model maps directly to real protocols and is actually implemented, while OSI is a theoretical reference model.",
+    "hints": [
+      "One is theoretical, one is practical"
+    ]
+  },
+  {
+    "id": "q-sub-01",
+    "topic_id": "subnetting",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "easy",
+    "question": "What is the subnet mask for a /24 network?",
+    "correct_answers": [
+      "255.255.255.0"
+    ],
+    "validation_type": "exact",
+    "required_keywords": [],
+    "explanation": "A /24 means 24 bits for network = 255.255.255.0.",
+    "hints": [
+      "Count the bits: 8+8+8=24"
+    ]
+  },
+  {
+    "id": "q-sub-02",
+    "topic_id": "subnetting",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "How many usable host addresses are in a /26 subnet?",
+    "correct_answers": [
+      "62"
+    ],
+    "validation_type": "exact",
+    "required_keywords": [],
+    "explanation": "A /26 has 6 host bits = 2^6 - 2 = 62 usable addresses.",
+    "hints": [
+      "Subtract 2 for network and broadcast"
+    ]
+  },
+  {
+    "id": "q-sub-03",
+    "topic_id": "subnetting",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What is the subnet mask for a /20 network?",
+    "correct_answers": [
+      "255.255.240.0"
+    ],
+    "validation_type": "exact",
+    "required_keywords": [],
+    "explanation": "A /20 = 255.255.240.0 (20 bits = 8+8+4, so third octet = 11110000 = 240).",
+    "hints": [
+      "Third octet has 4 network bits"
+    ]
+  },
+  {
+    "id": "q-sub-04",
+    "topic_id": "subnetting",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "You need to create 14 subnets from a /16 network. What prefix length should you use?",
+    "correct_answers": [
+      "20",
+      "/20"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "14 subnets needs 4 bits (2^4=16 >= 14). /16 + 4 = /20.",
+    "hints": [
+      "How many bits to represent 14?"
+    ]
+  },
+  {
+    "id": "q-sub-05",
+    "topic_id": "subnetting",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What is the broadcast address of 192.168.1.64/26?",
+    "correct_answers": [
+      "192.168.1.127"
+    ],
+    "validation_type": "exact",
+    "required_keywords": [],
+    "explanation": "Network: 192.168.1.64, next network: 192.168.1.128, broadcast = 192.168.1.127.",
+    "hints": [
+      "Broadcast is one less than next network"
+    ]
+  },
+  {
+    "id": "q-sub-06",
+    "topic_id": "subnetting",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "What is the network address for host 172.16.45.200/21?",
+    "correct_answers": [
+      "172.16.40.0"
+    ],
+    "validation_type": "exact",
+    "required_keywords": [],
+    "explanation": "A /21 means third octet increments by 8 (256-248). 45/8=5 remainder 5, so network = 5*8=40.",
+    "hints": [
+      "Third octet subnet size is 8"
+    ]
+  },
+  {
+    "id": "q-sub-07",
+    "topic_id": "subnetting",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What are the two addresses you cannot assign to hosts in a subnet?",
+    "correct_answers": [
+      "network and broadcast",
+      "network",
+      "broadcast"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "The network address (all host bits 0) and broadcast address (all host bits 1) cannot be assigned to hosts.",
+    "hints": [
+      "First and last"
+    ]
+  },
+  {
+    "id": "q-sub-08",
+    "topic_id": "subnetting",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "How many /30 subnets can you create from a /24 network?",
+    "correct_answers": [
+      "64"
+    ],
+    "validation_type": "exact",
+    "required_keywords": [],
+    "explanation": "A /24 has 8 host bits, /30 uses 6 for subnets = 2^6 = 64 subnets.",
+    "hints": [
+      "Each /30 has 4 addresses"
+    ]
+  },
+  {
+    "id": "q-sub-09",
+    "topic_id": "subnetting",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "You need point-to-point links between routers. What prefix length wastes the least addresses?",
+    "correct_answers": [
+      "31",
+      "/31",
+      "30",
+      "/30"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use /31 (RFC 3021) for point-to-point links (2 addresses, no waste) or /30 (traditional, 2 usable).",
+    "hints": [
+      "Point-to-point needs exactly 2 addresses"
+    ]
+  },
+  {
+    "id": "q-sub-10",
+    "topic_id": "subnetting",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "Convert 192.168.1.0/24 to CIDR notation if you need exactly 30 hosts per subnet.",
+    "correct_answers": [
+      "192.168.1.0/27",
+      "/27",
+      "27"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "30 hosts needs 5 host bits (2^5-2=30). Prefix = 32-5 = /27.",
+    "hints": [
+      "How many bits for 30+2?"
+    ]
+  },
+  {
+    "id": "q-vlan-01",
+    "topic_id": "vlans",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the default VLAN on most Cisco switches?",
+    "correct_answers": [
+      "vlan 1",
+      "1"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "VLAN 1 is the default VLAN \u2014 all ports are in VLAN 1 by default.",
+    "hints": [
+      "The first one"
+    ]
+  },
+  {
+    "id": "q-vlan-02",
+    "topic_id": "vlans",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What command assigns a switch port to VLAN 10 on Cisco IOS?",
+    "correct_answers": [
+      "switchport access vlan 10"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'switchport access vlan 10' in interface config mode.",
+    "hints": [
+      "switchport access..."
+    ]
+  },
+  {
+    "id": "q-vlan-03",
+    "topic_id": "vlans",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What protocol is used to carry multiple VLANs over a single link?",
+    "correct_answers": [
+      "802.1q",
+      "dot1q",
+      "trunk",
+      "trunking"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "IEEE 802.1Q (dot1q) adds a 4-byte tag to frames for VLAN identification on trunk links.",
+    "hints": [
+      "IEEE standard for VLAN tagging"
+    ]
+  },
+  {
+    "id": "q-vlan-04",
+    "topic_id": "vlans",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a native VLAN?",
+    "correct_answers": [
+      "untagged vlan on trunk",
+      "vlan that is untagged",
+      "frames without tags"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "The native VLAN carries untagged traffic on a trunk link. Frames in the native VLAN are sent without 802.1Q tags.",
+    "hints": [
+      "What happens to untagged frames on a trunk?"
+    ]
+  },
+  {
+    "id": "q-vlan-05",
+    "topic_id": "vlans",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "Two switches are connected via a trunk. Switch A has native VLAN 1, Switch B has native VLAN 99. What happens?",
+    "correct_answers": [
+      "native vlan mismatch",
+      "mismatch",
+      "traffic leak",
+      "security issue"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Native VLAN mismatch causes traffic leaking between VLANs \u2014 a security vulnerability. CDP/LLDP will report the mismatch.",
+    "hints": [
+      "What if they disagree on which VLAN is untagged?"
+    ]
+  },
+  {
+    "id": "q-vlan-06",
+    "topic_id": "vlans",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What command creates VLAN 100 named 'Engineering' on Cisco IOS?",
+    "correct_answers": [
+      "vlan 100",
+      "name engineering"
+    ],
+    "validation_type": "contains_all",
+    "required_keywords": [],
+    "explanation": "Enter 'vlan 100' then 'name Engineering' in global config mode.",
+    "hints": [
+      "Two commands needed"
+    ]
+  },
+  {
+    "id": "q-vlan-07",
+    "topic_id": "vlans",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Can devices in different VLANs communicate without a router?",
+    "correct_answers": [
+      "no",
+      "cannot",
+      "need router",
+      "need layer 3"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "VLANs are separate broadcast domains \u2014 inter-VLAN communication requires a Layer 3 device (router or L3 switch).",
+    "hints": [
+      "VLANs isolate traffic"
+    ]
+  },
+  {
+    "id": "q-vlan-08",
+    "topic_id": "vlans",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is VLAN hopping and how is it prevented?",
+    "correct_answers": [
+      "double tagging",
+      "switch spoofing",
+      "native vlan",
+      "trunk"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "VLAN hopping exploits native VLAN or DTP to access other VLANs. Prevent by: setting native VLAN to unused VLAN, disabling DTP, and using explicit trunk configuration.",
+    "hints": [
+      "Two attack methods exist"
+    ]
+  },
+  {
+    "id": "q-dns-01",
+    "topic_id": "dns-fundamentals",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What port does DNS primarily use?",
+    "correct_answers": [
+      "53",
+      "port 53"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "DNS uses port 53 \u2014 UDP for queries, TCP for zone transfers and large responses.",
+    "hints": [
+      "A well-known port number"
+    ]
+  },
+  {
+    "id": "q-dns-02",
+    "topic_id": "dns-fundamentals",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What command queries DNS for the MX records of a domain on Linux?",
+    "correct_answers": [
+      "dig mx",
+      "nslookup -type=mx",
+      "dig -t mx",
+      "host -t mx"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'dig mx domain.com' or 'nslookup -type=mx domain.com' to query MX records.",
+    "hints": [
+      "dig or nslookup with record type"
+    ]
+  },
+  {
+    "id": "q-dns-03",
+    "topic_id": "dns-fundamentals",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between an A record and a CNAME record?",
+    "correct_answers": [
+      "a record maps to ip",
+      "cname is alias",
+      "a is address",
+      "cname points to another name"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "An A record maps a hostname to an IPv4 address. A CNAME creates an alias pointing to another hostname.",
+    "hints": [
+      "One maps to IP, one maps to name"
+    ]
+  },
+  {
+    "id": "q-dns-04",
+    "topic_id": "dns-fundamentals",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a PTR record used for?",
+    "correct_answers": [
+      "reverse dns",
+      "reverse lookup",
+      "ip to name",
+      "reverse"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "PTR records map IP addresses to hostnames (reverse DNS lookup).",
+    "hints": [
+      "The opposite of an A record"
+    ]
+  },
+  {
+    "id": "q-dns-05",
+    "topic_id": "dns-fundamentals",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "Your recursive DNS server is being used in a DDoS amplification attack. What should you configure?",
+    "correct_answers": [
+      "response rate limiting",
+      "acl",
+      "restrict recursion",
+      "rrl"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Implement Response Rate Limiting (RRL), restrict recursion to internal clients only, and use ACLs to limit who can query.",
+    "hints": [
+      "Limit who can use your resolver"
+    ]
+  },
+  {
+    "id": "q-dns-06",
+    "topic_id": "dns-fundamentals",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "easy",
+    "question": "What command flushes the DNS cache on Windows?",
+    "correct_answers": [
+      "ipconfig /flushdns",
+      "ipconfig/flushdns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'ipconfig /flushdns' to clear the local DNS resolver cache on Windows.",
+    "hints": [
+      "ipconfig with a flag"
+    ]
+  },
+  {
+    "id": "q-dns-07",
+    "topic_id": "dns-fundamentals",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is DNS TTL and why does it matter?",
+    "correct_answers": [
+      "time to live",
+      "cache duration",
+      "how long cached",
+      "caching time"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "TTL (Time To Live) tells resolvers how long to cache a DNS response. Lower TTL = faster propagation of changes but more queries to authoritative servers.",
+    "hints": [
+      "How long should answers be remembered?"
+    ]
+  },
+  {
+    "id": "q-dns-08",
+    "topic_id": "dns-fundamentals",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "Explain the DNS resolution process for a new domain query.",
+    "correct_answers": [
+      "recursive",
+      "root",
+      "tld",
+      "authoritative",
+      "iterative"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Client asks recursive resolver \u2192 resolver queries root servers \u2192 TLD servers \u2192 authoritative nameserver \u2192 returns answer to client.",
+    "hints": [
+      "Multiple servers are involved"
+    ]
+  },
+  {
+    "id": "q-tcp-01",
+    "topic_id": "tcp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the TCP three-way handshake sequence?",
+    "correct_answers": [
+      "syn syn-ack ack",
+      "syn, syn/ack, ack",
+      "syn synack ack"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "TCP three-way handshake: SYN \u2192 SYN-ACK \u2192 ACK. Establishes a reliable connection.",
+    "hints": [
+      "Three steps to connect"
+    ]
+  },
+  {
+    "id": "q-tcp-02",
+    "topic_id": "tcp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What TCP flag is used to gracefully close a connection?",
+    "correct_answers": [
+      "fin",
+      "FIN"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "The FIN flag initiates a graceful connection termination (four-way close: FIN, ACK, FIN, ACK).",
+    "hints": [
+      "Finish..."
+    ]
+  },
+  {
+    "id": "q-tcp-03",
+    "topic_id": "tcp-protocol",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What Wireshark filter shows only TCP SYN packets (new connections)?",
+    "correct_answers": [
+      "tcp.flags.syn==1 and tcp.flags.ack==0",
+      "tcp.flags.syn == 1 && tcp.flags.ack == 0",
+      "tcp.flags == 0x002"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Filter for SYN=1 and ACK=0 to see only initial connection attempts.",
+    "hints": [
+      "SYN without ACK"
+    ]
+  },
+  {
+    "id": "q-tcp-04",
+    "topic_id": "tcp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is TCP window scaling and when is it needed?",
+    "correct_answers": [
+      "larger window",
+      "window size",
+      "exceed 65535",
+      "high bandwidth"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Window scaling (RFC 7323) allows TCP window sizes larger than 65535 bytes, needed for high-bandwidth or high-latency links.",
+    "hints": [
+      "Default window size has a limit"
+    ]
+  },
+  {
+    "id": "q-tcp-05",
+    "topic_id": "tcp-protocol",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "You see many TCP RST packets from a server. What could this indicate?",
+    "correct_answers": [
+      "port closed",
+      "service down",
+      "firewall",
+      "connection refused",
+      "not listening"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "TCP RST indicates the port is closed, service crashed, firewall is rejecting, or connection state was lost.",
+    "hints": [
+      "RST means rejection"
+    ]
+  },
+  {
+    "id": "q-tcp-06",
+    "topic_id": "tcp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between TCP and UDP?",
+    "correct_answers": [
+      "reliable",
+      "connection",
+      "ordered",
+      "unreliable",
+      "connectionless"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "TCP is connection-oriented, reliable, ordered delivery. UDP is connectionless, unreliable, no ordering \u2014 but faster and lower overhead.",
+    "hints": [
+      "One guarantees delivery, one doesn't"
+    ]
+  },
+  {
+    "id": "q-tcp-07",
+    "topic_id": "tcp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is TCP Selective Acknowledgment (SACK)?",
+    "correct_answers": [
+      "retransmit only lost",
+      "selective retransmission",
+      "specific segments",
+      "not retransmit all"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SACK allows the receiver to acknowledge non-contiguous blocks, so the sender only retransmits actually lost segments instead of everything after the gap.",
+    "hints": [
+      "Smarter retransmission"
+    ]
+  },
+  {
+    "id": "q-tcp-08",
+    "topic_id": "tcp-protocol",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What is the well-known port for HTTPS?",
+    "correct_answers": [
+      "443"
+    ],
+    "validation_type": "exact",
+    "required_keywords": [],
+    "explanation": "HTTPS uses TCP port 443.",
+    "hints": [
+      "Secure web"
+    ]
+  },
+  {
+    "id": "q-dhcp-01",
+    "topic_id": "dhcp",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What are the four steps of DHCP address assignment?",
+    "correct_answers": [
+      "discover offer request ack",
+      "dora",
+      "discover, offer, request, acknowledge"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "DHCP DORA: Discover \u2192 Offer \u2192 Request \u2192 Acknowledge.",
+    "hints": [
+      "DORA"
+    ]
+  },
+  {
+    "id": "q-dhcp-02",
+    "topic_id": "dhcp",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What happens when a DHCP lease expires?",
+    "correct_answers": [
+      "renew",
+      "release",
+      "request new",
+      "lose address"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Client attempts renewal at 50% (T1) and 87.5% (T2) of lease time. If renewal fails, the client loses the IP and must restart DORA.",
+    "hints": [
+      "Client tries to keep its address"
+    ]
+  },
+  {
+    "id": "q-dhcp-03",
+    "topic_id": "dhcp",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What command releases and renews a DHCP lease on Windows?",
+    "correct_answers": [
+      "ipconfig /release",
+      "ipconfig /renew"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'ipconfig /release' then 'ipconfig /renew' to get a new DHCP lease.",
+    "hints": [
+      "ipconfig with flags"
+    ]
+  },
+  {
+    "id": "q-dhcp-04",
+    "topic_id": "dhcp",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "DHCP clients on VLAN 10 can't get addresses from the DHCP server on VLAN 1. What's missing?",
+    "correct_answers": [
+      "dhcp relay",
+      "ip helper-address",
+      "relay agent",
+      "helper"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "DHCP broadcasts don't cross VLAN boundaries. Configure 'ip helper-address' (DHCP relay) on the VLAN 10 gateway interface.",
+    "hints": [
+      "Broadcasts don't cross VLANs"
+    ]
+  },
+  {
+    "id": "q-dhcp-05",
+    "topic_id": "dhcp",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is DHCP snooping?",
+    "correct_answers": [
+      "security",
+      "prevent rogue",
+      "trust",
+      "untrusted",
+      "validate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "DHCP snooping is a security feature that validates DHCP messages and builds a binding table. It prevents rogue DHCP servers by only allowing DHCP offers from trusted ports.",
+    "hints": [
+      "Security feature against rogue servers"
+    ]
+  },
+  {
+    "id": "q-arp-01",
+    "topic_id": "arp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What does ARP resolve?",
+    "correct_answers": [
+      "ip to mac",
+      "ip address to mac address",
+      "layer 3 to layer 2",
+      "network to physical"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "ARP resolves IP addresses (Layer 3) to MAC addresses (Layer 2) on the local network.",
+    "hints": [
+      "Maps between two address types"
+    ]
+  },
+  {
+    "id": "q-arp-02",
+    "topic_id": "arp-protocol",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What command shows the ARP table on Linux?",
+    "correct_answers": [
+      "arp -a",
+      "ip neigh",
+      "ip neighbor"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'arp -a' or 'ip neigh show' to display the ARP cache on Linux.",
+    "hints": [
+      "arp or ip command"
+    ]
+  },
+  {
+    "id": "q-arp-03",
+    "topic_id": "arp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a gratuitous ARP?",
+    "correct_answers": [
+      "announce",
+      "unsolicited",
+      "own ip",
+      "update",
+      "duplicate detection"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A gratuitous ARP is an unsolicited ARP reply announcing the sender's own IP-to-MAC mapping. Used for duplicate IP detection and updating caches after failover.",
+    "hints": [
+      "ARP nobody asked for"
+    ]
+  },
+  {
+    "id": "q-arp-04",
+    "topic_id": "arp-protocol",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "You suspect ARP spoofing on your network. What tool and technique would you use to detect it?",
+    "correct_answers": [
+      "arpwatch",
+      "static arp",
+      "arp inspection",
+      "dai",
+      "duplicate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use arpwatch to monitor ARP changes, enable Dynamic ARP Inspection (DAI) on switches, or look for duplicate IP-to-MAC mappings.",
+    "hints": [
+      "Monitor for changes"
+    ]
+  },
+  {
+    "id": "q-arp-05",
+    "topic_id": "arp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "Why doesn't ARP work across routers?",
+    "correct_answers": [
+      "broadcast",
+      "local segment",
+      "layer 2",
+      "same subnet",
+      "not routed"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "ARP uses broadcast frames which are confined to the local Layer 2 segment. Routers don't forward broadcasts between interfaces.",
+    "hints": [
+      "ARP uses broadcasts"
+    ]
+  },
+  {
+    "id": "q-nat-01",
+    "topic_id": "nat-pat",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the primary purpose of NAT?",
+    "correct_answers": [
+      "translate",
+      "private to public",
+      "conserve ip",
+      "address translation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NAT translates private IP addresses to public IP addresses, conserving the limited IPv4 address space.",
+    "hints": [
+      "Address conservation"
+    ]
+  },
+  {
+    "id": "q-nat-02",
+    "topic_id": "nat-pat",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between NAT and PAT?",
+    "correct_answers": [
+      "port",
+      "many to one",
+      "overload",
+      "multiple hosts one ip"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NAT maps one IP to one IP. PAT (Port Address Translation/NAT overload) maps many private IPs to one public IP using different port numbers.",
+    "hints": [
+      "PAT uses ports to distinguish"
+    ]
+  },
+  {
+    "id": "q-nat-03",
+    "topic_id": "nat-pat",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "An internal server needs to be accessible from the internet on port 443. What type of NAT do you configure?",
+    "correct_answers": [
+      "static nat",
+      "static",
+      "port forwarding",
+      "dnat"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use static NAT (or port forwarding/DNAT) to map a public IP:port to the internal server's private IP:port.",
+    "hints": [
+      "One-to-one permanent mapping"
+    ]
+  },
+  {
+    "id": "q-nat-04",
+    "topic_id": "nat-pat",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What problems does NAT cause for IPsec VPN?",
+    "correct_answers": [
+      "esp",
+      "encapsulation",
+      "no port",
+      "nat-t",
+      "traversal"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NAT breaks IPsec ESP because ESP doesn't have port numbers for PAT. NAT-Traversal (NAT-T) encapsulates ESP in UDP port 4500 to solve this.",
+    "hints": [
+      "ESP has no ports"
+    ]
+  },
+  {
+    "id": "q-nat-05",
+    "topic_id": "nat-pat",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "On a Cisco router, what command enables PAT using the outside interface?",
+    "correct_answers": [
+      "ip nat inside source list",
+      "overload",
+      "ip nat"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'ip nat inside source list <ACL> interface <outside-if> overload' to enable PAT.",
+    "hints": [
+      "overload keyword enables PAT"
+    ]
+  },
+  {
+    "id": "q-stp-01",
+    "topic_id": "stp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the purpose of Spanning Tree Protocol?",
+    "correct_answers": [
+      "prevent loops",
+      "loop prevention",
+      "loop-free",
+      "redundancy without loops"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "STP prevents Layer 2 loops by blocking redundant paths while maintaining backup links for failover.",
+    "hints": [
+      "Loops are bad at Layer 2"
+    ]
+  },
+  {
+    "id": "q-stp-02",
+    "topic_id": "stp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "How is the root bridge elected in STP?",
+    "correct_answers": [
+      "lowest bridge id",
+      "lowest priority",
+      "bridge id",
+      "priority + mac"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "The switch with the lowest Bridge ID (priority + MAC address) becomes the root bridge. Default priority is 32768.",
+    "hints": [
+      "Lowest wins"
+    ]
+  },
+  {
+    "id": "q-stp-03",
+    "topic_id": "stp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What are the STP port states?",
+    "correct_answers": [
+      "blocking",
+      "listening",
+      "learning",
+      "forwarding",
+      "disabled"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "STP port states: Blocking \u2192 Listening \u2192 Learning \u2192 Forwarding (and Disabled). RSTP simplifies to: Discarding, Learning, Forwarding.",
+    "hints": [
+      "Five states in classic STP"
+    ]
+  },
+  {
+    "id": "q-stp-04",
+    "topic_id": "stp-protocol",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "After a topology change, STP takes 50 seconds to converge. How can you reduce this?",
+    "correct_answers": [
+      "rstp",
+      "rapid spanning tree",
+      "portfast",
+      "802.1w"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use RSTP (802.1w) which converges in seconds instead of 50s. Also use PortFast on access ports to skip listening/learning.",
+    "hints": [
+      "A faster version exists"
+    ]
+  },
+  {
+    "id": "q-stp-05",
+    "topic_id": "stp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is PortFast and when should it be used?",
+    "correct_answers": [
+      "access port",
+      "end device",
+      "skip states",
+      "immediately forwarding",
+      "host port"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "PortFast transitions a port immediately to forwarding state, skipping listening/learning. Use ONLY on access ports connected to end devices (not switches).",
+    "hints": [
+      "Skip the wait on host ports"
+    ]
+  },
+  {
+    "id": "q-wifi-01",
+    "topic_id": "wireless-standards",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What frequency bands does Wi-Fi 6 (802.11ax) use?",
+    "correct_answers": [
+      "2.4",
+      "5",
+      "2.4 and 5",
+      "both",
+      "dual band"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Wi-Fi 6 (802.11ax) operates on both 2.4 GHz and 5 GHz bands.",
+    "hints": [
+      "Dual band"
+    ]
+  },
+  {
+    "id": "q-wifi-02",
+    "topic_id": "wireless-standards",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the maximum theoretical speed of Wi-Fi 6?",
+    "correct_answers": [
+      "9.6 gbps",
+      "9.6",
+      "9608"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Wi-Fi 6 has a maximum theoretical speed of 9.6 Gbps (with 8 spatial streams, 160 MHz channels).",
+    "hints": [
+      "Almost 10 Gbps"
+    ]
+  },
+  {
+    "id": "q-wifi-03",
+    "topic_id": "wireless-standards",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What technology does Wi-Fi 6 use to serve multiple clients simultaneously?",
+    "correct_answers": [
+      "ofdma",
+      "mu-mimo",
+      "orthogonal frequency division multiple access"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Wi-Fi 6 uses OFDMA (Orthogonal Frequency Division Multiple Access) and MU-MIMO to serve multiple clients simultaneously.",
+    "hints": [
+      "Divides the channel into sub-carriers"
+    ]
+  },
+  {
+    "id": "q-wifi-04",
+    "topic_id": "wireless-standards",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is the new frequency band introduced in Wi-Fi 6E?",
+    "correct_answers": [
+      "6 ghz",
+      "6ghz",
+      "6 GHz"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Wi-Fi 6E extends into the 6 GHz band (5.925-7.125 GHz), providing 1200 MHz of additional spectrum.",
+    "hints": [
+      "A new band above 5 GHz"
+    ]
+  },
+  {
+    "id": "q-wifi-05",
+    "topic_id": "wireless-standards",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "Users report slow WiFi in a dense office. What Wi-Fi 6 feature specifically addresses this?",
+    "correct_answers": [
+      "bss coloring",
+      "ofdma",
+      "target wake time",
+      "spatial reuse"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "BSS Coloring and OFDMA address dense environments. BSS Coloring reduces co-channel interference by marking frames from different BSSs.",
+    "hints": [
+      "Designed for dense environments"
+    ]
+  },
+  {
+    "id": "q-eth-01",
+    "topic_id": "ethernet",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the maximum frame size for standard Ethernet?",
+    "correct_answers": [
+      "1518",
+      "1518 bytes",
+      "1500 mtu"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Standard Ethernet frame is max 1518 bytes (1500 byte payload + 18 byte header/trailer). Jumbo frames can be up to 9000 bytes.",
+    "hints": [
+      "About 1500 for payload"
+    ]
+  },
+  {
+    "id": "q-eth-02",
+    "topic_id": "ethernet",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between half-duplex and full-duplex Ethernet?",
+    "correct_answers": [
+      "simultaneous",
+      "both directions",
+      "send and receive",
+      "collision"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Full-duplex allows simultaneous send and receive (no collisions). Half-duplex allows only one direction at a time (uses CSMA/CD).",
+    "hints": [
+      "Can you talk and listen at the same time?"
+    ]
+  },
+  {
+    "id": "q-ipv4-01",
+    "topic_id": "ipv4-addressing",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the range of private IP addresses in Class A?",
+    "correct_answers": [
+      "10.0.0.0",
+      "10.0.0.0/8",
+      "10.x.x.x"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Class A private range: 10.0.0.0 to 10.255.255.255 (10.0.0.0/8).",
+    "hints": [
+      "Starts with 10"
+    ]
+  },
+  {
+    "id": "q-ipv4-02",
+    "topic_id": "ipv4-addressing",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What is the CIDR notation for the Class B private range?",
+    "correct_answers": [
+      "172.16.0.0/12",
+      "/12"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Class B private: 172.16.0.0/12 (172.16.0.0 to 172.31.255.255).",
+    "hints": [
+      "172.16 to 172.31"
+    ]
+  },
+  {
+    "id": "q-ipv6-01",
+    "topic_id": "ipv6-basics",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "How many bits are in an IPv6 address?",
+    "correct_answers": [
+      "128",
+      "128 bits"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "IPv6 addresses are 128 bits long (compared to 32 bits for IPv4).",
+    "hints": [
+      "Four times IPv4"
+    ]
+  },
+  {
+    "id": "q-ipv6-02",
+    "topic_id": "ipv6-basics",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the IPv6 loopback address?",
+    "correct_answers": [
+      "::1"
+    ],
+    "validation_type": "exact",
+    "required_keywords": [],
+    "explanation": "The IPv6 loopback address is ::1 (equivalent to 127.0.0.1 in IPv4).",
+    "hints": [
+      "Very short"
+    ]
+  },
+  {
+    "id": "q-ipv6-03",
+    "topic_id": "ipv6-basics",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What does SLAAC stand for and what does it do?",
+    "correct_answers": [
+      "stateless address autoconfiguration",
+      "auto configure",
+      "automatic address"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SLAAC (Stateless Address Autoconfiguration) allows IPv6 hosts to automatically configure their own addresses using router advertisements.",
+    "hints": [
+      "Hosts configure themselves"
+    ]
+  },
+  {
+    "id": "q-http-01",
+    "topic_id": "http-https",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What port does HTTP use by default?",
+    "correct_answers": [
+      "80",
+      "port 80"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "HTTP uses TCP port 80 by default.",
+    "hints": [
+      "A very common port"
+    ]
+  },
+  {
+    "id": "q-ssh-01",
+    "topic_id": "ssh-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What port does SSH use by default?",
+    "correct_answers": [
+      "22",
+      "port 22"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SSH uses TCP port 22 by default.",
+    "hints": [
+      "A well-known port"
+    ]
+  },
+  {
+    "id": "q-ntp-01",
+    "topic_id": "ntp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What port and protocol does NTP use?",
+    "correct_answers": [
+      "123",
+      "udp 123",
+      "udp/123"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NTP uses UDP port 123.",
+    "hints": [
+      "UDP, not TCP"
+    ]
+  },
+  {
+    "id": "q-icmp-01",
+    "topic_id": "icmp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What ICMP type and code indicates 'Destination Unreachable - Port Unreachable'?",
+    "correct_answers": [
+      "type 3 code 3",
+      "3/3",
+      "type 3, code 3"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "ICMP Type 3, Code 3 = Destination Unreachable, Port Unreachable. Sent when UDP port has no listener.",
+    "hints": [
+      "Type 3 is unreachable"
+    ]
+  }
+]

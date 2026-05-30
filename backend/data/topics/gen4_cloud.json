@@ -1,0 +1,295 @@
+[
+  {
+    "id": "direct-connect",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "AWS Direct Connect",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Dedicated connection to AWS.",
+      "why": "Consistent performance vs internet VPN.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Dedicated",
+        "Hosted",
+        "LAG",
+        "Virtual interfaces"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "direct-connect",
+      "aws"
+    ]
+  },
+  {
+    "id": "expressroute",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "Azure ExpressRoute",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Private connectivity to Azure.",
+      "why": "Predictable performance.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Private peering",
+        "Microsoft peering",
+        "Global Reach"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "expressroute",
+      "azure"
+    ]
+  },
+  {
+    "id": "cloud-dns2",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "Cloud DNS Services",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Managed DNS \u2014 Route 53, Cloud DNS.",
+      "why": "Global, highly available DNS.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Hosted zones",
+        "Health checks",
+        "Routing policies"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "dns",
+      "cloud"
+    ]
+  },
+  {
+    "id": "cdn",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "Cloud CDN",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Cache content at edge locations.",
+      "why": "Reduces latency for users.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Edge locations",
+        "Cache",
+        "TTL",
+        "Invalidation"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "cdn",
+      "caching"
+    ]
+  },
+  {
+    "id": "cloud-waf2",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "Cloud WAF",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Managed WAF services.",
+      "why": "Protect web apps without hardware.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Managed rules",
+        "Rate limiting",
+        "Bot protection"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "waf",
+      "cloud"
+    ]
+  },
+  {
+    "id": "service-mesh2",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "Service Mesh",
+    "difficulty": "advanced",
+    "theory": {
+      "what": "Service-to-service communication layer.",
+      "why": "Microservices need discovery, LB, encryption.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Sidecar proxy",
+        "mTLS",
+        "Traffic management"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "service-mesh",
+      "istio"
+    ]
+  },
+  {
+    "id": "container-net",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "Container Networking",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "How containers communicate.",
+      "why": "Containers need networking.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Bridge",
+        "Overlay",
+        "CNI",
+        "Pod networking"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "container",
+      "kubernetes"
+    ]
+  },
+  {
+    "id": "cloud-fw",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "Cloud Firewall",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Cloud-native firewalls.",
+      "why": "Stateful inspection for cloud.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Stateful",
+        "IDS/IPS",
+        "URL filtering"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "firewall",
+      "cloud"
+    ]
+  },
+  {
+    "id": "private-ep",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "Private Endpoints",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "Access cloud services privately.",
+      "why": "No internet exposure for service access.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Interface endpoints",
+        "PrivateLink",
+        "DNS"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "private-endpoint",
+      "secure"
+    ]
+  },
+  {
+    "id": "cloud-mon",
+    "domain": "cloud_networking",
+    "phase": 5,
+    "name": "Cloud Network Monitoring",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "VPC Flow Logs, Network Watcher.",
+      "why": "Visibility into cloud traffic.",
+      "how": "See documentation.",
+      "when": "Apply in relevant scenarios.",
+      "key_concepts": [
+        "Flow Logs",
+        "Traffic Analytics",
+        "Packet Mirroring"
+      ],
+      "configuration": "# See official docs",
+      "troubleshooting": [
+        "Check logs",
+        "Verify config",
+        "Test connectivity"
+      ]
+    },
+    "related_topics": [],
+    "tags": [
+      "monitoring",
+      "cloud"
+    ]
+  }
+]

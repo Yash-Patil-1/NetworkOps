@@ -1,0 +1,533 @@
+[
+  {
+    "id": "q-noc2-prom-03",
+    "topic_id": "prometheus",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "Write a PromQL query to get the 5-minute rate of HTTP requests.",
+    "correct_answers": [
+      "rate(http_requests_total[5m])",
+      "rate(",
+      "[5m])"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "rate(http_requests_total[5m]) calculates the per-second rate over a 5-minute window.",
+    "hints": [
+      "rate function with time window"
+    ]
+  },
+  {
+    "id": "q-noc2-graf-02",
+    "topic_id": "grafana",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a Grafana data source?",
+    "correct_answers": [
+      "backend",
+      "database",
+      "where data comes from",
+      "prometheus",
+      "influxdb"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A data source is the backend that Grafana queries for metrics \u2014 Prometheus, InfluxDB, Elasticsearch, etc.",
+    "hints": [
+      "Where the data lives"
+    ]
+  },
+  {
+    "id": "q-noc2-zab-02",
+    "topic_id": "zabbix",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a Zabbix trigger?",
+    "correct_answers": [
+      "condition",
+      "threshold",
+      "expression",
+      "alert condition",
+      "problem"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A trigger is a logical expression that evaluates item data and defines when a problem state exists (e.g., CPU > 90% for 5 min).",
+    "hints": [
+      "Defines when something is wrong"
+    ]
+  },
+  {
+    "id": "q-noc2-libre-01",
+    "topic_id": "librenms",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What protocol does LibreNMS primarily use for discovery?",
+    "correct_answers": [
+      "snmp",
+      "lldp",
+      "cdp"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "LibreNMS uses SNMP for device discovery and monitoring, with LLDP/CDP for topology mapping.",
+    "hints": [
+      "The standard monitoring protocol"
+    ]
+  },
+  {
+    "id": "q-noc2-netbox-01",
+    "topic_id": "netbox-ipam",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is NetBox used for?",
+    "correct_answers": [
+      "ipam",
+      "dcim",
+      "documentation",
+      "inventory",
+      "source of truth"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NetBox is an IPAM/DCIM tool for documenting network infrastructure \u2014 IP addresses, devices, circuits, racks, and connections.",
+    "hints": [
+      "Network documentation and IPAM"
+    ]
+  },
+  {
+    "id": "q-noc2-tel-01",
+    "topic_id": "streaming-telemetry",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "How does streaming telemetry differ from SNMP polling?",
+    "correct_answers": [
+      "push",
+      "real-time",
+      "continuous",
+      "model-driven",
+      "grpc"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Streaming telemetry pushes data continuously in real-time (gRPC/gNMI) vs SNMP's periodic pull model. Higher resolution, lower device overhead.",
+    "hints": [
+      "Push vs pull"
+    ]
+  },
+  {
+    "id": "q-noc2-obs-01",
+    "topic_id": "network-observability",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What are the three pillars of observability?",
+    "correct_answers": [
+      "metrics logs traces",
+      "metrics",
+      "logs",
+      "traces"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "The three pillars: Metrics (what's happening), Logs (why it happened), Traces (how requests flow through systems).",
+    "hints": [
+      "Three types of data"
+    ]
+  },
+  {
+    "id": "q-noc2-runbook-01",
+    "topic_id": "runbooks2",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "A junior NOC engineer gets a 'BGP peer down' alert at 3 AM. What should the runbook tell them?",
+    "correct_answers": [
+      "verify",
+      "check interface",
+      "escalate",
+      "contact",
+      "steps"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Runbook should: 1) Verify alert is real, 2) Check interface status, 3) Check BGP logs, 4) Attempt clear/reset if safe, 5) Escalate if not resolved in X minutes.",
+    "hints": [
+      "Step-by-step for 3 AM"
+    ]
+  },
+  {
+    "id": "q-noc2-corr-01",
+    "topic_id": "correlation",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is event correlation in monitoring?",
+    "correct_answers": [
+      "relate events",
+      "reduce noise",
+      "root cause",
+      "group",
+      "deduplicate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Event correlation groups related alerts to identify root cause and reduce noise. E.g., 100 'host unreachable' alerts correlate to 1 'core switch down'.",
+    "hints": [
+      "Many alerts, one cause"
+    ]
+  },
+  {
+    "id": "q-noc2-oncall-01",
+    "topic_id": "oncall",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What should an on-call rotation include?",
+    "correct_answers": [
+      "schedule",
+      "escalation",
+      "handoff",
+      "documentation",
+      "compensation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "On-call includes: rotation schedule, escalation paths, handoff procedures, runbooks, communication tools, and fair compensation.",
+    "hints": [
+      "More than just a schedule"
+    ]
+  },
+  {
+    "id": "q-noc2-maint-01",
+    "topic_id": "maint-window",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What defines a good maintenance window?",
+    "correct_answers": [
+      "low traffic",
+      "communication",
+      "rollback",
+      "time limit",
+      "approval"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Good maintenance window: low-traffic period, pre-approved change, communicated to stakeholders, defined rollback plan, and time limit.",
+    "hints": [
+      "Plan for the quiet hours"
+    ]
+  },
+  {
+    "id": "q-noc2-dr-01",
+    "topic_id": "dr-network",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is RTO and RPO in disaster recovery?",
+    "correct_answers": [
+      "recovery time objective",
+      "recovery point objective",
+      "how long",
+      "how much data"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "RTO: maximum acceptable downtime. RPO: maximum acceptable data loss (how far back you recover to). Both drive DR design.",
+    "hints": [
+      "Time and data loss targets"
+    ]
+  },
+  {
+    "id": "q-noc2-cap-02",
+    "topic_id": "capacity-planning",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What formula calculates bandwidth utilization percentage?",
+    "correct_answers": [
+      "used / total",
+      "actual / capacity",
+      "bits / bandwidth"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Utilization = (Actual throughput / Link capacity) \u00d7 100%. E.g., 700 Mbps on a 1 Gbps link = 70%.",
+    "hints": [
+      "Simple division"
+    ]
+  },
+  {
+    "id": "q-noc2-fore-01",
+    "topic_id": "forecasting",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What data do you need for network capacity forecasting?",
+    "correct_answers": [
+      "historical",
+      "trend",
+      "growth rate",
+      "baseline",
+      "seasonal"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Need: historical utilization data, growth trends, seasonal patterns, planned projects, and business growth projections.",
+    "hints": [
+      "Past data predicts future needs"
+    ]
+  },
+  {
+    "id": "q-noc2-vendor-01",
+    "topic_id": "vendor-mgmt",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What should you track for vendor/circuit SLAs?",
+    "correct_answers": [
+      "uptime",
+      "latency",
+      "packet loss",
+      "jitter",
+      "mttr"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Track: availability/uptime, latency, packet loss, jitter, MTTR, and compare against contracted SLA values.",
+    "hints": [
+      "Measure what they promised"
+    ]
+  },
+  {
+    "id": "q-noc2-inv-01",
+    "topic_id": "inventory-mgmt",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What information should a network inventory contain?",
+    "correct_answers": [
+      "hostname",
+      "ip",
+      "model",
+      "serial",
+      "location",
+      "os version"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Inventory: hostname, management IP, model, serial number, OS version, location, rack position, and support contract status.",
+    "hints": [
+      "Everything about each device"
+    ]
+  },
+  {
+    "id": "q-noc2-log-01",
+    "topic_id": "log-techniques",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is structured logging and why is it better?",
+    "correct_answers": [
+      "json",
+      "key-value",
+      "parseable",
+      "searchable",
+      "machine-readable"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Structured logging uses consistent formats (JSON, key-value) making logs machine-parseable, searchable, and easier to correlate than free-text logs.",
+    "hints": [
+      "Machines can read it"
+    ]
+  },
+  {
+    "id": "q-noc2-config-01",
+    "topic_id": "config-backup",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "How often should network device configs be backed up?",
+    "correct_answers": [
+      "daily",
+      "after changes",
+      "automated",
+      "scheduled"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Back up configs: daily (scheduled), after every change, and before maintenance. Use automation (RANCID, Oxidized, Git) for consistency.",
+    "hints": [
+      "At minimum daily"
+    ]
+  },
+  {
+    "id": "q-noc2-weather-01",
+    "topic_id": "weathermap",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is a network weathermap?",
+    "correct_answers": [
+      "visual",
+      "topology",
+      "utilization",
+      "traffic",
+      "color-coded"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A weathermap is a visual network topology showing real-time link utilization with color-coding (green=low, red=high).",
+    "hints": [
+      "Visual traffic display"
+    ]
+  },
+  {
+    "id": "q-noc2-snmpv3-01",
+    "topic_id": "snmp-v3",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "What are the three SNMPv3 security levels?",
+    "correct_answers": [
+      "noauthnopriv",
+      "authnopriv",
+      "authpriv",
+      "no auth",
+      "auth",
+      "priv"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SNMPv3 levels: noAuthNoPriv (no security), authNoPriv (authentication only), authPriv (authentication + encryption).",
+    "hints": [
+      "Three levels of security"
+    ]
+  },
+  {
+    "id": "q-noc2-trap-01",
+    "topic_id": "snmp-traps2",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between an SNMP trap and an inform?",
+    "correct_answers": [
+      "acknowledged",
+      "reliable",
+      "no ack",
+      "udp",
+      "confirmed"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Traps are unacknowledged (fire-and-forget, may be lost). Informs are acknowledged (receiver confirms receipt, more reliable).",
+    "hints": [
+      "One confirms delivery"
+    ]
+  },
+  {
+    "id": "q-noc2-troubleshoot-05",
+    "topic_id": "network-troubleshooting",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What command shows interface error counters on Cisco?",
+    "correct_answers": [
+      "show interface",
+      "show interfaces"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "'show interfaces <name>' displays CRC errors, collisions, input/output errors, drops, and other counters.",
+    "hints": [
+      "show interfaces"
+    ]
+  },
+  {
+    "id": "q-noc2-troubleshoot-06",
+    "topic_id": "network-troubleshooting",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "Traceroute shows high latency at hop 5 but normal latency at hop 6. Is hop 5 the problem?",
+    "correct_answers": [
+      "no",
+      "not necessarily",
+      "icmp deprioritized",
+      "control plane",
+      "rate limited"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Not necessarily. Routers often deprioritize ICMP (used by traceroute) in the control plane. If subsequent hops are fine, hop 5 is likely just rate-limiting ICMP responses.",
+    "hints": [
+      "ICMP is low priority on routers"
+    ]
+  },
+  {
+    "id": "q-noc2-troubleshoot-07",
+    "topic_id": "network-troubleshooting",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What tool combines ping and traceroute for continuous path monitoring?",
+    "correct_answers": [
+      "mtr",
+      "mtr command",
+      "pathping"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "MTR (My Traceroute) combines ping and traceroute, continuously showing per-hop latency and packet loss over time.",
+    "hints": [
+      "Continuous traceroute"
+    ]
+  },
+  {
+    "id": "q-noc2-nagios-01",
+    "topic_id": "nagios-mon",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What are the Nagios host/service check states?",
+    "correct_answers": [
+      "ok warning critical unknown",
+      "up down unreachable"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Service states: OK, WARNING, CRITICAL, UNKNOWN. Host states: UP, DOWN, UNREACHABLE.",
+    "hints": [
+      "Four service states"
+    ]
+  },
+  {
+    "id": "q-noc2-baseline-02",
+    "topic_id": "baselining",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "You established a baseline showing 40% WAN utilization. Now it's consistently 75%. What action?",
+    "correct_answers": [
+      "investigate",
+      "capacity upgrade",
+      "plan upgrade",
+      "identify cause",
+      "growth"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Investigate the cause (new application? growth?). If legitimate growth, plan capacity upgrade before hitting 80-90% threshold.",
+    "hints": [
+      "Significant deviation from baseline"
+    ]
+  }
+]

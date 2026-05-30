@@ -1,0 +1,400 @@
+[
+  {
+    "id": "ethernet",
+    "domain": "fundamentals",
+    "phase": 1,
+    "name": "Ethernet (802.3)",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "Ethernet is the most common LAN technology. It defines how devices on the same network segment communicate using frames with MAC addresses.",
+      "why": "Ethernet is the foundation of virtually all local networks. Understanding frame structure, MAC addressing, and collision domains is essential for troubleshooting Layer 2 issues.",
+      "how": "Ethernet uses CSMA/CD (half-duplex) or full-duplex switching. Frames contain: Preamble, Dest MAC, Src MAC, EtherType, Payload, FCS. Switches learn MAC addresses and forward frames only to the correct port.",
+      "when": "Ethernet is used in every LAN. Troubleshoot when: frames are being dropped, MAC table is full, or broadcast storms occur.",
+      "key_concepts": [
+        "MAC address (48-bit)",
+        "Frame structure",
+        "Switch MAC table",
+        "Broadcast domain",
+        "Collision domain",
+        "MTU (1500 bytes)"
+      ],
+      "configuration": "# Show interface status\nshow interfaces status\n# Show MAC address table\nshow mac address-table",
+      "troubleshooting": [
+        "show interfaces (check errors/drops)",
+        "show mac address-table (verify learning)",
+        "show interfaces counters errors"
+      ]
+    },
+    "related_topics": [
+      "osi-model",
+      "vlans",
+      "stp"
+    ],
+    "tags": [
+      "ethernet",
+      "layer2",
+      "mac",
+      "frames",
+      "lan"
+    ]
+  },
+  {
+    "id": "vlans",
+    "domain": "fundamentals",
+    "phase": 1,
+    "name": "VLANs (Virtual LANs)",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "VLANs logically segment a physical switch into multiple broadcast domains. Each VLAN acts as a separate network even though devices share the same physical switch.",
+      "why": "Without VLANs, all devices on a switch are in one broadcast domain. VLANs reduce broadcast traffic, improve security (isolate departments), and enable flexible network design without rewiring.",
+      "how": "Switches assign ports to VLANs. Traffic within a VLAN stays in that VLAN. To communicate between VLANs, you need a router (inter-VLAN routing). Trunk links carry multiple VLANs between switches using 802.1Q tagging.",
+      "when": "Use VLANs to: separate departments, isolate guest traffic, create management networks, segment IoT devices, or meet compliance requirements (PCI DSS CDE isolation).",
+      "key_concepts": [
+        "Access port (single VLAN)",
+        "Trunk port (multiple VLANs, 802.1Q)",
+        "Native VLAN",
+        "VLAN tagging",
+        "Inter-VLAN routing",
+        "VLAN 1 (default, avoid using)"
+      ],
+      "configuration": "! Create VLAN\nvlan 10\n name Engineering\n!\n! Assign port to VLAN\ninterface GigabitEthernet0/1\n switchport mode access\n switchport access vlan 10\n!\n! Configure trunk\ninterface GigabitEthernet0/24\n switchport mode trunk\n switchport trunk allowed vlan 10,20,30",
+      "troubleshooting": [
+        "show vlan brief",
+        "show interfaces trunk",
+        "show interfaces switchport"
+      ]
+    },
+    "related_topics": [
+      "ethernet",
+      "stp",
+      "subnetting"
+    ],
+    "tags": [
+      "vlan",
+      "segmentation",
+      "802.1q",
+      "trunk",
+      "broadcast"
+    ]
+  },
+  {
+    "id": "arp-protocol",
+    "domain": "fundamentals",
+    "phase": 1,
+    "name": "ARP (Address Resolution Protocol)",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "ARP maps IP addresses to MAC addresses on a local network. When a device knows the destination IP but not the MAC, it broadcasts an ARP request.",
+      "why": "Ethernet frames need MAC addresses for delivery, but applications use IP addresses. ARP bridges this gap. Understanding ARP is critical for troubleshooting connectivity and understanding ARP-based attacks.",
+      "how": "1. Host A wants to reach 192.168.1.10\n2. Host A broadcasts: 'Who has 192.168.1.10? Tell 192.168.1.1'\n3. Host at .10 replies: 'I am 192.168.1.10, my MAC is AA:BB:CC:DD:EE:FF'\n4. Host A caches this mapping\n5. Future frames sent directly to that MAC",
+      "when": "ARP is used every time a device communicates on the local network. Troubleshoot when: devices can't communicate locally, ARP table is incorrect, or ARP spoofing is suspected.",
+      "key_concepts": [
+        "ARP Request (broadcast)",
+        "ARP Reply (unicast)",
+        "ARP Cache/Table",
+        "Gratuitous ARP",
+        "ARP timeout",
+        "Proxy ARP"
+      ],
+      "configuration": "# View ARP table\narp -a\n# Clear ARP cache\narp -d *\n# Static ARP entry\narp -s 192.168.1.10 AA:BB:CC:DD:EE:FF",
+      "troubleshooting": [
+        "arp -a (view cache)",
+        "ip neigh show (Linux)",
+        "show ip arp (Cisco)",
+        "Wireshark filter: arp"
+      ]
+    },
+    "related_topics": [
+      "ethernet",
+      "subnetting",
+      "tcp-ip-model"
+    ],
+    "tags": [
+      "arp",
+      "mac",
+      "resolution",
+      "layer2",
+      "broadcast"
+    ]
+  },
+  {
+    "id": "dhcp",
+    "domain": "fundamentals",
+    "phase": 1,
+    "name": "DHCP (Dynamic Host Configuration Protocol)",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "DHCP automatically assigns IP addresses, subnet masks, default gateways, and DNS servers to devices on a network.",
+      "why": "Without DHCP, every device would need manual IP configuration \u2014 impractical for networks with hundreds of devices. DHCP also prevents IP conflicts and simplifies management.",
+      "how": "DORA process:\n1. Discover \u2014 Client broadcasts looking for DHCP server\n2. Offer \u2014 Server offers an IP address\n3. Request \u2014 Client requests the offered address\n4. Acknowledge \u2014 Server confirms the lease\n\nLeases expire and must be renewed (typically at 50% of lease time).",
+      "when": "DHCP is used on virtually every network for client devices. Use static IPs for servers, printers, and infrastructure. Troubleshoot when: devices get 169.254.x.x (APIPA), wrong subnet, or duplicate IPs.",
+      "key_concepts": [
+        "DORA process",
+        "Lease time",
+        "DHCP Relay (ip helper-address)",
+        "DHCP Scope",
+        "Reservations",
+        "Options (DNS, gateway, domain)"
+      ],
+      "configuration": "! Cisco DHCP Server\nip dhcp pool OFFICE\n network 192.168.1.0 255.255.255.0\n default-router 192.168.1.1\n dns-server 8.8.8.8\n lease 8\n!\n! DHCP Relay\ninterface Vlan10\n ip helper-address 10.0.0.5",
+      "troubleshooting": [
+        "show ip dhcp binding",
+        "show ip dhcp pool",
+        "ipconfig /release && ipconfig /renew (Windows)",
+        "dhclient -v (Linux)"
+      ]
+    },
+    "related_topics": [
+      "dns-fundamentals",
+      "subnetting",
+      "tcp-ip-model"
+    ],
+    "tags": [
+      "dhcp",
+      "ip-assignment",
+      "dora",
+      "automatic",
+      "lease"
+    ]
+  },
+  {
+    "id": "nat-pat",
+    "domain": "fundamentals",
+    "phase": 1,
+    "name": "NAT/PAT (Network Address Translation)",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "NAT translates private IP addresses to public IP addresses, allowing multiple internal devices to share one or few public IPs. PAT (Port Address Translation) uses port numbers to distinguish connections.",
+      "why": "IPv4 address exhaustion made NAT essential. Without NAT, every device would need a public IP. NAT also provides a basic security layer by hiding internal network structure.",
+      "how": "Types:\n- Static NAT: 1:1 mapping (server needs consistent public IP)\n- Dynamic NAT: Pool of public IPs assigned on demand\n- PAT/NAT Overload: Many internal IPs share one public IP using different source ports\n\nRouter maintains a NAT translation table mapping inside\u2194outside addresses.",
+      "when": "NAT is used at every network edge connecting to the internet. Troubleshoot when: internal hosts can't reach internet, port forwarding doesn't work, or applications break due to NAT (VoIP, FTP).",
+      "key_concepts": [
+        "Inside Local/Global",
+        "Outside Local/Global",
+        "Static NAT",
+        "Dynamic NAT",
+        "PAT (Overload)",
+        "NAT table"
+      ],
+      "configuration": "! PAT (most common)\nip nat inside source list 1 interface GigabitEthernet0/0 overload\naccess-list 1 permit 192.168.1.0 0.0.0.255\n!\ninterface GigabitEthernet0/0\n ip nat outside\ninterface GigabitEthernet0/1\n ip nat inside",
+      "troubleshooting": [
+        "show ip nat translations",
+        "show ip nat statistics",
+        "debug ip nat",
+        "clear ip nat translation *"
+      ]
+    },
+    "related_topics": [
+      "subnetting",
+      "tcp-ip-model",
+      "ipv4-addressing"
+    ],
+    "tags": [
+      "nat",
+      "pat",
+      "translation",
+      "private-ip",
+      "internet"
+    ]
+  },
+  {
+    "id": "ipv4-addressing",
+    "domain": "fundamentals",
+    "phase": 1,
+    "name": "IPv4 Addressing",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "IPv4 uses 32-bit addresses (4 octets) to uniquely identify devices on a network. Addresses are divided into network and host portions by the subnet mask.",
+      "why": "IP addressing is the foundation of all network communication. Every device needs a unique IP within its network. Understanding addressing enables proper network design, subnetting, and troubleshooting.",
+      "how": "IPv4 address: 192.168.1.100/24\n- Network portion: 192.168.1.0 (first 24 bits)\n- Host portion: .100 (last 8 bits)\n- Subnet mask: 255.255.255.0\n\nClasses (legacy): A (1-126), B (128-191), C (192-223)\nPrivate ranges: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16",
+      "when": "Every time you configure a network interface, design a network, or troubleshoot connectivity.",
+      "key_concepts": [
+        "32-bit address",
+        "Network vs Host portion",
+        "Subnet mask",
+        "CIDR notation",
+        "Private vs Public",
+        "Broadcast address",
+        "Network address"
+      ],
+      "configuration": "# Linux\nip addr add 192.168.1.10/24 dev eth0\nip route add default via 192.168.1.1\n\n# Cisco\ninterface GigabitEthernet0/0\n ip address 192.168.1.1 255.255.255.0\n no shutdown",
+      "troubleshooting": [
+        "ip addr show",
+        "ifconfig",
+        "ipconfig (Windows)",
+        "ping gateway first"
+      ]
+    },
+    "related_topics": [
+      "subnetting",
+      "nat-pat",
+      "tcp-ip-model"
+    ],
+    "tags": [
+      "ipv4",
+      "addressing",
+      "ip",
+      "network",
+      "host"
+    ]
+  },
+  {
+    "id": "tcp-protocol",
+    "domain": "fundamentals",
+    "phase": 1,
+    "name": "TCP (Transmission Control Protocol)",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "TCP is a connection-oriented, reliable transport protocol. It guarantees delivery, ordering, and error checking of data between applications.",
+      "why": "TCP is used for any communication that requires reliability \u2014 web browsing (HTTP), email (SMTP), file transfer (FTP), SSH. Understanding TCP is essential for troubleshooting application connectivity.",
+      "how": "TCP 3-way handshake:\n1. SYN \u2192 (client initiates)\n2. SYN-ACK \u2190 (server acknowledges)\n3. ACK \u2192 (connection established)\n\nFeatures: Sequence numbers, acknowledgments, flow control (window size), congestion control, retransmission.",
+      "when": "TCP is used for HTTP/HTTPS, SSH, FTP, SMTP, databases \u2014 any application needing reliable delivery. Troubleshoot when: connections timeout, slow transfers, or retransmissions.",
+      "key_concepts": [
+        "3-way handshake (SYN, SYN-ACK, ACK)",
+        "Sequence numbers",
+        "Window size (flow control)",
+        "Retransmission",
+        "FIN/RST (connection teardown)",
+        "Ports (0-65535)"
+      ],
+      "configuration": "# Check TCP connections\nss -tuln\nnetstat -tlnp\n\n# Test TCP connectivity\nnc -zv <host> <port>\ntelnet <host> <port>",
+      "troubleshooting": [
+        "ss -s (socket statistics)",
+        "netstat -an | grep ESTABLISHED",
+        "tcpdump -i eth0 'tcp port 80'",
+        "Wireshark: tcp.analysis.retransmission"
+      ]
+    },
+    "related_topics": [
+      "udp-protocol",
+      "osi-model",
+      "tcp-ip-model"
+    ],
+    "tags": [
+      "tcp",
+      "reliable",
+      "connection",
+      "handshake",
+      "transport"
+    ]
+  },
+  {
+    "id": "udp-protocol",
+    "domain": "fundamentals",
+    "phase": 1,
+    "name": "UDP (User Datagram Protocol)",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "UDP is a connectionless, unreliable transport protocol. It sends datagrams without establishing a connection or guaranteeing delivery.",
+      "why": "UDP is faster than TCP because it has no handshake, no acknowledgments, and no retransmission. Used for real-time applications where speed matters more than reliability.",
+      "how": "UDP simply sends datagrams with source port, destination port, length, and checksum. No connection setup, no sequence numbers, no flow control. If a packet is lost, it's lost.",
+      "when": "UDP is used for: DNS (port 53), DHCP (67/68), SNMP (161), NTP (123), VoIP/video streaming, online gaming. Use when speed > reliability.",
+      "key_concepts": [
+        "Connectionless",
+        "No handshake",
+        "No guaranteed delivery",
+        "Lower overhead than TCP",
+        "Used for real-time applications",
+        "Stateless"
+      ],
+      "configuration": "# Check UDP listeners\nss -uln\nnetstat -uln\n\n# Test UDP\nnc -zu <host> <port>\nnmap -sU -p 53,161 <target>",
+      "troubleshooting": [
+        "ss -u (UDP sockets)",
+        "tcpdump -i eth0 udp",
+        "nmap -sU (UDP scan \u2014 slow)",
+        "DNS not working? Check UDP 53"
+      ]
+    },
+    "related_topics": [
+      "tcp-protocol",
+      "dns-fundamentals",
+      "dhcp"
+    ],
+    "tags": [
+      "udp",
+      "connectionless",
+      "fast",
+      "datagram",
+      "transport"
+    ]
+  },
+  {
+    "id": "icmp-protocol",
+    "domain": "fundamentals",
+    "phase": 1,
+    "name": "ICMP (Internet Control Message Protocol)",
+    "difficulty": "beginner",
+    "theory": {
+      "what": "ICMP is used for network diagnostics and error reporting. Ping and traceroute use ICMP. It reports unreachable destinations, TTL exceeded, and other network issues.",
+      "why": "ICMP is the primary tool for network troubleshooting. Ping tests reachability, traceroute maps paths. Understanding ICMP types helps diagnose connectivity issues.",
+      "how": "ICMP message types:\n- Type 0: Echo Reply (ping response)\n- Type 3: Destination Unreachable\n- Type 8: Echo Request (ping)\n- Type 11: Time Exceeded (traceroute)\n\nICMP is encapsulated in IP (protocol 1). It doesn't use ports.",
+      "when": "Use ICMP (ping/traceroute) as the first troubleshooting step for any connectivity issue. Note: some networks block ICMP \u2014 doesn't mean host is down.",
+      "key_concepts": [
+        "Echo Request/Reply (ping)",
+        "Destination Unreachable",
+        "Time Exceeded (TTL)",
+        "Traceroute uses TTL manipulation",
+        "No ports (not TCP/UDP)",
+        "Can be blocked by firewalls"
+      ],
+      "configuration": "# Ping\nping -c 4 192.168.1.1\n\n# Traceroute\ntraceroute 8.8.8.8\ntracert 8.8.8.8 (Windows)\n\n# MTR (continuous)\nmtr 8.8.8.8",
+      "troubleshooting": [
+        "ping gateway (Layer 3 basic test)",
+        "traceroute (find where packets stop)",
+        "ping -s 1472 -M do (test MTU)",
+        "If ping fails but TCP works \u2192 ICMP blocked"
+      ]
+    },
+    "related_topics": [
+      "tcp-ip-model",
+      "ipv4-addressing"
+    ],
+    "tags": [
+      "icmp",
+      "ping",
+      "traceroute",
+      "diagnostics",
+      "troubleshooting"
+    ]
+  },
+  {
+    "id": "stp-protocol",
+    "domain": "fundamentals",
+    "phase": 1,
+    "name": "STP (Spanning Tree Protocol)",
+    "difficulty": "intermediate",
+    "theory": {
+      "what": "STP prevents Layer 2 loops in networks with redundant switch links. It blocks redundant paths and activates them only if the primary path fails.",
+      "why": "Without STP, redundant links create broadcast storms that crash the network within seconds. STP ensures only one active path exists while keeping backups ready for failover.",
+      "how": "STP process:\n1. Elect Root Bridge (lowest Bridge ID)\n2. Calculate Root Path Cost per switch\n3. Select Root Port (best path to root) per switch\n4. Select Designated Port per segment\n5. Block all other ports\n\nPort states: Blocking \u2192 Listening \u2192 Learning \u2192 Forwarding (takes 30-50 seconds by default).",
+      "when": "STP runs automatically on all switches with redundant links. Troubleshoot when: network has loops (broadcast storms), slow convergence after link failure, or unexpected port blocking.",
+      "key_concepts": [
+        "Root Bridge election",
+        "Bridge ID (priority + MAC)",
+        "Root Port",
+        "Designated Port",
+        "Blocked Port",
+        "Convergence time (30-50s default)",
+        "RSTP (faster, 1-2s)"
+      ],
+      "configuration": "! Set root bridge\nspanning-tree vlan 1 root primary\n! Or set priority directly\nspanning-tree vlan 1 priority 4096\n!\n! Enable Rapid STP\nspanning-tree mode rapid-pvst",
+      "troubleshooting": [
+        "show spanning-tree",
+        "show spanning-tree root",
+        "show spanning-tree blockedports",
+        "debug spanning-tree events"
+      ]
+    },
+    "related_topics": [
+      "vlans",
+      "ethernet"
+    ],
+    "tags": [
+      "stp",
+      "loop-prevention",
+      "redundancy",
+      "root-bridge",
+      "convergence"
+    ]
+  }
+]

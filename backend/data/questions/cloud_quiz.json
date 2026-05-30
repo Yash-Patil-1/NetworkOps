@@ -1,0 +1,508 @@
+[
+  {
+    "id": "q-cloud-vpc-01",
+    "topic_id": "aws-vpc",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is a VPC?",
+    "correct_answers": [
+      "virtual private cloud",
+      "isolated network",
+      "virtual network",
+      "private network in cloud"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A VPC (Virtual Private Cloud) is an isolated virtual network in the cloud where you launch resources with your own IP addressing.",
+    "hints": [
+      "Your own network in the cloud"
+    ]
+  },
+  {
+    "id": "q-cloud-vpc-02",
+    "topic_id": "aws-vpc",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between a public and private subnet in AWS?",
+    "correct_answers": [
+      "internet gateway",
+      "route to igw",
+      "public ip",
+      "no internet"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Public subnet has a route to an Internet Gateway (IGW) and instances can have public IPs. Private subnet has no direct internet route.",
+    "hints": [
+      "One has internet access"
+    ]
+  },
+  {
+    "id": "q-cloud-vpc-03",
+    "topic_id": "aws-vpc",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What is the maximum CIDR block size for an AWS VPC?",
+    "correct_answers": [
+      "16",
+      "/16"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "AWS VPC supports CIDR blocks from /16 (65,536 IPs) to /28 (16 IPs).",
+    "hints": [
+      "Largest is /16"
+    ]
+  },
+  {
+    "id": "q-cloud-sg-01",
+    "topic_id": "aws-security-groups",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "How do AWS Security Groups differ from NACLs?",
+    "correct_answers": [
+      "stateful",
+      "stateless",
+      "instance level",
+      "subnet level",
+      "allow only"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Security Groups are stateful (return traffic auto-allowed), instance-level, allow-only rules. NACLs are stateless, subnet-level, support allow and deny.",
+    "hints": [
+      "One is stateful, one is stateless"
+    ]
+  },
+  {
+    "id": "q-cloud-sg-02",
+    "topic_id": "aws-security-groups",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the default behavior of an AWS Security Group?",
+    "correct_answers": [
+      "deny all inbound",
+      "allow all outbound",
+      "implicit deny"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Default: deny all inbound, allow all outbound. You add rules to allow specific inbound traffic.",
+    "hints": [
+      "Deny in, allow out"
+    ]
+  },
+  {
+    "id": "q-cloud-nacl-01",
+    "topic_id": "nacl",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the rule evaluation order for NACLs?",
+    "correct_answers": [
+      "lowest number first",
+      "numbered order",
+      "sequential",
+      "first match"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NACL rules are evaluated in order from lowest rule number to highest. First matching rule is applied.",
+    "hints": [
+      "Number order matters"
+    ]
+  },
+  {
+    "id": "q-cloud-nacl-02",
+    "topic_id": "nacl",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "You added a NACL deny rule for port 22 (rule 50) but SSH still works. Why?",
+    "correct_answers": [
+      "lower number allow",
+      "rule before",
+      "earlier rule",
+      "rule number"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A lower-numbered rule (e.g., rule 10 allowing all traffic) is evaluated first and matches before rule 50.",
+    "hints": [
+      "Check for earlier matching rules"
+    ]
+  },
+  {
+    "id": "q-cloud-rt-01",
+    "topic_id": "aws-route-tables",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the most specific route that wins in a route table?",
+    "correct_answers": [
+      "longest prefix",
+      "most specific",
+      "/32",
+      "longest match"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Longest prefix match wins. A /32 route is more specific than /24, which is more specific than /16.",
+    "hints": [
+      "More specific = longer prefix"
+    ]
+  },
+  {
+    "id": "q-cloud-peer-01",
+    "topic_id": "vpc-peering-topic",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is VPC peering?",
+    "correct_answers": [
+      "connect two vpcs",
+      "private connection",
+      "direct link between vpcs"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "VPC peering creates a private network connection between two VPCs, allowing resources to communicate using private IPs.",
+    "hints": [
+      "Connect two VPCs privately"
+    ]
+  },
+  {
+    "id": "q-cloud-peer-02",
+    "topic_id": "vpc-peering-topic",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is a limitation of VPC peering?",
+    "correct_answers": [
+      "not transitive",
+      "no transit",
+      "can't route through",
+      "hub and spoke"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "VPC peering is NOT transitive. If VPC-A peers with VPC-B and VPC-B peers with VPC-C, A cannot reach C through B.",
+    "hints": [
+      "Not transitive"
+    ]
+  },
+  {
+    "id": "q-cloud-tgw-01",
+    "topic_id": "transit-gw",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What problem does AWS Transit Gateway solve?",
+    "correct_answers": [
+      "full mesh",
+      "scalability",
+      "many vpcs",
+      "hub",
+      "centralize"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Transit Gateway eliminates the need for full-mesh VPC peering. It acts as a hub that all VPCs and on-premises networks connect to.",
+    "hints": [
+      "Hub instead of full mesh"
+    ]
+  },
+  {
+    "id": "q-cloud-dc-01",
+    "topic_id": "direct-connect",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is AWS Direct Connect?",
+    "correct_answers": [
+      "dedicated connection",
+      "private link",
+      "not internet",
+      "physical connection"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Direct Connect provides a dedicated private network connection from on-premises to AWS, bypassing the public internet for better performance and security.",
+    "hints": [
+      "Private physical connection"
+    ]
+  },
+  {
+    "id": "q-cloud-dc-02",
+    "topic_id": "direct-connect",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is the difference between a Direct Connect and a VPN connection?",
+    "correct_answers": [
+      "dedicated vs internet",
+      "physical vs tunnel",
+      "consistent vs variable",
+      "bandwidth"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Direct Connect: dedicated physical connection, consistent performance, higher bandwidth. VPN: encrypted tunnel over internet, variable performance, quick to set up.",
+    "hints": [
+      "Physical vs logical"
+    ]
+  },
+  {
+    "id": "q-cloud-hybrid-01",
+    "topic_id": "hybrid-connectivity",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "You need redundant connectivity to AWS with sub-10ms latency. What do you recommend?",
+    "correct_answers": [
+      "direct connect",
+      "dual direct connect",
+      "redundant dx",
+      "two connections"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use dual Direct Connect connections (ideally to different DX locations) for redundancy with consistent low latency.",
+    "hints": [
+      "Dedicated connections for low latency"
+    ]
+  },
+  {
+    "id": "q-cloud-lb-01",
+    "topic_id": "cloud-lb",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What are the types of load balancers in AWS?",
+    "correct_answers": [
+      "alb",
+      "nlb",
+      "application",
+      "network",
+      "gateway",
+      "clb"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "AWS has: ALB (Application/Layer 7), NLB (Network/Layer 4), GLB (Gateway/Layer 3), and Classic LB (legacy).",
+    "hints": [
+      "Different layers"
+    ]
+  },
+  {
+    "id": "q-cloud-lb-02",
+    "topic_id": "cloud-lb",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "When would you use an NLB instead of an ALB?",
+    "correct_answers": [
+      "tcp",
+      "udp",
+      "low latency",
+      "millions",
+      "static ip",
+      "layer 4"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use NLB for: TCP/UDP traffic, ultra-low latency, millions of requests/sec, static IPs, or non-HTTP protocols.",
+    "hints": [
+      "Layer 4, high performance"
+    ]
+  },
+  {
+    "id": "q-cloud-dns-01",
+    "topic_id": "cloud-dns2",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is AWS Route 53?",
+    "correct_answers": [
+      "dns service",
+      "domain name",
+      "routing",
+      "hosted zones"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Route 53 is AWS's DNS service providing domain registration, DNS routing, and health checking.",
+    "hints": [
+      "AWS DNS"
+    ]
+  },
+  {
+    "id": "q-cloud-cdn-01",
+    "topic_id": "cdn",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a CDN and how does it improve performance?",
+    "correct_answers": [
+      "content delivery",
+      "edge",
+      "cache",
+      "closer to user",
+      "distribute"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A CDN caches content at edge locations worldwide, serving users from the nearest location to reduce latency and offload origin servers.",
+    "hints": [
+      "Closer to users"
+    ]
+  },
+  {
+    "id": "q-cloud-container-01",
+    "topic_id": "container-net",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "How does Kubernetes networking differ from traditional networking?",
+    "correct_answers": [
+      "flat network",
+      "pod ip",
+      "every pod addressable",
+      "no nat between pods",
+      "overlay"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Kubernetes requires: every pod gets a unique IP, pods can communicate without NAT, and the network is flat (all pods can reach all pods by default).",
+    "hints": [
+      "Every pod gets an IP"
+    ]
+  },
+  {
+    "id": "q-cloud-k8s-01",
+    "topic_id": "kubernetes-networking",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a Kubernetes Service of type ClusterIP?",
+    "correct_answers": [
+      "internal only",
+      "cluster internal",
+      "virtual ip",
+      "not external"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "ClusterIP exposes the service on an internal IP only accessible within the cluster. It's the default Service type.",
+    "hints": [
+      "Internal only"
+    ]
+  },
+  {
+    "id": "q-cloud-k8s-02",
+    "topic_id": "kubernetes-networking",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a Kubernetes Ingress?",
+    "correct_answers": [
+      "http routing",
+      "layer 7",
+      "path-based",
+      "host-based",
+      "external http"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Ingress manages external HTTP/HTTPS access to services, providing path-based and host-based routing, TLS termination.",
+    "hints": [
+      "HTTP routing from outside"
+    ]
+  },
+  {
+    "id": "q-cloud-azure-01",
+    "topic_id": "azure-vnet",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the Azure equivalent of AWS VPC?",
+    "correct_answers": [
+      "vnet",
+      "virtual network"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Azure Virtual Network (VNet) is the equivalent of AWS VPC \u2014 an isolated network for Azure resources.",
+    "hints": [
+      "VNet"
+    ]
+  },
+  {
+    "id": "q-cloud-private-01",
+    "topic_id": "private-ep",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is a VPC endpoint (AWS) or Private Link?",
+    "correct_answers": [
+      "private access",
+      "no internet",
+      "service without igw",
+      "private connection to service"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "VPC endpoints allow private access to AWS services (S3, DynamoDB, etc.) without traversing the internet or requiring an IGW/NAT.",
+    "hints": [
+      "Access services privately"
+    ]
+  },
+  {
+    "id": "q-cloud-waf-01",
+    "topic_id": "cloud-waf2",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What does a Web Application Firewall (WAF) protect against?",
+    "correct_answers": [
+      "sql injection",
+      "xss",
+      "owasp",
+      "layer 7",
+      "application attacks"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "WAF protects against application-layer attacks: SQL injection, XSS, CSRF, and other OWASP Top 10 vulnerabilities.",
+    "hints": [
+      "Application-layer attacks"
+    ]
+  },
+  {
+    "id": "q-cloud-mesh-01",
+    "topic_id": "service-mesh2",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is a service mesh and what problem does it solve?",
+    "correct_answers": [
+      "service-to-service",
+      "sidecar",
+      "observability",
+      "traffic management",
+      "istio",
+      "envoy"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A service mesh manages service-to-service communication using sidecar proxies. Provides: traffic management, observability, security (mTLS), and resilience without code changes.",
+    "hints": [
+      "Manages microservice communication"
+    ]
+  }
+]

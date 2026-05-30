@@ -1,0 +1,580 @@
+[
+  {
+    "id": "q-ospf-01",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What type of routing protocol is OSPF?",
+    "correct_answers": [
+      "link-state",
+      "link state"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "OSPF is a link-state routing protocol that builds a complete topology map of the network.",
+    "hints": [
+      "Not distance-vector"
+    ]
+  },
+  {
+    "id": "q-ospf-02",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the OSPF administrative distance?",
+    "correct_answers": [
+      "110"
+    ],
+    "validation_type": "exact",
+    "required_keywords": [],
+    "explanation": "OSPF has an administrative distance of 110 (lower than RIP's 120, higher than static routes' 1).",
+    "hints": [
+      "Between 100 and 120"
+    ]
+  },
+  {
+    "id": "q-ospf-03",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What multicast address does OSPF use for all OSPF routers?",
+    "correct_answers": [
+      "224.0.0.5"
+    ],
+    "validation_type": "exact",
+    "required_keywords": [],
+    "explanation": "OSPF uses 224.0.0.5 (AllSPFRouters) and 224.0.0.6 (AllDRouters).",
+    "hints": [
+      "224.0.0.x range"
+    ]
+  },
+  {
+    "id": "q-ospf-04",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What command shows OSPF neighbor relationships on Cisco?",
+    "correct_answers": [
+      "show ip ospf neighbor"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'show ip ospf neighbor' to verify OSPF adjacencies and their states.",
+    "hints": [
+      "show ip ospf..."
+    ]
+  },
+  {
+    "id": "q-ospf-05",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What are the OSPF neighbor states in order?",
+    "correct_answers": [
+      "down init 2-way exstart exchange loading full",
+      "down, init, 2-way, exstart, exchange, loading, full"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "OSPF states: Down \u2192 Init \u2192 2-Way \u2192 ExStart \u2192 Exchange \u2192 Loading \u2192 Full.",
+    "hints": [
+      "Seven states"
+    ]
+  },
+  {
+    "id": "q-ospf-06",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the role of the OSPF Designated Router (DR)?",
+    "correct_answers": [
+      "reduce adjacencies",
+      "lsa flooding",
+      "represent segment",
+      "reduce overhead"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "The DR reduces OSPF overhead on multi-access networks by acting as the central point for LSA exchange, reducing the number of adjacencies from n*(n-1)/2 to n.",
+    "hints": [
+      "Reduces the number of relationships needed"
+    ]
+  },
+  {
+    "id": "q-ospf-07",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "Two OSPF routers won't form an adjacency. What parameters must match?",
+    "correct_answers": [
+      "area",
+      "hello",
+      "dead",
+      "network type",
+      "authentication",
+      "subnet",
+      "mtu"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "OSPF adjacency requires matching: area ID, hello/dead timers, network type, authentication, subnet mask, and MTU.",
+    "hints": [
+      "Several parameters must agree"
+    ]
+  },
+  {
+    "id": "q-ospf-08",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is OSPF Area 0?",
+    "correct_answers": [
+      "backbone",
+      "backbone area",
+      "transit area"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Area 0 is the backbone area. All other areas must connect to Area 0 (directly or via virtual links).",
+    "hints": [
+      "The center of OSPF"
+    ]
+  },
+  {
+    "id": "q-ospf-09",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "What command summarizes OSPF routes at an ABR?",
+    "correct_answers": [
+      "area range",
+      "area 0 range"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'area <id> range <network> <mask>' on an ABR to summarize routes between areas.",
+    "hints": [
+      "area ... range ..."
+    ]
+  },
+  {
+    "id": "q-ospf-10",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What LSA type does an ABR generate for inter-area routes?",
+    "correct_answers": [
+      "type 3",
+      "lsa type 3",
+      "summary lsa"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "ABRs generate Type 3 Summary LSAs to advertise routes between OSPF areas.",
+    "hints": [
+      "Summary LSA"
+    ]
+  },
+  {
+    "id": "q-ospf-11",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is an OSPF stub area?",
+    "correct_answers": [
+      "no external",
+      "no type 5",
+      "no asbr",
+      "default route"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A stub area doesn't accept external (Type 5) LSAs. The ABR injects a default route instead, reducing the LSDB size.",
+    "hints": [
+      "Blocks external routes"
+    ]
+  },
+  {
+    "id": "q-ospf-12",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What is the default OSPF hello interval on a broadcast network?",
+    "correct_answers": [
+      "10",
+      "10 seconds"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "OSPF hello interval is 10 seconds on broadcast/point-to-point networks, 30 seconds on NBMA.",
+    "hints": [
+      "A common timer value"
+    ]
+  },
+  {
+    "id": "q-ospf-13",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What metric does OSPF use?",
+    "correct_answers": [
+      "cost",
+      "bandwidth",
+      "reference bandwidth"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "OSPF uses cost as its metric, calculated as reference bandwidth / interface bandwidth. Default reference is 100 Mbps.",
+    "hints": [
+      "Based on bandwidth"
+    ]
+  },
+  {
+    "id": "q-ospf-14",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "You have a 10 Gbps link but OSPF shows cost 1 (same as 100 Mbps). How do you fix this?",
+    "correct_answers": [
+      "auto-cost reference-bandwidth",
+      "reference bandwidth",
+      "change reference"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Change reference bandwidth: 'auto-cost reference-bandwidth 10000' (in Mbps) so 10G gets cost 1 and 1G gets cost 10.",
+    "hints": [
+      "The default reference is too low"
+    ]
+  },
+  {
+    "id": "q-ospf-15",
+    "topic_id": "ospf-fundamentals",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What command enables OSPF on all interfaces in 10.0.0.0/8?",
+    "correct_answers": [
+      "network 10.0.0.0 0.255.255.255 area",
+      "router ospf",
+      "network 10.0.0.0"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Under 'router ospf <process-id>', use 'network 10.0.0.0 0.255.255.255 area 0'.",
+    "hints": [
+      "network command with wildcard"
+    ]
+  },
+  {
+    "id": "q-bgp-01",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the primary purpose of BGP?",
+    "correct_answers": [
+      "inter-as",
+      "between autonomous systems",
+      "internet routing",
+      "path vector"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "BGP is the inter-AS routing protocol that routes traffic between autonomous systems on the internet.",
+    "hints": [
+      "The internet's routing protocol"
+    ]
+  },
+  {
+    "id": "q-bgp-02",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What TCP port does BGP use?",
+    "correct_answers": [
+      "179",
+      "port 179"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "BGP uses TCP port 179 for establishing peer sessions.",
+    "hints": [
+      "A specific TCP port"
+    ]
+  },
+  {
+    "id": "q-bgp-03",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the difference between iBGP and eBGP?",
+    "correct_answers": [
+      "internal external",
+      "same as different as",
+      "within between"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "iBGP is between routers in the same AS. eBGP is between routers in different ASes. iBGP doesn't change next-hop by default.",
+    "hints": [
+      "Internal vs External"
+    ]
+  },
+  {
+    "id": "q-bgp-04",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is the BGP path selection order (first 4 attributes)?",
+    "correct_answers": [
+      "weight",
+      "local preference",
+      "local-pref",
+      "as-path",
+      "origin",
+      "med"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "BGP path selection: 1) Highest Weight (Cisco), 2) Highest Local Preference, 3) Shortest AS-Path, 4) Lowest Origin type (i>e>?).",
+    "hints": [
+      "Weight, Local Pref, AS-Path, Origin"
+    ]
+  },
+  {
+    "id": "q-bgp-05",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "medium",
+    "question": "What command shows BGP neighbors on Cisco?",
+    "correct_answers": [
+      "show ip bgp summary",
+      "show bgp summary"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Use 'show ip bgp summary' to see BGP peer status, AS numbers, and prefix counts.",
+    "hints": [
+      "show ip bgp..."
+    ]
+  },
+  {
+    "id": "q-bgp-06",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is AS-Path prepending used for?",
+    "correct_answers": [
+      "influence inbound",
+      "make path longer",
+      "less preferred",
+      "traffic engineering"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "AS-Path prepending makes a path appear longer to influence inbound traffic \u2014 neighbors prefer shorter AS-paths.",
+    "hints": [
+      "Make your path look worse"
+    ]
+  },
+  {
+    "id": "q-bgp-07",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is the BGP split-horizon rule for iBGP?",
+    "correct_answers": [
+      "not advertise to ibgp",
+      "learned from ibgp",
+      "route reflector",
+      "full mesh"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "iBGP split-horizon: routes learned from an iBGP peer are not advertised to other iBGP peers. Solved by full mesh, route reflectors, or confederations.",
+    "hints": [
+      "iBGP doesn't re-advertise to iBGP"
+    ]
+  },
+  {
+    "id": "q-bgp-08",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is a BGP route reflector?",
+    "correct_answers": [
+      "reduce full mesh",
+      "ibgp scalability",
+      "reflect routes",
+      "client"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A route reflector re-advertises iBGP routes to other iBGP peers, eliminating the need for full mesh iBGP.",
+    "hints": [
+      "Solves the full-mesh requirement"
+    ]
+  },
+  {
+    "id": "q-bgp-09",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "hard",
+    "question": "Your BGP peer is stuck in Active state. What are common causes?",
+    "correct_answers": [
+      "tcp connection",
+      "port 179",
+      "acl",
+      "firewall",
+      "reachability",
+      "authentication"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Active state means BGP is trying to establish TCP connection. Check: IP reachability, port 179 not blocked by ACL/firewall, correct neighbor IP, authentication mismatch.",
+    "hints": [
+      "Can't establish TCP"
+    ]
+  },
+  {
+    "id": "q-bgp-10",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the default BGP keepalive and hold timer?",
+    "correct_answers": [
+      "60",
+      "180",
+      "60 seconds",
+      "180 seconds"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "BGP default keepalive is 60 seconds, hold timer is 180 seconds (3x keepalive).",
+    "hints": [
+      "Keepalive and 3x that"
+    ]
+  },
+  {
+    "id": "q-bgp-11",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "How do you filter BGP routes using a prefix-list on Cisco?",
+    "correct_answers": [
+      "ip prefix-list",
+      "neighbor prefix-list",
+      "prefix-list"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Create 'ip prefix-list <name> permit/deny <prefix>/<len>' then apply with 'neighbor <ip> prefix-list <name> in/out'.",
+    "hints": [
+      "ip prefix-list command"
+    ]
+  },
+  {
+    "id": "q-bgp-12",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is BGP community and what is it used for?",
+    "correct_answers": [
+      "tag",
+      "label",
+      "group routes",
+      "policy",
+      "signal"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "BGP communities are tags attached to routes for policy signaling. Common: no-export, no-advertise, local-as.",
+    "hints": [
+      "Tags for routes"
+    ]
+  },
+  {
+    "id": "q-bgp-13",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What is BGP graceful restart?",
+    "correct_answers": [
+      "maintain forwarding",
+      "restart without disruption",
+      "stale routes",
+      "preserve"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Graceful restart allows a BGP router to restart without disrupting traffic. Peers maintain stale routes during restart, preserving forwarding.",
+    "hints": [
+      "Keep forwarding during restart"
+    ]
+  },
+  {
+    "id": "q-bgp-14",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "You want to prefer one ISP over another for outbound traffic. What BGP attribute do you modify?",
+    "correct_answers": [
+      "local preference",
+      "local-pref",
+      "weight"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Set higher Local Preference on routes from the preferred ISP. Local-pref is shared within the AS and higher is preferred.",
+    "hints": [
+      "Higher is better for this attribute"
+    ]
+  },
+  {
+    "id": "q-bgp-15",
+    "topic_id": "bgp-fundamentals",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "medium",
+    "question": "What is the BGP administrative distance for eBGP and iBGP?",
+    "correct_answers": [
+      "20",
+      "200",
+      "20 and 200"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "eBGP has AD 20 (very trusted), iBGP has AD 200 (less trusted than OSPF 110).",
+    "hints": [
+      "eBGP is very trusted"
+    ]
+  }
+]
