@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
-from routers import topics, quiz, domains, progress
+from routers import topics, quiz, domains, progress, streak, lessons
 from models.database import init_db
 from services.knowledge_base import NetworkKnowledgeBase
 from services.quiz_engine import QuizEngine
@@ -36,6 +36,8 @@ app.include_router(topics.router, prefix="/api/topics", tags=["Topics"])
 app.include_router(quiz.router, prefix="/api/quiz", tags=["Quiz"])
 app.include_router(domains.router, prefix="/api/domains", tags=["Domains"])
 app.include_router(progress.router, prefix="/api/progress", tags=["Progress"])
+app.include_router(streak.router, prefix="/api/streak", tags=["Streak"])
+app.include_router(lessons.router, prefix="/api/lessons", tags=["Lessons"])
 
 
 @app.get("/")

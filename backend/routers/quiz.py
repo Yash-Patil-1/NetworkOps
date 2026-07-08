@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Request, HTTPException
 from pydantic import BaseModel
 from models.database import get_connection
+from services.stats import award_xp, record_activity, XP_QUIZ_CORRECT
+
 router = APIRouter()
 
 class AnswerSubmit(BaseModel):
@@ -56,7 +58,31 @@ async def submit_answer(request: Request, body: AnswerSubmit):
     conn.commit()
     conn.close()
 
+    # Award XP for correct answers; maintain streak for any attempt
+    if result["correct"]:
+        streak_data = award_xp(XP_QUIZ_CORRECT, "quiz")
+        result["xp_awarded"] = XP_QUIZ_CORRECT
+    else:
+        streak_data = record_activity("quiz")
+        result["xp_awarded"] = 0
+    result["current_streak"] = streak_data["current_streak"]
+    result["total_xp"] = streak_data["total_xp"]
+
     return result
+
+@router.get("/stats")
+async def get_quiz_stats(request: Request, topic: str = None):
+    """Get quiz performance stats."""
+    conn = get_connection()
+    if topic:
+        total = conn.execute("SELECT COUNT(*) as c FROM quiz_history WHERE topic_id = ?", (topic,)).fetchone()["c"]
+        correct = conn.execute("SELECT COUNT(*) as c FROM quiz_history WHERE topic_id = ? AND correct = 1", (topic,)).fetchone()["c"]
+    else:
+        total = conn.execute("SELECT COUNT(*) as c FROM quiz_history").fetchone()["c"]
+        correct = conn.execute("SELECT COUNT(*) as c FROM quiz_history WHERE correct = 1").fetchone()["c"]
+    conn.close()
+    return {"total_answered": total, "correct": correct, "accuracy": round(correct/total*100, 1) if total else 0}
+
 
 @router.get("/stats")
 async def get_quiz_stats(request: Request, topic: str = None):

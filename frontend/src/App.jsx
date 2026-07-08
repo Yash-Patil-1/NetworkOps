@@ -4,6 +4,8 @@ import Dashboard from './pages/Dashboard'
 import Topics from './pages/Topics'
 import TopicDetail from './pages/TopicDetail'
 import Quiz from './pages/Quiz'
+import Learn from './pages/Learn'
+import LessonView from './pages/LessonView'
 
 export default function App() {
   return (
@@ -12,6 +14,8 @@ export default function App() {
       <main className="flex-1 ml-60 p-8">
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/learn" element={<Learn />} />
+          <Route path="/learn/:id" element={<LessonView />} />
           <Route path="/topics" element={<Topics />} />
           <Route path="/topics/:id" element={<TopicDetail />} />
           <Route path="/quiz" element={<Quiz />} />
