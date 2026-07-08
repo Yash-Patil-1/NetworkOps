@@ -13,28 +13,38 @@ LESSON_QUESTION_TOPICS: dict[str, list[str]] = {}
 
 
 def _topic_to_sections(topic: dict) -> list[dict]:
-    """Convert topic theory fields into ordered lesson sections."""
+    """Convert topic theory fields into ordered lesson sections.
+
+    Supports up to 8 optional sections based on what fields exist in theory:
+      1. Understanding {name}       (what)
+      2. Why {name} Matters         (why)
+      3. How {name} Works           (how)
+      4. Configuration              (configuration with code block)
+      5. Worked Examples            (worked_examples — step-by-step walkthroughs)
+      6. When to Use {name}         (when)
+      7. Troubleshooting {name}     (troubleshooting — bulleted items)
+      8. Summary & Best Practices   (summary — key takeaways)
+    """
     theory = topic.get("theory", {})
     sections = []
-
-    field_map = {
-        "what": "Understanding {name}",
-        "why": "Why {name} Matters",
-        "how": "How {name} Works",
-        "when": "When to Use {name}",
-    }
     name = topic.get("name", "")
 
-    for field, title_template in field_map.items():
-        content = theory.get(field)
-        if content and isinstance(content, str) and len(content.strip()) > 10:
-            sections.append({
-                "title": title_template.format(name=name),
-                "content": content,
-                "field": field,
-            })
+    # 1. Understanding (what)
+    content = theory.get("what")
+    if content and isinstance(content, str) and len(content.strip()) > 10:
+        sections.append({"title": f"Understanding {name}", "content": content, "field": "what"})
 
-    # Configuration section
+    # 2. Why it Matters (why)
+    content = theory.get("why")
+    if content and isinstance(content, str) and len(content.strip()) > 10:
+        sections.append({"title": f"Why {name} Matters", "content": content, "field": "why"})
+
+    # 3. How it Works (how)
+    content = theory.get("how")
+    if content and isinstance(content, str) and len(content.strip()) > 10:
+        sections.append({"title": f"How {name} Works", "content": content, "field": "how"})
+
+    # 4. Configuration (configuration — displayed as code block)
     config = theory.get("configuration")
     if config and isinstance(config, str) and len(config.strip()) > 5:
         sections.append({
@@ -43,14 +53,37 @@ def _topic_to_sections(topic: dict) -> list[dict]:
             "field": "configuration",
         })
 
-    # Troubleshooting section
+    # 5. Worked Examples (worked_examples)
+    examples = theory.get("worked_examples")
+    if examples and isinstance(examples, str) and len(examples.strip()) > 20:
+        sections.append({
+            "title": f"Worked Examples — {name}",
+            "content": examples,
+            "field": "worked_examples",
+        })
+
+    # 6. When to Use (when)
+    content = theory.get("when")
+    if content and isinstance(content, str) and len(content.strip()) > 10:
+        sections.append({"title": f"When to Use {name}", "content": content, "field": "when"})
+
+    # 7. Troubleshooting (troubleshooting)
     troubleshooting = theory.get("troubleshooting", [])
-    if troubleshooting and len(troubleshooting) > 0:
+    if troubleshooting and isinstance(troubleshooting, list) and len(troubleshooting) > 0:
         items = "\n".join(f"• {s}" for s in troubleshooting)
         sections.append({
             "title": f"Troubleshooting {name}",
             "content": f"Common issues and debugging commands:\n\n{items}",
             "field": "troubleshooting",
+        })
+
+    # 8. Summary & Best Practices (summary)
+    summary = theory.get("summary")
+    if summary and isinstance(summary, str) and len(summary.strip()) > 20:
+        sections.append({
+            "title": f"Summary & Best Practices",
+            "content": summary,
+            "field": "summary",
         })
 
     return sections
