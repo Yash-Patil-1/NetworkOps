@@ -6,27 +6,18 @@
     "name": "Route Redistribution",
     "difficulty": "advanced",
     "theory": {
-      "what": "Sharing routes between protocols.",
-      "why": "Multi-protocol needs route sharing.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "Seed metric",
-        "Route maps",
-        "Loop prevention"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Route redistribution shares routing information between different routing protocols or routing domains. A router running OSPF and BGP can redistribute OSPF-learned routes into BGP and vice versa, or redistribute static routes into OSPF. The redistribution point is called the Autonomous System Boundary Router (ASBR) in OSPF terminology.",
+      "why": "Networks rarely run a single routing protocol. A typical enterprise has OSPF (IGP within campus), BGP (Internet connectivity and MPLS WAN), static routes (for simple stub networks), and possibly EIGRP (acquired company). Redistribution connects these domains so all networks can reach each other without manual static routes.",
+      "how": "Redistribution configuration specifies: which routes to inject, what metric to assign (seed metric), and optional route filtering. The seed metric is critical — OSPF redistributes external routes with type E1 (metric = external + internal cost) or E2 (metric = external cost only, default). Route maps control exactly which routes are redistributed and can modify metrics and tags during redistribution.",
+      "when": "Redistribute when: connecting two routing domains (OSPF ↔ BGP at the Internet edge), introducing static routes into the IGP (default route into OSPF), connecting a newly acquired company running different IGP, or migrating from one protocol to another (redistribute both ways temporarily then remove old protocol). Always filter on both directions to prevent route loops and leaking.",
+      "key_concepts": ["ASBR (Autonomous System Boundary Router)", "Seed metric (default OSPF: 20 for BGP, 1 for static/connected)", "E1 vs E2 OSPF external route types", "Route maps for conditional redistribution", "Administrative distance (controls preference when redistributing)", "Loop prevention (tagging, filtering)","Redistribution between the same protocol instances"],
+      "configuration": "router ospf 1\n redistribute bgp 65000 subnets metric-type 1 metric 50\n redistribute static subnets metric 100 route-map STATIC-TO-OSPF\n!\nroute-map STATIC-TO-OSPF permit 10\n match ip address prefix-list EXTERNAL-STATICS\n set metric-type type-1\n!\nip prefix-list EXTERNAL-STATICS seq 5 permit 172.16.0.0/16 le 32",
+      "troubleshooting": ["Suboptimal routing (traffic taking wrong path): check administrative distance values and redistribution direction", "Route loops: verify one-way redistribution with filters, use route tagging to track redistributed routes", "Missing routes: check redistribute command includes 'subnets' keyword (OSPF won't redistribute classful networks without it)", "High CPU on ASBR: limit redistributed routes with prefix lists, avoid mutual redistribution without filters", "Metric too low making redistributed routes preferred over native: adjust seed metric upward"],
+      "worked_examples": "Scenario: Company acquires a branch running EIGRP. Central HQ runs OSPF. Need to connect both networks. On the ASBR: OSPF side redistributes EIGRP routes into OSPF with a route map that tags redistributed routes with tag 100. EIGRP side redistributes OSPF routes into EIGRP with tag 200. Loop prevention: each side's redistribution filter denies routes with its own tag (OSPF side: 'match tag 200' deny, EIGRP side: 'match tag 100' deny). This prevents routes learned through redistribution from being sent back to their origin protocol. In practice: if a route with tag 100 (originally from OSPF) somehow reaches EIGRP and tries to return to OSPF, it's filtered. Without this, routing loops form. Test by propagating a new subnet from HQ to branch and verifying show ip route on branch routers shows the route as EIGRP (not OSPF re-redistributed).",
+      "summary": "Route redistribution connects routing domains but requires careful filtering to prevent loops and suboptimal routing. Always use route maps to control which routes enter each protocol. Use route tagging and filter tagged routes out of the redistribution source. Prefer one-way redistribution with a default route where possible. Test redistribution changes in a lab before production."
     },
-    "related_topics": [],
-    "tags": [
-      "redistribution",
-      "routing"
-    ]
+    "related_topics": ["route-filter","ospf-fundamentals","bgp-fundamentals"],
+    "tags": ["redistribution","routing","IGP"]
   },
   {
     "id": "route-filter",
@@ -35,27 +26,18 @@
     "name": "Route Filtering",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Controlling advertised/accepted routes.",
-      "why": "Prevents route leaks.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "Prefix lists",
-        "Route maps",
-        "AS-path filters"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Route filtering controls which routes are advertised to or accepted from routing peers. Cisco IOS provides prefix lists (most efficient for prefix matching), route maps (for conditional matching with set actions), distribute lists (apply ACLs to routing updates), and AS-path filters (specific to BGP for filtering by AS path).",
+      "why": "Without route filtering, all routes propagate everywhere — consuming memory, CPU, and bandwidth unnecessarily. A typical internet BGP full feed is 950K+ routes; most enterprise routers need only a default route. Filtering prevents route leaks (exporting internal routes to the internet), reduces routing table size, and enforces routing policy.",
+      "how": "Prefix lists match on prefix length and range (ge/le keywords for prefix length matching). Route maps support if/match conditions and optional set actions (metric, tag, next-hop). Distribute lists reference ACLs to filter routing updates per interface. BGP uses AS-path filters combined with prefix lists for Internet edge filtering (RFC 7454 recommendations).",
+      "when": "Apply outbound filtering on redistribution points and BGP neighbors to control which routes leave your AS. Apply inbound filtering on BGP peers to limit accepted routes (default route only from ISP, or specific customer prefixes). Use prefix lists for efficiency with large route tables — they outperform ACL-based distribute lists significantly.",
+      "key_concepts": ["Prefix lists with ge/le (greater-equal/less-equal) for prefix length matching", "Route maps for conditional matching and modification", "Distribute-lists for interface-based filtering", "AS-path ACLs for BGP path-based filtering", "Outbound vs inbound filtering direction", "RFC 7454 BGP filtering best practices"],
+      "configuration": "ip prefix-list CUSTOMER seq 5 permit 10.0.0.0/8 le 32\nip prefix-list DEFAULT-ONLY seq 5 permit 0.0.0.0/0\n!\nroute-map DENY-TAG permit 10\n match tag 100\n set metric 200\n!\nrouter bgp 65000\n neighbor 10.0.0.1 prefix-list DEFAULT-ONLY in\n neighbor 10.0.0.2 prefix-list CUSTOMER out",
+      "troubleshooting": ["Missing routes after applying filter: check prefix list sequence numbers and permit/deny order", "Filter too broad: use 'show prefix-list summary' to see match counts, tighten ge/le ranges", "BGP not filtering: AS-path filters require ip as-path access-list, not prefix lists", "Route-map deny dropping traffic: route-map deny prevents all routes from being sent — verify permit entries exist", "Performance impact with large prefix lists: prefix lists are O(log n), distribute lists are O(n) — use prefix lists"],
+      "worked_examples": "Scenario: Multi-homed enterprise with two ISPs, each providing full BGP table (950K routes each). The enterprise only needs default routes from ISPs since they originate no public subnets. BGP inbound filter: ip prefix-list DEFAULT-ONLY seq 5 permit 0.0.0.0/0 applied to both ISP neighbors. Routing table drops from 1.9M entries to 2. Memory usage on the border routers drops from 512MB to 16MB for RIB. CPU utilization for BGP processing drops from 45% to <1%. For outbound: ip prefix-list NO-INTERNAL seq 5 deny 10.0.0.0/8 le 32, seq 10 deny 172.16.0.0/12 le 32, seq 15 deny 192.168.0.0/16 le 32, seq 20 permit any — ensures no RFC 1918 addresses leak to ISPs. Operational impact: router stability improves dramatically, no more BGP memory exhaustion reboots.",
+      "summary": "Route filtering is essential for routing table stability, security, and performance. Use prefix lists for efficient prefix-based filtering, route maps for conditional matching with modifications, and AS-path filters for BGP path filtering. Always filter RFC 1918 addresses outbound to prevent route leaks. Apply inbound filtering to limit unnecessary routing information."
     },
-    "related_topics": [],
-    "tags": [
-      "filtering",
-      "routes"
-    ]
+    "related_topics": ["bgp-fundamentals","redistribution","acls"],
+    "tags": ["filtering","routes","prefix-list"]
   },
   {
     "id": "campus-design",
@@ -64,28 +46,18 @@
     "name": "Campus Network Design",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Three-tier or collapsed core for LANs.",
-      "why": "Proper design ensures scalability.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "Access",
-        "Distribution",
-        "Core",
-        "Collapsed"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Campus network design provides hierarchical network topology for enterprise LANs: Access layer (user connectivity, PoE, port security), Distribution layer (aggregation, routing, policy enforcement), and Core layer (high-speed switching backbone). The collapsed core design combines distribution and core for smaller campuses. Cisco's Enterprise Campus Architecture and Hierarchical Network Model are the reference frameworks.",
+      "why": "Flat network designs don't scale — broadcast storms affect all devices, STP convergence takes longer with more switches, and adding capacity requires redesigning the entire network. Hierarchical design is modular: each layer can be upgraded independently, failure domains are contained within access blocks, and traffic patterns are predictable and optimized.",
+      "how": "Access switches connect end users with 802.1X authentication, VLAN assignment, PoE for phones/APs, and port security. Distribution switches aggregate multiple access switches using Layer 3 routing (no STP dependency — routed access model), enforce policies (ACLs, QoS marking), and provide redundancy via HSRP/VRRP. Core switches provide non-blocking Layer 3 switching between distribution blocks with ECMP for load balancing.",
+      "when": "Standard campus design scales from 100 to 10,000+ users. Use three-tier for 500+ users across multiple buildings. Use collapsed core for 50-500 users in a single building. The design is ideal for: corporate offices, university campuses, hospital networks, and government facilities with predictable traffic patterns and growth requirements.",
+      "key_concepts": ["Access-Distribution-Core hierarchy", "Collapsed core for smaller deployments", "STP and loop prevention at access layer", "Layer 3 routing to distribution eliminates STP dependency", "Redundancy: dual uplinks, HSRP/VRRP, stackwise", "QoS trust boundaries at access layer (Cisco IP phones mark EF, switches trust)","PoE budgeting for phones, APs, IoT devices"],
+      "configuration": "interface GigabitEthernet1/0/1\n description User-Port\n switchport access vlan 100\n switchport mode access\n authentication port-control auto\n dot1x pae authenticator\n spanning-tree portfast\n spanning-tree bpduguard enable\n storm-control broadcast level 10\n!\ninterface Port-channel1\n description Uplink to Distribution\n switchport trunk encapsulation dot1q\n switchport mode trunk\n mtu 9216",
+      "troubleshooting": ["Broadcast storms: verify storm-control on access ports, check for loops with show spanning-tree inconsistencies", "Slow user performance: check distribution uplink utilization, verify QoS marking and queuing configuration", "Port security violations: verify sticky MAC aging, use errdisable recovery interval to auto-recover", "STP topology changes: check for flapping ports with show spanning-tree detail, bpduguard on all access ports", "VoIP quality issues: verify LLDP/CDP for phone discovery, check QoS trust boundary at access port"],
+      "worked_examples": "Scenario: 4-story office building, 200 users per floor, plus a server room. Design: 1) Each floor has 3 access switches (Cisco Catalyst 9300) with StackWise-480 for 48 ports each, 2) Two distribution switches (Cisco 9500) in the MDF on floor 2, each access stack has dual 10 Gbps fiber uplinks to both distribution switches (active/active via Layer 3 routed access), 3) HSRP on the distribution switches provides first-hop redundancy with 3-second failover, 4) Collapsed core: the distribution switches also function as the core, connecting to servers via 40 Gbps uplinks, 5) QoS: IP phones mark EF (DSCP 46), access switches trust the marking at the port, distribution switches shape to the WAN link. Total: 800 users, 48 APs, 200 IP phones. Redundancy: no single switch failure takes down more than 48 users.",
+      "summary": "Hierarchical campus design provides scalability, redundancy, and predictable performance. Use three-tier (access-distribution-core) for large deployments, collapsed core for smaller ones. Implement Layer 3 routing to distribution for fast convergence and STP-free topology. Plan PoE budgets, QoS boundaries, and redundant uplinks from the start."
     },
-    "related_topics": [],
-    "tags": [
-      "campus",
-      "design"
-    ]
+    "related_topics": ["dc-design","redundancy-design","rstp-mstp"],
+    "tags": ["campus","design","LAN"]
   },
   {
     "id": "dc-design",
@@ -94,27 +66,18 @@
     "name": "Data Center Design",
     "difficulty": "advanced",
     "theory": {
-      "what": "Leaf-spine for modern data centers.",
-      "why": "Three-tier doesn't scale for east-west.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "Leaf-spine",
-        "ECMP",
-        "Oversubscription"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Modern data center networks use a leaf-spine (Clos) architecture where every leaf switch connects to every spine switch, providing predictable east-west bandwidth. Leaf switches handle server connectivity (ToR — Top of Rack), while spine switches provide high-speed fabric for leaf-to-leaf traffic. This replaced the traditional three-tier design (access-aggregation-core) which couldn't handle the 80% east-west traffic patterns of modern applications.",
+      "why": "Traditional hierarchical designs have oversubscription ratios of 4:1 or 20:1 at the aggregation layer — acceptable for north-south client-server traffic, but disastrous for applications that move data between servers (Hadoop, Spark, distributed databases, AI training). Leaf-spine provides 1:1 oversubscription with any-to-any connectivity at predictable latency through ECMP load balancing across all spine links.",
+      "how": "Each leaf switch connects to every spine switch via equal-cost links (40/100/400 Gbps). ECMP distributes flows across these links automatically. BGP in the data center (RFC 7938) or VXLAN BGP EVPN provides the control plane for MAC and IP reachability. VXLAN overlays enable Layer 2 extension across the Layer 3 fabric for VM mobility and multi-tenancy.",
+      "when": "Leaf-spine is the standard for any data center with east-west traffic: virtualization clusters (VMware, Hyper-V), container platforms (Kubernetes), big data (Hadoop, Spark), AI/ML training clusters (NVIDIA DGX, GPU farms), and any deployment requiring predictable performance across all server pairs.",
+      "key_concepts": ["Leaf-spine (Clos) topology: N leaves × M spines = N×M paths", "ECMP for flow-based load balancing across all spine links", "VXLAN BGP EVPN for overlay networking", "Oversubscription ratio (leaf-to-spine vs server-to-leaf)", "BGP in the data center (RFC 7938) — simplified BGP for the fabric", "Anycast gateway (distributed anycast default gateway)","RDMA over Converged Ethernet (RoCEv2) for storage traffic"],
+      "configuration": "# BGP EVPN configuration on leaf switch\ninterface Loopback0\n ip address 10.0.0.1 255.255.255.255\n!\nrouter bgp 65001\n neighbor 10.0.1.1 remote-as 65000\n neighbor 10.0.1.1 update-source Loopback0\n neighbor 10.0.2.1 remote-as 65000\n neighbor 10.0.2.1 update-source Loopback0\n !\n address-family l2vpn evpn\n  neighbor 10.0.1.1 activate\n  neighbor 10.0.2.1 activate\n!\ninterface Vlan100\n description Tenant-Prod\n vrf forwarding PROD\n ip address virtual 10.1.0.1/24  (anycast gateway)",
+      "troubleshooting": ["ECMP hashing imbalance: use per-flow hashing (src + dst IP + port), check for hash polarization with different ECMP hash seeds per switch", "VXLAN packet drops: verify MTU 9216 across the fabric (50 bytes VXLAN overhead on standard 1500 MTU tunnels)", "BGP EVPN routes not learning: check Loopback reachability via IGP (OSPF/IS-IS running across fabric)", "Spine link failure: verify traffic rebalances across remaining spines — check all leaves have equal number of active paths", "RoCEv2 performance: verify PFC (Priority Flow Control) and ECN (Explicit Congestion Notification) configured consistently across all devices"],
+      "worked_examples": "Scenario: Building a 1000-server data center for Kubernetes and AI training. Design: 10 racks, 100 servers per rack. Each rack gets a leaf switch (40x25G downlinks to servers, 8x100G uplinks to spines). 8 spine switches, each with 10x100G connections (one to each leaf). Oversubscription: 40 × 25G = 1000G down / 8 × 100G = 800G up = 1.25:1 — near line-rate any-to-any. BGP in the data center (RFC 7938): each leaf and spine is a BGP speaker with private AS, no full routing table, just fabric routes. VXLAN EVPN provides 4000+ tenant VRFs for multi-tenancy. Kubernetes Calico plugin uses BGP peering directly with leaf switches for pod network routing. GPU nodes with RoCEv2 for NCCL collectives — PFC and ECN configured on all interfaces, DCQCN for congestion control. Result: 200 Gbps bisection bandwidth per rack, sub-10 μs any-to-any latency.",
+      "summary": "Leaf-spine is the only design that meets modern data center demands. Use VXLAN BGP EVPN for overlay networking, ECMP for load balancing, and BGP as the fabric control plane. Plan oversubscription ratios carefully, support jumbo frames (9216 MTU) for VXLAN, and configure PFC/ECN if using RDMA (RoCEv2) for AI/ML or storage traffic."
     },
-    "related_topics": [],
-    "tags": [
-      "datacenter",
-      "leaf-spine"
-    ]
+    "related_topics": ["campus-design","container-net","redundancy-design"],
+    "tags": ["datacenter","leaf-spine","evpn"]
   },
   {
     "id": "wan-tech",
@@ -123,28 +86,18 @@
     "name": "WAN Technologies",
     "difficulty": "intermediate",
     "theory": {
-      "what": "MPLS, Metro Ethernet, broadband, SD-WAN.",
-      "why": "Understanding options for site connectivity.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "MPLS",
-        "Metro Ethernet",
-        "LTE/5G",
-        "SD-WAN"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Wide Area Network (WAN) technologies connect geographically dispersed sites. Main options: MPLS (carrier-managed Layer 3 VPN with QoS guarantees), Metro Ethernet (carrier Ethernet with 10 Mbps-100 Gbps, simpler than MPLS), broadband/VPN (DSL, cable, fiber broadband with IPSec tunneling — lowest cost), SD-WAN (software-defined overlay that combines multiple transports with intelligent path selection).",
+      "why": "Businesses with multiple locations need site-to-site connectivity. Each WAN option balances cost, performance, reliability, and complexity: MPLS is most reliable and supports QoS, SD-WAN provides flexibility and transport diversity, broadband VPN is cheapest but best-effort. The right choice depends on application requirements and budget.",
+      "how": "MPLS uses provider edge (PE) routers that label-switch customer traffic across the provider backbone, maintaining separate VRF tables per customer. Metro Ethernet extends L2 VLANs across the metro area. SD-WAN creates encrypted tunnels over any transport (MPLS, broadband, LTE) with centralized policy management and active path monitoring for dynamic traffic steering.",
+      "when": "MPLS: latency-sensitive apps (VoIP, video conferencing), regulatory (finance requiring carrier-grade SLA), legacy multisite with QoS requirements. SD-WAN: replacing expensive MPLS with broadband, needing transport diversity and agility, cloud-first architectures (direct internet breakout for SaaS). Broadband/VPN: small sites or branches with limited budget and non-critical connectivity.",
+      "key_concepts": ["MPLS Layer 3 VPN (provider-managed routing with VRF)", "MPLS Layer 2 VPN (VPLS, VPWS — transparent L2 extension)", "Metro Ethernet (E-LINE, E-LAN, E-TREE services)", "SD-WAN (overlay, path selection, centralized policy)", "IPSec VPN (site-to-site tunnel, encryption)", "QoS over WAN (CoS markings, shaping, policing)","DIA (Direct Internet Access) from branch"],
+      "configuration": "# SD-WAN vEdge CLI (Viptela)\nvpn 0\n interface ge0/0\n  ip address dhcp-client\n  tunnel-interface\n   encapsulation ipsec\n   color public-internet\n   allow-service all\n!\nvpn 1\n interface ge0/1\n  ip address 10.0.0.1/24\n  no shutdown\n!\npolicy\n  name TRAFFIC-ENGINEERING\n  vpn-list VPN-1\n   sequence 10\n    match source-ip 10.0.0.0/24 destination-ip 10.0.1.0/24 app-list VOICE\n    action accept\n     set load-balance sla-class VOICE-LATENCY",
+      "troubleshooting": ["MPLS: traceroute shows provider hops — verify MPLS labels with show mpls forwarding-table", "Metro Ethernet: MTU issues cause drops without errors — verify end-to-end MTU matches (usually 9216 for transport)", "SD-WAN: test with site-to-site ping, verify tunnel state on vManage dashboard, check SLA class metrics", "Broadband VPN: VPN drops when public IP changes on DHCP — configure DDNS or use keepalive", "QoS mismarking: verify DSCP markings survive across provider network boundaries"],
+      "worked_examples": "Scenario: Retail chain with 50 stores, 2 distribution centers, HQ. Design: HQ and DCs get dual MPLS (50 Mbps each) with QoS for voice + SD-WAN for path diversity and active failover. Stores get broadband (200 Mbps consumer fiber at $80/month) with IPSec VPN back to SD-WAN hubs at DCs. SD-WAN controller in HQ: 1) Voice traffic (EF-marked) has SLA requirement of <150ms latency, <30ms jitter — SD-WAN steers over MPLS. 2) Business-critical (SQL, inventory) uses MPLS primary, broadband backup. 3) Guest Wi-Fi and general web traffic goes direct-internet-breakout at store (DIA). 4) When broadband fails, SD-WAN fails over to LTE backup (built into SD-WAN CPE) in <10 seconds. Cost: MPLS drops from $500/store/month to $0 (stores have no MPLS), two DC MPLS links at $1,500/month each. Total WAN cost: $3,000/month MPLS + $4,000/month broadband + $2,000/month SD-WAN licensing = $9,000/month vs $28,000/month before (50 stores × $500 MPLS + DC links).",
+      "summary": "WAN technology choice depends on application requirements and budget. MPLS for mission-critical with QoS, SD-WAN for flexibility and transport diversity, broadband VPN for cost-sensitive branches. Modern designs mix transport types with SD-WAN overlay for optimal cost-performance balance. Plan for QoS consistency across MPLS providers and SD-WAN path policies."
     },
-    "related_topics": [],
-    "tags": [
-      "wan",
-      "connectivity"
-    ]
+    "related_topics": ["sd-wan","direct-connect","expressroute"],
+    "tags": ["wan","mpLs","sd-wan"]
   },
   {
     "id": "multicast",
@@ -153,28 +106,18 @@
     "name": "IP Multicast",
     "difficulty": "advanced",
     "theory": {
-      "what": "One-to-many efficient delivery.",
-      "why": "Efficient for video/streaming.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "IGMP",
-        "PIM",
-        "RP",
-        "Multicast addresses"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "IP multicast delivers one-to-many traffic efficiently by sending a single stream from the source that is replicated only at network branch points. It uses Class D IPv4 addresses (224.0.0.0/4). IGMP (Internet Group Management Protocol) manages host membership — hosts send IGMP join messages to their local router. PIM (Protocol Independent Multicast) builds distribution trees across the network.",
+      "why": "Unicast duplicates traffic for each receiver (wastes bandwidth for video or stock feed data to 1000 receivers: 1000× bandwidth). Broadcast sends to everyone regardless of interest. Multicast sends one copy per network segment — only routers/switches that have interested receivers get the traffic. For a 10 Mbps video stream to 1000 clients, multicast uses 10 Mbps vs 10 Gbps for unicast.",
+      "how": "IGMP querier on the LAN elects via PIM queries host membership. PIM Dense Mode floods initially with prune messages from branches without receivers (inefficient but simpler). PIM Sparse Mode requires explicit join messages toward a Rendezvous Point (RP) — the RP is the meeting point between sources and receivers. MSDP (Multicast Source Discovery Protocol) connects multiple RPs across PIM domains for inter-domain multicast.",
+      "when": "Use multicast for: IPTV and video distribution (cable TV, enterprise video conferencing), financial data feeds (stock tickers, real-time market data), software distribution (PXE boot, OS deployment images to many machines simultaneously), audio conferencing, real-time sensor data from many IoT devices, and any one-to-many streaming where bandwidth efficiency matters.",
+      "key_concepts": ["IGMPv2/v3 (host membership reporting, source-specific joins with IGMPv3)", "PIM Sparse Mode (SM) vs Dense Mode (DM) vs Bidirectional (Bidir)", "Rendezvous Point (RP) — auto-RP, BSR, anycast-RP", "PIM register process (source registration at RP)", "Shortest Path Tree (SPT) switchover from RPT after threshold", "MSDP for inter-domain RP discovery"],
+      "configuration": "ip multicast-routing distributed\n!\ninterface Vlan100\n ip pim sparse-mode\n ip igmp version 3\n!\nip pim rp-address 10.0.0.1 224.0.0.0/4\n!\ninterface GigabitEthernet0/0\n ip pim sparse-mode\n! Verify with:\n! show ip pim neighbor\n! show ip pim rp mapping\n! show ip mroute",
+      "troubleshooting": ["Receivers not getting multicast: check IGMP join received (show ip igmp groups), verify RPF check passes (show ip rpf)", "RP not reachable: verify PIM RP address is reachable via unicast routing table", "PIM neighbors not forming: all routers on a segment must use same PIM mode (all sparse-mode)", "SPT switchover issues: verify 'ip pim spt-threshold infinity' not set if you want SSM behavior", "Cannot ping multicast group: multicast is receiver-driven — ping won't work like unicast, use mgen or igmp-joint test tools"],
+      "worked_examples": "Scenario: Enterprise deploys IPTV for 500 office TVs across 5 buildings with news, internal communications, and training channels (total 10 channels at 8 Mbps each = 80 Mbps source bandwidth). Without multicast: each TV receives individual stream = 500 × 8 Mbps = 4 Gbps total, saturates all campus links. With multicast: each channel is a 239.x.x.x multicast group. Core router sends 80 Mbps (10 channels) across campus. Each building's distribution switch only forwards the channels that building requested (via IGMP joins). A building with 100 TVs still receives only 80 Mbps from core, then replicates at the access switch level to individual TVs. Total campus bandwidth: 80 Mbps for video. PIM Sparse Mode with anycast-RP (two RPs for redundancy) provides fast failover — if RP fails, the other RP takes over within 3 seconds (BGP next-hop tracking). IGMPv3 with Source-Specific Multicast (SSM) prevents cross-talk between redundant video encoders.",
+      "summary": "IP multicast is essential for efficient one-to-many data delivery at scale. Use PIM Sparse Mode with anycast-RP for production deployments, IGMPv3 for source-specific joins, and verify RPF for loop-free distribution trees. Plan multicast addresses (administratively scoped 239.0.0.0/8 for enterprise use) and monitor group membership for capacity planning."
     },
-    "related_topics": [],
-    "tags": [
-      "multicast",
-      "igmp"
-    ]
+    "related_topics": ["igmp","pim","dns-fundamentals"],
+    "tags": ["multicast","pim","video"]
   },
   {
     "id": "ipv6-route",
@@ -183,27 +126,18 @@
     "name": "IPv6 Routing",
     "difficulty": "intermediate",
     "theory": {
-      "what": "OSPFv3, MP-BGP for IPv6.",
-      "why": "IPv6 adoption requires routing knowledge.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "OSPFv3",
-        "MP-BGP",
-        "Link-local next-hops"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "IPv6 routing uses OSPFv3 (OSPF for IPv6), EIGRP for IPv6, and MP-BGP (Multiprotocol BGP) with AFI=IPv6 SAFI=1 for exchanging IPv6 routes. Key differences from IPv4: neighbors are identified by link-local addresses (FE80::/10), which complicates troubleshooting since loopback/global addresses aren't used for peering. BGP requires the update-source to be the global unicast address, not link-local.",
+      "why": "IPv6 adoption is mandatory for growth — IPv4 address exhaustion means new networks must be dual-stack or IPv6-only. Internet IPv6 traffic is now >40% for major content providers. Understanding OSPFv3 and MP-BGP for IPv6 is essential for network engineers operating modern, dual-stack networks.",
+      "how": "OSPFv3 runs per-link (not per-subnet) and uses link-local addresses for neighbor adjacency formation. Router-IDs are still 32-bit — for routers without IPv4, the OSPFv3 process auto-assigns or you configure manually. MP-BGP with IPv6 AF extends BGP to carry IPv6 prefixes using Address Family IPv6 Unicast. The same BGP session can carry both IPv4 and IPv6 via multiple address families.",
+      "when": "OSPFv3 for IGP in dual-stack or IPv6-only environments, MP-BGP for external BGP peers supporting IPv6 (most ISPs now offer IPv6 peering), and native IPv6 routing in data center fabrics (spine-leaf with BGP for IPv6 underlay). Enable dual-stack on all new deployments — IPv6-only for greenfield data centers.",
+      "key_concepts": ["OSPFv3 uses link-local addresses for adjacency", "OSPFv3 Router-ID must be unique (manually configured if no IPv4)", "MP-BGP with address-family ipv6 unicast", "BGP next-hop for IPv6: link-local vs global", "IPv6 ND (Neighbor Discovery) replaces ARP", "IS-IS for IPv6 (native support, single protocol for dual-stack)"],
+      "configuration": "ipv6 unicast-routing\n!\ninterface GigabitEthernet0/0\n ipv6 address 2001:db8:1::1/64\n ipv6 enable\n ipv6 ospf 1 area 0\n!\nipv6 router ospf 1\n router-id 1.1.1.1\n!\nrouter bgp 65000\n neighbor 2001:db8:2::1 remote-as 65001\n address-family ipv6 unicast\n  neighbor 2001:db8:2::1 activate\n  network 2001:db8:3::/48\n  next-hop-self",
+      "troubleshooting": ["OSPFv3 neighbor not forming: check link-local reachability — ping FE80::%interface from the neighbor", "IPv6 BGP not establishing: verify both sides have address-family ipv6 unicast activated, check update-source is loopback global address", "IPv6 routes showing as unreachable: verify next-hop address is reachable, check recursive routing", "Link-local address confusion: OSPFv3 uses link-local to neighbor automatically — use 'show ipv6 ospf neighbor detail' to see link-local addresses", "Dual-stack misconfiguration: test with ping6 to global address of neighbor, verify IPv6 forwarding on interfaces"],
+      "worked_examples": "Scenario: Migrating campus network to dual-stack. Existing OSPFv2 (IPv4) runs on all links. Step 1: Enable IPv6 on all interfaces. The same physical interfaces now have IPv4 (/24) and IPv6 (/64) addresses. Step 2: Configure OSPFv3 (OSPF for IPv6) on all interfaces: it runs alongside OSPFv2 independently. Step 3: Configure MP-BGP at the Internet edge with the ISP for IPv6 prefix advertisement. Step 4: IPv6 DNS (AAAA records) for external-facing servers. Verification: traceroute6 to google.com — traffic follows the same path as IPv4 but via IPv6. DNS round-robin: 50% queries return A (IPv4), 50% return AAAA (IPv6) — gradual adoption. Common gotcha: OSPFv3 neighbor fails because Firewall blocking ICMPv6 — enable ICMPv6 passthrough (it's required for MTU path discovery and neighbor discovery).",
+      "summary": "IPv6 routing is a fundamental skill for modern network engineering. OSPFv3 uses link-local neighbors, MP-BGP for external IPv6 route exchange, and IPv6 ND replaces ARP. Deploy dual-stack everywhere, enable IPv6 internally before external peering, and remember that ICMPv6 must be permitted for proper network operation."
     },
-    "related_topics": [],
-    "tags": [
-      "ipv6",
-      "routing"
-    ]
+    "related_topics": ["ospf-fundamentals","bgp-fundamentals","subnetting"],
+    "tags": ["ipv6","routing","ospfv3"]
   },
   {
     "id": "gre",
@@ -212,27 +146,18 @@
     "name": "GRE Tunnels",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Point-to-point tunnels over IP.",
-      "why": "Connect non-contiguous networks.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "Encapsulation",
-        "MTU",
-        "Recursive routing"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Generic Routing Encapsulation (GRE) is a tunneling protocol that encapsulates packets of one protocol inside another — most commonly encapsulating IPv4 or IPv6 packets within IPv4. It creates a virtual point-to-point link between two routers. GRE has no encryption (unlike IPsec), so it's typically paired with IPsec for secure tunnels. GRE over IPsec is the standard for site-to-site VPN with dynamic routing.",
+      "why": "GRE enables routing protocols to run across non-contiguous networks — OSPF neighbors can form across a GRE tunnel even if intermediate networks only support IP forwarding. Without GRE, you'd be limited to static routes across a VPN. GRE also supports multicast traffic (IP, OSPF hellos) which IPsec alone cannot carry natively.",
+      "how": "GRE adds a 4-byte GRE header (protocol type, flags, checksum, key) plus a 20-byte IP header (total 24 bytes overhead) to each packet. The tunnel interface appears as a directly connected interface. Routing protocols peer over the tunnel interface. Key and checksum fields are optional but useful for distinguishing tunnels.",
+      "when": "Use GRE to: run OSPF/EIGRP across a VPN link (enables dynamic routing without static routes), carry multicast over IPsec (IPsec tunnel mode doesn't support multicast natively), connect non-contiguous networks with the same protocol family, and create overlay networks for virtual labs or multi-tenant environments.",
+      "key_concepts": ["GRE header format: 4 bytes with flags, protocol type, optional key and checksum", "Tunnel source/destination endpoints (loopback or physical interface IPs)", "IPsec transport mode + GRE tunnel for encryption with routing protocol support", "GRE keepalives for tunnel status monitoring", "MTU issues: GRE adds 24 bytes overhead (reduce interface MTU to 1476 or enable TCP MSS clamping)", "Recursive routing: tunnel destination must not be reachable through the tunnel itself"],
+      "configuration": "interface Tunnel0\n description GRE Tunnel to R2\n ip address 10.255.255.1 255.255.255.252\n ip mtu 1400\n ip tcp adjust-mss 1360\n tunnel source GigabitEthernet0/0\n tunnel destination 203.0.113.2\n tunnel key 12345\n keepalive 10 3\n!\nrouter ospf 1\n network 10.255.255.0 0.0.0.3 area 0",
+      "troubleshooting": ["Tunnel down: verify tunnel source/destination addresses are reachable (ping destination), check both sides have consistent tunnel configuration", "Routing loops: never point a default route through a tunnel — configure specific routes or use a routing protocol across the tunnel", "MTU drops: ping with DF-bit set and size 1476 (1500 - 24 GRE) to verify, reduce ip mtu or enable tcp adjust-mss", "OSPF adjacency over tunnel not forming: verify OSPF network type (broadcast vs point-to-point), tunnel is point-to-point by default", "GRE keepalive failures on peer: keepalive requires GRE sequence numbers, ensure both ends support them"],
+      "worked_examples": "Scenario: Company has two data centers connected via ISP IPsec VPN (no dynamic routing support). Need to run OSPF between DCs for automatic failover. Solution: 1) Configure GRE tunnel between DC edge routers sourcing from loopbacks (loopback0 → loopback0 across the WAN), 2) Encap the GRE traffic in IPsec transport mode for encryption (crypto map applied to the physical interface the tunnel uses), 3) Run OSPF over the tunnel interface, 4) MTU adjustment: ip mtu 1400, ip tcp adjust-mss 1360 on tunnel (1500 - 24 GRE - 20 IPsec ESP = 1456 safe limit). Result: OSPF forms adjacency across data centers, when a DC application subnet is added, OSPF propagates automatically vs requiring static route updates. When the WAN link fails, EIGRP detect failure in <10 seconds (OSPF dead timer on tunnel), and traffic fails over to the backup VPN link automatically.",
+      "summary": "GRE tunnels enable routing protocols over non-contiguous networks but add 24 bytes overhead per packet. Always pair GRE with IPsec for encryption, configure MTU appropriately (ip mtu 1400 + tcp adjust-mss 1360), and beware of recursive routing. Use GRE keepalives for tunnel health monitoring."
     },
-    "related_topics": [],
-    "tags": [
-      "gre",
-      "tunnel"
-    ]
+    "related_topics": ["ipsec","ospf-fundamentals","net-encryption"],
+    "tags": ["gre","tunnel","encapsulation"]
   },
   {
     "id": "pbr",
@@ -241,27 +166,18 @@
     "name": "Policy-Based Routing",
     "difficulty": "advanced",
     "theory": {
-      "what": "Route by source, protocol, not just destination.",
-      "why": "Traffic engineering beyond destination routing.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "Route maps",
-        "Match criteria",
-        "Set next-hop"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Policy-Based Routing (PBR) routes packets based on criteria other than destination IP — source IP, packet size, protocol, TCP/UDP ports, DSCP marking, or input interface. While destination-based routing uses the routing table for forwarding decisions, PBR applied via route-maps on an interface can override the routing table entirely.",
+      "why": "Destination-based routing can't differentiate traffic types or enforce traffic engineering policies. PBR enables: sending voice traffic over a low-latency link while bulk data uses a high-bandwidth link, forwarding traffic from specific subnets through a firewall for inspection, load balancing across unequal-cost paths, and service insertion (routing traffic through inline services like WAN optimizers).",
+      "how": "PBR uses route-maps applied to an incoming interface with a 'ip policy route-map' statement. Each sequence in the route-map has match criteria (source IP via ACL, packet length, protocol) and set actions (next-hop IP, output interface, ToS/DSCP marking, VRF selection). The route-map default action is to forward using the routing table — only matched traffic is PBR-forwarded.",
+      "when": "PBR is ideal for: traffic engineering across multiple WAN links (voice on MPLS, internet traffic on broadband), routing specific subnets through inspection devices (firewall, IPS), source-based routing for multi-tenancy (tenant A traffic leaves via ISP1, tenant B via ISP2), and implementing QoS policies (mark down bulk traffic from certain servers).",
+      "key_concepts": ["Route-maps with match and set clauses", "Set next-hop vs set interface (next-hop is Layer 3, interface is Layer 2)", "PBR and CEF: PBR processes at process-switching speed unless CEF-switched (enable with ip route-cache policy)", "Local PBR (ip local policy route-map) for locally generated traffic", "VRF selection via PBR (set vrf for MPLS L3VPN traffic steering)","Next-hop verify-availability for track object integration"],
+      "configuration": "access-list 101 permit ip 10.1.0.0 0.0.255.255 any\naccess-list 102 permit tcp any any eq 80\n!\nroute-map PBR-INTERNET permit 10\n match ip address 101\n set ip next-hop 192.168.1.1 192.168.2.1\n set ip next-hop verify-availability\n!\nroute-map PBR-INTERNET permit 20\n match ip address 102\n set ip next-hop 10.0.0.2\n!\ninterface GigabitEthernet0/1\n ip policy route-map PBR-INTERNET",
+      "troubleshooting": ["PBR not taking effect: verify route-map is applied to the correct interface (incoming direction)", "CEF switching not working for PBR: enable 'ip route-cache policy' for CEF-based PBR forwarding", "Next-hop unreachable: PBR fails to next sequence if next-hop is down — use track objects for dynamic failover", "Debug PBR selectively: debug ip policy <access-list> to avoid flooding logs", "Asymmetric routing: PBR may cause packets to return via a different path — verify firewall/stateful inspecting devices handle asym routes"],
+      "worked_examples": "Scenario: Branch office with two WAN links: MPLS (10 Mbps, SLA-backed, for voice) and Broadband (100 Mbps, best-effort, for data). Goal: voice traffic (DSCP EF) takes MPLS, data traffic takes broadband. PBR on the LAN interface: route-map PBR-WAN permit 10 matches DSCP EF and sets next-hop to MPLS router (192.168.1.1). permit 20 matches all other traffic and sets next-hop to broadband router (192.168.2.1). Next-hop verify-availability via IP SLA tracks each WAN link — if MPLS goes down, voice traffic automatically falls back to broadband (at reduced quality but still working). IP SLA probe: icmp-echo to MPLS ISP gateway every 5 seconds, track object 123 decrements 10 on timeout. When MPLS fails (3 consecutive timeouts), voice traffic PBR fails over to broadband path. When MPLS recovers, voice traffic automatically routes back to MPLS.",
+      "summary": "PBR provides traffic engineering beyond destination-based routing. Use for WAN path selection, service insertion, and source-based routing. Combine with IP SLA tracking for automatic failover. Prefer route-maps with precise match criteria and always configure multiple next-hop options for resilience. Monitor PBR statistics to verify traffic distribution."
     },
-    "related_topics": [],
-    "tags": [
-      "pbr",
-      "policy"
-    ]
+    "related_topics": ["route-filter","qos-voice","wan-tech"],
+    "tags": ["pbr","policy","traffic-engineering"]
   },
   {
     "id": "redundancy-design",
@@ -270,27 +186,18 @@
     "name": "Redundancy Design",
     "difficulty": "intermediate",
     "theory": {
-      "what": "No single point of failure.",
-      "why": "Ensures continuity.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "Dual-homed",
-        "Active/Standby",
-        "ECMP"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Network redundancy eliminates single points of failure (SPOF) through multiple paths, devices, and power sources. Key techniques: dual-uplink (each device connects to two upstream switches), link aggregation (EtherChannel/port-channel — active/active bandwidth aggregation), HSRP/VRRP/GLBP (first-hop redundancy for gateways), stack-wise (multiple switches as one logical unit), and ECMP (equal-cost multi-path routing).",
+      "why": "Statistics show 80% of network outages are caused by a single failure point. Redundant designs target 99.999% uptime (5 minutes downtime/year). Without redundancy: a single power supply failure, line card failure, or cable cut takes down the entire network segment. Redundancy is not just about availability — it enables maintenance without downtime.",
+      "how": "HSRP/VRRP provides active/standby gateway with sub-second failover. EtherChannel aggregates multiple links into one logical link with active/active bandwidth utilization. ECMP via OSPF or BGP provides multiple equal-cost paths with automatic traffic distribution. StackWise/Catalyst Center manages multiple switches as one for simplified management and cross-switch port channels. N+1 power supplies and UPS ensure power redundancy.",
+      "when": "Design for redundancy in all production environments: core and distribution switches (dual supervisors, dual power supplies, redundant uplinks), all access layer connections (run spanning-tree with two uplinks, one active, one blocking), server connections (NIC teaming with dual switches), and WAN connections (dual ISPs or dual circuits).",
+      "key_concepts": ["SPOF elimination (no single device, link, or power supply whose failure kills service)", "N+1, N+N (2N) redundancy models", "Active/Active vs Active/Standby designs", "HSRP/VRRP for gateway redundancy with preempt for failback", "EtherChannel with LACP for multi-link aggregation", "ECMP for Layer 3 redundancy","Dual power supplies, dual supervisors, diverse physical paths"],
+      "configuration": "interface Port-channel1\n description Redundant Uplink to Dist\n switchport trunk encapsulation dot1q\n switchport mode trunk\n!\ninterface GigabitEthernet1/0/1\n channel-group 1 mode active\n!\ninterface GigabitEthernet1/0/2\n channel-group 1 mode active\n!\ninterface Vlan10\n ip address 10.0.0.1 255.255.255.0\n standby version 2\n standby 10 ip 10.0.0.254\n standby 10 priority 110\n standby 10 preempt\n standby 10 track GigabitEthernet0/0 30",
+      "troubleshooting": ["Failover not happening: verify HSRP/VRRP timers, check preempt configuration, verify tracking objects", "EtherChannel not forming: LACP negotiation requires consistent port configuration across all member ports (speed, duplex, VLAN allowed)", "STP blocking unexpected port: check bridge priority, verify root bridge placement", "Dual-homed server link issues: configure the two switch ports with same spanning-tree settings (PortFast, BPDUGuard)", "Traffic not balancing across ECMP: check CEF load balancing method (per-destination vs per-packet), verify equal cost paths"],
+      "worked_examples": "Scenario: Redundant campus access design: Each access switch has two 10 Gbps fiber uplinks to two different distribution switches (dual-homed). Port-channel bundles them with LACP for active/active bandwidth (20 Gbps) and sub-second failover if one link fails. The distribution switches run HSRP: Distribution-1 is active (priority 110), Distribution-2 is standby (priority 100). Each access switch has redundant power supplies feeding from separate PDUs. If the first power supply fails, the second takes over with zero disruption. If Distribution-1 fails entirely, HSRP preempts to Distribution-2 in <3 seconds (hello timer 1s, hold timer 3s). Access layer uses FlexLink (alternative to STP) for sub-50ms failover between the two uplinks. Result: any single component failure (PSU, switch, cable, port) causes zero service disruption; converging back to optimal path when the failure is repaired.",
+      "summary": "Redundancy design targets SPOF elimination at every layer. Use dual-uplink (LACP/EtherChannel) for active/active bandwidth, HSRP/VRRP for gateway redundancy with failover tracking, and diverse physical paths (different cable routes, power sources, and distribution switches). Test failover scenarios regularly — a redundant design that hasn't been tested is not redundant."
     },
-    "related_topics": [],
-    "tags": [
-      "redundancy",
-      "ha"
-    ]
+    "related_topics": ["campus-design","dc-design","rstp-mstp"],
+    "tags": ["redundancy","ha","failover"]
   },
   {
     "id": "qos-voice",
@@ -299,27 +206,18 @@
     "name": "QoS for VoIP",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Prioritizing voice traffic.",
-      "why": "Voice needs <150ms delay, <1% loss.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "EF marking",
-        "Priority queue",
-        "LLQ"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "QoS for VoIP prioritizes voice traffic over data traffic to meet strict performance requirements: one-way latency <150ms (G.114 standard), jitter <30ms, packet loss <1%. Voice uses UDP (no retransmission) so lost packets = clipped audio. Cisco AutoQoS, MQC (Modular QoS CLI), and LLQ (Low Latency Queueing) are the primary tools for implementing VoIP QoS.",
+      "why": "Without QoS, a single large file download can introduce 500ms+ latency on a congested WAN link, making phone calls unusable (echo, clipping, dropped calls). Networks are designed for data (burst-tolerant), not voice (real-time). QoS guarantees voice always has available bandwidth regardless of other traffic. VoIP deployment without QoS is production-dangerous.",
+      "how": "End-to-end QoS marks traffic at trust boundaries: IP phones mark voice payload (EF — DSCP 46), call signaling (AF41 — DSCP 34), at the access switch port. The access port trusts the marking (mls qos trust cos). Distribution/core routers use MQC: class-map matches EF traffic, policy-map applies LLQ (guaranteed bandwidth + low-latency queue), and the service-policy is applied outbound on WAN interfaces.",
+      "when": "QoS for VoIP is essential on any WAN link (even with 1 Gbps WAN, bursty traffic can cause microburst congestion) and on oversubscribed access links (e.g., PoE switch with 48 phones and 48 PCs on a single 1 Gbps uplink). Also needed in data center fabrics carrying storage + voice + data to prevent bufferbloat affecting voice.",
+      "key_concepts": ["LLQ (Low Latency Queueing): priority queue + class-based weighted fair queue", "Trust boundary: where QoS markings are trusted (IP phone → switch port trust)", "DSCP marking: EF (46) for voice payload, AF41 (34) for call signaling", "AutoQoS: automated VoIP QoS configuration on Cisco devices", "Shaping vs policing: shape buffers, police drops — use shaping on LAN-to-WAN edges", "MQC (Modular QoS CLI): class-map, policy-map, service-policy"],
+      "configuration": "class-map match-any VOICE\n match ip dscp ef\n!\nclass-map match-any SIGNALING\n match ip dscp af41\n!\npolicy-map WAN-EDGE\n class VOICE\n  priority percent 10\n class SIGNALING\n  bandwidth percent 5\n class class-default\n  fair-queue\n  random-detect\n!\ninterface Serial0/0/0\n bandwidth 1544\n service-policy output WAN-EDGE",
+      "troubleshooting": ["Voice quality issues: verify DSCP markings end-to-end with 'show policy-map interface' counters", "LLQ starvation: voice priority queue shouldn't exceed 33% of bandwidth — non-voice traffic may starve", "Trust boundary broken: verify 'mls qos trust cos' on access ports with phones, CDP should auto-detect phone", "Dropped packets on priority queue: monitor 'show policy-map int serial0/0/0' class VOICE drop counts", "Jitter issues: enable 'ip rtp header-compression' on slow links (<768 Kbps)"],
+      "worked_examples": "Scenario: Branch office with 50 IP phones, 200 users, connected to HQ via 10 Mbps MPLS link. Without QoS: during backup window, WAN link saturates at 10 Mbps, voice packets queue behind backup data packets. Result: 300ms+ latency, dropped calls. With LLQ QoS on the branch WAN router: 1) class-map matches EF (voice payload, 30% of voice codec G.711 at 64 Kbps each = 50 × 64 Kbps = 3.2 Mbps), 2) policy-map VOICE-WAN: class VOICE gets priority 35% (3.5 Mbps guaranteed), class SIGNALING gets bandwidth 5% (500 Kbps), class class-default uses fair-queue with WRED (for data traffic). When backup saturates the link to 10 Mbps, the LLQ ensures voice gets its 3.5 Mbps with zero queuing delay — no jitter, no dropped voice packets. Data traffic is queued and may slow down, but voice quality stays perfect. Verification: show policy-map int Gig0/0 shows class VOICE with zero drop count, class-default shows drops during backup window. One minor misconfiguration: the priority queue was initially set to 40% which caused data traffic intermittent timeouts during high-voice periods. Reduced to 33%, added WRED to class-default to manage TCP congestion, problem solved.",
+      "summary": "VoIP QoS is mandatory for any network supporting voice. Use LLQ to guarantee bandwidth and low latency for voice traffic. Set trust boundaries correctly at the access port. Monitor QoS statistics monthly — dropping voice packets indicates congestion that needs bandwidth upgrades or traffic optimization. Remember: the bottleneck is almost always the WAN link."
     },
-    "related_topics": [],
-    "tags": [
-      "qos",
-      "voip"
-    ]
+    "related_topics": ["wan-tech","voip","rstp-mstp"],
+    "tags": ["qos","voip","llq"]
   },
   {
     "id": "rstp-mstp",
@@ -328,28 +226,18 @@
     "name": "RSTP/MSTP",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Fast STP convergence (1-2s).",
-      "why": "Classic STP takes 30-50s.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "RSTP roles",
-        "Edge ports",
-        "BPDU Guard"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "RSTP (Rapid Spanning Tree Protocol, IEEE 802.1w) improves on classic STP (802.1D) with sub-second convergence (1-2 seconds vs 30-50 seconds). MSTP (Multiple Spanning Tree Protocol, IEEE 802.1s) extends RSTP for VLAN-aware spanning tree — one instance per VLAN group for load balancing across redundant links. RSTP introduces port roles: Root, Designated, Alternate (discarding but ready), and Backup.",
+      "why": "Classic STP convergence time (30s listening + 15s learning = 45s) is unacceptable for modern networks — a switch failure causes 45 seconds of no traffic. RSTP's 1-2 second convergence is acceptable for most applications. MSTP enables multiple VLANs to use different active topologies, preventing the problem where half the VLANs unnecessarily block redundant links.",
+      "how": "RSTP uses explicit (proposal/agreement) handshakes between switches for rapid convergence instead of timer-based transitions. Edge ports (connected to end devices, not switches) transition immediately to forwarding — no STP delays for user ports. MSTP assigns VLANs to instances (MSTIs), each with its own root bridge. Internal Spanning Tree (IST) provides the CIST (Common and Internal Spanning Tree) connectivity.",
+      "when": "Replace classic STP with RSTP on all switch networks running 802.1Q. Upgrade to MSTP when: running multiple VLANs (10+), needing load balancing across uplinks (active different VLANs on different links), or operating large switched networks requiring STP scalability.",
+      "key_concepts": ["RSTP port roles: Root (RP), Designated (DP), Alternate (discarding but immediate failover), Backup", "RSTP edge ports (PortFast): immediate forwarding for access ports", "Proposal/agreement handshake for rapid transition to forwarding", "MSTP: multiple spanning tree instances (MSTI 0-4094)", "Regional root bridges per MSTI for per-VLAN load balancing", "STP BPDU Guard and Root Guard for protection"],
+      "configuration": "spanning-tree mode rapid-pvst\n!\ninterface GigabitEthernet1/0/1\n spanning-tree portfast\n spanning-tree bpduguard enable\n!\ninterface Port-channel1\n spanning-tree guard root\n!\n! For MSTP:\nspanning-tree mode mst\nspanning-tree mst configuration\n instance 1 vlan 1-100,300-400\n instance 2 vlan 101-200\n!\nspanning-tree mst 1 priority 4096\nspanning-tree mst 2 priority 8192",
+      "troubleshooting": ["Slow convergence: check if all switches run the same STP version (some may be running classic STP 802.1D)", "BPDU Guard err-disable: verify access ports configured with spanning-tree portfast + bpduguard, check for accidental switch-to-switch connection on user ports", "MST region mismatch: all switches in an MST region must have the same configuration name, revision number, and VLAN-to-instance mapping", "Alternate port not taking over: check bridge priority values — the alternate should have a better path to root than the current path", "TC (Topology Change) notifications flooding: check for flapping ports causing constant topology changes — investigate with show spanning-tree detail"],
+      "worked_examples": "Scenario: Campus switch network with 30 switches, 500 VLANs, dual uplinks. Using classic STP: convergence after link failure takes 45 seconds. UplinkFast (Cisco proprietary) reduces to 3-5 seconds but still noticeable. Upgrade to RSTP: convergence after link failure drops to 1-2 seconds. PortFast on all 10,000 access ports eliminates STP delays for user connections. When a user's PC boots, the port goes forwarding immediately. Additionally, configure MSTP with two instances: MSTI 1 for VLANs 1-250 (root at Switch-A), MSTI 2 for VLANs 251-500 (root at Switch-B). Each access switch's two uplinks actively carry traffic — one carries MSTI 1 VLANs, the other carries MSTI 2 VLANs. Before MSTP: one uplink was blocking for all VLANs, wasting 50% of available bandwidth. After MSTP: both uplinks active, 100% bandwidth utilization. Failover scenario: if MSTI 1's active uplink fails, MSTI 1 fails over to the other uplink (previously carrying MSTI 2). Since the second uplink has enough capacity, both MSTIs share it until the primary link is restored.",
+      "summary": "Upgrade all switches to RSTP for sub-second convergence and replace PortFast/BPDUGuard for access ports. Use MSTP for VLAN-aware load balancing with per-VLAN root bridge placement. RSTP's explicit handshake protocol (proposal/agreement) is the key difference from classic STP's timer-based convergence. Monitor topology change notifications as an indicator of network stability."
     },
-    "related_topics": [],
-    "tags": [
-      "rstp",
-      "mstp",
-      "fast"
-    ]
+    "related_topics": ["campus-design","redundancy-design","vlans"],
+    "tags": ["rstp","mstp","spanning-tree"]
   },
   {
     "id": "dhcp-relay2",
@@ -358,26 +246,18 @@
     "name": "DHCP Relay",
     "difficulty": "beginner",
     "theory": {
-      "what": "Forward DHCP across subnets.",
-      "why": "Broadcasts don't cross routers.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "ip helper-address",
-        "Option 82"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "DHCP relay (ip helper-address on Cisco) forwards DHCP broadcast requests across router boundaries so clients in one subnet can get IP addresses from a DHCP server in another subnet. DHCP uses broadcasts (UDP 67/68) which don't cross routers by default. The relay agent converts the broadcast to unicast, adds the Gateway IP Address (giaddr) field (the router's interface IP) so the server knows which subnet to assign an address from.",
+      "why": "Running a DHCP server on every subnet is impractical — you'd need servers per VLAN, each with its own scope. DHCP relay centralizes DHCP services: one or two DHCP servers serve all subnets. This centralizes management, simplifies scope administration, and reduces server costs.",
+      "how": "The router receiving the DHCP broadcast: 1) intercepts the DHCP Discover packet, 2) replaces the source IP with its interface IP (giaddr field), 3) unicasts to the DHCP server IP (ip helper-address). The server sees the giaddr and allocates an address from the matching scope. The relay forwards the DHCP Offer/Ack back to the client. DHCP Option 82 (Relay Agent Information) adds switch port and VLAN ID for additional granularity.",
+      "when": "DHCP relay is needed for any network with multiple VLANs or subnets where you want centralized DHCP services. Required for: campus networks (one DHCP server for all VLANs), remote branches with DHCP server at HQ, and any network with routed segments where DHCP clients exist across multiple Layer 3 interfaces.",
+      "key_concepts": ["DHCP broadcast → unicast conversion at router", "giaddr (Gateway IP Address) field for subnet identification", "ip helper-address forwards BOOTP/DHCP + TFTP + DNS + Time + TACACS", "DHCP Option 82 for port/VLAN identification", "DHCP relay agent vs DHCP server (router can be both)", "Multiple DHCP servers for redundancy (ip helper-address with multiple entries)"],
+      "configuration": "interface Vlan100\n description Users-Floor-1\n ip address 10.1.0.1 255.255.255.0\n ip helper-address 10.0.0.10\n ip helper-address 10.0.0.11  # redundant server\n!\ninterface Vlan200\n description Users-Floor-2\n ip address 10.2.0.1 255.255.255.0\n ip helper-address 10.0.0.10\n ip helper-address 10.0.0.11",
+      "troubleshooting": ["Clients not getting IP: verify ip helper-address on the correct SVI, confirm DHCP server reachability", "Wrong subnet assigned: check giaddr field in DHCP Discover via debug ip dhcp server packet (server must have scope matching giaddr)", "DHCP server sees requests but no response: check firewall rules allowing UDP 67/68 between relay and server", "Option 82 not being added: verify ip dhcp relay information option on the switch interface", "Multiple helper addresses causing duplicates: each helper forwards separately — client receives multiple offers and picks one"],
+      "worked_examples": "Scenario: Campus with 10 VLANs (10.1.0.0/16 through 10.10.0.0/16), each VLAN corresponds to a floor/building segment. One DHCP server at 10.0.0.10 handles all scopes. Configuration: each SVI (Vlan100-1000) has ip helper-address 10.0.0.10. When a client on VLAN 500 (10.5.0.0/24) boots: 1) Client sends DHCP Discover broadcast to 255.255.255.255, 2) Switch's SVI Vlan500 intercepts (giaddr = 10.5.0.1), 3) Forwards unicast to 10.0.0.10, 4) DHCP server sees giaddr = 10.5.0.1, allocates from scope 10.5.0.0/24, 5) Offers 10.5.0.50 with subnet mask /24 and default gateway 10.5.0.1, 6) Relay forwards Offer to client's MAC address. Common issue: VLAN 600 fails to get addresses. Debug: giaddr shows as 10.5.0.1 (wrong — captured from wrong SVI). Fix: verify SVI Vlan600 has correct IP address and ip helper-address is on the correct SVI.",
+      "summary": "DHCP relay centralizes IP address management by forwarding DHCP broadcasts across subnets. Configure ip helper-address on each SVI/subnet interface pointing to your DHCP server. Verify giaddr field for proper scope assignment. Use multiple helper addresses for DHCP server redundancy. Understand that ip helper-address forwards more than just DHCP — it also forwards TFTP, DNS, Time, TACACS, and NetBIOS by default."
     },
-    "related_topics": [],
-    "tags": [
-      "dhcp",
-      "relay"
-    ]
+    "related_topics": ["dns-fundamentals","dhcp-snoop"],
+    "tags": ["dhcp","relay","ip-helper"]
   },
   {
     "id": "acls",
@@ -386,27 +266,17 @@
     "name": "Access Control Lists",
     "difficulty": "beginner",
     "theory": {
-      "what": "Packet filtering on routers.",
-      "why": "Basic network security building block.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "Standard",
-        "Extended",
-        "Named",
-        "Wildcard masks"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Access Control Lists (ACLs) are sequential lists of permit/deny statements that filter packets based on IP addresses, protocols, and port numbers. Standard ACLs filter by source IP only (numbered 1-99, 1300-1999). Extended ACLs filter by source/destination IP, protocol, TCP/UDP ports, ICMP types, DSCP, and more (numbered 100-199, 2000-2699). Named ACLs (IP access-list extended name) offer modular, editable entries.",
+      "why": "ACLs are the fundamental building block of network security — every firewall, router ACL, and security group is based on ACL logic. They secure network access (restrict SSH/Telnet to management subnets), implement traffic policies (permit specific traffic types), control routing updates (distribute-lists), and define NAT interesting traffic.",
+      "how": "ACLs process packets sequentially — first match wins (permit or deny). Every ACL has an implicit deny at the end: if no rule matches, the packet is dropped. Extended ACLs are placed closest to the source (efficient — denies happen before consuming bandwidth across the network). Standard ACLs are placed closest to the destination (standard ACLs can't filter on destination, so they need to be near the destination). Wildcard masks use inverse logic: 0.0.0.255 matches the first 24 bits exactly, 255.255.255.255 matches nothing (any), 0.0.0.0 matches everything.",
+      "when": "ACLs are used everywhere: restrict management access to routers/switches (vty access-class), filter traffic at network boundaries (between departments, to/from internet), control NAT (which traffic gets translated), define QoS class maps, and match routes for redistribution.",
+      "key_concepts": ["Standard ACLs (1-99, 1300-1999): source IP only", "Extended ACLs (100-199, 2000-2699): source + destination + protocol + port", "Named ACLs: modular, editable entries with sequence numbers", "Wildcard masks: 0 = match, 1 = ignore (inverse of subnet mask)", "Implicit deny at end of every ACL", "ACL placement: extended closest to source, standard closest to destination","vty access-class for SSH/telnet restriction"],
+      "configuration": "ip access-list extended SECURE-MGMT\n remark Allow SSH from NMS and IT subnet\n permit tcp 10.0.0.0 0.0.0.255 host 192.168.1.1 eq 22\n permit tcp 10.10.0.0 0.0.0.255 host 192.168.1.1 eq 22\n deny tcp any host 192.168.1.1 eq 22 log\n permit ip any any\n!\ninterface GigabitEthernet0/0\n ip access-group SECURE-MGMT in",
+      "troubleshooting": ["ACL blocking expected traffic: use 'show access-list' to check match counters, verify rule order (first match wins)", "Logging: add 'log' keyword to ACL entries for denied traffic — logs show source IP attempting access", "ACL too long: remove unused entries, sequence numbers enable inserting/deleting entries without rewriting", "Performance issues: ACLs are CEF-switched on most modern routers — performance impact is negligible at <500 entries", "Forgot implicit deny: create an explicit permit at the end during testing to avoid blocking all traffic, then remove it when rules are final"],
+      "worked_examples": "Scenario: Restrict SSH access to a core router. Only the NMS server (10.0.0.10), IT subnet (10.10.0.0/24), and console server (192.168.100.1) should be able to SSH. Serial console and OOB management for emergencies. ACL: permit tcp host 10.0.0.10 any eq 22, permit tcp 10.10.0.0 0.0.0.255 any eq 22, permit tcp host 192.168.100.1 any eq 22, deny tcp any any eq 22 log. Applied: line vty 0 4, access-class SECURE-MGMT in. Effect: an attacker from the internet (who somehow reached the router mgmt IP) sends SSH attempt — ACL matches deny, packet dropped, log generated: '%SEC-6-IPACCESSLOGP: list SECURE-MGMT denied tcp 203.0.113.5(45201) -> 192.168.1.1(22)'. The log entry provides source IP for incident response. Refinement: add a log-input variant to also capture the input interface. Result: unauthorized SSH attempts are logged but never reach the VTY process.",
+      "summary": "ACLs are the universal access control mechanism in networking. Master wildcard mask calculation, understand placement rules (extended close to source, standard close to destination), and always account for the implicit deny. Use named ACLs with sequence numbers for production — they're easier to maintain. Add logging to deny entries for security monitoring. Always test ACLs with explicit permit any during initial deployment to avoid accidental connectivity loss."
     },
-    "related_topics": [],
-    "tags": [
-      "acl",
-      "filtering"
-    ]
+    "related_topics": ["route-filter","cloud-fw","port-sec"],
+    "tags": ["acl","filtering","security"]
   }
 ]

@@ -6,27 +6,18 @@
     "name": "IKEv2 VPN",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Modern VPN with fast reconnection.",
-      "why": "Preferred for modern VPNs.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "MOBIKE",
-        "EAP",
-        "Dead peer detection"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "IKEv2 (Internet Key Exchange version 2) is the modern VPN tunneling protocol standardized in RFC 7296. It's the successor to IKEv1 (used with IPsec). IKEv2 features built-in MOBIKE (Mobility and Multihoming) for seamless network transitions (switching from Wi-Fi to LTE without VPN reconnection), built-in NAT traversal (no extra configuration), EAP (Extensible Authentication Protocol) integration for flexible authentication, and faster tunnel establishment (3 messages vs IKEv1's 6-9).",
+      "why": "IKEv1 has known security weaknesses (aggressive mode sends identities in cleartext, complex configuration with 6+ parameters). IKEv2 simplifies: fewer configuration options, mandatory security features (DDoS protection via cookies), built-in NAT traversal, and standard MOBIKE for mobile users. IKEv2 is recommended over IKEv1 for all new VPN deployments.",
+      "how": "IKEv2 uses a 3-message exchange: IKE_SA_INIT (negotiate crypto parameters, exchange nonces, Diffie-Hellman key exchange), IKE_AUTH (authenticate identities, establish first CHILD_SA, push configuration payloads), and CREATE_CHILD_SA (establish additional SAs, rekey within the same tunnel). Multiple authentication methods: pre-shared keys, certificates (PKI), or EAP (for remote access with user auth).",
+      "when": "Use IKEv2 for: site-to-site VPN (branch offices, data center interconnect), remote access VPN (mobile users connecting from home/coffee shop), replacing existing IKEv1 deployments (migration target), and any VPN requiring MOBIKE (users switching between Wi-Fi and cellular).",
+      "key_concepts": ["IKE_SA (ISAKMP Security Association) for control channel", "CHILD_SA (IPsec Security Association) for data encryption", "MOBIKE: seamless network transition without VPN reconnect", "EAP authentication for remote access (username/password + certificate)", "DDoS cookie protection (built-in, no configuration)", "NAT traversal (UDP encapsulation, no extra config required)","IKEv2 redirect (load balancing across VPN gateways)"],
+      "configuration": "crypto ikev2 proposal IKEV2-PROPOSAL\n encryption aes-cbc-256\n integrity sha256\n group 14\n!\ncrypto ikev2 policy IKEV2-POLICY\n proposal IKEV2-PROPOSAL\n!\ncrypto ikev2 profile IKEV2-PROFILE\n match identity remote address 10.0.0.0 255.255.255.0\n authentication remote pre-share\n authentication local pre-share\n keyring local IKEV2-KEY\n!\ncrypto ipsec transform-set AES256-SHA esp-aes 256 esp-sha256-hmac\n mode tunnel\n!\ncrypto map VPN 10 ipsec-isakmp\n set peer 203.0.113.1\n set transform-set AES256-SHA\n set ikev2-profile IKEV2-PROFILE\n match address VPN-ACL",
+      "troubleshooting": ["IKE_SA_INIT failure: verify proposal parameters match on both ends (encryption, hash, DH group)", "IKE_AUTH failure: check authentication credentials (pre-shared key or certificate), verify identity matching (match identity statement)", "MOBIKE not working: verify both ends support MOBIKE (show crypto ikev2 sa detail), check NAT detection", "NAT traversal issues: ensure both ends have 'nat-keepalive' configured (default 20 seconds)", "Child SA not establishing: verify IPsec transform set and proxy identities (ACL or traffic selectors) match"],
+      "worked_examples": "Scenario: Migrating 50 site-to-site IKEv1 VPN tunnels to IKEv2. Old IKEv1 config had: aggressive mode (cleartext identity), pre-shared key, DES encryption (weak), MD5 hash (weak). New IKEv2 config: AES-256-GCM encryption, SHA-256 hash, DH group 14 (2048-bit), pre-shared keys (with plan to migrate to certificate-based auth). Migration steps: 1) Configure IKEv2 alongside IKEv1 on the hub router (both enabled), 2) Test one spoke site: change from IKEv1 to IKEv2 config, verify tunnel comes up, 3) Verify traffic flows through the new IKEv2 tunnel with show crypto ipsec sa, 4) Monitor for 24 hours, 5) Roll out to remaining 49 spoke sites over 2 weeks. Result: all tunnels migrated, strong crypto (AES-256-GCM vs DES), no impact to user traffic during cutover (maintenance window per site). One spoke site failed IKE_AUTH — the preshared key had a special character that was interpreted differently between the two routers. Re-encrypted the key on both ends, tunnel established. Four sites behind NAT needed 'nat-keepalive 20' added to prevent idle tunnel timeouts.",
+      "summary": "IKEv2 is the modern VPN standard, replacing IKEv1 with stronger crypto, simpler configuration, and MOBIKE support. Use AES-256-GCM encryption, SHA-256 integrity, DH group 14+, and EAP for remote access authentication. Migrate from IKEv1 to IKEv2 for all new deployments. Test NAT traversal and MOBIKE during pilot rollout."
     },
-    "related_topics": [],
-    "tags": [
-      "ikev2",
-      "vpn"
-    ]
+    "related_topics": ["net-encryption","ssl-vpn2"],
+    "tags": ["ikev2","vpn","ipsec"]
   },
   {
     "id": "ssl-vpn2",
@@ -35,27 +26,18 @@
     "name": "SSL/TLS VPN",
     "difficulty": "intermediate",
     "theory": {
-      "what": "VPN using TLS \u2014 works through firewalls.",
-      "why": "Works anywhere HTTPS works.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "Clientless",
-        "Full tunnel",
-        "Split tunnel"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "SSL/TLS VPN provides remote access via HTTPS (port 443), making it virtually unblockable (firewalls almost always allow HTTPS). Two modes: Clientless (browser-based, no client software — access internal web apps via a web portal) and Full Tunnel (thin client connects and routes all traffic through the corporate network). Cisco AnyConnect (SSL/TLS + IPsec IKEv2) and OpenVPN are the primary implementations.",
+      "why": "IPsec IKEv2 can be blocked by restrictive firewalls, hotel/cafe Wi-Fi portals, or enterprise outbound firewalls. SSL/TLS VPN uses port 443 — the same port as normal HTTPS web traffic — making it indistinguishable from web browsing. It also provides clientless access for users who can't install VPN clients (contractors, managed devices).",
+      "how": "Clientless mode: user browses to https://vpn.company.com, authenticates (SSO, MFA), and accesses internal web apps through a reverse proxy. The VPN gateway rewrites URLs and cookies to make internal apps accessible without client software. Full tunnel mode: the AnyConnect client authenticates, establishes a TLS session to the VPN gateway, and creates a virtual adapter. Client routes are pushed from the gateway (company-routes.txt), directing specific subnets through the tunnel.",
+      "when": "Use SSL/TLS VPN for: remote user access (teleworkers, road warriors), contractor access (clientless mode — no software install), guest vendor access (limited, time-bound), and primary VPN for organizations that can't control outbound firewall rules (users on hotel/cafe networks, international travel).",
+      "key_concepts": ["Clientless (web portal, reverse proxy) vs Full Tunnel (virtual adapter)", "TLS/DTLS: TLS for reliable transport, DTLS for latency-sensitive (voice)", "Cisco AnyConnect: most widely deployed enterprise SSL VPN", "Split tunneling: only corporate traffic through VPN, internet direct (reduces VPN load)", "Posture assessment: check client OS, antivirus, firewall before granting access", "MFA integration: SAML, RADIUS with OTP","Always-On VPN: auto-connect, never disconnect (managed devices)"],
+      "configuration": "# Cisco ASA AnyConnect config\nwebvpn\n enable outside\n anyconnect image /flash/anyconnect-win-4.10.pkg 1\n anyconnect enable\n tunnel-group-list enable\n!\ngroup-policy REMOTE-ACCESS internal\ngroup-policy REMOTE-ACCESS attributes\n vpn-tunnel-protocol ssl-client ssl-clientless\n split-tunnel-policy tunnelspecified\n split-tunnel-network-list value SPLIT-TUNNEL\n default-domain company.com\n!\nusername admin@company.com password ****\n!",
+      "troubleshooting": ["Cannot connect: verify AnyConnect client version matches gateway, check for firewall blocking DTLS (UDP 443, fall back to TLS)", "Clientless mode apps not working: check URL rewriting rules, verify internal DNS resolution for apps", "Split tunnel not working (all traffic goes through VPN): check 'split-tunnel-policy' is 'tunnelspecified', verify network list", "Authentication loop: clear browser cookies/cache, check SAML assertion validity, verify clock sync", "Performance issues: DTLS is faster than TCP-based TLS — ensure DTLS is not blocked, consider using IPsec IKEv2 for high-bandwidth (IPsec has lower overhead)"],
+      "worked_examples": "Scenario: 5000 remote employees need VPN access. Most use company laptops (AnyConnect), some contractors use personal devices (clientless). Solution: 1) AnyConnect for company laptops with Always-On VPN (auto-reconnect, full tunnel for corporate subnets, split-tunnel for internet), 2) MFA via DUO (push notification) for all authentication, 3) Posture assessment: checks for updated antivirus, no unauthorized software, disk encryption enabled, 4) Clientless portal (https://vpn.company.com) for contractors — grants access to Office 365 web apps and internal SharePoint only, 5) Performance: 2 VPN gateways (Cisco ASA) handling 2500 concurrent connections each. Issue: some users in hotels can't connect via DTLS (UDP 443 blocked) — client falls back to TLS (TCP 443), which is slower due to TCP-over-TCP problem. Solution: enable IPsec IKEv2 as the primary protocol (lower overhead than TLS) with SSL/TLS as fallback. Result: 75% of users connect via IKEv2 (faster), 20% via DTLS (good), 5% fall back to TLS (acceptable).",
+      "summary": "SSL/TLS VPN provides versatile remote access — clientless for quick access, full tunnel for comprehensive connectivity. Cisco AnyConnect is the enterprise standard. Use DTLS for better performance than TCP-based TLS. Implement split-tunneling to reduce VPN gateway load. Always configure MFA and posture assessment for security. Consider IKEv2 as primary with SSL/TLS fallback for optimal performance."
     },
-    "related_topics": [],
-    "tags": [
-      "ssl-vpn",
-      "remote"
-    ]
+    "related_topics": ["ikev2","radius-tacacs2"],
+    "tags": ["ssl-vpn","anyconnect","remote-access"]
   },
   {
     "id": "seg-patterns",
@@ -64,27 +46,18 @@
     "name": "Segmentation Patterns",
     "difficulty": "intermediate",
     "theory": {
-      "what": "DMZ, three-zone, micro-perimeter.",
-      "why": "Proper design limits blast radius.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "DMZ",
-        "Three-zone",
-        "PCI CDE isolation"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Network segmentation divides the network into isolated zones based on security requirements. Common patterns: DMZ (demilitarized zone — isolated subnet for public-facing servers), Three-Zone (inside → DMZ → outside), PCI CDE (Cardholder Data Environment — strict isolation for payment data), and Zero Trust / microsegmentation (per-workload firewalling with identity-based policies). Segmentation is implemented with VLANs, firewall zones, VRFs (Cisco), or overlay networks (VXLAN).",
+      "why": "A flat network is a security disaster: if an attacker compromises a single web server, they can move laterally to the database server (containing PII) because both are on the same network. Segmentation limits blast radius — an attacker in the DMZ cannot reach the internal network without crossing a firewall. PCI DSS Requirement 1 mandates network segmentation as a primary compliance control.",
+      "how": "DMZ: public servers exist between two firewalls — the internet-facing firewall permits HTTP/HTTPS from anywhere, the internal firewall permits specific outbound connections (DB queries to internal database, LDAP authentication). Three-zone adds a third zone for restricted systems (internal users only). Microsegmentation uses software-defined policies (NSX, Cisco ACI, Illumio) to create per-workload firewall rules regardless of physical location.",
+      "when": "Segmentation is essential for: any network with sensitive data (PII, PCI, PHI), PCI DSS compliance (cardholder data must be isolated), multi-tenant environments (separate tenants cannot communicate), and Zero Trust architectures (no implicit trust based on network location — every workload is firewalled).",
+      "key_concepts": ["DMZ: isolated zone for public-facing servers", "Three-zone model: inside (trusted) → DMZ (semi-trusted) → outside (untrusted)", "PCI CDE isolation: restrict access to cardholder data environment", "VLAN-based segmentation (traditional, VLAN per security zone)", "VRF segmentation (Cisco: separate routing tables per tenant)", "Microsegmentation (per-workload firewall policies, identity-based)","Zoning in SDN (ACI endpoint groups, NSX security groups)"],
+      "configuration": "# VLAN-based segmentation on Cisco switch\nvlan 10\n name INSIDE-USER\n!\nvlan 20\n name INSIDE-SERVER\n!\nvlan 30\n name DMZ\n!\nvlan 40\n name MGMT\n!\ninterface Vlan10\n description Users\n ip address 10.1.0.1 255.255.255.0\n ip access-group INSIDE-ACL in\n!\ninterface Vlan30\n description DMZ\n ip address 10.3.0.1 255.255.255.0\n ip access-group DMZ-ACL in",
+      "troubleshooting": ["Applications break across zones: common patterns HTTP/HTTPS through DMZ, DB traffic to internal, LDAP — document all cross-zone flows", "Microsegmentation complexity: start with macro-segmentation (VLAN/VRF), add micro per workload gradually", "Network performance with firewall inspection: ensure firewall throughput matches inter-zone bandwidth requirements", "Management access to segmented zones: dedicated management VLAN with jump host (bastion) for access to each zone", "DHCP across zones: use DHCP relay across firewall zones, don't extend single DHCP scope across segmented boundaries"],
+      "worked_examples": "Scenario: E-commerce application with three tiers: web (public), app (internal), database (restricted). Segmentation design: 1) Web servers in DMZ (VLAN 30, 10.3.0.0/24) — accessible from internet on ports 80/443 via firewall. 2) App servers in INSIDE-SERVER (VLAN 20, 10.2.0.0/24) — accessible only from DMZ on port 8080 via specific firewall rule. 3) Database servers in INSIDE-SERVER-restricted (VLAN 25, 10.2.5.0/24) — accessible only from app servers on port 3306. 4) Management in MGMT (VLAN 40, 10.4.0.0/24) — accessible only from bastion host. Firewall rules: Internet → DMZ: permit 80, 443. DMZ → APP: permit 8080. APP → DB: permit 3306. All other inter-zone traffic: deny. Any → MGMT: deny (only via bastion). If an attacker compromises the web server: they are in DMZ (VLAN 30). They can only reach: the internet, app servers on port 8080. They cannot reach: database servers (no direct DMZ-to-DB rule), management network (deny all to MGMT), or internal user networks (different zone, no rule). The segmentation limits the attack to potentially compromising the app server — but not the database with customer PII. Microsegmentation adds: even within the app zone, each app VM has a firewall rule that only permit traffic from specific DMZ web servers.",
+      "summary": "Network segmentation is the foundation of network security. Implement DMZ for public-facing services, isolate sensitive data (PCI, PII) in restricted zones, and enforce least-privilege inter-zone communication with firewalls. Start with VLAN-based macro-segmentation and evolve to microsegmentation for Zero Trust architectures. Document every cross-zone traffic flow and audit firewall rules quarterly."
     },
-    "related_topics": [],
-    "tags": [
-      "segmentation",
-      "patterns"
-    ]
+    "related_topics": ["cloud-fw","acls","port-sec"],
+    "tags": ["segmentation","dmz","zero-trust"]
   },
   {
     "id": "ips-tuning",
@@ -93,27 +66,18 @@
     "name": "IPS Tuning",
     "difficulty": "advanced",
     "theory": {
-      "what": "Balance detection vs false positives.",
-      "why": "Out-of-box IPS is too noisy.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "Signature tuning",
-        "Thresholds",
-        "Exclusions"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Intrusion Prevention System (IPS) tuning balances detection coverage against false positives. Out-of-box IPS configurations typically generate 10,000+ alerts per day, with 95%+ being false positives (benign traffic matching attack signatures). Tuning adjusts: signature sensitivity (some are too aggressive for your environment), threshold levels (how many times an event must occur before alerting), and exclusion rules (known good traffic that shouldn't trigger). Snort and Suricata are the primary open-source IDS/IPS engines.",
+      "why": "An untuned IPS generates so many alerts that the security team ignores them all (alert fatigue). A properly tuned IPS generates fewer, higher-quality alerts — 10-50 actionable alerts per day instead of 10,000+ noise. Tuning also improves performance: unnecessary signature processing consumes CPU. Organizations using untuned IPS typically have 60%+ of signatures disabled due to false positive overload vs properly tuned with 90%+ enabled.",
+      "how": "Tuning process: 1) Deploy IPS in monitor-only (IDS) mode for 30 days — collect all alerts, 2) Analyze alert data: group by signature ID, count occurrences, identify the top 20 signatures generating 80% of alerts, 3) For each high-volume signature: determine if it's a real threat or false positive (check packet capture), 4) For false positives: add suppression rules (exclude specific IPs, ports, or protocols), adjust threshold (only alert if > N times per minute), or disable the signature if it's not applicable (e.g., Windows exploits on Linux network), 5) Move to inline (IPS) mode after tuning baseline is established.",
+      "when": "IPS tuning is required: during initial deployment (baseline period — 30 days), after network changes (new applications, new server OS, new protocols), after signature updates (new signatures need tuning), and quarterly reviews (validate tuning rules still apply).",
+      "key_concepts": ["Alert triage: classify as true positive, false positive, or benign/ informational", "Suppression rules: exclude specific source/destination from specific signatures", "Threshold tuning: require N events in M seconds before alerting", "Baseline profiling: normal traffic patterns for your environment", "Monitor-only (IDS) vs inline (IPS) mode", "False positive causes: software updates, scanner traffic, legitimate administrative tools","Signature categories: exploit, trojan, policy-violation, protocol-anomaly"],
+      "configuration": "# Suricata threshold configuration\n# Suppress Windows exploit signatures on Linux server\nsuppress: gen_id 1, sig_id 2012345, track_by_src, ip 10.0.0.0/24\nsuppress: gen_id 1, sig_id 2013456, track_by_dst, ip 10.0.0.200\n# Threshold: alert only if > 10 events/minute\nthreshold: gen_id 1, sig_id 2012345, type threshold, track by_src, count 10, seconds 60\n# Remove signature for protocol not in use\n# disable: sig_id 2014567",
+      "troubleshooting": ["IPS blocking legitimate traffic (false positive): immediately place signature in alert-only mode, analyze the packet capture, add suppression", "Too many alerts after tuning: reduce thresholds on high-volume signatures, add more specific suppression rules, remove signatures not relevant to your environment", "Signature update causes new false positives: new signatures default to alert-only until reviewed", "IPS performance degradation: disable unused signatures, enable flow-based (stateful) inspection instead of deep packet inspection for high-throughput links", "Missed real attacks (false negatives): review missed attacks, enable or create signatures for the attack pattern"],
+      "worked_examples": "Scenario: Deploying Suricata IPS at internet edge (10 Gbps link). Baseline data (30 days IDS mode): 250,000 alerts recorded. Top 5 signatures generating 80% of alerts: 1) 'ET SCAN NMAP OS Detection' — 85,000 alerts (34%). Analysis: internal vulnerability scanner running weekly. Suppression: exclude vulnerability scanner IP (10.0.0.50) as source — reduces by 34%. 2) 'ET POLICY Outbound DNS Query to Non-Port 53' — 45,000 alerts (18%). Analysis: legitimate CDN traffic using custom DNS. Suppression: exclude specific CDN IPs (from CDN allow list). 3) 'ET WEB_SERVER Possible SQL Injection in URI' — 25,000 alerts (10%). Analysis: all from internal web app developer testing. Suppression: exclude developer subnet (10.1.100.0/24) as source — reduces 10% for this signature, but retain others. 4) 'ET COMPROMISED Known Malicious IP' — 15,000 alerts (6%). Analysis: 100% true positives — mostly automated scans. Retain, but threshold: alert only if > 5 events/minute from same IP — groups the scans into single alerts. 5) 'ET SHELLCODE Detected' — 12,000 alerts (4.8%). Analysis: all from a monitoring tool using legitimate shell commands. Suppression: exclude monitoring server IPs. After tuning: daily alerts drop from 8,333/day to ~200/day with 95% actionable. IPS moved to inline mode. True positive detection rate (after 6 months): 80% of real attacks detected (missed 20% are new CVEs that signatures didn't exist for).",
+      "summary": "IPS tuning is essential for effective intrusion detection. Deploy in monitor-only mode for 30 days, analyze the top alert sources, and add suppression rules for known false positives. Re-tune after signature updates and network changes. Target: 100-200 actionable alerts/day on a 10 Gbps link. An untuned IPS is worse than no IPS — it creates alert fatigue that hides real incidents."
     },
-    "related_topics": [],
-    "tags": [
-      "ips",
-      "tuning"
-    ]
+    "related_topics": ["cloud-waf2","ndr"],
+    "tags": ["ips","tuning","snort"]
   },
   {
     "id": "net-encryption",
@@ -122,28 +86,18 @@
     "name": "Network Encryption",
     "difficulty": "intermediate",
     "theory": {
-      "what": "MACsec, IPsec, WireGuard.",
-      "why": "Protect data in transit.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "MACsec",
-        "IPsec",
-        "WireGuard",
-        "Key management"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Network encryption protects data in transit at different OSI layers: MACsec (Layer 2 — encrypts Ethernet frames between directly connected switches, IEEE 802.1AE), IPsec (Layer 3 — encrypts IP packets between networks, used in VPNs), WireGuard (modern Layer 3 — faster, simpler than IPsec, uses Noise protocol framework), TLS (Layer 4-7 — encrypts application data between client and server, used in HTTPS). Each operates at a different layer with different use cases.",
+      "why": "Data travels over untrusted networks (public internet, shared infrastructure, ISP networks). Without encryption, packets can be intercepted (sniffing), modified (man-in-the-middle), or replayed. Encryption ensures confidentiality (no one can read the data), integrity (data hasn't been modified), and authenticity (verified peer identity). Compliance: PCI DSS requires encryption of cardholder data over open networks.",
+      "how": "MACsec uses a pre-shared key (static CAK) or 802.1X-based key exchange between two directly connected devices. It encrypts the entire Ethernet payload (including ARP, CDP, LLDP). IPsec operates at Layer 3: ESP (Encapsulating Security Payload) encrypts the IP packet, AH (Authentication Header) provides integrity without encryption. WireGuard is simpler: 4 kernel operations in Linux (vs 100,000+ lines for IPsec), uses Curve25519 for key exchange, ChaCha20 for encryption, Poly1305 for authentication.",
+      "when": "MACsec: encrypt traffic between network devices in the same data center or campus (switch-to-switch, router-to-switch). IPsec/WireGuard: encrypt traffic across untrusted networks (site-to-site VPN, remote access). TLS: encrypt application traffic (HTTPS for web, LDAPS for directory, SMTPS for email). Use encryption at the appropriate layer: MACsec for physical links, IPsec/WireGuard for networks, TLS for applications.",
+      "key_concepts": ["MACsec (IEEE 802.1AE): Layer 2 encryption between directly connected devices", "IPsec ESP vs AH (ESP provides encryption + authentication, AH only authentication)", "WireGuard: modern, minimal (4000 lines), fast (ChaCha20-Poly1305), kernel-native", "TLS/HTTPS: most common application encryption", "Key management: pre-shared keys vs PKI (public key infrastructure)", "Cipher selection: AES-256-GCM (preferred), ChaCha20-Poly1305 (WireGuard), AES-CBC (legacy)","Perfect Forward Secrecy (PFS): DH key exchange ensures past sessions can't be decrypted if private key is compromised"],
+      "configuration": "# MACsec on Cisco switch\ncrypto macsec\n!\ninterface TenGigabitEthernet1/0/1\n macsec\n mka policy ENCRYPT-ALL\n  key-chain MACSEC-KEY-CHAIN\n mka pre-shared-key key-chain MACSEC-KEY-CHAIN\n!",
+      "troubleshooting": ["MACsec not encrypting: verify both ends support MACsec same cipher suite, check MKA (MACsec Key Agreement) status", "IPsec tunnel not encrypting: verify crypto ACL matches interesting traffic, check IPSec SA is active (show crypto ipsec sa)", "WireGuard handshake failed: verify public keys match, check UDP port 51820 is open on firewall, check keepalive interval", "TLS version mismatch: older servers may only support TLS 1.1 (deprecated) — upgrade to TLS 1.2/1.3, check application configuration", "Performance impact: MACsec is hardware-offloaded on modern switches (negligible impact), IPsec uses <10% CPU on modern routers with hardware acceleration"],
+      "worked_examples": "Scenario: Data center security upgrade to meet PCI DSS 4.0 requirements (encrypt all data in transit between network devices). Solution: 1) MACsec between all core switches and ToR switches within the data center — encrypts all intra-DC traffic at wire speed (no performance impact, hardware offloaded). 2) IPsec between the two data centers (primary and DR) — encrypts all cross-site traffic with AES-256-GCM and PFS. 3) TLS 1.3 for all internal web services (API, dashboards) — browser-to-server encryption. 4) WireGuard for remote access (replacing OpenVPN) — simpler management, faster performance. Verification: MACsec: show mka sessions — all 24 switches show 'Secured' status. IPsec: show crypto ipsec sa — 15 active tunnels, 2 Gbps throughput, <2% CPU utilization. TLS: SSL Labs test — A+ rating, TLS 1.3 only, no weak ciphers. WireGuard: all 200 remote users connected, average throughput 85% of internet link speed (vs 60% with OpenVPN). Compliance audit: encryption at rest and in-transit verified with screenshots of MACsec, IPsec, TLS, WireGuard configurations.",
+      "summary": "Network encryption protects data in transit at multiple layers. Use MACsec for Layer 2 (switch-to-switch encryption at wire speed), IPsec/WireGuard for Layer 3 (network-to-network encryption), and TLS for application encryption. WireGuard is replacing IPsec for simplicity and performance. Deploy MACsec within data centers for comprehensive east-west traffic encryption. Always use AES-256-GCM with PFS where possible."
     },
-    "related_topics": [],
-    "tags": [
-      "encryption",
-      "transit"
-    ]
+    "related_topics": ["ikev2","ssl-vpn2","macsec"],
+    "tags": ["encryption","macsec","ipsec","wireguard"]
   },
   {
     "id": "ndr",
@@ -152,27 +106,18 @@
     "name": "Network Detection & Response",
     "difficulty": "advanced",
     "theory": {
-      "what": "Behavioral threat detection.",
-      "why": "Catches unknown threats signatures miss.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "NDR",
-        "Behavioral analytics",
-        "ML-based"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Network Detection and Response (NDR) uses behavioral analytics and machine learning to detect network threats that signature-based systems miss. NDR tools (Darktrace, Vectra, ExtraHop, Cisco Stealthwatch) analyze network metadata (flows, DNS queries, HTTP requests) and build behavioral baselines — what's 'normal' for each device, user, and application. Anomalies (a server making outbound connections at 3 AM for the first time, a finance user accessing HR data) trigger alerts for investigation.",
+      "why": "Signature-based detection (IPS, antivirus) misses: zero-day exploits (no signature exists), insider threats (legitimate credentials used by malicious employees), and slow-and-low attacks (attacker moves slowly to avoid thresholds). NDR catches these by detecting behavioral anomalies — a normal Windows server suddenly running Mimikatz (credential dumping), or a printer connecting to a command-and-control server.",
+      "how": "NDR platforms ingest network metadata from: NetFlow/IPFIX (flow data from routers), network TAPs (full packet capture at strategic points), DNS logs (which domains devices query), and proxy logs (HTTP/HTTPS request metadata). ML models build baselines per device: typical traffic volume, typical destinations, typical protocols. Deviations score as 'threat' (e.g., server 10.0.0.50 has never made outbound connections, now connecting to unknown IP on port 4444 — score: 9.2/10 — critical alert).",
+      "when": "NDR is essential for: organizations handling sensitive data (finance, healthcare, government), detecting lateral movement (attacker moving from compromised web server to database), insider threat detection (anomalous behavior by authorized users), and zero-day attack detection (behavioral anomalies regardless of known signatures). Most effective when combined with existing IPS and EDR (endpoint detection and response).",
+      "key_concepts": ["Behavioral baseline profiling per device/user", "ML anomaly detection (supervised and unsupervised models)", "Lateral movement detection (unusual internal connections)", "DNS tunneling detection (exfiltration via DNS queries)", "DGA (Domain Generation Algorithm) detection (malware call-home patterns)", "Encrypted traffic analysis (metadata-only — can't decrypt, can profile patterns)","Integration with SIEM and SOAR for automated response"],
+      "configuration": "# NDR platform detection rule (conceptual)\ndetection-rule:\n  name: Outbound SMB to Untrusted\n  condition: destination_port == 445 AND direction == outbound\n  filter: destination_ip not-in private_ip_ranges\n  score: 8.5\n  description: SMB should never be outbound to internet — possible data exfiltration\n  response: block_destination_ip 30m\n  notify: security-ops",
+      "troubleshooting": ["Too many anomalies: tune baseline sensitivity per device type (expected behavior for web servers vs databases vs printers)", "False positives from new applications: create profiles for new apps, add to baseline during rollout", "Encrypted traffic blind spots: NDR analyzes metadata only — packet size, timing, destination patterns — still effective for anomaly detection", "Storage requirements for full packet capture: use NetFlow/IPFIX for metadata (much smaller), full packet capture for high-value segments only", "Integration complexity: start with one NDR tool, integrate with SIEM first, then SOAR for automated response"],
+      "worked_examples": "Scenario: NDR deployed on a 5000-user enterprise network. Week 1: NDR baselines normal behavior. Week 2: Anomaly detected — 'Finance-Laptop-05' at 2 AM establishes SSH connections to 'DEV-API-Server-03' (never seen in 30 days of baselining, finance never accesses dev API servers). Threat score: 9.5/10. Investigation: the finance laptop was compromised via a phishing email at 6 PM — the attacker was using stolen credentials and waiting until low-traffic hours to move laterally. The NDR alert triggered automatic: 1) Blocked the laptop's network access, 2) Sent alert to SOC (full packet capture for the 2-hour window available for analysis), 3) Created incident ticket in ServiceNow. Incident response team: isolated the laptop, investigated the dev server (no evidence of compromise — attack was interrupted early). Without NDR: the attacker would have moved from the laptop to the dev server, used it as a pivot point to access more sensitive systems (database), and potentially exfiltrated data over days or weeks. The phishing email might be detected days later by user report — but by then, lateral movement would be complete. NDR detected the behavioral anomaly within seconds of the first abnormal connection.",
+      "summary": "NDR detects behavioral anomalies that signature-based systems miss — zero-days, insider threats, and slow-and-low attacks. Deploy NDR alongside signature-based IPS for defense in depth. Start with NetFlow metadata collection, add full packet capture for high-value segments. Tune baselines per device type to reduce false positives. Integrate NDR alerts with SIEM and SOAR for automated blocking of confirmed threats."
     },
-    "related_topics": [],
-    "tags": [
-      "ndr",
-      "detection"
-    ]
+    "related_topics": ["ips-tuning","honeypots","cloud-waf2"],
+    "tags": ["ndr","detection","behavioral"]
   },
   {
     "id": "honeypots",
@@ -181,27 +126,18 @@
     "name": "Honeypots/Deception",
     "difficulty": "advanced",
     "theory": {
-      "what": "Fake services to detect attackers.",
-      "why": "Zero false positives.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "Honeypots",
-        "Canary tokens",
-        "Early warning"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Honeypots are decoy systems that appear to be legitimate network resources but are actually monitored traps for attackers. Types: low-interaction (simulates services like SSH, HTTP — low risk, limited data), high-interaction (real OS/applications — more data but higher risk if compromised), and canary tokens (unique URLs, DNS names, API keys that trigger alerts when used — no interaction required). Deception technology (Illusive Networks, TrapX, Thinkst Canary) deploys realistic decoys across the network to detect lateral movement.",
+      "why": "Honeypots have zero false positives — no legitimate user should ever access a decoy system. Any traffic to a honeypot is immediately malicious. Traditional detection relies on known signatures (IPS) or behavioral baselines (NDR) — both have false positive rates of 0.1-5%. Honeypot alerts are 100% actionable: someone is on the network who shouldn't be. This makes them the most reliable detection method for lateral movement.",
+      "how": "Low-interaction honeypots: listen on ports (SSH/22, RDP/3389, HTTP/80) and log connection attempts. When an attacker connects, they interact with a simulated service — the honeypot logs every command and keystroke. Canary tokens: create a fake database connection string (jdbc:postgresql://canary.example.com:5432/db), place it on an application server — if any process connects to this URL, the attacker is probing the database. Honeypots can also be auto-deployed: when NDR detects reconnaissance, it dynamically deploys decoy systems into the attacker's scan path.",
+      "when": "Honeypots are most valuable for detecting: lateral movement (attacker inside the network probing other systems), automated threats (worm/malware scanning for targets), insider threats (employees probing sensitive systems they shouldn't access), and attackers who have bypassed perimeter defenses. Canary tokens are the easiest to deploy: place fake API keys, configs, documents around the network to detect access.",
+      "key_concepts": ["Low-interaction vs high-interaction honeypots", "Canary tokens: trackable decoy data (URLs, API keys, documents)", "Honeynets: entire network segment of decoys", "Honeypot placement: near high-value assets, in less-trafficked network segments", "Kippo/Cowrie: SSH honeypot (logs attacker commands, captures malware)", "Detection signal: any traffic to honeypot = immediate incident (zero false positives)","Deception technology: auto-deploy decoys based on threat intelligence"],
+      "configuration": "# Cowrie SSH honeypot (docker)\ndocker run -d --name cowrie \\\n  -p 2222:2222 \\\n  -v /data/cowrie/log:/cowrie/var/log/cowrie \\\n  cowrie/cowrie:latest\n# Canary token API key\ncanarytoken:\n  type: aws-api-key\n  access_key_id: AKIAIOSFODNN7EXAMPLE\n  secret_access_key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\n  alert_webhook: https://hooks.slack.com/services/T00/B00/xxx\n  memo: \"AWS key for prod DB access (DO NOT USE — canary token only)\"",
+      "troubleshooting": ["No attacks detected (false sense of security): verify honeypot is reachable from attacker-accessible networks, increase decoy density", "Honeypot compromised and used as pivot: run high-interaction honeypots in isolated network segments with egress filtering", "Legitimate scanning triggers honeypot: review scanning policy (internal security team, vulnerability scanners) and ensure they exclude honeypot IPs from scans", "Too many worthless alerts from internet scanners: place honeypots on internal network segments only (not internet-facing, those get millions of probes)", "Honeypot maintenance: update simulated services to look current (run actual OS versions, not old versions attackers would recognize as honeypots)"],
+      "worked_examples": "Scenario: Deploying canary tokens across a financial services network. Deployments: 1) Fake AWS API key in a config file on a dev server named 'prod-db-access-key.txt' — named to attract database-targeting attackers. 2) Fake database connection string in a web app config file (config.php with 'mysql://canary-db:3306/banking' — domain resolves to a honeypot). 3) Fake HR salary spreadsheet named '2024_SALARIES_CONFIDENTIAL.xlsx' on a file share. 4) DNS canary: unique subdomain 'alert-5c3b.internal-monitor.company.com' that only appears in SSH config on a jump box. Alert scenario: Day 14 — the database connection string canary fires at 2:17 AM! A process on the web server resolved 'canary-db.company.com' DNS — no legitimate process should ever query this domain. Immediate investigation: network isolation of web server, full incident response. The attacker had compromised the web server via a vulnerable library and was probing internal databases — the canary detected them within seconds of the first DNS query, before any database access occurred. Without the canary: the attacker would have scanned the internal network, found the real database server (15 minutes of scanning), and potentially exfiltrated data before morning. The honeypot gave the security team a 15+ hour head start.",
+      "summary": "Honeypots and canary tokens provide the highest-fidelity detection signal available — zero false positives. Deploy canary tokens (fake API keys, DB strings, documents) across the network for early lateral movement detection. Use low-interaction honeypots (Cowrie for SSH) on internal segments. Combine with NDR for comprehensive detection: NDR catches behavioral anomalies, honeypots catch anyone who touches a decoy. Start with 10-20 canary tokens — minimal deployment effort, maximum detection value."
     },
-    "related_topics": [],
-    "tags": [
-      "deception",
-      "honeypot"
-    ]
+    "related_topics": ["ndr","ips-tuning","seg-patterns"],
+    "tags": ["honeypot","canary","deception"]
   },
   {
     "id": "radius-tacacs2",
@@ -210,28 +146,18 @@
     "name": "RADIUS & TACACS+",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Centralized AAA protocols.",
-      "why": "Consistent access control.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "RADIUS",
-        "TACACS+",
-        "AAA model"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "RADIUS (Remote Authentication Dial-In User Service, RFC 2865) and TACACS+ (Terminal Access Controller Access-Control System Plus, Cisco proprietary) are AAA (Authentication, Authorization, Accounting) protocols used for centralized network access control. RADIUS: UDP-based (ports 1812/1813 for authentication/ accounting), combines authentication and authorization, encrypts only the password field. TACACS+: TCP-based (port 49), separates authentication, authorization, and accounting into separate operations, encrypts the entire packet body — preferred for device administration.",
+      "why": "Local device credentials (username/password per router) don't scale: 200 routers = 200 password changes when an engineer leaves. Centralized AAA provides: single user management (add/remove user once, affects all devices), fine-grained authorization (who can enter config mode, who can run specific commands), full accounting logs (every command execution logged with timestamp and user), and MFA integration (RADIUS with OTP token for VPN access).",
+      "how": "RADIUS: user authenticates to network device → device (NAS) creates RADIUS request → forwarded to RADIUS server → server checks credentials (AD/LDAP backend) → returns Accept/Reject with authorization attributes (VLAN assignment, ACL name). Used for: network access (802.1X), VPN authentication (any user connecting to VPN), and Wi-Fi authentication (WPA2-Enterprise). TACACS+: device sends authentication packet to TACACS+ server → server authenticates → returns ACCEPT/REJECT. Separate authorization request determines what commands the user can run. Accounting logs every command to the server.",
+      "when": "Use RADIUS for: end-user network access (802.1X port-based authentication), VPN remote access (anyconnect authentication), Wi-Fi enterprise authentication (WPA2/3-Enterprise), and subscriber access (ISP/MNO). Use TACACS+ for: network device administration (router/switch/firewall CLI access), privilege-level authorization (who can enter enable mode), and command accounting (audit trail of every config change).",
+      "key_concepts": ["AAA model: Authentication (who you are), Authorization (what you can do), Accounting (what you did)", "RADIUS: UDP, auth+authz combined, only password encrypted, port 1812/1813", "TACACS+: TCP, AAA separated, entire packet encrypted, port 49", "RADIUS for end-user auth (802.1X, VPN), TACACS+ for device admin", "RADIUS attribute 64 (Tunnel-Type), 65 (Tunnel-Medium-Type), 81 (Tunnel-Private-Group-ID) for VLAN assignment", "TACACS+ command authorization and accounting (every command logged)","MFA integration: RADIUS proxies to OTP server (DUO, RSA SecurID)"],
+      "configuration": "# Cisco AAA with TACACS+\naaa new-model\naaa authentication login default group tacacs+ local\naaa authorization exec default group tacacs+ local\naaa authorization commands 15 default group tacacs+ local\naaa accounting exec default start-stop group tacacs+\naaa accounting commands 15 default start-stop group tacacs+\n!\ntacacs server TACACS-1\n address ipv4 10.0.0.100\n key Cisco123!\n!\n! RADIUS for 802.1X\naaa authentication dot1x default group radius\ndot1x system-auth-control\n!\nradius server RADIUS-1\n address ipv4 10.0.0.101 auth-port 1812 acct-port 1813\n key radius-secret",
+      "troubleshooting": ["RADIUS authentication fails: check shared secret matches, verify UDP 1812/1813 reachable, test with radtest tool", "TACACS+ authorization fails: check command authorization set matches privilege level, verify user shell profile on ACS/ISE", "Accounting not recording: verify accounting is enabled for the correct service (exec, commands, system)", "RADIUS VLAN assignment not working: verify RADIUS attributes (64/65/81) are sent, check interface is configured for dynamic VLAN assignment", "MFA loop: verify RADIUS server proxies correctly to OTP server, check DUO/RSA proxy health"],
+      "worked_examples": "Scenario: Migrating from local device credentials to TACACS+ for all network devices. 200 devices, 25 NOC engineers, 10 network engineers. Old method: each device has local credentials, when an engineer leaves, all 200 device passwords need changing (takes 2-5 days, some missed). New method: TACACS+ with ISE integrated with Active Directory. 1) All 200 devices configured for TACACS+ AAA. 2) Authentication: NOC engineers enter their AD username/password. 3) Authorization: NOC engineers have privilege level 7 (show commands only — no config access), network engineers have privilege 15 (full config access). Command accounting: every 'configure terminal' and 'ip route' logged with engineer name, device name, timestamp, and the exact command. 4) When an engineer leaves: disable AD account → immediate lockout from all 200 devices. No credential change needed. After 1 year: 12,000,000 accounting records stored. When investigating a routing change that caused an outage: search accounting logs for 'ip route' on the affected router at the time of the incident — found the engineer who made a BGP change (unauthorized, against policy). Issue resolved, engineer retrained. Without AAA accounting: who made the change would be unknown.",
+      "summary": "Centralized AAA with RADIUS (end-user access) and TACACS+ (device admin) is essential for production networks with 10+ devices. TACACS+ provides encrypted, separated AAA with command-level accounting. Use AD integration for user management, privilege levels for authorization, and full command accounting for audit trail. Deployment on 200 switches takes 2-3 hours with automation (Ansible). Immediate benefit: single user management and complete audit trail."
     },
-    "related_topics": [],
-    "tags": [
-      "radius",
-      "tacacs",
-      "aaa"
-    ]
+    "related_topics": ["ikev2","ssl-vpn2","acls"],
+    "tags": ["radius","tacacs","aaa"]
   },
   {
     "id": "port-sec",
@@ -240,27 +166,18 @@
     "name": "Port Security",
     "difficulty": "beginner",
     "theory": {
-      "what": "Limit MACs per switch port.",
-      "why": "Prevent rogue devices.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "MAC limiting",
-        "Sticky MAC",
-        "Violation modes"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "Port security restricts which MAC addresses can communicate through a switch port. It prevents unauthorized devices from connecting to the network by limiting the number of MAC addresses per port and/or specifying allowed MACs. Modes: shutdown (port goes err-disable on violation — most secure, requires manual recovery), restrict (port stays up but drops traffic from unauthorized MACs and generates logs), and protect (same as restrict but no logs — stealth mode).",
+      "why": "Without port security, anyone can plug a rogue device into any Ethernet port and gain network access — attacker laptop, unauthorized Wi-Fi access point, or infected personal device. Port security is the first line of defense against unauthorized physical access. Combined with 802.1X (which authenticates the user), port security provides device-level control (MAC-based).",
+      "how": "Switch tracks MAC addresses learned on each port. Sticky MAC dynamically learns and saves MACs to the running config — the first N addresses seen become the allowed list. The security violation counter tracks violations per port. Auto-recovery via errdisable recovery cause psecure-violation automatically re-enables the port after the configured interval. Port security is typically configured on access ports (user-facing, not trunk ports).",
+      "when": "Port security is appropriate for: all end-user access ports (limit 1-2 MACs), server ports (limit 2-5 MACs for NIC teaming), and any port where the connected device is known and fixed. NOT for trunk ports, ports with IP phones + PC (voice VLAN needs 2 MACs — okay to allow max 2).",
+      "key_concepts": ["Maximum MAC addresses per port (typical: 1 for single PC, 2 for phone+PC, 5 for server)", "Sticky MAC: auto-learn and save first N MACs to running config", "Violation modes: shutdown, restrict, protect", "Err-disable recovery (auto-recover after N minutes)", "MAC address aging (time before a learned MAC expires)", "Voice VLAN: IP phone security + PC behind phone (2 MACs allowed)","STP edge port (PortFast) must be enabled with port security"],
+      "configuration": "interface GigabitEthernet1/0/1\n description User-Port\n switchport mode access\n switchport port-security\n switchport port-security maximum 2\n switchport port-security violation shutdown\n switchport port-security mac-address sticky\n switchport port-security aging time 10\n spanning-tree portfast\n spanning-tree bpduguard enable\n!\nerrdisable recovery cause psecure-violation\nerrdisable recovery interval 300",
+      "troubleshooting": ["Port goes err-disable repeatedly: check sticky MAC list (show port-security interface), if MAC changed (new device), clear port-security sticky and re-learn", "Phone+PC not working: verify voice VLAN is separate, allow maximum 2 MACs (phone + PC), check both MACs learned", "Port security blocking legitimate traffic: verify sticky MAC count isn't exceeded, increase maximum if NIC teaming is used", "Sticky MACs lost on reload: use 'switchport port-security mac-address sticky' which saves to config — verify config is saved (write memory)", "Too many violation notifications: use 'restrict' mode instead of 'shutdown' for ports where flexibility is needed, but audit violations weekly"],
+      "worked_examples": "Scenario: 500 access ports across campus switches. Port security with max 2 MACs (phone + PC), sticky MAC, shutdown on violation. First week of deployment: 40 ports go err-disable. Analysis: 25 ports had legitimate reasons (laptop + phone + visitor's laptop plugged into same port = 3 MACs > maximum 2), 10 ports had someone moving their PC to a different port (new MAC on wrong port), 5 were real violations (rogue device plugged in). Actions: 1) Increase max to 3 on conference room ports (visitors frequently plug in), 2) Educate users about staying at their assigned desk (PC MAC follows port), 3) Keep max 2 on regular desk ports (company policy: one laptop + one phone). Errdisable recovery interval 300 seconds (5 minutes) auto-recovers most violations without NOC intervention. Results after tuning: violation rate drops from 40/week to 3-4/week. The 3-4 real violations per week are investigated: 2 are still user errors, 1-2 are legitimate security events (unknown device plugged in). Real rogue device found: a temp employee plugged their personal laptop into a conference room port — flagged within minutes, device traced to user, security incident created.",
+      "summary": "Port security is the first line of defense against unauthorized physical network access. Configure on all access ports with sticky MAC, shutdown violation mode, and errdisable recovery. Allow 2 MACs for voice deployments (IP phone + PC), 3 for shared spaces. Monitor violation logs weekly for threat detection. Combine with 802.1X for defense in depth (user authentication + device MAC control)."
     },
-    "related_topics": [],
-    "tags": [
-      "port-security",
-      "mac"
-    ]
+    "related_topics": ["acls","dhcp-snoop","seg-patterns"],
+    "tags": ["port-security","mac","layer2"]
   },
   {
     "id": "dhcp-snoop",
@@ -269,26 +186,17 @@
     "name": "DHCP Snooping",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Block rogue DHCP servers.",
-      "why": "Prevent MITM via rogue DHCP.",
-      "how": "See documentation.",
-      "when": "Apply in relevant scenarios.",
-      "key_concepts": [
-        "Trusted/untrusted",
-        "Binding table",
-        "DAI"
-      ],
-      "configuration": "# See official docs",
-      "troubleshooting": [
-        "Check logs",
-        "Verify config",
-        "Test connectivity"
-      ]
+      "what": "DHCP snooping is a security feature on switches that filters DHCP messages based on trust: ports are designated as trusted (uplink to DHCP server) or untrusted (user-facing ports). It builds a DHCP binding table (MAC, IP, VLAN, port, lease time) from valid DHCP exchanges. DHCP server messages (OFFER, ACK) from untrusted ports are dropped — preventing rogue DHCP server attacks where an attacker sets up a fake DHCP server to assign malicious gateway IPs (man-in-the-middle attack).",
+      "why": "A rogue DHCP server attack: attacker plugs a Raspberry Pi into a conference room port running a DHCP server. This server responds faster than the legitimate server, assigning clients an IP with a malicious gateway (attacker's laptop). The attacker then intercepts all traffic from the victim — passwords, credit card numbers, email. DHCP snooping blocks this by only accepting DHCP server messages from trusted ports (where the legitimate DHCP server is connected).",
+      "how": "DHCP snooping tracks four DHCP message types: DISCOVER (client to server — allowed from untrusted), OFFER (server to client — dropped on untrusted ports), REQUEST (client to server — allowed from untrusted, validated against binding table), ACK (server to client — dropped on untrusted ports). The binding table is built from successful DHCP transactions and used by Dynamic ARP Inspection (DAI) and IP Source Guard (IPSG) for additional Layer 2 security.",
+      "when": "Enable DHCP snooping on all VLANs with user-facing ports. Essential for: any wired network with untrusted access ports (office networks, campus networks, retail networks), and as a prerequisite for DAI (Dynamic ARP Inspection — prevents ARP spoofing). Disable on VLANs where DHCP is not used (infrastructure VLANs, point-to-point links).",
+      "key_concepts": ["Trusted ports: DHCP server port, uplinks to other switches", "Untrusted ports: any user-facing access port", "DHCP binding table: MAC, IP, VLAN, port, lease time", "Rate limiting: limit DHCP packets per second on untrusted ports (prevent DHCP exhaustion attacks)", "Option 82 insertion: identifies which switch/port sent the DHCP request (enhances security)", "DAI prerequisite: DHCP snooping binding table is the source of truth for DAI (valid IP-MAC bindings)","IPSG prerequisite: IP Source Guard uses binding table to filter IP traffic at port level"],
+      "configuration": "ip dhcp snooping\nip dhcp snooping vlan 10,20,30\nno ip dhcp snooping information option\n!\ninterface GigabitEthernet0/1\n description Uplink to DHCP Server\n ip dhcp snooping trust\n!\ninterface GigabitEthernet1/0/1\n description User Port\n ip dhcp snooping limit rate 10\n!\nip dhcp snooping binding 0000.1111.2222 vlan 10 10.0.0.50 interface Gi1/0/1 expiry 86400",
+      "troubleshooting": ["Clients not getting IP addresses: verify DHCP snooping is enabled on the correct VLAN, check trusted port configuration", "Binding table not building: verify DHCP server is on a trusted port (or DHCP requests via trusted uplink)", "Rate limit exceeded: port goes err-disable — increase rate limit if many devices on port (IP phones + PC both send DHCP requests)", "DAI dropping traffic: if DAI enabled, check DHCP snooping binding table has correct entries, clear stale bindings", "DHCP relay + snooping issues: relay agent adds Option 82, which switches may drop — use 'no ip dhcp snooping information option' if DHCP server doesn't support Option 82"],
+      "worked_examples": "Scenario: 2000-user office network. Attacker plugs a laptop into a conference room port running a DHCP server application. Without DHCP snooping: 1) Attacker's DHCP server responds to DISCOVERs faster than the legitimate server (both are on the same LAN), 2) Clients receive IP with gateway = attacker's IP, 3) All traffic goes through attacker's laptop (passwords, emails, banking data captured). With DHCP snooping: 1) Attacker's port (Gi1/0/10) is untrusted (all user ports are), 2) DHCP OFFER from attacker's port is immediately dropped by the switch, 3) Clients only receive OFFERs from the legitimate DHCP server on the trusted uplink port, 4) Attacker's DHCP server never reaches any client. Even if the attacker spoofs MACs, the DHCP binding table tracks IP-MAC-VLAN-port — any attempt to use an already-assigned IP from a different port is blocked. Additional protection: the binding table feeds DAI (prevents ARP spoofing) and IPSG (prevents IP spoofing). After deploying DHCP snooping on this network: zero rogue DHCP incidents in 6 months (vs 2-3 per year before deployment). One false positive: a new VoIP phone was misconfigured as a DHCP server — identified and fixed within hours.",
+      "summary": "DHCP snooping is the essential defense against rogue DHCP server attacks. Enable on all user-facing VLANs, configure trusted ports (DHCP servers, switch uplinks), and set rate limits on untrusted ports. DHCP snooping is also the prerequisite for DAI (ARP spoofing prevention) and IP Source Guard (IP spoofing prevention) — enabling all three provides comprehensive Layer 2 security. Monitor binding table and violation logs for signs of DHCP attacks."
     },
-    "related_topics": [],
-    "tags": [
-      "dhcp-snooping",
-      "layer2"
-    ]
+    "related_topics": ["port-sec","acls","dhcp-relay2"],
+    "tags": ["dhcp-snooping","layer2","security"]
   }
 ]
