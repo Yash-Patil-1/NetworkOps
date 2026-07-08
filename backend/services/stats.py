@@ -3,9 +3,8 @@
 from datetime import date, timedelta
 from models.database import get_connection
 
-# XP values
+# XP values — only lesson completions award XP; quizzes maintain streak but give 0 XP
 XP_LESSON_COMPLETE = 15
-XP_QUIZ_CORRECT = 5
 DAILY_GOAL = 50
 
 # XP thresholds for levels 1–10

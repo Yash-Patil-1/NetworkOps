@@ -28,16 +28,16 @@ export default function Quiz() {
   return (
     <div className="max-w-3xl">
       <h1 className="text-3xl font-bold mb-2">Quiz</h1>
-      <p className="text-ash mb-8">Topic: <span className="text-amber">{topicId.replace(/-/g,' ')}</span> · Answered: {count}</p>
+      <p className="text-ash mb-8">Topic: <span className="text-red">{topicId.replace(/-/g,' ')}</span> · Answered: {count}</p>
 
       {question ? (
         <div className="card">
           <div className="flex justify-between mb-4">
-            <span className="tag-amber">{question.type}</span>
+            <span className="tag-red">{question.type}</span>
             <span className="tag-green">{question.difficulty}</span>
           </div>
 
-          <p className="text-polar mb-6 leading-relaxed">{question.question}</p>
+          <p className="text-chalk mb-6 leading-relaxed">{question.question}</p>
 
           {!result && (
             <>
@@ -46,18 +46,18 @@ export default function Quiz() {
                 <button onClick={submitAnswer} className="btn-primary">Submit</button>
                 <button onClick={() => setShowHint(true)} className="btn-ghost"><Lightbulb className="w-4 h-4"/>Hint</button>
               </div>
-              {showHint && question.hints?.[0] && <p className="mt-4 text-xs text-amber italic">💡 {question.hints[0]}</p>}
+              {showHint && question.hints?.[0] && <p className="mt-4 text-xs text-red italic">💡 {question.hints[0]}</p>}
             </>
           )}
 
           {result && (
-            <div className={`mt-4 p-4 rounded-lg border ${result.correct ? 'border-green/50 bg-green/5' : 'border-[#E74C3C]/50 bg-[#E74C3C]/5'}`}>
+            <div className={`mt-4 p-4 rounded-lg border ${result.correct ? 'border-green/50 bg-green/5' : 'border-red/50 bg-red/5'}`}>
               <div className="flex items-center gap-2 mb-2">
-                {result.correct ? <CheckCircle className="w-5 h-5 text-green"/> : <XCircle className="w-5 h-5 text-[#E74C3C]"/>}
+                {result.correct ? <CheckCircle className="w-5 h-5 text-green"/> : <XCircle className="w-5 h-5 text-red"/>}
                 <span className="font-medium">{result.correct ? 'Correct!' : 'Incorrect'}</span>
               </div>
-              <p className="text-xs text-slate mb-2">{result.explanation}</p>
-              {!result.correct && <p className="text-xs text-ash">Expected: <code className="text-amber">{result.expected}</code></p>}
+              <p className="text-xs text-ash mb-2">{result.explanation}</p>
+              {!result.correct && <p className="text-xs text-ash">Expected: <code className="text-red">{result.expected}</code></p>}
               <button onClick={loadQuestion} className="btn-primary mt-4">Next Question →</button>
             </div>
           )}

@@ -16,18 +16,8 @@ export default function Learn() {
   const [lessons, setLessons] = useState([])
   const [search, setSearch] = useState('')
   const [activeDomain, setActiveDomain] = useState(null)
-  const [progress, setProgress] = useState({})
-
   useEffect(() => {
     axios.get('/api/lessons').then(r => setLessons(r.data.lessons || []))
-    axios.get('/api/progress').then(r => {
-      // Get learned topics
-      axios.get('/api/topics?limit=500').then(t => {
-        const learned = {}
-        t.data.topics.forEach(topic => learned[topic.id] = false)
-        setProgress(learned)
-      })
-    })
   }, [])
 
   const filtered = lessons.filter(l => {

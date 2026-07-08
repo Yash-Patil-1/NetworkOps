@@ -45,23 +45,27 @@
     "name": "VLANs (Virtual LANs)",
     "difficulty": "beginner",
     "theory": {
-      "what": "VLANs logically segment a physical switch into multiple broadcast domains. Each VLAN acts as a separate network even though devices share the same physical switch.",
-      "why": "Without VLANs, all devices on a switch are in one broadcast domain. VLANs reduce broadcast traffic, improve security (isolate departments), and enable flexible network design without rewiring.",
-      "how": "Switches assign ports to VLANs. Traffic within a VLAN stays in that VLAN. To communicate between VLANs, you need a router (inter-VLAN routing). Trunk links carry multiple VLANs between switches using 802.1Q tagging.",
-      "when": "Use VLANs to: separate departments, isolate guest traffic, create management networks, segment IoT devices, or meet compliance requirements (PCI DSS CDE isolation).",
+      "what": "VLANs (Virtual Local Area Networks) logically segment a physical switch into multiple isolated broadcast domains. Each VLAN behaves as if it's a separate physical network — devices in VLAN 10 cannot directly communicate with devices in VLAN 20 without going through a router, even though they share the same physical switch hardware. This logical separation is achieved by tagging Ethernet frames with a VLAN identifier (802.1Q tag) as they traverse the switch fabric.",
+      "why": "Without VLANs, every device on a switch belongs to one flat broadcast domain. In a 200-device network, ARP broadcasts from any single device reach all 199 others, wasting bandwidth and CPU. VLANs solve this by: (1) **Reducing broadcast traffic** — broadcasts are contained within each VLAN; (2) **Improving security** — Finance traffic never reaches the guest Wi-Fi network; (3) **Enabling flexible design** — reorganizing departments doesn't require rewiring, just changing port VLAN assignments; (4) **Meeting compliance** — PCI DSS requires cardholder data environment (CDE) isolation, which is implemented using dedicated VLANs. A well-designed VLAN architecture is the foundation of any enterprise network.",
+      "how": "**VLAN operation:**\n1. Each switch port is configured as either an **access port** (belongs to a single VLAN) or a **trunk port** (carries multiple VLANs with 802.1Q tags)\n2. When a frame arrives on an access port, the switch adds the VLAN ID internally\n3. When a frame must go to another switch, the trunk port inserts a 4-byte 802.1Q tag containing the VLAN ID\n4. The receiving switch strips the tag and forwards the frame to the correct access port\n5. Frames from different VLANs never leak into each other — switches only forward within the same VLAN\n\n**Inter-VLAN routing:** To communicate between VLANs, traffic must pass through a Layer 3 device (router or Layer 3 switch). This is typically done via a 'router-on-a-stick' configuration where a single trunk link connects the switch to the router, and the router has a subinterface for each VLAN:\n```\nVLAN 10 (Engineering) ←→ Switch (trunk) ←→ Router (subif .10: 192.168.10.1)\n                                             Router (subif .20: 192.168.20.1)\nVLAN 20 (Marketing)   ←→ Switch (trunk) ←→ Router (subif .20: 192.168.20.1)\n```\n\n**Worked example — setting up three departments:**\n| Department | VLAN ID | Subnet | Switch Ports |\n|------------|---------|--------|-------------|\n| Engineering | 10 | 192.168.10.0/24 | Gi0/1-8 |\n| Marketing | 20 | 192.168.20.0/24 | Gi0/9-16 |\n| Guest Wi-Fi | 30 | 192.168.30.0/24 | Gi0/17-24 |\n",
+      "when": "Use VLANs in virtually any scenario beyond a simple home network: (1) **Department isolation** — Finance, HR, Engineering each get their own VLAN; (2) **Guest networks** — isolate guest Wi-Fi from internal corporate resources; (3) **Management networks** — out-of-band management interfaces on a dedicated VLAN; (4) **IoT segmentation** — security cameras, badge readers, and HVAC on their own isolated VLANs; (5) **Compliance** — PCI DSS requires CDE on separate VLANs from the corporate network; (6) **VoIP** — voice VLANs provide QoS prioritization for phone traffic. **Common mistake**: forgetting that VLANs require a router for inter-VLAN communication — if you segment into VLANs but don't configure routing between them, devices in different VLANs can't communicate.",
       "key_concepts": [
-        "Access port (single VLAN)",
-        "Trunk port (multiple VLANs, 802.1Q)",
-        "Native VLAN",
-        "VLAN tagging",
-        "Inter-VLAN routing",
-        "VLAN 1 (default, avoid using)"
+        "Access port — belongs to a single VLAN, carries untagged traffic",
+        "Trunk port — carries multiple VLANs using 802.1Q tagging",
+        "Native VLAN — the VLAN for untagged traffic on a trunk (default: VLAN 1)",
+        "VLAN hopping attack — attacker exploits trunk negotiation to reach other VLANs (disable DTP!)",
+        "Inter-VLAN routing — required for VLAN-to-VLAN communication",
+        "VLAN 1 is the default — avoid using it for user traffic (security best practice)",
+        "VTP (VLAN Trunking Protocol) — propagates VLAN info between switches (use with caution or disable)"
       ],
-      "configuration": "! Create VLAN\nvlan 10\n name Engineering\n!\n! Assign port to VLAN\ninterface GigabitEthernet0/1\n switchport mode access\n switchport access vlan 10\n!\n! Configure trunk\ninterface GigabitEthernet0/24\n switchport mode trunk\n switchport trunk allowed vlan 10,20,30",
+      "configuration": "! Create VLANs\nvlan 10\n name Engineering\nvlan 20\n name Marketing\nvlan 30\n name Guest_WiFi\n!\n! Assign ports to VLANs (access mode)\ninterface range GigabitEthernet0/1-8\n switchport mode access\n switchport access vlan 10\n!\ninterface range GigabitEthernet0/9-16\n switchport mode access\n switchport access vlan 20\n!\n! Configure trunk to upstream router\ninterface GigabitEthernet0/24\n switchport mode trunk\n switchport trunk native vlan 99\n switchport trunk allowed vlan 10,20,30\n!\n! Router-on-a-stick (on the router side)\ninterface GigabitEthernet0/0.10\n encapsulation dot1Q 10\n ip address 192.168.10.1 255.255.255.0\n!\ninterface GigabitEthernet0/0.20\n encapsulation dot1Q 20\n ip address 192.168.20.1 255.255.255.0",
       "troubleshooting": [
-        "show vlan brief",
-        "show interfaces trunk",
-        "show interfaces switchport"
+        "show vlan brief — list all VLANs and their port memberships",
+        "show interfaces trunk — verify trunk ports and allowed VLANs",
+        "show interfaces switchport — detailed port mode and VLAN info",
+        "Can't reach another VLAN? Check for a router or L3 switch with inter-VLAN routing configured",
+        "Native VLAN mismatch? Trunk won't come up — ensure native VLAN matches on both ends",
+        "DTP (Dynamic Trunking Protocol) — disable on all access ports: switchport nonegotiate"
       ]
     },
     "related_topics": [
@@ -245,24 +249,27 @@
     "name": "TCP (Transmission Control Protocol)",
     "difficulty": "beginner",
     "theory": {
-      "what": "TCP is a connection-oriented, reliable transport protocol. It guarantees delivery, ordering, and error checking of data between applications.",
-      "why": "TCP is used for any communication that requires reliability \u2014 web browsing (HTTP), email (SMTP), file transfer (FTP), SSH. Understanding TCP is essential for troubleshooting application connectivity.",
-      "how": "TCP 3-way handshake:\n1. SYN \u2192 (client initiates)\n2. SYN-ACK \u2190 (server acknowledges)\n3. ACK \u2192 (connection established)\n\nFeatures: Sequence numbers, acknowledgments, flow control (window size), congestion control, retransmission.",
-      "when": "TCP is used for HTTP/HTTPS, SSH, FTP, SMTP, databases \u2014 any application needing reliable delivery. Troubleshoot when: connections timeout, slow transfers, or retransmissions.",
+      "what": "TCP (Transmission Control Protocol) is a connection-oriented, reliable transport protocol operating at Layer 4 of the OSI model. It guarantees in-order delivery of data between applications running on different hosts, handling lost packets through retransmission, duplicate packets through sequence numbers, and congestion through flow control mechanisms. TCP was designed as part of the original TCP/IP protocol suite to provide reliable communication over the inherently unreliable IP layer — it's the 'T' in TCP/IP that made the internet work for critical applications.",
+      "why": "TCP is used for virtually any application that requires data integrity and reliability — web browsing (HTTP/HTTPS), email (SMTP/IMAP), file transfer (FTP/SFTP), remote access (SSH), and databases (MySQL, PostgreSQL). Understanding TCP is essential for application troubleshooting because the majority of application performance issues manifest as TCP problems: slow page loads often trace back to TCP retransmissions or window scaling issues; connection timeouts may indicate a TCP handshake failure; 'connection reset' errors are TCP RST packets being sent by one side. A network engineer who understands TCP can diagnose problems that others attribute mysteriously to 'the network being slow.'",
+      "how": "**TCP 3-Way Handshake (Connection Establishment):**\n1. Client sends SYN (synchronize) packet with initial sequence number (ISN)\n2. Server responds with SYN-ACK (acknowledges client's ISN + 1, sends own ISN)\n3. Client sends ACK (acknowledges server's ISN + 1) — connection established\n\n**Worked example — loading a web page:**\nClient (192.168.1.10:54321) → Server (93.184.216.34:80):\n```\n1. Client → Server: SYN, seq=1000\n2. Server → Client: SYN-ACK, seq=5000, ack=1001\n3. Client → Server: ACK, seq=1001, ack=5001\n4. Client → Server: HTTP GET / (data starts flowing)\n5. Server → Client: HTTP 200 OK (with webpage content)\n... data transfer with ACKs for each segment ...\n6. Client → Server: FIN (connection close initiation)\n7. Server → Client: ACK\n8. Server → Client: FIN\n9. Client → Server: ACK (connection closed)\n```\n\n**Key mechanisms:**\n• **Sequence numbers** — each byte has a sequence number; receiver reorders out-of-order segments\n• **Window size** — receiver tells sender how much data it can buffer (flow control)\n• **Congestion control** — TCP slowly increases send rate until packet loss (AIMD: Additive Increase Multiplicative Decrease)\n• **Retransmission** — if ACK not received within timeout, sender retransmits the segment\n• **Selective ACK (SACK)** — modern TCP can ACK specific received segments, not just the last contiguous one",
+      "when": "TCP is the right choice for any application that needs guaranteed delivery — you'd never use UDP for a bank transfer or file download. Use TCP for: HTTP/HTTPS (web), SSH (remote admin), SMTP/IMAP (email), FTP/SFTP (file transfer), databases, and APIs. Troubleshoot TCP when: connections timeout (handshake never completes), transfers are slow (window scaling issues or retransmissions), connections reset unexpectedly (RST packets), or you see 'Connection refused' (nothing listening on that port). **Common gotcha**: a 'half-open' connection — when one side crashes without sending FIN, the other side waits until the TCP keepalive timeout (often 2 hours!) to detect the failure.",
       "key_concepts": [
-        "3-way handshake (SYN, SYN-ACK, ACK)",
-        "Sequence numbers",
-        "Window size (flow control)",
-        "Retransmission",
-        "FIN/RST (connection teardown)",
-        "Ports (0-65535)"
+        "3-way handshake (SYN, SYN-ACK, ACK) — establishes reliable connection",
+        "Sequence numbers — track bytes sent/received for ordering and dedup",
+        "Window size — flow control: receiver tells sender how much it can accept",
+        "Retransmission timeout (RTO) — adaptive timer, doubles on each failure",
+        "FIN (graceful close) vs RST (abrupt close — error condition)",
+        "Ports (0-65535) — well-known (0-1023), registered (1024-49151), ephemeral (49152-65535)",
+        "SACK — Selective Acknowledgments for efficient loss recovery"
       ],
-      "configuration": "# Check TCP connections\nss -tuln\nnetstat -tlnp\n\n# Test TCP connectivity\nnc -zv <host> <port>\ntelnet <host> <port>",
+      "configuration": "# View all TCP connections and listeners\nss -tuln\nnetstat -tlnp\n\n# Test TCP connectivity to a specific port\nnc -zv google.com 80\ntelnet google.com 80\n\n# Capture TCP traffic\ntcpdump -i eth0 'tcp port 80' -w capture.pcap\n\n# View TCP statistics\nss -s\ncat /proc/net/tcp",
       "troubleshooting": [
-        "ss -s (socket statistics)",
-        "netstat -an | grep ESTABLISHED",
-        "tcpdump -i eth0 'tcp port 80'",
-        "Wireshark: tcp.analysis.retransmission"
+        "ss -s (overall TCP statistics — retransmissions, segments)",
+        "netstat -an | grep ESTABLISHED (active connections)",
+        "tcpdump -i eth0 'tcp port 80' (capture TCP traffic live)",
+        "Wireshark display filter: tcp.analysis.retransmission (spot retransmits)",
+        "Check for window scaling issues: tcp.window_size == 0 (zero window = receiver overwhelmed)",
+        "Connection refused? Check service is running: systemctl status sshd / nc -zv localhost 22"
       ]
     },
     "related_topics": [

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, HTTPException
 from pydantic import BaseModel
 from models.database import get_connection
-from services.stats import award_xp, record_activity, XP_QUIZ_CORRECT
+from services.stats import record_activity
 
 router = APIRouter()
 
@@ -58,13 +58,9 @@ async def submit_answer(request: Request, body: AnswerSubmit):
     conn.commit()
     conn.close()
 
-    # Award XP for correct answers; maintain streak for any attempt
-    if result["correct"]:
-        streak_data = award_xp(XP_QUIZ_CORRECT, "quiz")
-        result["xp_awarded"] = XP_QUIZ_CORRECT
-    else:
-        streak_data = record_activity("quiz")
-        result["xp_awarded"] = 0
+    # Quizzes maintain streak but award 0 XP — only lessons give XP
+    streak_data = record_activity("quiz")
+    result["xp_awarded"] = 0
     result["current_streak"] = streak_data["current_streak"]
     result["total_xp"] = streak_data["total_xp"]
 

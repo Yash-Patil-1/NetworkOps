@@ -7,7 +7,7 @@ const DOMAIN_META = {
   fundamentals: { label: 'Networking Fundamentals', icon: Cpu, color: 'text-blue-400' },
   network_engineering: { label: 'Network Engineering', icon: Network, color: 'text-amber' },
   noc_operations: { label: 'NOC Operations', icon: Monitor, color: 'text-green' },
-  network_security: { label: 'Network Security', icon: Shield, color: 'text-red-400' },
+  network_security: { label: 'Network Security', icon: Shield, color: 'text-red' },
   cloud_networking: { label: 'Cloud Networking', icon: Cloud, color: 'text-purple-400' },
   network_automation: { label: 'Network Automation', icon: Terminal, color: 'text-cyan-400' },
 }
@@ -49,12 +49,12 @@ export default function Topics() {
       {/* Domain filter tabs */}
       <div className="flex flex-wrap gap-2 mb-8">
         <button onClick={() => setActiveDomain(null)}
-          className={`px-3 py-1.5 rounded text-xs font-medium transition ${!activeDomain ? 'bg-amber/20 text-amber border border-amber/50' : 'bg-white/5 text-ash hover:text-polar border border-white/10 hover:border-amber/30'}`}>
+          className={`px-3 py-1.5 rounded text-xs font-medium transition ${!activeDomain ? 'bg-red/20 text-red border border-red/50' : 'bg-white/5 text-ash hover:text-chalk border border-carbon/30 hover:border-red/30'}`}>
           All Domains
         </button>
         {Object.entries(DOMAIN_META).map(([key, { label }]) => (
           <button key={key} onClick={() => setActiveDomain(key)}
-            className={`px-3 py-1.5 rounded text-xs font-medium transition ${activeDomain === key ? 'bg-amber/20 text-amber border border-amber/50' : 'bg-white/5 text-ash hover:text-polar border border-white/10 hover:border-amber/30'}`}>
+            className={`px-3 py-1.5 rounded text-xs font-medium transition ${activeDomain === key ? 'bg-red/20 text-red border border-red/50' : 'bg-white/5 text-ash hover:text-chalk border border-carbon/30 hover:border-red/30'}`}>
             {label}
           </button>
         ))}
@@ -68,16 +68,16 @@ export default function Topics() {
           <div key={domain} className="mb-8">
             <div className="flex items-center gap-2 mb-3">
               <Icon className={`w-5 h-5 ${meta.color}`} />
-              <h2 className="text-lg font-semibold">{meta.label}</h2>
+              <h2 className="text-lg font-semibold text-chalk">{meta.label}</h2>
               <span className="text-xs text-ash ml-2">({domainTopics.length} topics)</span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {domainTopics.map(t => (
-                <Link key={t.id} to={`/topics/${t.id}`} className="card block hover:border-amber/30 transition-colors">
+                <Link key={t.id} to={`/topics/${t.id}`} className="card block hover:border-red/30 transition-colors">
                   <div className="flex justify-between items-center">
-                    <h3 className="font-medium text-sm">{t.name}</h3>
+                    <h3 className="font-medium text-sm text-chalk">{t.name}</h3>
                     <div className="flex gap-2">
-                      {t.difficulty && <span className="tag-amber">{t.difficulty}</span>}
+                      {t.difficulty && <span className="tag-red">{t.difficulty}</span>}
                     </div>
                   </div>
                 </Link>

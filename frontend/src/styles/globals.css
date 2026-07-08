@@ -65,6 +65,12 @@
   &:focus { outline: none; border-color: var(--color-guards-red); }
 }
 
+@utility tag-red {
+  display: inline-flex; padding: 0.15rem 0.5rem; border-radius: var(--radius-tag);
+  border: 1px solid var(--color-guards-red); color: var(--color-guards-red);
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.04em;
+}
+
 @utility tag-amber {
   display: inline-flex; padding: 0.15rem 0.5rem; border-radius: var(--radius-tag);
   border: 1px solid var(--color-guards-red); color: var(--color-guards-red);
