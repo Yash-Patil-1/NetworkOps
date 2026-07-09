@@ -29,7 +29,7 @@ NetworkOps is a local-first learning platform for network operations and enginee
 |---------|-------------|
 | 📚 Topic Explorer | 148 topics across 6 network domains |
 | 🌐 Domain Browser | Routing, Switching, Security, Protocols, Infrastructure, Troubleshooting |
-| 🧠 Quiz Engine | 401 quiz questions with adaptive testing |
+| 🧠 Quiz Engine | 779 quiz questions across 150+ topics |
 | 📊 Progress Tracking | Track your learning journey |
 | 🔍 Search & Filter | Find topics by domain, keyword, or difficulty |
 | 📖 Structured Phases | Progressive learning path |
@@ -43,7 +43,7 @@ NetworkOps is a local-first learning platform for network operations and enginee
 |--------|-------|
 | Topics | 148 |
 | Domains | 6 |
-| Quiz Questions | 401 |
+| Quiz Questions | 779 |
 | Automated Tests | 29 |
 
 ---
@@ -85,7 +85,7 @@ cd frontend
 npm run dev
 ```
 
-Open **http://localhost:5173**
+Open **http://localhost:5175**
 
 ---
 
@@ -128,7 +128,7 @@ NetworkOps/
 │   ├── requirements.txt        # Python dependencies
 │   ├── data/
 │   │   ├── topics/             # Topic JSON files (148 topics)
-│   │   ├── questions/          # Quiz questions (401)
+│   │   ├── questions/          # Quiz questions (779)
 │   │   ├── domains.json        # Network domains (6)
 │   │   └── phases.json         # Learning phases
 │   ├── models/                 # Database models
