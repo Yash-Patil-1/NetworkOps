@@ -34,7 +34,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "A data source is the backend that Grafana queries for metrics \u2014 Prometheus, InfluxDB, Elasticsearch, etc.",
+    "explanation": "A data source is the backend that Grafana queries for metrics — Prometheus, InfluxDB, Elasticsearch, etc.",
     "hints": [
       "Where the data lives"
     ]
@@ -95,7 +95,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "NetBox is an IPAM/DCIM tool for documenting network infrastructure \u2014 IP addresses, devices, circuits, racks, and connections.",
+    "explanation": "NetBox is an IPAM/DCIM tool for documenting network infrastructure — IP addresses, devices, circuits, racks, and connections.",
     "hints": [
       "Network documentation and IPAM"
     ]
@@ -259,7 +259,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "Utilization = (Actual throughput / Link capacity) \u00d7 100%. E.g., 700 Mbps on a 1 Gbps link = 70%.",
+    "explanation": "Utilization = (Actual throughput / Link capacity) × 100%. E.g., 700 Mbps on a 1 Gbps link = 70%.",
     "hints": [
       "Simple division"
     ]
@@ -528,6 +528,1518 @@
     "explanation": "Investigate the cause (new application? growth?). If legitimate growth, plan capacity upgrade before hitting 80-90% threshold.",
     "hints": [
       "Significant deviation from baseline"
+    ]
+  },
+  {
+    "id": "q-config-backup-gen1",
+    "topic_id": "config-backup",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Automated Config Backup in networking.",
+    "correct_answers": [
+      "automated config backup networking",
+      "automated config backup",
+      "automated config backup concept",
+      "backup",
+      "repository"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Automated Config Backup is a core concept in noc operations that describes Automated Config Backup is a networking concept.",
+    "hints": [
+      "Review the theory section on Automated Config Backup"
+    ]
+  },
+  {
+    "id": "q-config-backup-gen2",
+    "topic_id": "config-backup",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Automated Config Backup improve network operations or security?",
+    "correct_answers": [
+      "automated config backup efficiency",
+      "automated config backup optimization",
+      "automated config backup improvement",
+      "backup",
+      "repository"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Automated Config Backup leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Automated Config Backup"
+    ]
+  },
+  {
+    "id": "q-config-backup-gen3",
+    "topic_id": "config-backup",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Automated Config Backup. What are the key implementation considerations?",
+    "correct_answers": [
+      "automated config backup testing",
+      "automated config backup planning",
+      "automated config backup deployment",
+      "backup",
+      "repository"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Automated Config Backup requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Automated Config Backup"
+    ]
+  },
+  {
+    "id": "q-config-backup-gen4",
+    "topic_id": "config-backup",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Automated Config Backup. What are the key implementation considerations?",
+    "correct_answers": [
+      "automated config backup testing",
+      "automated config backup planning",
+      "automated config backup deployment",
+      "backup",
+      "repository"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Automated Config Backup requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Automated Config Backup"
+    ]
+  },
+  {
+    "id": "q-correlation-gen1",
+    "topic_id": "correlation",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Event Correlation in networking.",
+    "correct_answers": [
+      "event correlation concept",
+      "event correlation networking",
+      "event correlation",
+      "events",
+      "repeated"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Event Correlation is a core concept in noc operations that describes Event Correlation is a networking concept.",
+    "hints": [
+      "Review the theory section on Event Correlation"
+    ]
+  },
+  {
+    "id": "q-correlation-gen2",
+    "topic_id": "correlation",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Event Correlation improve network operations or security?",
+    "correct_answers": [
+      "event correlation optimization",
+      "event correlation improvement",
+      "event correlation efficiency",
+      "events",
+      "repeated"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Event Correlation leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Event Correlation"
+    ]
+  },
+  {
+    "id": "q-correlation-gen3",
+    "topic_id": "correlation",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Event Correlation. What are the key implementation considerations?",
+    "correct_answers": [
+      "event correlation testing",
+      "event correlation planning",
+      "event correlation deployment",
+      "events",
+      "repeated"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Event Correlation requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Event Correlation"
+    ]
+  },
+  {
+    "id": "q-correlation-gen4",
+    "topic_id": "correlation",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Event Correlation. What are the key implementation considerations?",
+    "correct_answers": [
+      "event correlation testing",
+      "event correlation planning",
+      "event correlation deployment",
+      "events",
+      "repeated"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Event Correlation requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Event Correlation"
+    ]
+  },
+  {
+    "id": "q-dr-network-gen1",
+    "topic_id": "dr-network",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Network DR in networking.",
+    "correct_answers": [
+      "network dr networking",
+      "network dr",
+      "network dr concept",
+      "backup",
+      "site"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network DR is a core concept in noc operations that describes Network DR is a networking concept.",
+    "hints": [
+      "Review the theory section on Network DR"
+    ]
+  },
+  {
+    "id": "q-dr-network-gen2",
+    "topic_id": "dr-network",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Network DR improve network operations or security?",
+    "correct_answers": [
+      "network dr optimization",
+      "network dr efficiency",
+      "network dr improvement",
+      "backup",
+      "site"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Network DR leads to improved noc operations outcomes. Key concepts include: backup, site, rpo.",
+    "hints": [
+      "Review the theory section on Network DR"
+    ]
+  },
+  {
+    "id": "q-dr-network-gen3",
+    "topic_id": "dr-network",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network DR. What are the key implementation considerations?",
+    "correct_answers": [
+      "network dr planning",
+      "network dr deployment",
+      "network dr testing",
+      "backup",
+      "site"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network DR requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network DR"
+    ]
+  },
+  {
+    "id": "q-dr-network-gen4",
+    "topic_id": "dr-network",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network DR. What are the key implementation considerations?",
+    "correct_answers": [
+      "network dr planning",
+      "network dr deployment",
+      "network dr testing",
+      "backup",
+      "site"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network DR requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network DR"
+    ]
+  },
+  {
+    "id": "q-forecasting-gen1",
+    "topic_id": "forecasting",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Capacity Forecasting in networking.",
+    "correct_answers": [
+      "capacity forecasting concept",
+      "capacity forecasting",
+      "capacity forecasting networking",
+      "line",
+      "autoregressive"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Capacity Forecasting is a core concept in noc operations that describes Capacity Forecasting is a networking concept.",
+    "hints": [
+      "Review the theory section on Capacity Forecasting"
+    ]
+  },
+  {
+    "id": "q-forecasting-gen2",
+    "topic_id": "forecasting",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Capacity Forecasting improve network operations or security?",
+    "correct_answers": [
+      "capacity forecasting optimization",
+      "capacity forecasting improvement",
+      "capacity forecasting efficiency",
+      "line",
+      "autoregressive"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Capacity Forecasting leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Capacity Forecasting"
+    ]
+  },
+  {
+    "id": "q-forecasting-gen3",
+    "topic_id": "forecasting",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Capacity Forecasting. What are the key implementation considerations?",
+    "correct_answers": [
+      "capacity forecasting testing",
+      "capacity forecasting planning",
+      "capacity forecasting deployment",
+      "line",
+      "autoregressive"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Capacity Forecasting requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Capacity Forecasting"
+    ]
+  },
+  {
+    "id": "q-forecasting-gen4",
+    "topic_id": "forecasting",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Capacity Forecasting. What are the key implementation considerations?",
+    "correct_answers": [
+      "capacity forecasting testing",
+      "capacity forecasting planning",
+      "capacity forecasting deployment",
+      "line",
+      "autoregressive"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Capacity Forecasting requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Capacity Forecasting"
+    ]
+  },
+  {
+    "id": "q-inventory-mgmt-gen1",
+    "topic_id": "inventory-mgmt",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Inventory Management in networking.",
+    "correct_answers": [
+      "inventory management",
+      "inventory management networking",
+      "inventory management concept",
+      "lifecycle",
+      "entry"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Inventory Management is a core concept in noc operations that describes Inventory Management is a networking concept.",
+    "hints": [
+      "Review the theory section on Inventory Management"
+    ]
+  },
+  {
+    "id": "q-inventory-mgmt-gen2",
+    "topic_id": "inventory-mgmt",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Inventory Management improve network operations or security?",
+    "correct_answers": [
+      "inventory management efficiency",
+      "inventory management optimization",
+      "inventory management improvement",
+      "lifecycle",
+      "entry"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Inventory Management leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Inventory Management"
+    ]
+  },
+  {
+    "id": "q-inventory-mgmt-gen3",
+    "topic_id": "inventory-mgmt",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Inventory Management. What are the key implementation considerations?",
+    "correct_answers": [
+      "inventory management planning",
+      "inventory management deployment",
+      "inventory management testing",
+      "lifecycle",
+      "entry"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Inventory Management requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Inventory Management"
+    ]
+  },
+  {
+    "id": "q-inventory-mgmt-gen4",
+    "topic_id": "inventory-mgmt",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Inventory Management. What are the key implementation considerations?",
+    "correct_answers": [
+      "inventory management planning",
+      "inventory management deployment",
+      "inventory management testing",
+      "lifecycle",
+      "entry"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Inventory Management requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Inventory Management"
+    ]
+  },
+  {
+    "id": "q-librenms-gen1",
+    "topic_id": "librenms",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of LibreNMS in networking.",
+    "correct_answers": [
+      "librenms concept",
+      "librenms networking",
+      "librenms",
+      "definitions",
+      "alert"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "LibreNMS is a core concept in noc operations that describes LibreNMS is a networking concept.",
+    "hints": [
+      "Review the theory section on LibreNMS"
+    ]
+  },
+  {
+    "id": "q-librenms-gen2",
+    "topic_id": "librenms",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does LibreNMS improve network operations or security?",
+    "correct_answers": [
+      "librenms optimization",
+      "librenms improvement",
+      "librenms efficiency",
+      "definitions",
+      "alert"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of LibreNMS leads to improved noc operations outcomes. Key concepts include: definitions, alert, third-party.",
+    "hints": [
+      "Review the theory section on LibreNMS"
+    ]
+  },
+  {
+    "id": "q-librenms-gen3",
+    "topic_id": "librenms",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying LibreNMS. What are the key implementation considerations?",
+    "correct_answers": [
+      "librenms planning",
+      "librenms deployment",
+      "librenms testing",
+      "definitions",
+      "alert"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying LibreNMS requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on LibreNMS"
+    ]
+  },
+  {
+    "id": "q-librenms-gen4",
+    "topic_id": "librenms",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying LibreNMS. What are the key implementation considerations?",
+    "correct_answers": [
+      "librenms planning",
+      "librenms deployment",
+      "librenms testing",
+      "definitions",
+      "alert"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying LibreNMS requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on LibreNMS"
+    ]
+  },
+  {
+    "id": "q-log-techniques-gen1",
+    "topic_id": "log-techniques",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Log Analysis Techniques in networking.",
+    "correct_answers": [
+      "log analysis techniques",
+      "log analysis techniques networking",
+      "log analysis techniques concept",
+      "anomaly",
+      "using"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Log Analysis Techniques is a core concept in noc operations that describes Log Analysis Techniques is a networking concept.",
+    "hints": [
+      "Review the theory section on Log Analysis Techniques"
+    ]
+  },
+  {
+    "id": "q-log-techniques-gen2",
+    "topic_id": "log-techniques",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Log Analysis Techniques improve network operations or security?",
+    "correct_answers": [
+      "log analysis techniques optimization",
+      "log analysis techniques efficiency",
+      "log analysis techniques improvement",
+      "anomaly",
+      "using"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Log Analysis Techniques leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Log Analysis Techniques"
+    ]
+  },
+  {
+    "id": "q-log-techniques-gen3",
+    "topic_id": "log-techniques",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Log Analysis Techniques. What are the key implementation considerations?",
+    "correct_answers": [
+      "log analysis techniques testing",
+      "log analysis techniques planning",
+      "log analysis techniques deployment",
+      "anomaly",
+      "using"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Log Analysis Techniques requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Log Analysis Techniques"
+    ]
+  },
+  {
+    "id": "q-log-techniques-gen4",
+    "topic_id": "log-techniques",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Log Analysis Techniques. What are the key implementation considerations?",
+    "correct_answers": [
+      "log analysis techniques testing",
+      "log analysis techniques planning",
+      "log analysis techniques deployment",
+      "anomaly",
+      "using"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Log Analysis Techniques requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Log Analysis Techniques"
+    ]
+  },
+  {
+    "id": "q-maint-window-gen1",
+    "topic_id": "maint-window",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Maintenance Windows in networking.",
+    "correct_answers": [
+      "maintenance windows",
+      "maintenance windows concept",
+      "maintenance windows networking",
+      "execute",
+      "assessment"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Maintenance Windows is a core concept in noc operations that describes Maintenance Windows is a networking concept.",
+    "hints": [
+      "Review the theory section on Maintenance Windows"
+    ]
+  },
+  {
+    "id": "q-maint-window-gen2",
+    "topic_id": "maint-window",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Maintenance Windows improve network operations or security?",
+    "correct_answers": [
+      "maintenance windows efficiency",
+      "maintenance windows improvement",
+      "maintenance windows optimization",
+      "execute",
+      "assessment"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Maintenance Windows leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Maintenance Windows"
+    ]
+  },
+  {
+    "id": "q-maint-window-gen3",
+    "topic_id": "maint-window",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Maintenance Windows. What are the key implementation considerations?",
+    "correct_answers": [
+      "maintenance windows planning",
+      "maintenance windows deployment",
+      "maintenance windows testing",
+      "execute",
+      "assessment"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Maintenance Windows requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Maintenance Windows"
+    ]
+  },
+  {
+    "id": "q-maint-window-gen4",
+    "topic_id": "maint-window",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Maintenance Windows. What are the key implementation considerations?",
+    "correct_answers": [
+      "maintenance windows planning",
+      "maintenance windows deployment",
+      "maintenance windows testing",
+      "execute",
+      "assessment"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Maintenance Windows requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Maintenance Windows"
+    ]
+  },
+  {
+    "id": "q-nagios-mon-gen1",
+    "topic_id": "nagios-mon",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Nagios in networking.",
+    "correct_answers": [
+      "nagios concept",
+      "nagios networking",
+      "nagios",
+      "sms",
+      "definitions"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Nagios is a core concept in noc operations that describes Nagios is a networking concept.",
+    "hints": [
+      "Review the theory section on Nagios"
+    ]
+  },
+  {
+    "id": "q-nagios-mon-gen2",
+    "topic_id": "nagios-mon",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Nagios improve network operations or security?",
+    "correct_answers": [
+      "nagios improvement",
+      "nagios efficiency",
+      "nagios optimization",
+      "sms",
+      "definitions"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Nagios leads to improved noc operations outcomes. Key concepts include: sms, definitions, weird.",
+    "hints": [
+      "Review the theory section on Nagios"
+    ]
+  },
+  {
+    "id": "q-nagios-mon-gen3",
+    "topic_id": "nagios-mon",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Nagios. What are the key implementation considerations?",
+    "correct_answers": [
+      "nagios testing",
+      "nagios deployment",
+      "nagios planning",
+      "sms",
+      "definitions"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Nagios requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Nagios"
+    ]
+  },
+  {
+    "id": "q-nagios-mon-gen4",
+    "topic_id": "nagios-mon",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Nagios. What are the key implementation considerations?",
+    "correct_answers": [
+      "nagios testing",
+      "nagios deployment",
+      "nagios planning",
+      "sms",
+      "definitions"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Nagios requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Nagios"
+    ]
+  },
+  {
+    "id": "q-netbox-ipam-gen1",
+    "topic_id": "netbox-ipam",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of NetBox (IPAM/DCIM) in networking.",
+    "correct_answers": [
+      "netbox (ipam/dcim) concept",
+      "netbox (ipam/dcim)",
+      "netbox (ipam/dcim) networking",
+      "source",
+      "prefix"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NetBox (IPAM/DCIM) is a core concept in noc operations that describes NetBox (IPAM/DCIM) is a networking concept.",
+    "hints": [
+      "Review the theory section on NetBox (IPAM/DCIM)"
+    ]
+  },
+  {
+    "id": "q-netbox-ipam-gen2",
+    "topic_id": "netbox-ipam",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does NetBox (IPAM/DCIM) improve network operations or security?",
+    "correct_answers": [
+      "netbox (ipam/dcim) improvement",
+      "netbox (ipam/dcim) optimization",
+      "netbox (ipam/dcim) efficiency",
+      "source",
+      "prefix"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of NetBox (IPAM/DCIM) leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on NetBox (IPAM/DCIM)"
+    ]
+  },
+  {
+    "id": "q-netbox-ipam-gen3",
+    "topic_id": "netbox-ipam",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying NetBox (IPAM/DCIM). What are the key implementation considerations?",
+    "correct_answers": [
+      "netbox (ipam/dcim) planning",
+      "netbox (ipam/dcim) deployment",
+      "netbox (ipam/dcim) testing",
+      "source",
+      "prefix"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying NetBox (IPAM/DCIM) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on NetBox (IPAM/DCIM)"
+    ]
+  },
+  {
+    "id": "q-netbox-ipam-gen4",
+    "topic_id": "netbox-ipam",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying NetBox (IPAM/DCIM). What are the key implementation considerations?",
+    "correct_answers": [
+      "netbox (ipam/dcim) planning",
+      "netbox (ipam/dcim) deployment",
+      "netbox (ipam/dcim) testing",
+      "source",
+      "prefix"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying NetBox (IPAM/DCIM) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on NetBox (IPAM/DCIM)"
+    ]
+  },
+  {
+    "id": "q-network-observability-gen1",
+    "topic_id": "network-observability",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Network Observability in networking.",
+    "correct_answers": [
+      "network observability concept",
+      "network observability",
+      "network observability networking",
+      "gaps",
+      "what"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network Observability is a core concept in noc operations that describes Network Observability is a networking concept.",
+    "hints": [
+      "Review the theory section on Network Observability"
+    ]
+  },
+  {
+    "id": "q-network-observability-gen2",
+    "topic_id": "network-observability",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Network Observability improve network operations or security?",
+    "correct_answers": [
+      "network observability efficiency",
+      "network observability optimization",
+      "network observability improvement",
+      "gaps",
+      "what"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Network Observability leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Network Observability"
+    ]
+  },
+  {
+    "id": "q-network-observability-gen3",
+    "topic_id": "network-observability",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Observability. What are the key implementation considerations?",
+    "correct_answers": [
+      "network observability testing",
+      "network observability planning",
+      "network observability deployment",
+      "gaps",
+      "what"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Observability requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Observability"
+    ]
+  },
+  {
+    "id": "q-network-observability-gen4",
+    "topic_id": "network-observability",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Observability. What are the key implementation considerations?",
+    "correct_answers": [
+      "network observability testing",
+      "network observability planning",
+      "network observability deployment",
+      "gaps",
+      "what"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Observability requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Observability"
+    ]
+  },
+  {
+    "id": "q-oncall-gen1",
+    "topic_id": "oncall",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of On-Call Management in networking.",
+    "correct_answers": [
+      "on-call management concept",
+      "on-call management",
+      "on-call management networking",
+      "backup",
+      "gaps"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "On-Call Management is a core concept in noc operations that describes On-Call Management is a networking concept.",
+    "hints": [
+      "Review the theory section on On-Call Management"
+    ]
+  },
+  {
+    "id": "q-oncall-gen2",
+    "topic_id": "oncall",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does On-Call Management improve network operations or security?",
+    "correct_answers": [
+      "on-call management optimization",
+      "on-call management improvement",
+      "on-call management efficiency",
+      "backup",
+      "gaps"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of On-Call Management leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on On-Call Management"
+    ]
+  },
+  {
+    "id": "q-oncall-gen3",
+    "topic_id": "oncall",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying On-Call Management. What are the key implementation considerations?",
+    "correct_answers": [
+      "on-call management testing",
+      "on-call management deployment",
+      "on-call management planning",
+      "backup",
+      "gaps"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying On-Call Management requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on On-Call Management"
+    ]
+  },
+  {
+    "id": "q-oncall-gen4",
+    "topic_id": "oncall",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying On-Call Management. What are the key implementation considerations?",
+    "correct_answers": [
+      "on-call management testing",
+      "on-call management deployment",
+      "on-call management planning",
+      "backup",
+      "gaps"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying On-Call Management requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on On-Call Management"
+    ]
+  },
+  {
+    "id": "q-runbooks2-gen1",
+    "topic_id": "runbooks2",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of NOC Runbooks in networking.",
+    "correct_answers": [
+      "noc runbooks concept",
+      "noc runbooks networking",
+      "noc runbooks",
+      "symptom-to-resolution",
+      "trees"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NOC Runbooks is a core concept in noc operations that describes NOC Runbooks is a networking concept.",
+    "hints": [
+      "Review the theory section on NOC Runbooks"
+    ]
+  },
+  {
+    "id": "q-runbooks2-gen2",
+    "topic_id": "runbooks2",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does NOC Runbooks improve network operations or security?",
+    "correct_answers": [
+      "noc runbooks efficiency",
+      "noc runbooks improvement",
+      "noc runbooks optimization",
+      "symptom-to-resolution",
+      "trees"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of NOC Runbooks leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on NOC Runbooks"
+    ]
+  },
+  {
+    "id": "q-runbooks2-gen3",
+    "topic_id": "runbooks2",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying NOC Runbooks. What are the key implementation considerations?",
+    "correct_answers": [
+      "noc runbooks testing",
+      "noc runbooks deployment",
+      "noc runbooks planning",
+      "symptom-to-resolution",
+      "trees"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying NOC Runbooks requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on NOC Runbooks"
+    ]
+  },
+  {
+    "id": "q-runbooks2-gen4",
+    "topic_id": "runbooks2",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying NOC Runbooks. What are the key implementation considerations?",
+    "correct_answers": [
+      "noc runbooks testing",
+      "noc runbooks deployment",
+      "noc runbooks planning",
+      "symptom-to-resolution",
+      "trees"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying NOC Runbooks requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on NOC Runbooks"
+    ]
+  },
+  {
+    "id": "q-snmp-traps2-gen1",
+    "topic_id": "snmp-traps2",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of SNMP Traps in networking.",
+    "correct_answers": [
+      "snmp traps concept",
+      "snmp traps networking",
+      "snmp traps",
+      "snmpv3",
+      "snmp"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SNMP Traps is a core concept in noc operations that describes SNMP Traps is a networking concept.",
+    "hints": [
+      "Review the theory section on SNMP Traps"
+    ]
+  },
+  {
+    "id": "q-snmp-traps2-gen2",
+    "topic_id": "snmp-traps2",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does SNMP Traps improve network operations or security?",
+    "correct_answers": [
+      "snmp traps efficiency",
+      "snmp traps optimization",
+      "snmp traps improvement",
+      "snmpv3",
+      "snmp"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of SNMP Traps leads to improved noc operations outcomes. Key concepts include: snmpv3, severity, receiver.",
+    "hints": [
+      "Review the theory section on SNMP Traps"
+    ]
+  },
+  {
+    "id": "q-snmp-traps2-gen3",
+    "topic_id": "snmp-traps2",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying SNMP Traps. What are the key implementation considerations?",
+    "correct_answers": [
+      "snmp traps planning",
+      "snmp traps testing",
+      "snmp traps deployment",
+      "snmpv3",
+      "snmp"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying SNMP Traps requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on SNMP Traps"
+    ]
+  },
+  {
+    "id": "q-snmp-traps2-gen4",
+    "topic_id": "snmp-traps2",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying SNMP Traps. What are the key implementation considerations?",
+    "correct_answers": [
+      "snmp traps planning",
+      "snmp traps testing",
+      "snmp traps deployment",
+      "snmpv3",
+      "snmp"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying SNMP Traps requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on SNMP Traps"
+    ]
+  },
+  {
+    "id": "q-snmp-v3-gen1",
+    "topic_id": "snmp-v3",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of SNMPv3 Security in networking.",
+    "correct_answers": [
+      "snmpv3 security networking",
+      "snmpv3 security concept",
+      "snmpv3 security",
+      "aes-128",
+      "snmpv3"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SNMPv3 Security is a core concept in noc operations that describes SNMPv3 Security is a networking concept.",
+    "hints": [
+      "Review the theory section on SNMPv3 Security"
+    ]
+  },
+  {
+    "id": "q-snmp-v3-gen2",
+    "topic_id": "snmp-v3",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does SNMPv3 Security improve network operations or security?",
+    "correct_answers": [
+      "snmpv3 security efficiency",
+      "snmpv3 security optimization",
+      "snmpv3 security improvement",
+      "aes-128",
+      "snmpv3"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of SNMPv3 Security leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on SNMPv3 Security"
+    ]
+  },
+  {
+    "id": "q-snmp-v3-gen3",
+    "topic_id": "snmp-v3",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying SNMPv3 Security. What are the key implementation considerations?",
+    "correct_answers": [
+      "snmpv3 security planning",
+      "snmpv3 security testing",
+      "snmpv3 security deployment",
+      "aes-128",
+      "snmpv3"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying SNMPv3 Security requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on SNMPv3 Security"
+    ]
+  },
+  {
+    "id": "q-snmp-v3-gen4",
+    "topic_id": "snmp-v3",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying SNMPv3 Security. What are the key implementation considerations?",
+    "correct_answers": [
+      "snmpv3 security planning",
+      "snmpv3 security testing",
+      "snmpv3 security deployment",
+      "aes-128",
+      "snmpv3"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying SNMPv3 Security requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on SNMPv3 Security"
+    ]
+  },
+  {
+    "id": "q-streaming-telemetry-gen1",
+    "topic_id": "streaming-telemetry",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Streaming Telemetry in networking.",
+    "correct_answers": [
+      "streaming telemetry",
+      "streaming telemetry networking",
+      "streaming telemetry concept",
+      "event-driven",
+      "dial-out"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Streaming Telemetry is a core concept in noc operations that describes Streaming Telemetry is a networking concept.",
+    "hints": [
+      "Review the theory section on Streaming Telemetry"
+    ]
+  },
+  {
+    "id": "q-streaming-telemetry-gen2",
+    "topic_id": "streaming-telemetry",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Streaming Telemetry improve network operations or security?",
+    "correct_answers": [
+      "streaming telemetry improvement",
+      "streaming telemetry efficiency",
+      "streaming telemetry optimization",
+      "event-driven",
+      "dial-out"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Streaming Telemetry leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Streaming Telemetry"
+    ]
+  },
+  {
+    "id": "q-streaming-telemetry-gen3",
+    "topic_id": "streaming-telemetry",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Streaming Telemetry. What are the key implementation considerations?",
+    "correct_answers": [
+      "streaming telemetry planning",
+      "streaming telemetry testing",
+      "streaming telemetry deployment",
+      "event-driven",
+      "dial-out"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Streaming Telemetry requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Streaming Telemetry"
+    ]
+  },
+  {
+    "id": "q-streaming-telemetry-gen4",
+    "topic_id": "streaming-telemetry",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Streaming Telemetry. What are the key implementation considerations?",
+    "correct_answers": [
+      "streaming telemetry planning",
+      "streaming telemetry testing",
+      "streaming telemetry deployment",
+      "event-driven",
+      "dial-out"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Streaming Telemetry requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Streaming Telemetry"
+    ]
+  },
+  {
+    "id": "q-vendor-mgmt-gen1",
+    "topic_id": "vendor-mgmt",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Vendor/ISP Management in networking.",
+    "correct_answers": [
+      "vendor/isp management concept",
+      "vendor/isp management networking",
+      "vendor/isp management",
+      "lifecycle",
+      "demarcation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Vendor/ISP Management is a core concept in noc operations that describes Vendor/ISP Management is a networking concept.",
+    "hints": [
+      "Review the theory section on Vendor/ISP Management"
+    ]
+  },
+  {
+    "id": "q-vendor-mgmt-gen2",
+    "topic_id": "vendor-mgmt",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Vendor/ISP Management improve network operations or security?",
+    "correct_answers": [
+      "vendor/isp management efficiency",
+      "vendor/isp management improvement",
+      "vendor/isp management optimization",
+      "lifecycle",
+      "demarcation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Vendor/ISP Management leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Vendor/ISP Management"
+    ]
+  },
+  {
+    "id": "q-vendor-mgmt-gen3",
+    "topic_id": "vendor-mgmt",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Vendor/ISP Management. What are the key implementation considerations?",
+    "correct_answers": [
+      "vendor/isp management planning",
+      "vendor/isp management deployment",
+      "vendor/isp management testing",
+      "lifecycle",
+      "demarcation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Vendor/ISP Management requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Vendor/ISP Management"
+    ]
+  },
+  {
+    "id": "q-vendor-mgmt-gen4",
+    "topic_id": "vendor-mgmt",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Vendor/ISP Management. What are the key implementation considerations?",
+    "correct_answers": [
+      "vendor/isp management planning",
+      "vendor/isp management deployment",
+      "vendor/isp management testing",
+      "lifecycle",
+      "demarcation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Vendor/ISP Management requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Vendor/ISP Management"
+    ]
+  },
+  {
+    "id": "q-weathermap-gen1",
+    "topic_id": "weathermap",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Network Weather Maps in networking.",
+    "correct_answers": [
+      "network weather maps concept",
+      "network weather maps",
+      "network weather maps networking",
+      "messy",
+      "color-code"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network Weather Maps is a core concept in noc operations that describes Network Weather Maps is a networking concept.",
+    "hints": [
+      "Review the theory section on Network Weather Maps"
+    ]
+  },
+  {
+    "id": "q-weathermap-gen2",
+    "topic_id": "weathermap",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Network Weather Maps improve network operations or security?",
+    "correct_answers": [
+      "network weather maps efficiency",
+      "network weather maps improvement",
+      "network weather maps optimization",
+      "messy",
+      "color-code"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Network Weather Maps leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Network Weather Maps"
+    ]
+  },
+  {
+    "id": "q-weathermap-gen3",
+    "topic_id": "weathermap",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Weather Maps. What are the key implementation considerations?",
+    "correct_answers": [
+      "network weather maps planning",
+      "network weather maps testing",
+      "network weather maps deployment",
+      "messy",
+      "color-code"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Weather Maps requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Weather Maps"
+    ]
+  },
+  {
+    "id": "q-weathermap-gen4",
+    "topic_id": "weathermap",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Weather Maps. What are the key implementation considerations?",
+    "correct_answers": [
+      "network weather maps planning",
+      "network weather maps testing",
+      "network weather maps deployment",
+      "messy",
+      "color-code"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Weather Maps requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Weather Maps"
     ]
   }
 ]

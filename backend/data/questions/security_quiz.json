@@ -34,7 +34,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "Default deny (implicit deny all) \u2014 block everything not explicitly permitted. This is the most secure approach.",
+    "explanation": "Default deny (implicit deny all) — block everything not explicitly permitted. This is the most secure approach.",
     "hints": [
       "Block by default"
     ]
@@ -592,6 +592,384 @@
     "explanation": "Microsegmentation applies security policies at the workload/application level (per-VM, per-container) rather than at network boundaries. Controls east-west traffic.",
     "hints": [
       "More granular than VLANs"
+    ]
+  },
+  {
+    "id": "q-802-1x-gen1",
+    "topic_id": "802-1x",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of 802.1X (Network Access Control) in networking.",
+    "correct_answers": [
+      "802.1x (network access control)",
+      "802.1x (network access control) networking",
+      "802.1x (network access control) concept",
+      "debug",
+      "assignment"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "802.1X (Network Access Control) is a core concept in network security that describes 802.1X (Network Access Control) is used for securing network infrastructure.",
+    "hints": [
+      "Review the theory section on 802.1X (Network Access Control)"
+    ]
+  },
+  {
+    "id": "q-802-1x-gen2",
+    "topic_id": "802-1x",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does 802.1X (Network Access Control) improve network operations or security?",
+    "correct_answers": [
+      "802.1x (network access control) improvement",
+      "802.1x (network access control) optimization",
+      "802.1x (network access control) efficiency",
+      "debug",
+      "assignment"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of 802.1X (Network Access Control) leads to improved network security outcomes.",
+    "hints": [
+      "Review the theory section on 802.1X (Network Access Control)"
+    ]
+  },
+  {
+    "id": "q-802-1x-gen3",
+    "topic_id": "802-1x",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying 802.1X (Network Access Control). What are the key implementation considerations?",
+    "correct_answers": [
+      "802.1x (network access control) planning",
+      "802.1x (network access control) testing",
+      "802.1x (network access control) deployment",
+      "debug",
+      "assignment"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying 802.1X (Network Access Control) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on 802.1X (Network Access Control)"
+    ]
+  },
+  {
+    "id": "q-802-1x-gen4",
+    "topic_id": "802-1x",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying 802.1X (Network Access Control). What are the key implementation considerations?",
+    "correct_answers": [
+      "802.1x (network access control) planning",
+      "802.1x (network access control) testing",
+      "802.1x (network access control) deployment",
+      "debug",
+      "assignment"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying 802.1X (Network Access Control) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on 802.1X (Network Access Control)"
+    ]
+  },
+  {
+    "id": "q-ddos-gen1",
+    "topic_id": "ddos",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of DDoS Mitigation in networking.",
+    "correct_answers": [
+      "ddos mitigation networking",
+      "ddos mitigation concept",
+      "ddos mitigation",
+      "saturation",
+      "using"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "DDoS Mitigation is a core concept in network security that describes DDoS Mitigation is used for securing network infrastructure.",
+    "hints": [
+      "Review the theory section on DDoS Mitigation"
+    ]
+  },
+  {
+    "id": "q-ddos-gen2",
+    "topic_id": "ddos",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does DDoS Mitigation improve network operations or security?",
+    "correct_answers": [
+      "ddos mitigation improvement",
+      "ddos mitigation efficiency",
+      "ddos mitigation optimization",
+      "saturation",
+      "using"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of DDoS Mitigation leads to improved network security outcomes.",
+    "hints": [
+      "Review the theory section on DDoS Mitigation"
+    ]
+  },
+  {
+    "id": "q-ddos-gen3",
+    "topic_id": "ddos",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying DDoS Mitigation. What are the key implementation considerations?",
+    "correct_answers": [
+      "ddos mitigation testing",
+      "ddos mitigation planning",
+      "ddos mitigation deployment",
+      "saturation",
+      "using"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying DDoS Mitigation requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on DDoS Mitigation"
+    ]
+  },
+  {
+    "id": "q-microseg-gen1",
+    "topic_id": "microseg",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Microsegmentation in networking.",
+    "correct_answers": [
+      "microsegmentation networking",
+      "microsegmentation concept",
+      "microsegmentation",
+      "temporary",
+      "kubernetes"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Microsegmentation is a core concept in network security that describes Microsegmentation is used for securing network infrastructure.",
+    "hints": [
+      "Review the theory section on Microsegmentation"
+    ]
+  },
+  {
+    "id": "q-microseg-gen2",
+    "topic_id": "microseg",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Microsegmentation improve network operations or security?",
+    "correct_answers": [
+      "microsegmentation efficiency",
+      "microsegmentation optimization",
+      "microsegmentation improvement",
+      "temporary",
+      "kubernetes"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Microsegmentation leads to improved network security outcomes.",
+    "hints": [
+      "Review the theory section on Microsegmentation"
+    ]
+  },
+  {
+    "id": "q-microseg-gen3",
+    "topic_id": "microseg",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Microsegmentation. What are the key implementation considerations?",
+    "correct_answers": [
+      "microsegmentation testing",
+      "microsegmentation planning",
+      "microsegmentation deployment",
+      "temporary",
+      "kubernetes"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Microsegmentation requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Microsegmentation"
+    ]
+  },
+  {
+    "id": "q-microseg-gen4",
+    "topic_id": "microseg",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Microsegmentation. What are the key implementation considerations?",
+    "correct_answers": [
+      "microsegmentation testing",
+      "microsegmentation planning",
+      "microsegmentation deployment",
+      "temporary",
+      "kubernetes"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Microsegmentation requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Microsegmentation"
+    ]
+  },
+  {
+    "id": "q-nac-gen1",
+    "topic_id": "nac",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of NAC Implementation in networking.",
+    "correct_answers": [
+      "nac implementation networking",
+      "nac implementation",
+      "nac implementation concept",
+      "non-compliant",
+      "self-onboarding"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NAC Implementation is a core concept in network security that describes NAC Implementation is used for securing network infrastructure.",
+    "hints": [
+      "Review the theory section on NAC Implementation"
+    ]
+  },
+  {
+    "id": "q-nac-gen2",
+    "topic_id": "nac",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does NAC Implementation improve network operations or security?",
+    "correct_answers": [
+      "nac implementation optimization",
+      "nac implementation improvement",
+      "nac implementation efficiency",
+      "non-compliant",
+      "self-onboarding"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of NAC Implementation leads to improved network security outcomes.",
+    "hints": [
+      "Review the theory section on NAC Implementation"
+    ]
+  },
+  {
+    "id": "q-nac-gen3",
+    "topic_id": "nac",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying NAC Implementation. What are the key implementation considerations?",
+    "correct_answers": [
+      "nac implementation planning",
+      "nac implementation deployment",
+      "nac implementation testing",
+      "non-compliant",
+      "self-onboarding"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying NAC Implementation requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on NAC Implementation"
+    ]
+  },
+  {
+    "id": "q-nac-gen4",
+    "topic_id": "nac",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying NAC Implementation. What are the key implementation considerations?",
+    "correct_answers": [
+      "nac implementation planning",
+      "nac implementation deployment",
+      "nac implementation testing",
+      "non-compliant",
+      "self-onboarding"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying NAC Implementation requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on NAC Implementation"
+    ]
+  },
+  {
+    "id": "q-network-segmentation-gen1",
+    "topic_id": "network-segmentation",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Network Segmentation in networking.",
+    "correct_answers": [
+      "network segmentation concept",
+      "network segmentation",
+      "network segmentation networking",
+      "privilege",
+      "traceroute"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network Segmentation is a core concept in network security that describes Network Segmentation is used for securing network infrastructure.",
+    "hints": [
+      "Review the theory section on Network Segmentation"
+    ]
+  },
+  {
+    "id": "q-network-segmentation-gen2",
+    "topic_id": "network-segmentation",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Network Segmentation improve network operations or security?",
+    "correct_answers": [
+      "network segmentation efficiency",
+      "network segmentation improvement",
+      "network segmentation optimization",
+      "privilege",
+      "traceroute"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Network Segmentation leads to improved network security outcomes.",
+    "hints": [
+      "Review the theory section on Network Segmentation"
+    ]
+  },
+  {
+    "id": "q-network-segmentation-gen3",
+    "topic_id": "network-segmentation",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Segmentation. What are the key implementation considerations?",
+    "correct_answers": [
+      "network segmentation testing",
+      "network segmentation planning",
+      "network segmentation deployment",
+      "privilege",
+      "traceroute"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Segmentation requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Segmentation"
     ]
   }
 ]

@@ -15,7 +15,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "HSRP (Hot Standby Router Protocol) provides first-hop gateway redundancy. Multiple routers share a virtual IP \u2014 if active fails, standby takes over.",
+    "explanation": "HSRP (Hot Standby Router Protocol) provides first-hop gateway redundancy. Multiple routers share a virtual IP — if active fails, standby takes over.",
     "hints": [
       "Redundant default gateway"
     ]
@@ -35,7 +35,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "HSRP is Cisco proprietary. VRRP is an open standard (RFC 5798). Functionally similar \u2014 both provide gateway redundancy.",
+    "explanation": "HSRP is Cisco proprietary. VRRP is an open standard (RFC 5798). Functionally similar — both provide gateway redundancy.",
     "hints": [
       "One is Cisco-only"
     ]
@@ -455,7 +455,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "PBR routes traffic based on criteria other than destination (source IP, protocol, port) \u2014 overrides the normal routing table.",
+    "explanation": "PBR routes traffic based on criteria other than destination (source IP, protocol, port) — overrides the normal routing table.",
     "hints": [
       "Route by rules, not just destination"
     ]
@@ -573,6 +573,1497 @@
     "explanation": "VoIP needs: <150ms one-way latency, <30ms jitter, <1% packet loss. Use EF (Expedited Forwarding) DSCP marking and priority queuing.",
     "hints": [
       "Strict latency and loss requirements"
+    ]
+  },
+  {
+    "id": "q-acls-gen1",
+    "topic_id": "acls",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Access Control Lists in networking.",
+    "correct_answers": [
+      "access control lists concept",
+      "access control lists networking",
+      "access control lists",
+      "source",
+      "implicit"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Access Control Lists is a core concept in network engineering that describes Access Control Lists is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on Access Control Lists"
+    ]
+  },
+  {
+    "id": "q-acls-gen2",
+    "topic_id": "acls",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Access Control Lists improve network operations or security?",
+    "correct_answers": [
+      "access control lists improvement",
+      "access control lists efficiency",
+      "access control lists optimization",
+      "source",
+      "implicit"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Access Control Lists leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on Access Control Lists"
+    ]
+  },
+  {
+    "id": "q-acls-gen3",
+    "topic_id": "acls",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Access Control Lists. What are the key implementation considerations?",
+    "correct_answers": [
+      "access control lists testing",
+      "access control lists deployment",
+      "access control lists planning",
+      "source",
+      "implicit"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Access Control Lists requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Access Control Lists"
+    ]
+  },
+  {
+    "id": "q-campus-design-gen1",
+    "topic_id": "campus-design",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Campus Network Design in networking.",
+    "correct_answers": [
+      "campus network design",
+      "campus network design concept",
+      "campus network design networking",
+      "core",
+      "vrrp"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Campus Network Design is a core concept in network engineering that describes Campus Network Design is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on Campus Network Design"
+    ]
+  },
+  {
+    "id": "q-campus-design-gen2",
+    "topic_id": "campus-design",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Campus Network Design improve network operations or security?",
+    "correct_answers": [
+      "campus network design optimization",
+      "campus network design efficiency",
+      "campus network design improvement",
+      "core",
+      "vrrp"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Campus Network Design leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on Campus Network Design"
+    ]
+  },
+  {
+    "id": "q-campus-design-gen3",
+    "topic_id": "campus-design",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Campus Network Design. What are the key implementation considerations?",
+    "correct_answers": [
+      "campus network design testing",
+      "campus network design planning",
+      "campus network design deployment",
+      "core",
+      "vrrp"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Campus Network Design requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Campus Network Design"
+    ]
+  },
+  {
+    "id": "q-campus-design-gen4",
+    "topic_id": "campus-design",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Campus Network Design. What are the key implementation considerations?",
+    "correct_answers": [
+      "campus network design testing",
+      "campus network design planning",
+      "campus network design deployment",
+      "core",
+      "vrrp"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Campus Network Design requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Campus Network Design"
+    ]
+  },
+  {
+    "id": "q-dc-design-gen1",
+    "topic_id": "dc-design",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Data Center Design in networking.",
+    "correct_answers": [
+      "data center design",
+      "data center design concept",
+      "data center design networking",
+      "vxlan",
+      "hashing"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Data Center Design is a core concept in network engineering that describes Data Center Design is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on Data Center Design"
+    ]
+  },
+  {
+    "id": "q-dc-design-gen2",
+    "topic_id": "dc-design",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Data Center Design improve network operations or security?",
+    "correct_answers": [
+      "data center design optimization",
+      "data center design improvement",
+      "data center design efficiency",
+      "vxlan",
+      "hashing"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Data Center Design leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on Data Center Design"
+    ]
+  },
+  {
+    "id": "q-dc-design-gen3",
+    "topic_id": "dc-design",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Data Center Design. What are the key implementation considerations?",
+    "correct_answers": [
+      "data center design testing",
+      "data center design planning",
+      "data center design deployment",
+      "vxlan",
+      "hashing"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Data Center Design requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Data Center Design"
+    ]
+  },
+  {
+    "id": "q-dhcp-relay2-gen1",
+    "topic_id": "dhcp-relay2",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of DHCP Relay in networking.",
+    "correct_answers": [
+      "dhcp relay concept",
+      "dhcp relay networking",
+      "dhcp relay",
+      "servers",
+      "helper-address"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "DHCP Relay is a core concept in network engineering that describes DHCP Relay is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on DHCP Relay"
+    ]
+  },
+  {
+    "id": "q-dhcp-relay2-gen2",
+    "topic_id": "dhcp-relay2",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does DHCP Relay improve network operations or security?",
+    "correct_answers": [
+      "dhcp relay optimization",
+      "dhcp relay efficiency",
+      "dhcp relay improvement",
+      "servers",
+      "helper-address"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of DHCP Relay leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on DHCP Relay"
+    ]
+  },
+  {
+    "id": "q-dhcp-relay2-gen3",
+    "topic_id": "dhcp-relay2",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying DHCP Relay. What are the key implementation considerations?",
+    "correct_answers": [
+      "dhcp relay deployment",
+      "dhcp relay testing",
+      "dhcp relay planning",
+      "servers",
+      "helper-address"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying DHCP Relay requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on DHCP Relay"
+    ]
+  },
+  {
+    "id": "q-dhcp-relay2-gen4",
+    "topic_id": "dhcp-relay2",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying DHCP Relay. What are the key implementation considerations?",
+    "correct_answers": [
+      "dhcp relay deployment",
+      "dhcp relay testing",
+      "dhcp relay planning",
+      "servers",
+      "helper-address"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying DHCP Relay requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on DHCP Relay"
+    ]
+  },
+  {
+    "id": "q-etherchannel-gen1",
+    "topic_id": "etherchannel",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of EtherChannel (Link Aggregation) in networking.",
+    "correct_answers": [
+      "etherchannel (link aggregation)",
+      "etherchannel (link aggregation) networking",
+      "etherchannel (link aggregation) concept",
+      "uses",
+      "desirable"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "EtherChannel (Link Aggregation) is a core concept in network engineering that describes EtherChannel (Link Aggregation) is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on EtherChannel (Link Aggregation)"
+    ]
+  },
+  {
+    "id": "q-etherchannel-gen2",
+    "topic_id": "etherchannel",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does EtherChannel (Link Aggregation) improve network operations or security?",
+    "correct_answers": [
+      "etherchannel (link aggregation) optimization",
+      "etherchannel (link aggregation) improvement",
+      "etherchannel (link aggregation) efficiency",
+      "uses",
+      "desirable"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of EtherChannel (Link Aggregation) leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on EtherChannel (Link Aggregation)"
+    ]
+  },
+  {
+    "id": "q-etherchannel-gen3",
+    "topic_id": "etherchannel",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying EtherChannel (Link Aggregation). What are the key implementation considerations?",
+    "correct_answers": [
+      "etherchannel (link aggregation) testing",
+      "etherchannel (link aggregation) planning",
+      "etherchannel (link aggregation) deployment",
+      "uses",
+      "desirable"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying EtherChannel (Link Aggregation) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on EtherChannel (Link Aggregation)"
+    ]
+  },
+  {
+    "id": "q-gre-gen1",
+    "topic_id": "gre",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of GRE Tunnels in networking.",
+    "correct_answers": [
+      "gre tunnels networking",
+      "gre tunnels concept",
+      "gre tunnels",
+      "source",
+      "down"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "GRE Tunnels is a core concept in network engineering that describes GRE Tunnels is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on GRE Tunnels"
+    ]
+  },
+  {
+    "id": "q-gre-gen2",
+    "topic_id": "gre",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does GRE Tunnels improve network operations or security?",
+    "correct_answers": [
+      "gre tunnels improvement",
+      "gre tunnels optimization",
+      "gre tunnels efficiency",
+      "source",
+      "down"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of GRE Tunnels leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on GRE Tunnels"
+    ]
+  },
+  {
+    "id": "q-gre-gen3",
+    "topic_id": "gre",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying GRE Tunnels. What are the key implementation considerations?",
+    "correct_answers": [
+      "gre tunnels deployment",
+      "gre tunnels testing",
+      "gre tunnels planning",
+      "source",
+      "down"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying GRE Tunnels requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on GRE Tunnels"
+    ]
+  },
+  {
+    "id": "q-gre-gen4",
+    "topic_id": "gre",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying GRE Tunnels. What are the key implementation considerations?",
+    "correct_answers": [
+      "gre tunnels deployment",
+      "gre tunnels testing",
+      "gre tunnels planning",
+      "source",
+      "down"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying GRE Tunnels requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on GRE Tunnels"
+    ]
+  },
+  {
+    "id": "q-hsrp-vrrp-gen1",
+    "topic_id": "hsrp-vrrp",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of HSRP/VRRP (First Hop Redundancy) in networking.",
+    "correct_answers": [
+      "hsrp/vrrp (first hop redundancy) networking",
+      "hsrp/vrrp (first hop redundancy)",
+      "hsrp/vrrp (first hop redundancy) concept",
+      "debug",
+      "hello"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "HSRP/VRRP (First Hop Redundancy) is a core concept in network engineering that describes HSRP/VRRP (First Hop Redundancy) is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on HSRP/VRRP (First Hop Redundancy)"
+    ]
+  },
+  {
+    "id": "q-hsrp-vrrp-gen2",
+    "topic_id": "hsrp-vrrp",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does HSRP/VRRP (First Hop Redundancy) improve network operations or security?",
+    "correct_answers": [
+      "hsrp/vrrp (first hop redundancy) efficiency",
+      "hsrp/vrrp (first hop redundancy) optimization",
+      "hsrp/vrrp (first hop redundancy) improvement",
+      "debug",
+      "hello"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of HSRP/VRRP (First Hop Redundancy) leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on HSRP/VRRP (First Hop Redundancy)"
+    ]
+  },
+  {
+    "id": "q-hsrp-vrrp-gen3",
+    "topic_id": "hsrp-vrrp",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying HSRP/VRRP (First Hop Redundancy). What are the key implementation considerations?",
+    "correct_answers": [
+      "hsrp/vrrp (first hop redundancy) planning",
+      "hsrp/vrrp (first hop redundancy) deployment",
+      "hsrp/vrrp (first hop redundancy) testing",
+      "debug",
+      "hello"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying HSRP/VRRP (First Hop Redundancy) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on HSRP/VRRP (First Hop Redundancy)"
+    ]
+  },
+  {
+    "id": "q-ipv6-route-gen1",
+    "topic_id": "ipv6-route",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of IPv6 Routing in networking.",
+    "correct_answers": [
+      "ipv6 routing",
+      "ipv6 routing concept",
+      "ipv6 routing networking",
+      "uses",
+      "native"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "IPv6 Routing is a core concept in network engineering that describes IPv6 Routing is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on IPv6 Routing"
+    ]
+  },
+  {
+    "id": "q-ipv6-route-gen2",
+    "topic_id": "ipv6-route",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does IPv6 Routing improve network operations or security?",
+    "correct_answers": [
+      "ipv6 routing improvement",
+      "ipv6 routing efficiency",
+      "ipv6 routing optimization",
+      "uses",
+      "native"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of IPv6 Routing leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on IPv6 Routing"
+    ]
+  },
+  {
+    "id": "q-ipv6-route-gen3",
+    "topic_id": "ipv6-route",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying IPv6 Routing. What are the key implementation considerations?",
+    "correct_answers": [
+      "ipv6 routing testing",
+      "ipv6 routing planning",
+      "ipv6 routing deployment",
+      "uses",
+      "native"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying IPv6 Routing requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on IPv6 Routing"
+    ]
+  },
+  {
+    "id": "q-ipv6-route-gen4",
+    "topic_id": "ipv6-route",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying IPv6 Routing. What are the key implementation considerations?",
+    "correct_answers": [
+      "ipv6 routing testing",
+      "ipv6 routing planning",
+      "ipv6 routing deployment",
+      "uses",
+      "native"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying IPv6 Routing requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on IPv6 Routing"
+    ]
+  },
+  {
+    "id": "q-mpls-basics-gen1",
+    "topic_id": "mpls-basics",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of MPLS Basics in networking.",
+    "correct_answers": [
+      "mpls basics networking",
+      "mpls basics concept",
+      "mpls basics",
+      "data-carrying",
+      "using"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "MPLS Basics is a core concept in network engineering that describes MPLS Basics is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on MPLS Basics"
+    ]
+  },
+  {
+    "id": "q-mpls-basics-gen2",
+    "topic_id": "mpls-basics",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does MPLS Basics improve network operations or security?",
+    "correct_answers": [
+      "mpls basics optimization",
+      "mpls basics improvement",
+      "mpls basics efficiency",
+      "data-carrying",
+      "using"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of MPLS Basics leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on MPLS Basics"
+    ]
+  },
+  {
+    "id": "q-mpls-basics-gen3",
+    "topic_id": "mpls-basics",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying MPLS Basics. What are the key implementation considerations?",
+    "correct_answers": [
+      "mpls basics planning",
+      "mpls basics testing",
+      "mpls basics deployment",
+      "data-carrying",
+      "using"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying MPLS Basics requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on MPLS Basics"
+    ]
+  },
+  {
+    "id": "q-multicast-gen1",
+    "topic_id": "multicast",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of IP Multicast in networking.",
+    "correct_answers": [
+      "ip multicast networking",
+      "ip multicast",
+      "ip multicast concept",
+      "source",
+      "auto-rp"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "IP Multicast is a core concept in network engineering that describes IP Multicast is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on IP Multicast"
+    ]
+  },
+  {
+    "id": "q-multicast-gen2",
+    "topic_id": "multicast",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does IP Multicast improve network operations or security?",
+    "correct_answers": [
+      "ip multicast improvement",
+      "ip multicast efficiency",
+      "ip multicast optimization",
+      "source",
+      "auto-rp"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of IP Multicast leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on IP Multicast"
+    ]
+  },
+  {
+    "id": "q-multicast-gen3",
+    "topic_id": "multicast",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying IP Multicast. What are the key implementation considerations?",
+    "correct_answers": [
+      "ip multicast planning",
+      "ip multicast testing",
+      "ip multicast deployment",
+      "source",
+      "auto-rp"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying IP Multicast requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on IP Multicast"
+    ]
+  },
+  {
+    "id": "q-multicast-gen4",
+    "topic_id": "multicast",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying IP Multicast. What are the key implementation considerations?",
+    "correct_answers": [
+      "ip multicast planning",
+      "ip multicast testing",
+      "ip multicast deployment",
+      "source",
+      "auto-rp"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying IP Multicast requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on IP Multicast"
+    ]
+  },
+  {
+    "id": "q-pbr-gen1",
+    "topic_id": "pbr",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Policy-Based Routing in networking.",
+    "correct_answers": [
+      "policy-based routing",
+      "policy-based routing concept",
+      "policy-based routing networking",
+      "selection",
+      "next-hop"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Policy-Based Routing is a core concept in network engineering that describes Policy-Based Routing is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on Policy-Based Routing"
+    ]
+  },
+  {
+    "id": "q-pbr-gen2",
+    "topic_id": "pbr",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Policy-Based Routing improve network operations or security?",
+    "correct_answers": [
+      "policy-based routing improvement",
+      "policy-based routing efficiency",
+      "policy-based routing optimization",
+      "selection",
+      "next-hop"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Policy-Based Routing leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on Policy-Based Routing"
+    ]
+  },
+  {
+    "id": "q-pbr-gen3",
+    "topic_id": "pbr",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Policy-Based Routing. What are the key implementation considerations?",
+    "correct_answers": [
+      "policy-based routing testing",
+      "policy-based routing planning",
+      "policy-based routing deployment",
+      "selection",
+      "next-hop"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Policy-Based Routing requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Policy-Based Routing"
+    ]
+  },
+  {
+    "id": "q-pbr-gen4",
+    "topic_id": "pbr",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Policy-Based Routing. What are the key implementation considerations?",
+    "correct_answers": [
+      "policy-based routing testing",
+      "policy-based routing planning",
+      "policy-based routing deployment",
+      "selection",
+      "next-hop"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Policy-Based Routing requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Policy-Based Routing"
+    ]
+  },
+  {
+    "id": "q-qos-basics-gen1",
+    "topic_id": "qos-basics",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of QoS (Quality of Service) in networking.",
+    "correct_answers": [
+      "qos (quality of service) concept",
+      "qos (quality of service) networking",
+      "qos (quality of service)",
+      "class-based",
+      "buffer"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "QoS (Quality of Service) is a core concept in network engineering that describes QoS (Quality of Service) is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on QoS (Quality of Service)"
+    ]
+  },
+  {
+    "id": "q-qos-basics-gen2",
+    "topic_id": "qos-basics",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does QoS (Quality of Service) improve network operations or security?",
+    "correct_answers": [
+      "qos (quality of service) optimization",
+      "qos (quality of service) improvement",
+      "qos (quality of service) efficiency",
+      "class-based",
+      "buffer"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of QoS (Quality of Service) leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on QoS (Quality of Service)"
+    ]
+  },
+  {
+    "id": "q-qos-basics-gen3",
+    "topic_id": "qos-basics",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying QoS (Quality of Service). What are the key implementation considerations?",
+    "correct_answers": [
+      "qos (quality of service) testing",
+      "qos (quality of service) planning",
+      "qos (quality of service) deployment",
+      "class-based",
+      "buffer"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying QoS (Quality of Service) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on QoS (Quality of Service)"
+    ]
+  },
+  {
+    "id": "q-qos-voice-gen1",
+    "topic_id": "qos-voice",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of QoS for VoIP in networking.",
+    "correct_answers": [
+      "qos for voip networking",
+      "qos for voip concept",
+      "qos for voip",
+      "quality",
+      "marking"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "QoS for VoIP is a core concept in network engineering that describes QoS for VoIP is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on QoS for VoIP"
+    ]
+  },
+  {
+    "id": "q-qos-voice-gen2",
+    "topic_id": "qos-voice",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does QoS for VoIP improve network operations or security?",
+    "correct_answers": [
+      "qos for voip efficiency",
+      "qos for voip optimization",
+      "qos for voip improvement",
+      "quality",
+      "marking"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of QoS for VoIP leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on QoS for VoIP"
+    ]
+  },
+  {
+    "id": "q-qos-voice-gen3",
+    "topic_id": "qos-voice",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying QoS for VoIP. What are the key implementation considerations?",
+    "correct_answers": [
+      "qos for voip testing",
+      "qos for voip deployment",
+      "qos for voip planning",
+      "quality",
+      "marking"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying QoS for VoIP requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on QoS for VoIP"
+    ]
+  },
+  {
+    "id": "q-qos-voice-gen4",
+    "topic_id": "qos-voice",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying QoS for VoIP. What are the key implementation considerations?",
+    "correct_answers": [
+      "qos for voip testing",
+      "qos for voip deployment",
+      "qos for voip planning",
+      "quality",
+      "marking"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying QoS for VoIP requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on QoS for VoIP"
+    ]
+  },
+  {
+    "id": "q-redistribution-gen1",
+    "topic_id": "redistribution",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Route Redistribution in networking.",
+    "correct_answers": [
+      "route redistribution concept",
+      "route redistribution",
+      "route redistribution networking",
+      "seed",
+      "router"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Route Redistribution is a core concept in network engineering that describes Route Redistribution is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on Route Redistribution"
+    ]
+  },
+  {
+    "id": "q-redistribution-gen2",
+    "topic_id": "redistribution",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Route Redistribution improve network operations or security?",
+    "correct_answers": [
+      "route redistribution efficiency",
+      "route redistribution optimization",
+      "route redistribution improvement",
+      "seed",
+      "router"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Route Redistribution leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on Route Redistribution"
+    ]
+  },
+  {
+    "id": "q-redistribution-gen3",
+    "topic_id": "redistribution",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Route Redistribution. What are the key implementation considerations?",
+    "correct_answers": [
+      "route redistribution deployment",
+      "route redistribution planning",
+      "route redistribution testing",
+      "seed",
+      "router"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Route Redistribution requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Route Redistribution"
+    ]
+  },
+  {
+    "id": "q-redundancy-design-gen1",
+    "topic_id": "redundancy-design",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Redundancy Design in networking.",
+    "correct_answers": [
+      "redundancy design",
+      "redundancy design concept",
+      "redundancy design networking",
+      "vrrp",
+      "link"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Redundancy Design is a core concept in network engineering that describes Redundancy Design is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on Redundancy Design"
+    ]
+  },
+  {
+    "id": "q-redundancy-design-gen2",
+    "topic_id": "redundancy-design",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Redundancy Design improve network operations or security?",
+    "correct_answers": [
+      "redundancy design efficiency",
+      "redundancy design improvement",
+      "redundancy design optimization",
+      "vrrp",
+      "link"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Redundancy Design leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on Redundancy Design"
+    ]
+  },
+  {
+    "id": "q-redundancy-design-gen3",
+    "topic_id": "redundancy-design",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Redundancy Design. What are the key implementation considerations?",
+    "correct_answers": [
+      "redundancy design planning",
+      "redundancy design testing",
+      "redundancy design deployment",
+      "vrrp",
+      "link"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Redundancy Design requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Redundancy Design"
+    ]
+  },
+  {
+    "id": "q-redundancy-design-gen4",
+    "topic_id": "redundancy-design",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Redundancy Design. What are the key implementation considerations?",
+    "correct_answers": [
+      "redundancy design planning",
+      "redundancy design testing",
+      "redundancy design deployment",
+      "vrrp",
+      "link"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Redundancy Design requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Redundancy Design"
+    ]
+  },
+  {
+    "id": "q-rstp-mstp-gen1",
+    "topic_id": "rstp-mstp",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of RSTP/MSTP in networking.",
+    "correct_answers": [
+      "rstp/mstp networking",
+      "rstp/mstp",
+      "rstp/mstp concept",
+      "convergence",
+      "roles"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "RSTP/MSTP is a core concept in network engineering that describes RSTP/MSTP is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on RSTP/MSTP"
+    ]
+  },
+  {
+    "id": "q-rstp-mstp-gen2",
+    "topic_id": "rstp-mstp",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does RSTP/MSTP improve network operations or security?",
+    "correct_answers": [
+      "rstp/mstp efficiency",
+      "rstp/mstp optimization",
+      "rstp/mstp improvement",
+      "convergence",
+      "roles"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of RSTP/MSTP leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on RSTP/MSTP"
+    ]
+  },
+  {
+    "id": "q-rstp-mstp-gen3",
+    "topic_id": "rstp-mstp",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying RSTP/MSTP. What are the key implementation considerations?",
+    "correct_answers": [
+      "rstp/mstp testing",
+      "rstp/mstp planning",
+      "rstp/mstp deployment",
+      "convergence",
+      "roles"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying RSTP/MSTP requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on RSTP/MSTP"
+    ]
+  },
+  {
+    "id": "q-rstp-mstp-gen4",
+    "topic_id": "rstp-mstp",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying RSTP/MSTP. What are the key implementation considerations?",
+    "correct_answers": [
+      "rstp/mstp testing",
+      "rstp/mstp planning",
+      "rstp/mstp deployment",
+      "convergence",
+      "roles"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying RSTP/MSTP requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on RSTP/MSTP"
+    ]
+  },
+  {
+    "id": "q-sd-wan-gen1",
+    "topic_id": "sd-wan",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of SD-WAN Basics in networking.",
+    "correct_answers": [
+      "sd-wan basics networking",
+      "sd-wan basics concept",
+      "sd-wan basics",
+      "internet",
+      "test"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SD-WAN Basics is a core concept in network engineering that describes SD-WAN Basics is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on SD-WAN Basics"
+    ]
+  },
+  {
+    "id": "q-sd-wan-gen2",
+    "topic_id": "sd-wan",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does SD-WAN Basics improve network operations or security?",
+    "correct_answers": [
+      "sd-wan basics improvement",
+      "sd-wan basics efficiency",
+      "sd-wan basics optimization",
+      "internet",
+      "test"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of SD-WAN Basics leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on SD-WAN Basics"
+    ]
+  },
+  {
+    "id": "q-sd-wan-gen3",
+    "topic_id": "sd-wan",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying SD-WAN Basics. What are the key implementation considerations?",
+    "correct_answers": [
+      "sd-wan basics testing",
+      "sd-wan basics deployment",
+      "sd-wan basics planning",
+      "internet",
+      "test"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying SD-WAN Basics requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on SD-WAN Basics"
+    ]
+  },
+  {
+    "id": "q-static-routing-gen1",
+    "topic_id": "static-routing",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Static Routing in networking.",
+    "correct_answers": [
+      "static routing networking",
+      "static routing",
+      "static routing concept",
+      "static",
+      "traceroute"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Static Routing is a core concept in network engineering that describes Static Routing is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on Static Routing"
+    ]
+  },
+  {
+    "id": "q-static-routing-gen2",
+    "topic_id": "static-routing",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Static Routing improve network operations or security?",
+    "correct_answers": [
+      "static routing optimization",
+      "static routing efficiency",
+      "static routing improvement",
+      "static",
+      "traceroute"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Static Routing leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on Static Routing"
+    ]
+  },
+  {
+    "id": "q-static-routing-gen3",
+    "topic_id": "static-routing",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Static Routing. What are the key implementation considerations?",
+    "correct_answers": [
+      "static routing testing",
+      "static routing deployment",
+      "static routing planning",
+      "static",
+      "traceroute"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Static Routing requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Static Routing"
+    ]
+  },
+  {
+    "id": "q-vxlan-basics-gen1",
+    "topic_id": "vxlan-basics",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of VXLAN Basics in networking.",
+    "correct_answers": [
+      "vxlan basics networking",
+      "vxlan basics",
+      "vxlan basics concept",
+      "vxlan",
+      "replicates"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "VXLAN Basics is a core concept in network engineering that describes VXLAN Basics is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on VXLAN Basics"
+    ]
+  },
+  {
+    "id": "q-vxlan-basics-gen2",
+    "topic_id": "vxlan-basics",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does VXLAN Basics improve network operations or security?",
+    "correct_answers": [
+      "vxlan basics efficiency",
+      "vxlan basics improvement",
+      "vxlan basics optimization",
+      "vxlan",
+      "replicates"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of VXLAN Basics leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on VXLAN Basics"
+    ]
+  },
+  {
+    "id": "q-vxlan-basics-gen3",
+    "topic_id": "vxlan-basics",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying VXLAN Basics. What are the key implementation considerations?",
+    "correct_answers": [
+      "vxlan basics testing",
+      "vxlan basics deployment",
+      "vxlan basics planning",
+      "vxlan",
+      "replicates"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying VXLAN Basics requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on VXLAN Basics"
+    ]
+  },
+  {
+    "id": "q-vxlan-basics-gen4",
+    "topic_id": "vxlan-basics",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying VXLAN Basics. What are the key implementation considerations?",
+    "correct_answers": [
+      "vxlan basics testing",
+      "vxlan basics deployment",
+      "vxlan basics planning",
+      "vxlan",
+      "replicates"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying VXLAN Basics requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on VXLAN Basics"
+    ]
+  },
+  {
+    "id": "q-wan-tech-gen1",
+    "topic_id": "wan-tech",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of WAN Technologies in networking.",
+    "correct_answers": [
+      "wan technologies",
+      "wan technologies networking",
+      "wan technologies concept",
+      "internet",
+      "label-switch"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "WAN Technologies is a core concept in network engineering that describes WAN Technologies is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on WAN Technologies"
+    ]
+  },
+  {
+    "id": "q-wan-tech-gen2",
+    "topic_id": "wan-tech",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does WAN Technologies improve network operations or security?",
+    "correct_answers": [
+      "wan technologies improvement",
+      "wan technologies optimization",
+      "wan technologies efficiency",
+      "internet",
+      "label-switch"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of WAN Technologies leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on WAN Technologies"
+    ]
+  },
+  {
+    "id": "q-wan-tech-gen3",
+    "topic_id": "wan-tech",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying WAN Technologies. What are the key implementation considerations?",
+    "correct_answers": [
+      "wan technologies planning",
+      "wan technologies testing",
+      "wan technologies deployment",
+      "internet",
+      "label-switch"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying WAN Technologies requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on WAN Technologies"
+    ]
+  },
+  {
+    "id": "q-wan-tech-gen4",
+    "topic_id": "wan-tech",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying WAN Technologies. What are the key implementation considerations?",
+    "correct_answers": [
+      "wan technologies planning",
+      "wan technologies testing",
+      "wan technologies deployment",
+      "internet",
+      "label-switch"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying WAN Technologies requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on WAN Technologies"
     ]
   }
 ]

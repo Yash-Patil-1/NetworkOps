@@ -32,7 +32,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "It allows traffic from any instance associated with the referenced security group \u2014 dynamic, no IP management needed.",
+    "explanation": "It allows traffic from any instance associated with the referenced security group — dynamic, no IP management needed.",
     "hints": [
       "Group membership, not IPs"
     ]
@@ -496,6 +496,384 @@
     "explanation": "Route 0.0.0.0/0 to the firewall appliance's ENI (or Transit Gateway). Firewall then routes inspected traffic to NAT Gateway/IGW.",
     "hints": [
       "Route through the appliance"
+    ]
+  },
+  {
+    "id": "q-cloud-fw-gen1",
+    "topic_id": "cloud-fw",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Cloud Firewall in networking.",
+    "correct_answers": [
+      "cloud firewall networking",
+      "cloud firewall",
+      "cloud firewall concept",
+      "appliance",
+      "stateful"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Cloud Firewall is a core concept in cloud networking that describes Cloud Firewall is used in cloud networking environments.",
+    "hints": [
+      "Review the theory section on Cloud Firewall"
+    ]
+  },
+  {
+    "id": "q-cloud-fw-gen2",
+    "topic_id": "cloud-fw",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Cloud Firewall improve network operations or security?",
+    "correct_answers": [
+      "cloud firewall improvement",
+      "cloud firewall efficiency",
+      "cloud firewall optimization",
+      "appliance",
+      "stateful"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Cloud Firewall leads to improved cloud networking outcomes.",
+    "hints": [
+      "Review the theory section on Cloud Firewall"
+    ]
+  },
+  {
+    "id": "q-cloud-fw-gen3",
+    "topic_id": "cloud-fw",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Cloud Firewall. What are the key implementation considerations?",
+    "correct_answers": [
+      "cloud firewall deployment",
+      "cloud firewall testing",
+      "cloud firewall planning",
+      "appliance",
+      "stateful"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Cloud Firewall requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Cloud Firewall"
+    ]
+  },
+  {
+    "id": "q-cloud-fw-gen4",
+    "topic_id": "cloud-fw",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Cloud Firewall. What are the key implementation considerations?",
+    "correct_answers": [
+      "cloud firewall deployment",
+      "cloud firewall testing",
+      "cloud firewall planning",
+      "appliance",
+      "stateful"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Cloud Firewall requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Cloud Firewall"
+    ]
+  },
+  {
+    "id": "q-cloud-interconnect-gen1",
+    "topic_id": "cloud-interconnect",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Multi-Cloud Networking in networking.",
+    "correct_answers": [
+      "multi-cloud networking networking",
+      "multi-cloud networking",
+      "multi-cloud networking concept",
+      "inter-cloud",
+      "virtual"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Multi-Cloud Networking is a core concept in cloud networking that describes Multi-Cloud Networking is used in cloud networking environments.",
+    "hints": [
+      "Review the theory section on Multi-Cloud Networking"
+    ]
+  },
+  {
+    "id": "q-cloud-interconnect-gen2",
+    "topic_id": "cloud-interconnect",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Multi-Cloud Networking improve network operations or security?",
+    "correct_answers": [
+      "multi-cloud networking improvement",
+      "multi-cloud networking efficiency",
+      "multi-cloud networking optimization",
+      "inter-cloud",
+      "virtual"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Multi-Cloud Networking leads to improved cloud networking outcomes.",
+    "hints": [
+      "Review the theory section on Multi-Cloud Networking"
+    ]
+  },
+  {
+    "id": "q-cloud-interconnect-gen3",
+    "topic_id": "cloud-interconnect",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Multi-Cloud Networking. What are the key implementation considerations?",
+    "correct_answers": [
+      "multi-cloud networking testing",
+      "multi-cloud networking planning",
+      "multi-cloud networking deployment",
+      "inter-cloud",
+      "virtual"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Multi-Cloud Networking requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Multi-Cloud Networking"
+    ]
+  },
+  {
+    "id": "q-cloud-interconnect-gen4",
+    "topic_id": "cloud-interconnect",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Multi-Cloud Networking. What are the key implementation considerations?",
+    "correct_answers": [
+      "multi-cloud networking testing",
+      "multi-cloud networking planning",
+      "multi-cloud networking deployment",
+      "inter-cloud",
+      "virtual"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Multi-Cloud Networking requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Multi-Cloud Networking"
+    ]
+  },
+  {
+    "id": "q-cloud-mon-gen1",
+    "topic_id": "cloud-mon",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Cloud Network Monitoring in networking.",
+    "correct_answers": [
+      "cloud network monitoring networking",
+      "cloud network monitoring concept",
+      "cloud network monitoring",
+      "analyzer",
+      "missing"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Cloud Network Monitoring is a core concept in cloud networking that describes Cloud Network Monitoring is used in cloud networking environments.",
+    "hints": [
+      "Review the theory section on Cloud Network Monitoring"
+    ]
+  },
+  {
+    "id": "q-cloud-mon-gen2",
+    "topic_id": "cloud-mon",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Cloud Network Monitoring improve network operations or security?",
+    "correct_answers": [
+      "cloud network monitoring efficiency",
+      "cloud network monitoring improvement",
+      "cloud network monitoring optimization",
+      "analyzer",
+      "missing"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Cloud Network Monitoring leads to improved cloud networking outcomes.",
+    "hints": [
+      "Review the theory section on Cloud Network Monitoring"
+    ]
+  },
+  {
+    "id": "q-cloud-mon-gen3",
+    "topic_id": "cloud-mon",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Cloud Network Monitoring. What are the key implementation considerations?",
+    "correct_answers": [
+      "cloud network monitoring testing",
+      "cloud network monitoring planning",
+      "cloud network monitoring deployment",
+      "analyzer",
+      "missing"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Cloud Network Monitoring requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Cloud Network Monitoring"
+    ]
+  },
+  {
+    "id": "q-expressroute-gen1",
+    "topic_id": "expressroute",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Azure ExpressRoute in networking.",
+    "correct_answers": [
+      "azure expressroute concept",
+      "azure expressroute networking",
+      "azure expressroute",
+      "stuck",
+      "secondary"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Azure ExpressRoute is a core concept in cloud networking that describes Azure ExpressRoute is used in cloud networking environments.",
+    "hints": [
+      "Review the theory section on Azure ExpressRoute"
+    ]
+  },
+  {
+    "id": "q-expressroute-gen2",
+    "topic_id": "expressroute",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Azure ExpressRoute improve network operations or security?",
+    "correct_answers": [
+      "azure expressroute improvement",
+      "azure expressroute optimization",
+      "azure expressroute efficiency",
+      "stuck",
+      "secondary"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Azure ExpressRoute leads to improved cloud networking outcomes.",
+    "hints": [
+      "Review the theory section on Azure ExpressRoute"
+    ]
+  },
+  {
+    "id": "q-expressroute-gen3",
+    "topic_id": "expressroute",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Azure ExpressRoute. What are the key implementation considerations?",
+    "correct_answers": [
+      "azure expressroute deployment",
+      "azure expressroute testing",
+      "azure expressroute planning",
+      "stuck",
+      "secondary"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Azure ExpressRoute requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Azure ExpressRoute"
+    ]
+  },
+  {
+    "id": "q-expressroute-gen4",
+    "topic_id": "expressroute",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Azure ExpressRoute. What are the key implementation considerations?",
+    "correct_answers": [
+      "azure expressroute deployment",
+      "azure expressroute testing",
+      "azure expressroute planning",
+      "stuck",
+      "secondary"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Azure ExpressRoute requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Azure ExpressRoute"
+    ]
+  },
+  {
+    "id": "q-gcp-vpc-net-gen1",
+    "topic_id": "gcp-vpc-net",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of GCP VPC in networking.",
+    "correct_answers": [
+      "gcp vpc concept",
+      "gcp vpc networking",
+      "gcp vpc",
+      "ranges",
+      "stateful"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "GCP VPC is a core concept in cloud networking that describes GCP VPC is used in cloud networking environments.",
+    "hints": [
+      "Review the theory section on GCP VPC"
+    ]
+  },
+  {
+    "id": "q-gcp-vpc-net-gen2",
+    "topic_id": "gcp-vpc-net",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does GCP VPC improve network operations or security?",
+    "correct_answers": [
+      "gcp vpc optimization",
+      "gcp vpc improvement",
+      "gcp vpc efficiency",
+      "ranges",
+      "stateful"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of GCP VPC leads to improved cloud networking outcomes. Key concepts include: ranges, stateful, internet.",
+    "hints": [
+      "Review the theory section on GCP VPC"
+    ]
+  },
+  {
+    "id": "q-gcp-vpc-net-gen3",
+    "topic_id": "gcp-vpc-net",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying GCP VPC. What are the key implementation considerations?",
+    "correct_answers": [
+      "gcp vpc deployment",
+      "gcp vpc testing",
+      "gcp vpc planning",
+      "ranges",
+      "stateful"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying GCP VPC requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on GCP VPC"
     ]
   }
 ]

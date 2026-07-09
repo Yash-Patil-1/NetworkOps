@@ -70,7 +70,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "'terraform plan' shows the execution plan \u2014 what will be created, modified, or destroyed \u2014 without making changes.",
+    "explanation": "'terraform plan' shows the execution plan — what will be created, modified, or destroyed — without making changes.",
     "hints": [
       "Preview changes"
     ]
@@ -193,7 +193,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "OpenAPI (formerly Swagger) is a specification for documenting REST APIs \u2014 defines endpoints, parameters, responses, and authentication.",
+    "explanation": "OpenAPI (formerly Swagger) is a specification for documenting REST APIs — defines endpoints, parameters, responses, and authentication.",
     "hints": [
       "API documentation standard"
     ]
@@ -234,7 +234,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "Use Batfish to analyze the proposed config offline \u2014 it simulates routing and can verify reachability, loops, and policy compliance before deployment.",
+    "explanation": "Use Batfish to analyze the proposed config offline — it simulates routing and can verify reachability, loops, and policy compliance before deployment.",
     "hints": [
       "Simulate before deploying"
     ]
@@ -356,7 +356,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "{% for item in list %}\n  {{ item }}\n{% endfor %} \u2014 iterates over a list and renders each item.",
+    "explanation": "{% for item in list %}\n  {{ item }}\n{% endfor %} — iterates over a list and renders each item.",
     "hints": [
       "{% for ... %}"
     ]
@@ -515,7 +515,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "Infrastructure testing: automated verification that network state matches intent \u2014 ping tests, route checks, config validation using pytest/Robot Framework.",
+    "explanation": "Infrastructure testing: automated verification that network state matches intent — ping tests, route checks, config validation using pytest/Robot Framework.",
     "hints": [
       "Automated verification"
     ]
@@ -561,6 +561,741 @@
     "explanation": "'ansible-playbook --check' simulates execution without making changes. Shows what would change (like terraform plan).",
     "hints": [
       "Preview without applying"
+    ]
+  },
+  {
+    "id": "q-ansible-roles2-gen1",
+    "topic_id": "ansible-roles2",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Ansible Roles in networking.",
+    "correct_answers": [
+      "ansible roles networking",
+      "ansible roles",
+      "ansible roles concept",
+      "arguments",
+      "role-specific"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Ansible Roles is a core concept in network automation that describes Ansible Roles is used for automating network tasks.",
+    "hints": [
+      "Review the theory section on Ansible Roles"
+    ]
+  },
+  {
+    "id": "q-ansible-roles2-gen2",
+    "topic_id": "ansible-roles2",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Ansible Roles improve network operations or security?",
+    "correct_answers": [
+      "ansible roles optimization",
+      "ansible roles improvement",
+      "ansible roles efficiency",
+      "arguments",
+      "role-specific"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Ansible Roles leads to improved network automation outcomes.",
+    "hints": [
+      "Review the theory section on Ansible Roles"
+    ]
+  },
+  {
+    "id": "q-ansible-roles2-gen3",
+    "topic_id": "ansible-roles2",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Ansible Roles. What are the key implementation considerations?",
+    "correct_answers": [
+      "ansible roles deployment",
+      "ansible roles planning",
+      "ansible roles testing",
+      "arguments",
+      "role-specific"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Ansible Roles requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Ansible Roles"
+    ]
+  },
+  {
+    "id": "q-ansible-roles2-gen4",
+    "topic_id": "ansible-roles2",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Ansible Roles. What are the key implementation considerations?",
+    "correct_answers": [
+      "ansible roles deployment",
+      "ansible roles planning",
+      "ansible roles testing",
+      "arguments",
+      "role-specific"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Ansible Roles requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Ansible Roles"
+    ]
+  },
+  {
+    "id": "q-batfish2-gen1",
+    "topic_id": "batfish2",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Batfish Analysis in networking.",
+    "correct_answers": [
+      "batfish analysis concept",
+      "batfish analysis",
+      "batfish analysis networking",
+      "missing",
+      "config"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Batfish Analysis is a core concept in network automation that describes Batfish Analysis is used for automating network tasks.",
+    "hints": [
+      "Review the theory section on Batfish Analysis"
+    ]
+  },
+  {
+    "id": "q-batfish2-gen2",
+    "topic_id": "batfish2",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Batfish Analysis improve network operations or security?",
+    "correct_answers": [
+      "batfish analysis efficiency",
+      "batfish analysis improvement",
+      "batfish analysis optimization",
+      "missing",
+      "config"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Batfish Analysis leads to improved network automation outcomes.",
+    "hints": [
+      "Review the theory section on Batfish Analysis"
+    ]
+  },
+  {
+    "id": "q-batfish2-gen3",
+    "topic_id": "batfish2",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Batfish Analysis. What are the key implementation considerations?",
+    "correct_answers": [
+      "batfish analysis deployment",
+      "batfish analysis testing",
+      "batfish analysis planning",
+      "missing",
+      "config"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Batfish Analysis requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Batfish Analysis"
+    ]
+  },
+  {
+    "id": "q-batfish2-gen4",
+    "topic_id": "batfish2",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Batfish Analysis. What are the key implementation considerations?",
+    "correct_answers": [
+      "batfish analysis deployment",
+      "batfish analysis testing",
+      "batfish analysis planning",
+      "missing",
+      "config"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Batfish Analysis requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Batfish Analysis"
+    ]
+  },
+  {
+    "id": "q-config-compliance2-gen1",
+    "topic_id": "config-compliance2",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Config Compliance in networking.",
+    "correct_answers": [
+      "config compliance concept",
+      "config compliance",
+      "config compliance networking",
+      "ssh",
+      "severity"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Config Compliance is a core concept in network automation that describes Config Compliance is used for automating network tasks.",
+    "hints": [
+      "Review the theory section on Config Compliance"
+    ]
+  },
+  {
+    "id": "q-config-compliance2-gen2",
+    "topic_id": "config-compliance2",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Config Compliance improve network operations or security?",
+    "correct_answers": [
+      "config compliance improvement",
+      "config compliance optimization",
+      "config compliance efficiency",
+      "ssh",
+      "severity"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Config Compliance leads to improved network automation outcomes.",
+    "hints": [
+      "Review the theory section on Config Compliance"
+    ]
+  },
+  {
+    "id": "q-config-compliance2-gen3",
+    "topic_id": "config-compliance2",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Config Compliance. What are the key implementation considerations?",
+    "correct_answers": [
+      "config compliance deployment",
+      "config compliance testing",
+      "config compliance planning",
+      "ssh",
+      "severity"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Config Compliance requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Config Compliance"
+    ]
+  },
+  {
+    "id": "q-config-compliance2-gen4",
+    "topic_id": "config-compliance2",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Config Compliance. What are the key implementation considerations?",
+    "correct_answers": [
+      "config compliance deployment",
+      "config compliance testing",
+      "config compliance planning",
+      "ssh",
+      "severity"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Config Compliance requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Config Compliance"
+    ]
+  },
+  {
+    "id": "q-event-driven-gen1",
+    "topic_id": "event-driven",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Event-Driven Automation in networking.",
+    "correct_answers": [
+      "event-driven automation",
+      "event-driven automation networking",
+      "event-driven automation concept",
+      "action",
+      "event-driven"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Event-Driven Automation is a core concept in network automation that describes Event-Driven Automation is used for automating network tasks.",
+    "hints": [
+      "Review the theory section on Event-Driven Automation"
+    ]
+  },
+  {
+    "id": "q-event-driven-gen2",
+    "topic_id": "event-driven",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Event-Driven Automation improve network operations or security?",
+    "correct_answers": [
+      "event-driven automation improvement",
+      "event-driven automation optimization",
+      "event-driven automation efficiency",
+      "action",
+      "event-driven"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Event-Driven Automation leads to improved network automation outcomes.",
+    "hints": [
+      "Review the theory section on Event-Driven Automation"
+    ]
+  },
+  {
+    "id": "q-event-driven-gen3",
+    "topic_id": "event-driven",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Event-Driven Automation. What are the key implementation considerations?",
+    "correct_answers": [
+      "event-driven automation deployment",
+      "event-driven automation planning",
+      "event-driven automation testing",
+      "action",
+      "event-driven"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Event-Driven Automation requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Event-Driven Automation"
+    ]
+  },
+  {
+    "id": "q-event-driven-gen4",
+    "topic_id": "event-driven",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Event-Driven Automation. What are the key implementation considerations?",
+    "correct_answers": [
+      "event-driven automation deployment",
+      "event-driven automation planning",
+      "event-driven automation testing",
+      "action",
+      "event-driven"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Event-Driven Automation requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Event-Driven Automation"
+    ]
+  },
+  {
+    "id": "q-net-as-code-gen1",
+    "topic_id": "net-as-code",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Network as Code in networking.",
+    "correct_answers": [
+      "network as code concept",
+      "network as code networking",
+      "network as code",
+      "state",
+      "version-controlled"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network as Code is a core concept in network automation that describes Network as Code is used for automating network tasks.",
+    "hints": [
+      "Review the theory section on Network as Code"
+    ]
+  },
+  {
+    "id": "q-net-as-code-gen2",
+    "topic_id": "net-as-code",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Network as Code improve network operations or security?",
+    "correct_answers": [
+      "network as code efficiency",
+      "network as code improvement",
+      "network as code optimization",
+      "state",
+      "version-controlled"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Network as Code leads to improved network automation outcomes.",
+    "hints": [
+      "Review the theory section on Network as Code"
+    ]
+  },
+  {
+    "id": "q-net-as-code-gen3",
+    "topic_id": "net-as-code",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network as Code. What are the key implementation considerations?",
+    "correct_answers": [
+      "network as code deployment",
+      "network as code testing",
+      "network as code planning",
+      "state",
+      "version-controlled"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network as Code requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network as Code"
+    ]
+  },
+  {
+    "id": "q-net-as-code-gen4",
+    "topic_id": "net-as-code",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network as Code. What are the key implementation considerations?",
+    "correct_answers": [
+      "network as code deployment",
+      "network as code testing",
+      "network as code planning",
+      "state",
+      "version-controlled"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network as Code requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network as Code"
+    ]
+  },
+  {
+    "id": "q-network-simulation-gen1",
+    "topic_id": "network-simulation",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Network Simulation (GNS3/EVE-NG) in networking.",
+    "correct_answers": [
+      "network simulation (gns3/eve-ng)",
+      "network simulation (gns3/eve-ng) concept",
+      "network simulation (gns3/eve-ng) networking",
+      "virtualization",
+      "emulated"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network Simulation (GNS3/EVE-NG) is a core concept in network automation that describes Network Simulation (GNS3/EVE-NG) is used for automating network tasks.",
+    "hints": [
+      "Review the theory section on Network Simulation (GNS3/EVE-NG)"
+    ]
+  },
+  {
+    "id": "q-network-simulation-gen2",
+    "topic_id": "network-simulation",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Network Simulation (GNS3/EVE-NG) improve network operations or security?",
+    "correct_answers": [
+      "network simulation (gns3/eve-ng) efficiency",
+      "network simulation (gns3/eve-ng) improvement",
+      "network simulation (gns3/eve-ng) optimization",
+      "virtualization",
+      "emulated"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Network Simulation (GNS3/EVE-NG) leads to improved network automation outcomes.",
+    "hints": [
+      "Review the theory section on Network Simulation (GNS3/EVE-NG)"
+    ]
+  },
+  {
+    "id": "q-network-simulation-gen3",
+    "topic_id": "network-simulation",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Simulation (GNS3/EVE-NG). What are the key implementation considerations?",
+    "correct_answers": [
+      "network simulation (gns3/eve-ng) testing",
+      "network simulation (gns3/eve-ng) deployment",
+      "network simulation (gns3/eve-ng) planning",
+      "virtualization",
+      "emulated"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Simulation (GNS3/EVE-NG) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Simulation (GNS3/EVE-NG)"
+    ]
+  },
+  {
+    "id": "q-network-simulation-gen4",
+    "topic_id": "network-simulation",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Simulation (GNS3/EVE-NG). What are the key implementation considerations?",
+    "correct_answers": [
+      "network simulation (gns3/eve-ng) testing",
+      "network simulation (gns3/eve-ng) deployment",
+      "network simulation (gns3/eve-ng) planning",
+      "virtualization",
+      "emulated"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Simulation (GNS3/EVE-NG) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Simulation (GNS3/EVE-NG)"
+    ]
+  },
+  {
+    "id": "q-openapi-gen1",
+    "topic_id": "openapi",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of OpenAPI/Swagger in networking.",
+    "correct_answers": [
+      "openapi/swagger networking",
+      "openapi/swagger concept",
+      "openapi/swagger",
+      "typescript",
+      "machine-readable"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "OpenAPI/Swagger is a core concept in network automation that describes OpenAPI/Swagger is used for automating network tasks.",
+    "hints": [
+      "Review the theory section on OpenAPI/Swagger"
+    ]
+  },
+  {
+    "id": "q-openapi-gen2",
+    "topic_id": "openapi",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does OpenAPI/Swagger improve network operations or security?",
+    "correct_answers": [
+      "openapi/swagger efficiency",
+      "openapi/swagger optimization",
+      "openapi/swagger improvement",
+      "typescript",
+      "machine-readable"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of OpenAPI/Swagger leads to improved network automation outcomes.",
+    "hints": [
+      "Review the theory section on OpenAPI/Swagger"
+    ]
+  },
+  {
+    "id": "q-openapi-gen3",
+    "topic_id": "openapi",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying OpenAPI/Swagger. What are the key implementation considerations?",
+    "correct_answers": [
+      "openapi/swagger planning",
+      "openapi/swagger deployment",
+      "openapi/swagger testing",
+      "typescript",
+      "machine-readable"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying OpenAPI/Swagger requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on OpenAPI/Swagger"
+    ]
+  },
+  {
+    "id": "q-openapi-gen4",
+    "topic_id": "openapi",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying OpenAPI/Swagger. What are the key implementation considerations?",
+    "correct_answers": [
+      "openapi/swagger planning",
+      "openapi/swagger deployment",
+      "openapi/swagger testing",
+      "typescript",
+      "machine-readable"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying OpenAPI/Swagger requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on OpenAPI/Swagger"
+    ]
+  },
+  {
+    "id": "q-paramiko2-gen1",
+    "topic_id": "paramiko2",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Paramiko SSH in networking.",
+    "correct_answers": [
+      "paramiko ssh concept",
+      "paramiko ssh",
+      "paramiko ssh networking",
+      "ssh",
+      "objects"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Paramiko SSH is a core concept in network automation that describes Paramiko SSH is used for automating network tasks.",
+    "hints": [
+      "Review the theory section on Paramiko SSH"
+    ]
+  },
+  {
+    "id": "q-paramiko2-gen2",
+    "topic_id": "paramiko2",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Paramiko SSH improve network operations or security?",
+    "correct_answers": [
+      "paramiko ssh improvement",
+      "paramiko ssh efficiency",
+      "paramiko ssh optimization",
+      "ssh",
+      "objects"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Paramiko SSH leads to improved network automation outcomes.",
+    "hints": [
+      "Review the theory section on Paramiko SSH"
+    ]
+  },
+  {
+    "id": "q-paramiko2-gen3",
+    "topic_id": "paramiko2",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Paramiko SSH. What are the key implementation considerations?",
+    "correct_answers": [
+      "paramiko ssh deployment",
+      "paramiko ssh testing",
+      "paramiko ssh planning",
+      "ssh",
+      "objects"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Paramiko SSH requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Paramiko SSH"
+    ]
+  },
+  {
+    "id": "q-paramiko2-gen4",
+    "topic_id": "paramiko2",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Paramiko SSH. What are the key implementation considerations?",
+    "correct_answers": [
+      "paramiko ssh deployment",
+      "paramiko ssh testing",
+      "paramiko ssh planning",
+      "ssh",
+      "objects"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Paramiko SSH requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Paramiko SSH"
+    ]
+  },
+  {
+    "id": "q-textfsm-gen1",
+    "topic_id": "textfsm",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of TextFSM Parsing in networking.",
+    "correct_answers": [
+      "textfsm parsing concept",
+      "textfsm parsing networking",
+      "textfsm parsing",
+      "line",
+      "building"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "TextFSM Parsing is a core concept in network automation that describes TextFSM Parsing is used for automating network tasks.",
+    "hints": [
+      "Review the theory section on TextFSM Parsing"
+    ]
+  },
+  {
+    "id": "q-textfsm-gen2",
+    "topic_id": "textfsm",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does TextFSM Parsing improve network operations or security?",
+    "correct_answers": [
+      "textfsm parsing optimization",
+      "textfsm parsing improvement",
+      "textfsm parsing efficiency",
+      "line",
+      "building"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of TextFSM Parsing leads to improved network automation outcomes.",
+    "hints": [
+      "Review the theory section on TextFSM Parsing"
+    ]
+  },
+  {
+    "id": "q-textfsm-gen3",
+    "topic_id": "textfsm",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying TextFSM Parsing. What are the key implementation considerations?",
+    "correct_answers": [
+      "textfsm parsing testing",
+      "textfsm parsing deployment",
+      "textfsm parsing planning",
+      "line",
+      "building"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying TextFSM Parsing requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on TextFSM Parsing"
     ]
   }
 ]

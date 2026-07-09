@@ -360,7 +360,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "Create a specific exception/whitelist for the known-good traffic pattern. Don't disable the entire rule \u2014 create a targeted bypass.",
+    "explanation": "Create a specific exception/whitelist for the known-good traffic pattern. Don't disable the entire rule — create a targeted bypass.",
     "hints": [
       "Targeted exception, not disable"
     ]
@@ -439,7 +439,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "This is a SYN scan (half-open scan) \u2014 reconnaissance activity probing for open SMB ports. The scanner sends SYN but never completes the handshake.",
+    "explanation": "This is a SYN scan (half-open scan) — reconnaissance activity probing for open SMB ports. The scanner sends SYN but never completes the handshake.",
     "hints": [
       "Incomplete handshakes to one port"
     ]
@@ -460,7 +460,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "NAC should: detect unknown device, check compliance (fails \u2014 no corporate agent), place in quarantine/guest VLAN with limited access or deny entirely.",
+    "explanation": "NAC should: detect unknown device, check compliance (fails — no corporate agent), place in quarantine/guest VLAN with limited access or deny entirely.",
     "hints": [
       "Unknown device = restricted"
     ]
@@ -499,7 +499,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "Personal uses a Pre-Shared Key (same for everyone). Enterprise uses 802.1X/RADIUS with individual credentials per user \u2014 more secure and auditable.",
+    "explanation": "Personal uses a Pre-Shared Key (same for everyone). Enterprise uses 802.1X/RADIUS with individual credentials per user — more secure and auditable.",
     "hints": [
       "Shared key vs individual auth"
     ]
@@ -607,6 +607,1140 @@
     "explanation": "IKEv2: fewer messages (4 vs 9), built-in NAT-T, MOBIKE (seamless roaming), more reliable, and simpler configuration.",
     "hints": [
       "Faster and more features"
+    ]
+  },
+  {
+    "id": "q-bgp-security-gen1",
+    "topic_id": "bgp-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the primary purpose of BGP Security in network security?",
+    "correct_answers": [
+      "bgp hijack detection",
+      "route hijacking prevention",
+      "rpki validation",
+      "industry",
+      "legitimate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "BGP security focuses on preventing route hijacks and misconfigurations through mechanisms like RPKI, BGPsec, and prefix filtering.",
+    "hints": [
+      "Review the theory section on BGP Security"
+    ]
+  },
+  {
+    "id": "q-bgp-security-gen2",
+    "topic_id": "bgp-security",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "Describe a key challenge when implementing BGP Security.",
+    "correct_answers": [
+      "bgpsec",
+      "prefix filtering",
+      "rpki",
+      "industry",
+      "legitimate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "RPKI uses cryptographic certificates to validate route origination, while BGPsec provides path validation for BGP updates.",
+    "hints": [
+      "Review the theory section on BGP Security"
+    ]
+  },
+  {
+    "id": "q-bgp-security-gen3",
+    "topic_id": "bgp-security",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A security audit reveals issues with BGP Security. Describe the remediation process.",
+    "correct_answers": [
+      "prefix hijacking",
+      "route leak detection",
+      "as path verification",
+      "industry",
+      "legitimate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A BGP hijack occurs when an AS announces prefixes it does not own, diverting traffic through the attacker's network.",
+    "hints": [
+      "Review the theory section on BGP Security"
+    ]
+  },
+  {
+    "id": "q-bgp-security-gen4",
+    "topic_id": "bgp-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What does BGP Security refer to in network security?",
+    "correct_answers": [
+      "bgp security optimization",
+      "bgp security planning",
+      "bgp security migration",
+      "industry",
+      "legitimate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Implementing BGP Security requires careful planning, testing, and validation for production network security networks.",
+    "hints": [
+      "Review the theory section on BGP Security"
+    ]
+  },
+  {
+    "id": "q-dhcp-snoop-gen1",
+    "topic_id": "dhcp-snoop",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the primary purpose of DHCP Snooping in network security?",
+    "correct_answers": [
+      "rogue dhcp detection",
+      "dhcp security",
+      "dhcp spoofing prevention",
+      "source",
+      "rate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "DHCP snooping filters DHCP messages on untrusted ports to prevent rogue DHCP server attacks on the network.",
+    "hints": [
+      "Review the theory section on DHCP Snooping"
+    ]
+  },
+  {
+    "id": "q-dhcp-snoop-gen2",
+    "topic_id": "dhcp-snoop",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "Describe a key challenge when implementing DHCP Snooping.",
+    "correct_answers": [
+      "option 82 insertion",
+      "rate limiting",
+      "trusted vs untrusted ports",
+      "source",
+      "rate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "DHCP snooping classifies switch ports as trusted (DHCP server side) or untrusted (client side) to filter rogue messages.",
+    "hints": [
+      "Review the theory section on DHCP Snooping"
+    ]
+  },
+  {
+    "id": "q-dhcp-snoop-gen3",
+    "topic_id": "dhcp-snoop",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A security audit reveals issues with DHCP Snooping. Describe the remediation process.",
+    "correct_answers": [
+      "option 82 spoofing",
+      "dhcp starvation attack",
+      "rate limit tuning",
+      "source",
+      "rate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Attackers may attempt DHCP starvation by exhausting the IP pool, or spoof Option 82 to bypass security controls.",
+    "hints": [
+      "Review the theory section on DHCP Snooping"
+    ]
+  },
+  {
+    "id": "q-dhcp-snoop-gen4",
+    "topic_id": "dhcp-snoop",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What does DHCP Snooping refer to in network security?",
+    "correct_answers": [
+      "dhcp snooping planning",
+      "dhcp snooping optimization",
+      "dhcp snooping migration",
+      "source",
+      "rate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Implementing DHCP Snooping requires careful planning, testing, and validation for production network security networks.",
+    "hints": [
+      "Review the theory section on DHCP Snooping"
+    ]
+  },
+  {
+    "id": "q-forensics-gen1",
+    "topic_id": "forensics",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the primary purpose of Network Forensics in network security?",
+    "correct_answers": [
+      "chain of custody",
+      "incident investigation",
+      "evidence collection",
+      "build",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network forensics involves capturing, recording, and analyzing network events to discover the source of security incidents.",
+    "hints": [
+      "Review the theory section on Network Forensics"
+    ]
+  },
+  {
+    "id": "q-forensics-gen2",
+    "topic_id": "forensics",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "Describe a key challenge when implementing Network Forensics.",
+    "correct_answers": [
+      "memory acquisition",
+      "volatile data collection",
+      "disk imaging",
+      "build",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Forensic investigators follow a preservation hierarchy: collect volatile data first (memory), then less volatile data (disk).",
+    "hints": [
+      "Review the theory section on Network Forensics"
+    ]
+  },
+  {
+    "id": "q-forensics-gen3",
+    "topic_id": "forensics",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A security audit reveals issues with Network Forensics. Describe the remediation process.",
+    "correct_answers": [
+      "chain of custody documentation",
+      "evidence integrity",
+      "admissibility standards",
+      "build",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Maintaining a documented chain of custody ensures evidence admissibility in legal proceedings and preserves integrity.",
+    "hints": [
+      "Review the theory section on Network Forensics"
+    ]
+  },
+  {
+    "id": "q-honeypots-gen1",
+    "topic_id": "honeypots",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the primary purpose of Honeypots/Deception in network security?",
+    "correct_answers": [
+      "attacker intelligence",
+      "early warning detection",
+      "threat deception",
+      "legitimate",
+      "ssh"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Honeypots are decoy systems designed to attract attackers, enabling early threat detection and intelligence gathering.",
+    "hints": [
+      "Review the theory section on Honeypots/Deception"
+    ]
+  },
+  {
+    "id": "q-honeypots-gen2",
+    "topic_id": "honeypots",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "Describe a key challenge when implementing Honeypots/Deception.",
+    "correct_answers": [
+      "traffic emulation",
+      "service mimicry",
+      "low interaction simulation",
+      "legitimate",
+      "ssh"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Honeypots simulate real services without exposing actual production systems, using varying levels of fidelity.",
+    "hints": [
+      "Review the theory section on Honeypots/Deception"
+    ]
+  },
+  {
+    "id": "q-honeypots-gen3",
+    "topic_id": "honeypots",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A security audit reveals issues with Honeypots/Deception. Describe the remediation process.",
+    "correct_answers": [
+      "lateral movement monitoring",
+      "data leakage prevention",
+      "containment boundaries",
+      "legitimate",
+      "ssh"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Properly deployed honeypots must be isolated from production networks to prevent attackers from using them as pivot points.",
+    "hints": [
+      "Review the theory section on Honeypots/Deception"
+    ]
+  },
+  {
+    "id": "q-honeypots-gen4",
+    "topic_id": "honeypots",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What does Honeypots/Deception refer to in network security?",
+    "correct_answers": [
+      "honeypots/deception planning",
+      "honeypots/deception optimization",
+      "honeypots/deception migration",
+      "legitimate",
+      "ssh"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Implementing Honeypots/Deception requires careful planning, testing, and validation for production network security networks.",
+    "hints": [
+      "Review the theory section on Honeypots/Deception"
+    ]
+  },
+  {
+    "id": "q-ikev2-gen1",
+    "topic_id": "ikev2",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the primary purpose of IKEv2 VPN in network security?",
+    "correct_answers": [
+      "secure key exchange",
+      "ipsec key management",
+      "vpn tunneling protocol",
+      "cookie",
+      "mobike"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "IKEv2 is a key exchange protocol used in IPsec VPNs, providing secure negotiation and authentication for VPN tunnels.",
+    "hints": [
+      "Review the theory section on IKEv2 VPN"
+    ]
+  },
+  {
+    "id": "q-ikev2-gen2",
+    "topic_id": "ikev2",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "Describe a key challenge when implementing IKEv2 VPN.",
+    "correct_answers": [
+      "reduced latency",
+      "mobike support",
+      "faster rekeying",
+      "cookie",
+      "mobike"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "IKEv2 improves on IKEv1 with built-in MOBIKE support, faster rekeying, and reduced connection establishment latency.",
+    "hints": [
+      "Review the theory section on IKEv2 VPN"
+    ]
+  },
+  {
+    "id": "q-ikev2-gen3",
+    "topic_id": "ikev2",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A security audit reveals issues with IKEv2 VPN. Describe the remediation process.",
+    "correct_answers": [
+      "preshared key mismatch",
+      "nat traversal configuration",
+      "certificate authentication",
+      "cookie",
+      "mobike"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "IKEv2 authentication may fail due to certificate validation errors, PSK mismatches, or NAT traversal misconfigurations.",
+    "hints": [
+      "Review the theory section on IKEv2 VPN"
+    ]
+  },
+  {
+    "id": "q-ikev2-gen4",
+    "topic_id": "ikev2",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What does IKEv2 VPN refer to in network security?",
+    "correct_answers": [
+      "ikev2 vpn optimization",
+      "ikev2 vpn planning",
+      "ikev2 vpn migration",
+      "cookie",
+      "mobike"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Implementing IKEv2 VPN requires careful planning, testing, and validation for production network security networks.",
+    "hints": [
+      "Review the theory section on IKEv2 VPN"
+    ]
+  },
+  {
+    "id": "q-ips-tuning-gen1",
+    "topic_id": "ips-tuning",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the primary purpose of IPS Tuning in network security?",
+    "correct_answers": [
+      "signature customization",
+      "alert threshold tuning",
+      "false positive reduction",
+      "legitimate",
+      "source"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "IPS tuning adjusts detection signatures and thresholds to reduce false positives while maintaining threat detection effectiveness.",
+    "hints": [
+      "Review the theory section on IPS Tuning"
+    ]
+  },
+  {
+    "id": "q-ips-tuning-gen2",
+    "topic_id": "ips-tuning",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "Describe a key challenge when implementing IPS Tuning.",
+    "correct_answers": [
+      "signature disabling",
+      "baseline establishment",
+      "passive monitoring mode",
+      "legitimate",
+      "source"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "IPS tuning starts with passive monitoring to establish baseline traffic patterns before enabling inline blocking.",
+    "hints": [
+      "Review the theory section on IPS Tuning"
+    ]
+  },
+  {
+    "id": "q-ips-tuning-gen3",
+    "topic_id": "ips-tuning",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A security audit reveals issues with IPS Tuning. Describe the remediation process.",
+    "correct_answers": [
+      "signature exception rules",
+      "protocol decoder tuning",
+      "sensitivity adjustments",
+      "legitimate",
+      "source"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Tuning involves creating exception rules for known benign traffic, adjusting sensitivity levels, and tuning protocol decoders.",
+    "hints": [
+      "Review the theory section on IPS Tuning"
+    ]
+  },
+  {
+    "id": "q-ips-tuning-gen4",
+    "topic_id": "ips-tuning",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What does IPS Tuning refer to in network security?",
+    "correct_answers": [
+      "ips tuning planning",
+      "ips tuning optimization",
+      "ips tuning migration",
+      "legitimate",
+      "source"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Implementing IPS Tuning requires careful planning, testing, and validation for production network security networks.",
+    "hints": [
+      "Review the theory section on IPS Tuning"
+    ]
+  },
+  {
+    "id": "q-ndr-gen1",
+    "topic_id": "ndr",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Network Detection & Response in networking.",
+    "correct_answers": [
+      "network detection & response concept",
+      "network detection & response",
+      "network detection & response networking",
+      "anomaly",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network Detection & Response is a core concept in network security that describes Network Detection & Response is used for securing network infrastructure.",
+    "hints": [
+      "Review the theory section on Network Detection & Response"
+    ]
+  },
+  {
+    "id": "q-ndr-gen2",
+    "topic_id": "ndr",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Network Detection & Response improve network operations or security?",
+    "correct_answers": [
+      "network detection & response optimization",
+      "network detection & response efficiency",
+      "network detection & response improvement",
+      "anomaly",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Network Detection & Response leads to improved network security outcomes.",
+    "hints": [
+      "Review the theory section on Network Detection & Response"
+    ]
+  },
+  {
+    "id": "q-ndr-gen3",
+    "topic_id": "ndr",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Detection & Response. What are the key implementation considerations?",
+    "correct_answers": [
+      "network detection & response planning",
+      "network detection & response testing",
+      "network detection & response deployment",
+      "anomaly",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Detection & Response requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Detection & Response"
+    ]
+  },
+  {
+    "id": "q-ndr-gen4",
+    "topic_id": "ndr",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Detection & Response. What are the key implementation considerations?",
+    "correct_answers": [
+      "network detection & response planning",
+      "network detection & response testing",
+      "network detection & response deployment",
+      "anomaly",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Detection & Response requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Detection & Response"
+    ]
+  },
+  {
+    "id": "q-net-encryption-gen1",
+    "topic_id": "net-encryption",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Network Encryption in networking.",
+    "correct_answers": [
+      "network encryption concept",
+      "network encryption",
+      "network encryption networking",
+      "osi",
+      "cipher"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network Encryption is a core concept in network security that describes Network Encryption is used for securing network infrastructure.",
+    "hints": [
+      "Review the theory section on Network Encryption"
+    ]
+  },
+  {
+    "id": "q-net-encryption-gen2",
+    "topic_id": "net-encryption",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Network Encryption improve network operations or security?",
+    "correct_answers": [
+      "network encryption optimization",
+      "network encryption efficiency",
+      "network encryption improvement",
+      "osi",
+      "cipher"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Network Encryption leads to improved network security outcomes.",
+    "hints": [
+      "Review the theory section on Network Encryption"
+    ]
+  },
+  {
+    "id": "q-net-encryption-gen3",
+    "topic_id": "net-encryption",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Encryption. What are the key implementation considerations?",
+    "correct_answers": [
+      "network encryption testing",
+      "network encryption deployment",
+      "network encryption planning",
+      "osi",
+      "cipher"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Encryption requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Encryption"
+    ]
+  },
+  {
+    "id": "q-net-encryption-gen4",
+    "topic_id": "net-encryption",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Encryption. What are the key implementation considerations?",
+    "correct_answers": [
+      "network encryption testing",
+      "network encryption deployment",
+      "network encryption planning",
+      "osi",
+      "cipher"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Encryption requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Encryption"
+    ]
+  },
+  {
+    "id": "q-port-sec-gen1",
+    "topic_id": "port-sec",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Port Security in networking.",
+    "correct_answers": [
+      "port security concept",
+      "port security",
+      "port security networking",
+      "maximum",
+      "macs"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Port Security is a core concept in network security that describes Port Security is used for securing network infrastructure.",
+    "hints": [
+      "Review the theory section on Port Security"
+    ]
+  },
+  {
+    "id": "q-port-sec-gen2",
+    "topic_id": "port-sec",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Port Security improve network operations or security?",
+    "correct_answers": [
+      "port security efficiency",
+      "port security optimization",
+      "port security improvement",
+      "maximum",
+      "macs"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Port Security leads to improved network security outcomes.",
+    "hints": [
+      "Review the theory section on Port Security"
+    ]
+  },
+  {
+    "id": "q-port-sec-gen3",
+    "topic_id": "port-sec",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Port Security. What are the key implementation considerations?",
+    "correct_answers": [
+      "port security deployment",
+      "port security testing",
+      "port security planning",
+      "maximum",
+      "macs"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Port Security requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Port Security"
+    ]
+  },
+  {
+    "id": "q-radius-tacacs2-gen1",
+    "topic_id": "radius-tacacs2",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of RADIUS & TACACS+ in networking.",
+    "correct_answers": [
+      "radius & tacacs+",
+      "radius & tacacs+ concept",
+      "radius & tacacs+ networking",
+      "tunnel-private-group-id",
+      "authz"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "RADIUS & TACACS+ is a core concept in network security that describes RADIUS & TACACS+ is used for securing network infrastructure.",
+    "hints": [
+      "Review the theory section on RADIUS & TACACS+"
+    ]
+  },
+  {
+    "id": "q-radius-tacacs2-gen2",
+    "topic_id": "radius-tacacs2",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does RADIUS & TACACS+ improve network operations or security?",
+    "correct_answers": [
+      "radius & tacacs+ optimization",
+      "radius & tacacs+ efficiency",
+      "radius & tacacs+ improvement",
+      "tunnel-private-group-id",
+      "authz"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of RADIUS & TACACS+ leads to improved network security outcomes.",
+    "hints": [
+      "Review the theory section on RADIUS & TACACS+"
+    ]
+  },
+  {
+    "id": "q-radius-tacacs2-gen3",
+    "topic_id": "radius-tacacs2",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying RADIUS & TACACS+. What are the key implementation considerations?",
+    "correct_answers": [
+      "radius & tacacs+ deployment",
+      "radius & tacacs+ testing",
+      "radius & tacacs+ planning",
+      "tunnel-private-group-id",
+      "authz"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying RADIUS & TACACS+ requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on RADIUS & TACACS+"
+    ]
+  },
+  {
+    "id": "q-radius-tacacs2-gen4",
+    "topic_id": "radius-tacacs2",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying RADIUS & TACACS+. What are the key implementation considerations?",
+    "correct_answers": [
+      "radius & tacacs+ deployment",
+      "radius & tacacs+ testing",
+      "radius & tacacs+ planning",
+      "tunnel-private-group-id",
+      "authz"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying RADIUS & TACACS+ requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on RADIUS & TACACS+"
+    ]
+  },
+  {
+    "id": "q-sdwan-security-gen1",
+    "topic_id": "sdwan-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of SD-WAN Security in networking.",
+    "correct_answers": [
+      "sd-wan security",
+      "sd-wan security networking",
+      "sd-wan security concept",
+      "stateful",
+      "virtual"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SD-WAN Security is a core concept in network security that describes SD-WAN Security is used for securing network infrastructure.",
+    "hints": [
+      "Review the theory section on SD-WAN Security"
+    ]
+  },
+  {
+    "id": "q-sdwan-security-gen2",
+    "topic_id": "sdwan-security",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does SD-WAN Security improve network operations or security?",
+    "correct_answers": [
+      "sd-wan security efficiency",
+      "sd-wan security improvement",
+      "sd-wan security optimization",
+      "stateful",
+      "virtual"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of SD-WAN Security leads to improved network security outcomes.",
+    "hints": [
+      "Review the theory section on SD-WAN Security"
+    ]
+  },
+  {
+    "id": "q-sdwan-security-gen3",
+    "topic_id": "sdwan-security",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying SD-WAN Security. What are the key implementation considerations?",
+    "correct_answers": [
+      "sd-wan security deployment",
+      "sd-wan security planning",
+      "sd-wan security testing",
+      "stateful",
+      "virtual"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying SD-WAN Security requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on SD-WAN Security"
+    ]
+  },
+  {
+    "id": "q-sdwan-security-gen4",
+    "topic_id": "sdwan-security",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying SD-WAN Security. What are the key implementation considerations?",
+    "correct_answers": [
+      "sd-wan security deployment",
+      "sd-wan security planning",
+      "sd-wan security testing",
+      "stateful",
+      "virtual"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying SD-WAN Security requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on SD-WAN Security"
+    ]
+  },
+  {
+    "id": "q-seg-patterns-gen1",
+    "topic_id": "seg-patterns",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Segmentation Patterns in networking.",
+    "correct_answers": [
+      "segmentation patterns concept",
+      "segmentation patterns networking",
+      "segmentation patterns",
+      "applications",
+      "break"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Segmentation Patterns is a core concept in network security that describes Segmentation Patterns is used for securing network infrastructure.",
+    "hints": [
+      "Review the theory section on Segmentation Patterns"
+    ]
+  },
+  {
+    "id": "q-seg-patterns-gen2",
+    "topic_id": "seg-patterns",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Segmentation Patterns improve network operations or security?",
+    "correct_answers": [
+      "segmentation patterns improvement",
+      "segmentation patterns optimization",
+      "segmentation patterns efficiency",
+      "applications",
+      "break"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Segmentation Patterns leads to improved network security outcomes.",
+    "hints": [
+      "Review the theory section on Segmentation Patterns"
+    ]
+  },
+  {
+    "id": "q-seg-patterns-gen3",
+    "topic_id": "seg-patterns",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Segmentation Patterns. What are the key implementation considerations?",
+    "correct_answers": [
+      "segmentation patterns planning",
+      "segmentation patterns testing",
+      "segmentation patterns deployment",
+      "applications",
+      "break"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Segmentation Patterns requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Segmentation Patterns"
+    ]
+  },
+  {
+    "id": "q-seg-patterns-gen4",
+    "topic_id": "seg-patterns",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Segmentation Patterns. What are the key implementation considerations?",
+    "correct_answers": [
+      "segmentation patterns planning",
+      "segmentation patterns testing",
+      "segmentation patterns deployment",
+      "applications",
+      "break"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Segmentation Patterns requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Segmentation Patterns"
+    ]
+  },
+  {
+    "id": "q-ssl-vpn2-gen1",
+    "topic_id": "ssl-vpn2",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of SSL/TLS VPN in networking.",
+    "correct_answers": [
+      "ssl/tls vpn concept",
+      "ssl/tls vpn networking",
+      "ssl/tls vpn",
+      "assessment",
+      "vpn"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SSL/TLS VPN is a core concept in network security that describes SSL/TLS VPN is used for securing network infrastructure.",
+    "hints": [
+      "Review the theory section on SSL/TLS VPN"
+    ]
+  },
+  {
+    "id": "q-ssl-vpn2-gen2",
+    "topic_id": "ssl-vpn2",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does SSL/TLS VPN improve network operations or security?",
+    "correct_answers": [
+      "ssl/tls vpn optimization",
+      "ssl/tls vpn improvement",
+      "ssl/tls vpn efficiency",
+      "assessment",
+      "vpn"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of SSL/TLS VPN leads to improved network security outcomes.",
+    "hints": [
+      "Review the theory section on SSL/TLS VPN"
+    ]
+  },
+  {
+    "id": "q-ssl-vpn2-gen3",
+    "topic_id": "ssl-vpn2",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying SSL/TLS VPN. What are the key implementation considerations?",
+    "correct_answers": [
+      "ssl/tls vpn deployment",
+      "ssl/tls vpn testing",
+      "ssl/tls vpn planning",
+      "assessment",
+      "vpn"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying SSL/TLS VPN requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on SSL/TLS VPN"
+    ]
+  },
+  {
+    "id": "q-ssl-vpn2-gen4",
+    "topic_id": "ssl-vpn2",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying SSL/TLS VPN. What are the key implementation considerations?",
+    "correct_answers": [
+      "ssl/tls vpn deployment",
+      "ssl/tls vpn testing",
+      "ssl/tls vpn planning",
+      "assessment",
+      "vpn"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying SSL/TLS VPN requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on SSL/TLS VPN"
+    ]
+  },
+  {
+    "id": "q-waf-gen1",
+    "topic_id": "waf",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "What is the primary purpose of WAF (Web Application Firewall) in network security?",
+    "correct_answers": [
+      "application layer security",
+      "http traffic inspection",
+      "web application filtering",
+      "owasp",
+      "legitimate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "A WAF (Web Application Firewall) filters and monitors HTTP traffic between web applications and the internet, protecting against attacks like SQL injection and XSS.",
+    "hints": [
+      "Review the theory section on WAF (Web Application Firewall)"
+    ]
+  },
+  {
+    "id": "q-waf-gen2",
+    "topic_id": "waf",
+    "domain": "network_security",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "Describe a key challenge when implementing WAF (Web Application Firewall).",
+    "correct_answers": [
+      "negative security model",
+      "positive security model",
+      "hybrid approach",
+      "owasp",
+      "legitimate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "WAFs use a hybrid approach: positive models allow known-good traffic, while negative models block known-bad signatures.",
+    "hints": [
+      "Review the theory section on WAF (Web Application Firewall)"
+    ]
+  },
+  {
+    "id": "q-waf-gen3",
+    "topic_id": "waf",
+    "domain": "network_security",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A security audit reveals issues with WAF (Web Application Firewall). Describe the remediation process.",
+    "correct_answers": [
+      "false positives from legitimate traffic",
+      "rule tuning for applications",
+      "bypass via encoding",
+      "owasp",
+      "legitimate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "WAF tuning requires balancing security against false positives, as application-specific traffic may be incorrectly flagged.",
+    "hints": [
+      "Review the theory section on WAF (Web Application Firewall)"
+    ]
+  },
+  {
+    "id": "q-waf-gen4",
+    "topic_id": "waf",
+    "domain": "network_security",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "What does WAF (Web Application Firewall) refer to in network security?",
+    "correct_answers": [
+      "waf (web application firewall) optimization",
+      "waf (web application firewall) migration",
+      "waf (web application firewall) planning",
+      "owasp",
+      "legitimate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Implementing WAF (Web Application Firewall) requires careful planning, testing, and validation for production network security networks.",
+    "hints": [
+      "Review the theory section on WAF (Web Application Firewall)"
     ]
   }
 ]

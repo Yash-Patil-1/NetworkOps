@@ -14,7 +14,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "ExStart/Exchange stuck usually means MTU mismatch \u2014 DBD packets are too large for one side. Verify MTU matches on both ends.",
+    "explanation": "ExStart/Exchange stuck usually means MTU mismatch — DBD packets are too large for one side. Verify MTU matches on both ends.",
     "hints": [
       "Packet size issue"
     ]
@@ -233,7 +233,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "No. Security groups are VPC-specific \u2014 they cannot be shared across VPCs.",
+    "explanation": "No. Security groups are VPC-specific — they cannot be shared across VPCs.",
     "hints": [
       "Tied to one VPC"
     ]
@@ -477,7 +477,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "UDP is used by: DNS (port 53), VoIP/video (real-time), gaming, NTP, SNMP, DHCP \u2014 applications where speed matters more than reliability.",
+    "explanation": "UDP is used by: DNS (port 53), VoIP/video (real-time), gaming, NTP, SNMP, DHCP — applications where speed matters more than reliability.",
     "hints": [
       "Real-time applications"
     ]
@@ -602,6 +602,489 @@
     "explanation": "CIDR (Classless Inter-Domain Routing) replaced rigid classful addressing with flexible prefix lengths, enabling efficient IP allocation and route summarization.",
     "hints": [
       "Replaced Class A/B/C"
+    ]
+  },
+  {
+    "id": "q-aci-nsx-gen1",
+    "topic_id": "aci-nsx",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of SDN (ACI/NSX) in networking.",
+    "correct_answers": [
+      "sdn (aci/nsx) concept",
+      "sdn (aci/nsx)",
+      "sdn (aci/nsx) networking",
+      "defines",
+      "vxlan"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SDN (ACI/NSX) is a core concept in network engineering that describes SDN (ACI/NSX) is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on SDN (ACI/NSX)"
+    ]
+  },
+  {
+    "id": "q-aci-nsx-gen2",
+    "topic_id": "aci-nsx",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does SDN (ACI/NSX) improve network operations or security?",
+    "correct_answers": [
+      "sdn (aci/nsx) efficiency",
+      "sdn (aci/nsx) improvement",
+      "sdn (aci/nsx) optimization",
+      "defines",
+      "vxlan"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of SDN (ACI/NSX) leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on SDN (ACI/NSX)"
+    ]
+  },
+  {
+    "id": "q-aci-nsx-gen3",
+    "topic_id": "aci-nsx",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying SDN (ACI/NSX). What are the key implementation considerations?",
+    "correct_answers": [
+      "sdn (aci/nsx) deployment",
+      "sdn (aci/nsx) testing",
+      "sdn (aci/nsx) planning",
+      "defines",
+      "vxlan"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying SDN (ACI/NSX) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on SDN (ACI/NSX)"
+    ]
+  },
+  {
+    "id": "q-aci-nsx-gen4",
+    "topic_id": "aci-nsx",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying SDN (ACI/NSX). What are the key implementation considerations?",
+    "correct_answers": [
+      "sdn (aci/nsx) deployment",
+      "sdn (aci/nsx) testing",
+      "sdn (aci/nsx) planning",
+      "defines",
+      "vxlan"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying SDN (ACI/NSX) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on SDN (ACI/NSX)"
+    ]
+  },
+  {
+    "id": "q-documentation-gen1",
+    "topic_id": "documentation",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Network Documentation in networking.",
+    "correct_answers": [
+      "network documentation",
+      "network documentation networking",
+      "network documentation concept",
+      "runbooks",
+      "source"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network Documentation is a core concept in noc operations that describes Network Documentation is a networking concept.",
+    "hints": [
+      "Review the theory section on Network Documentation"
+    ]
+  },
+  {
+    "id": "q-documentation-gen2",
+    "topic_id": "documentation",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Network Documentation improve network operations or security?",
+    "correct_answers": [
+      "network documentation improvement",
+      "network documentation optimization",
+      "network documentation efficiency",
+      "runbooks",
+      "source"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Network Documentation leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Network Documentation"
+    ]
+  },
+  {
+    "id": "q-documentation-gen3",
+    "topic_id": "documentation",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Documentation. What are the key implementation considerations?",
+    "correct_answers": [
+      "network documentation planning",
+      "network documentation testing",
+      "network documentation deployment",
+      "runbooks",
+      "source"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Documentation requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Documentation"
+    ]
+  },
+  {
+    "id": "q-documentation-gen4",
+    "topic_id": "documentation",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Documentation. What are the key implementation considerations?",
+    "correct_answers": [
+      "network documentation planning",
+      "network documentation testing",
+      "network documentation deployment",
+      "runbooks",
+      "source"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Documentation requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Documentation"
+    ]
+  },
+  {
+    "id": "q-eigrp-basics-gen1",
+    "topic_id": "eigrp-basics",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of EIGRP Basics in networking.",
+    "correct_answers": [
+      "eigrp basics",
+      "eigrp basics concept",
+      "eigrp basics networking",
+      "backup",
+      "meeting"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "EIGRP Basics is a core concept in network engineering that describes EIGRP Basics is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on EIGRP Basics"
+    ]
+  },
+  {
+    "id": "q-eigrp-basics-gen2",
+    "topic_id": "eigrp-basics",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does EIGRP Basics improve network operations or security?",
+    "correct_answers": [
+      "eigrp basics optimization",
+      "eigrp basics efficiency",
+      "eigrp basics improvement",
+      "backup",
+      "meeting"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of EIGRP Basics leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on EIGRP Basics"
+    ]
+  },
+  {
+    "id": "q-eigrp-basics-gen3",
+    "topic_id": "eigrp-basics",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying EIGRP Basics. What are the key implementation considerations?",
+    "correct_answers": [
+      "eigrp basics testing",
+      "eigrp basics deployment",
+      "eigrp basics planning",
+      "backup",
+      "meeting"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying EIGRP Basics requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on EIGRP Basics"
+    ]
+  },
+  {
+    "id": "q-ftp-sftp-gen1",
+    "topic_id": "ftp-sftp",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of FTP/SFTP/SCP in networking.",
+    "correct_answers": [
+      "ftp/sftp/scp",
+      "ftp/sftp/scp networking",
+      "ftp/sftp/scp concept",
+      "ascii",
+      "directory"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "FTP/SFTP/SCP is a core concept in fundamentals that describes FTP/SFTP/SCP is a networking concept.",
+    "hints": [
+      "Review the theory section on FTP/SFTP/SCP"
+    ]
+  },
+  {
+    "id": "q-ftp-sftp-gen2",
+    "topic_id": "ftp-sftp",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does FTP/SFTP/SCP improve network operations or security?",
+    "correct_answers": [
+      "ftp/sftp/scp optimization",
+      "ftp/sftp/scp improvement",
+      "ftp/sftp/scp efficiency",
+      "ascii",
+      "directory"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of FTP/SFTP/SCP leads to improved fundamentals outcomes. Key concepts include: ascii, directory, transfer.",
+    "hints": [
+      "Review the theory section on FTP/SFTP/SCP"
+    ]
+  },
+  {
+    "id": "q-ftp-sftp-gen3",
+    "topic_id": "ftp-sftp",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying FTP/SFTP/SCP. What are the key implementation considerations?",
+    "correct_answers": [
+      "ftp/sftp/scp planning",
+      "ftp/sftp/scp testing",
+      "ftp/sftp/scp deployment",
+      "ascii",
+      "directory"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying FTP/SFTP/SCP requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on FTP/SFTP/SCP"
+    ]
+  },
+  {
+    "id": "q-ftp-sftp-gen4",
+    "topic_id": "ftp-sftp",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying FTP/SFTP/SCP. What are the key implementation considerations?",
+    "correct_answers": [
+      "ftp/sftp/scp planning",
+      "ftp/sftp/scp testing",
+      "ftp/sftp/scp deployment",
+      "ascii",
+      "directory"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying FTP/SFTP/SCP requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on FTP/SFTP/SCP"
+    ]
+  },
+  {
+    "id": "q-route-filter-gen1",
+    "topic_id": "route-filter",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Route Filtering in networking.",
+    "correct_answers": [
+      "route filtering",
+      "route filtering concept",
+      "route filtering networking",
+      "prefix",
+      "missing"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Route Filtering is a core concept in network engineering that describes Route Filtering is used in network engineering and design.",
+    "hints": [
+      "Review the theory section on Route Filtering"
+    ]
+  },
+  {
+    "id": "q-route-filter-gen2",
+    "topic_id": "route-filter",
+    "domain": "network_engineering",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Route Filtering improve network operations or security?",
+    "correct_answers": [
+      "route filtering efficiency",
+      "route filtering improvement",
+      "route filtering optimization",
+      "prefix",
+      "missing"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Route Filtering leads to improved network engineering outcomes.",
+    "hints": [
+      "Review the theory section on Route Filtering"
+    ]
+  },
+  {
+    "id": "q-route-filter-gen3",
+    "topic_id": "route-filter",
+    "domain": "network_engineering",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Route Filtering. What are the key implementation considerations?",
+    "correct_answers": [
+      "route filtering testing",
+      "route filtering planning",
+      "route filtering deployment",
+      "prefix",
+      "missing"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Route Filtering requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Route Filtering"
+    ]
+  },
+  {
+    "id": "q-route-filter-gen4",
+    "topic_id": "route-filter",
+    "domain": "network_engineering",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Route Filtering. What are the key implementation considerations?",
+    "correct_answers": [
+      "route filtering testing",
+      "route filtering planning",
+      "route filtering deployment",
+      "prefix",
+      "missing"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Route Filtering requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Route Filtering"
+    ]
+  },
+  {
+    "id": "q-udp-protocol-gen1",
+    "topic_id": "udp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of UDP (User Datagram Protocol) in networking.",
+    "correct_answers": [
+      "udp (user datagram protocol) networking",
+      "udp (user datagram protocol)",
+      "udp (user datagram protocol) concept",
+      "detects",
+      "works"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "UDP (User Datagram Protocol) is a core concept in fundamentals that describes UDP (User Datagram Protocol) is a networking concept.",
+    "hints": [
+      "Review the theory section on UDP (User Datagram Protocol)"
+    ]
+  },
+  {
+    "id": "q-udp-protocol-gen2",
+    "topic_id": "udp-protocol",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does UDP (User Datagram Protocol) improve network operations or security?",
+    "correct_answers": [
+      "udp (user datagram protocol) efficiency",
+      "udp (user datagram protocol) optimization",
+      "udp (user datagram protocol) improvement",
+      "detects",
+      "works"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of UDP (User Datagram Protocol) leads to improved fundamentals outcomes.",
+    "hints": [
+      "Review the theory section on UDP (User Datagram Protocol)"
+    ]
+  },
+  {
+    "id": "q-udp-protocol-gen3",
+    "topic_id": "udp-protocol",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying UDP (User Datagram Protocol). What are the key implementation considerations?",
+    "correct_answers": [
+      "udp (user datagram protocol) deployment",
+      "udp (user datagram protocol) testing",
+      "udp (user datagram protocol) planning",
+      "detects",
+      "works"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying UDP (User Datagram Protocol) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on UDP (User Datagram Protocol)"
+    ]
+  },
+  {
+    "id": "q-udp-protocol-gen4",
+    "topic_id": "udp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying UDP (User Datagram Protocol). What are the key implementation considerations?",
+    "correct_answers": [
+      "udp (user datagram protocol) deployment",
+      "udp (user datagram protocol) testing",
+      "udp (user datagram protocol) planning",
+      "detects",
+      "works"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying UDP (User Datagram Protocol) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on UDP (User Datagram Protocol)"
     ]
   }
 ]

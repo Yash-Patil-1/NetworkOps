@@ -375,7 +375,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "Network CI/CD: Lint configs \u2192 Validate syntax \u2192 Test in lab/simulation \u2192 Peer review \u2192 Approve \u2192 Deploy to staging \u2192 Deploy to production.",
+    "explanation": "Network CI/CD: Lint configs → Validate syntax → Test in lab/simulation → Peer review → Approve → Deploy to staging → Deploy to production.",
     "hints": [
       "Multiple validation stages"
     ]
@@ -438,7 +438,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "compare_config() shows the diff between candidate and running configuration before committing \u2014 like a dry-run for network changes.",
+    "explanation": "compare_config() shows the diff between candidate and running configuration before committing — like a dry-run for network changes.",
     "hints": [
       "See changes before applying"
     ]
@@ -500,7 +500,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "Batfish analyzes network configurations offline to verify correctness, find bugs, and test changes before deployment \u2014 without touching live devices.",
+    "explanation": "Batfish analyzes network configurations offline to verify correctness, find bugs, and test changes before deployment — without touching live devices.",
     "hints": [
       "Analyze configs without deploying"
     ]
@@ -524,6 +524,342 @@
     "explanation": "A Source of Truth is the authoritative database defining the intended network state. Tools like NetBox serve as SoT for IP addresses, devices, and configurations.",
     "hints": [
       "The authoritative record"
+    ]
+  },
+  {
+    "id": "q-infra-testing-gen1",
+    "topic_id": "infra-testing",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Network Testing in networking.",
+    "correct_answers": [
+      "network testing",
+      "network testing concept",
+      "network testing networking",
+      "config",
+      "static"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network Testing is a core concept in network automation that describes Network Testing is used for automating network tasks.",
+    "hints": [
+      "Review the theory section on Network Testing"
+    ]
+  },
+  {
+    "id": "q-infra-testing-gen2",
+    "topic_id": "infra-testing",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Network Testing improve network operations or security?",
+    "correct_answers": [
+      "network testing efficiency",
+      "network testing improvement",
+      "network testing optimization",
+      "config",
+      "static"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Network Testing leads to improved network automation outcomes.",
+    "hints": [
+      "Review the theory section on Network Testing"
+    ]
+  },
+  {
+    "id": "q-infra-testing-gen3",
+    "topic_id": "infra-testing",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Testing. What are the key implementation considerations?",
+    "correct_answers": [
+      "network testing deployment",
+      "network testing testing",
+      "network testing planning",
+      "config",
+      "static"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Testing requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Testing"
+    ]
+  },
+  {
+    "id": "q-infra-testing-gen4",
+    "topic_id": "infra-testing",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Testing. What are the key implementation considerations?",
+    "correct_answers": [
+      "network testing deployment",
+      "network testing testing",
+      "network testing planning",
+      "config",
+      "static"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Testing requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Testing"
+    ]
+  },
+  {
+    "id": "q-nornir-gen1",
+    "topic_id": "nornir",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Nornir Framework in networking.",
+    "correct_answers": [
+      "nornir framework",
+      "nornir framework networking",
+      "nornir framework concept",
+      "timeout",
+      "platform"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Nornir Framework is a core concept in network automation that describes Nornir Framework is used for automating network tasks.",
+    "hints": [
+      "Review the theory section on Nornir Framework"
+    ]
+  },
+  {
+    "id": "q-nornir-gen2",
+    "topic_id": "nornir",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Nornir Framework improve network operations or security?",
+    "correct_answers": [
+      "nornir framework efficiency",
+      "nornir framework improvement",
+      "nornir framework optimization",
+      "timeout",
+      "platform"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Nornir Framework leads to improved network automation outcomes.",
+    "hints": [
+      "Review the theory section on Nornir Framework"
+    ]
+  },
+  {
+    "id": "q-nornir-gen3",
+    "topic_id": "nornir",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Nornir Framework. What are the key implementation considerations?",
+    "correct_answers": [
+      "nornir framework deployment",
+      "nornir framework planning",
+      "nornir framework testing",
+      "timeout",
+      "platform"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Nornir Framework requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Nornir Framework"
+    ]
+  },
+  {
+    "id": "q-nornir-gen4",
+    "topic_id": "nornir",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Nornir Framework. What are the key implementation considerations?",
+    "correct_answers": [
+      "nornir framework deployment",
+      "nornir framework planning",
+      "nornir framework testing",
+      "timeout",
+      "platform"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Nornir Framework requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Nornir Framework"
+    ]
+  },
+  {
+    "id": "q-python-scapy-gen1",
+    "topic_id": "python-scapy",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Scapy (Packet Crafting) in networking.",
+    "correct_answers": [
+      "scapy (packet crafting) concept",
+      "scapy (packet crafting)",
+      "scapy (packet crafting) networking",
+      "capturing",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Scapy (Packet Crafting) is a core concept in network automation that describes Scapy (Packet Crafting) is used for automating network tasks.",
+    "hints": [
+      "Review the theory section on Scapy (Packet Crafting)"
+    ]
+  },
+  {
+    "id": "q-python-scapy-gen2",
+    "topic_id": "python-scapy",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Scapy (Packet Crafting) improve network operations or security?",
+    "correct_answers": [
+      "scapy (packet crafting) improvement",
+      "scapy (packet crafting) efficiency",
+      "scapy (packet crafting) optimization",
+      "capturing",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Scapy (Packet Crafting) leads to improved network automation outcomes.",
+    "hints": [
+      "Review the theory section on Scapy (Packet Crafting)"
+    ]
+  },
+  {
+    "id": "q-python-scapy-gen3",
+    "topic_id": "python-scapy",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Scapy (Packet Crafting). What are the key implementation considerations?",
+    "correct_answers": [
+      "scapy (packet crafting) deployment",
+      "scapy (packet crafting) testing",
+      "scapy (packet crafting) planning",
+      "capturing",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Scapy (Packet Crafting) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Scapy (Packet Crafting)"
+    ]
+  },
+  {
+    "id": "q-python-scapy-gen4",
+    "topic_id": "python-scapy",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Scapy (Packet Crafting). What are the key implementation considerations?",
+    "correct_answers": [
+      "scapy (packet crafting) deployment",
+      "scapy (packet crafting) testing",
+      "scapy (packet crafting) planning",
+      "capturing",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Scapy (Packet Crafting) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Scapy (Packet Crafting)"
+    ]
+  },
+  {
+    "id": "q-sot-gen1",
+    "topic_id": "sot",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Source of Truth in networking.",
+    "correct_answers": [
+      "source of truth networking",
+      "source of truth",
+      "source of truth concept",
+      "dns",
+      "paginate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Source of Truth is a core concept in network automation that describes Source of Truth is used for automating network tasks.",
+    "hints": [
+      "Review the theory section on Source of Truth"
+    ]
+  },
+  {
+    "id": "q-sot-gen2",
+    "topic_id": "sot",
+    "domain": "network_automation",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Source of Truth improve network operations or security?",
+    "correct_answers": [
+      "source of truth improvement",
+      "source of truth efficiency",
+      "source of truth optimization",
+      "dns",
+      "paginate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Source of Truth leads to improved network automation outcomes.",
+    "hints": [
+      "Review the theory section on Source of Truth"
+    ]
+  },
+  {
+    "id": "q-sot-gen3",
+    "topic_id": "sot",
+    "domain": "network_automation",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Source of Truth. What are the key implementation considerations?",
+    "correct_answers": [
+      "source of truth testing",
+      "source of truth deployment",
+      "source of truth planning",
+      "dns",
+      "paginate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Source of Truth requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Source of Truth"
+    ]
+  },
+  {
+    "id": "q-sot-gen4",
+    "topic_id": "sot",
+    "domain": "network_automation",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Source of Truth. What are the key implementation considerations?",
+    "correct_answers": [
+      "source of truth testing",
+      "source of truth deployment",
+      "source of truth planning",
+      "dns",
+      "paginate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Source of Truth requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Source of Truth"
     ]
   }
 ]

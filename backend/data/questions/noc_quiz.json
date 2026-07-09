@@ -217,7 +217,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "Availability = (Total Time - Downtime) / Total Time \u00d7 100%. Also: MTBF / (MTBF + MTTR).",
+    "explanation": "Availability = (Total Time - Downtime) / Total Time × 100%. Also: MTBF / (MTBF + MTTR).",
     "hints": [
       "Uptime divided by total time"
     ]
@@ -414,7 +414,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "Step 1: Identify/define the problem \u2014 gather symptoms, affected users, scope, and timeline.",
+    "explanation": "Step 1: Identify/define the problem — gather symptoms, affected users, scope, and timeline.",
     "hints": [
       "Understand what's wrong first"
     ]
@@ -535,7 +535,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "Prometheus uses a pull model \u2014 it scrapes metrics from HTTP endpoints exposed by targets at configured intervals.",
+    "explanation": "Prometheus uses a pull model — it scrapes metrics from HTTP endpoints exposed by targets at configured intervals.",
     "hints": [
       "It goes and gets the data"
     ]
@@ -661,6 +661,447 @@
     "explanation": "A baseline documents normal network behavior (bandwidth, latency, errors). It's the reference point for detecting anomalies and planning capacity.",
     "hints": [
       "What does normal look like?"
+    ]
+  },
+  {
+    "id": "q-baselining-gen1",
+    "topic_id": "baselining",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Performance Baselining in networking.",
+    "correct_answers": [
+      "performance baselining networking",
+      "performance baselining",
+      "performance baselining concept",
+      "anomaly",
+      "investigate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Performance Baselining is a core concept in noc operations that describes Performance Baselining is a networking concept.",
+    "hints": [
+      "Review the theory section on Performance Baselining"
+    ]
+  },
+  {
+    "id": "q-baselining-gen2",
+    "topic_id": "baselining",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Performance Baselining improve network operations or security?",
+    "correct_answers": [
+      "performance baselining optimization",
+      "performance baselining efficiency",
+      "performance baselining improvement",
+      "anomaly",
+      "investigate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Performance Baselining leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Performance Baselining"
+    ]
+  },
+  {
+    "id": "q-baselining-gen3",
+    "topic_id": "baselining",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Performance Baselining. What are the key implementation considerations?",
+    "correct_answers": [
+      "performance baselining testing",
+      "performance baselining planning",
+      "performance baselining deployment",
+      "anomaly",
+      "investigate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Performance Baselining requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Performance Baselining"
+    ]
+  },
+  {
+    "id": "q-baselining-gen4",
+    "topic_id": "baselining",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Performance Baselining. What are the key implementation considerations?",
+    "correct_answers": [
+      "performance baselining testing",
+      "performance baselining planning",
+      "performance baselining deployment",
+      "anomaly",
+      "investigate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Performance Baselining requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Performance Baselining"
+    ]
+  },
+  {
+    "id": "q-change-mgmt-gen1",
+    "topic_id": "change-mgmt",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Network Change Management in networking.",
+    "correct_answers": [
+      "network change management",
+      "network change management networking",
+      "network change management concept",
+      "assessment",
+      "post-implementation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Network Change Management is a core concept in noc operations that describes Network Change Management is a networking concept.",
+    "hints": [
+      "Review the theory section on Network Change Management"
+    ]
+  },
+  {
+    "id": "q-change-mgmt-gen2",
+    "topic_id": "change-mgmt",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Network Change Management improve network operations or security?",
+    "correct_answers": [
+      "network change management efficiency",
+      "network change management improvement",
+      "network change management optimization",
+      "assessment",
+      "post-implementation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Network Change Management leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Network Change Management"
+    ]
+  },
+  {
+    "id": "q-change-mgmt-gen3",
+    "topic_id": "change-mgmt",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Network Change Management. What are the key implementation considerations?",
+    "correct_answers": [
+      "network change management testing",
+      "network change management planning",
+      "network change management deployment",
+      "assessment",
+      "post-implementation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Network Change Management requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Network Change Management"
+    ]
+  },
+  {
+    "id": "q-grafana-gen1",
+    "topic_id": "grafana",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Grafana Dashboards in networking.",
+    "correct_answers": [
+      "grafana dashboards",
+      "grafana dashboards networking",
+      "grafana dashboards concept",
+      "influxdb",
+      "source"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Grafana Dashboards is a core concept in noc operations that describes Grafana Dashboards is a networking concept.",
+    "hints": [
+      "Review the theory section on Grafana Dashboards"
+    ]
+  },
+  {
+    "id": "q-grafana-gen2",
+    "topic_id": "grafana",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Grafana Dashboards improve network operations or security?",
+    "correct_answers": [
+      "grafana dashboards improvement",
+      "grafana dashboards optimization",
+      "grafana dashboards efficiency",
+      "influxdb",
+      "source"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Grafana Dashboards leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Grafana Dashboards"
+    ]
+  },
+  {
+    "id": "q-grafana-gen3",
+    "topic_id": "grafana",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Grafana Dashboards. What are the key implementation considerations?",
+    "correct_answers": [
+      "grafana dashboards planning",
+      "grafana dashboards testing",
+      "grafana dashboards deployment",
+      "influxdb",
+      "source"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Grafana Dashboards requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Grafana Dashboards"
+    ]
+  },
+  {
+    "id": "q-grafana-gen4",
+    "topic_id": "grafana",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Grafana Dashboards. What are the key implementation considerations?",
+    "correct_answers": [
+      "grafana dashboards planning",
+      "grafana dashboards testing",
+      "grafana dashboards deployment",
+      "influxdb",
+      "source"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Grafana Dashboards requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Grafana Dashboards"
+    ]
+  },
+  {
+    "id": "q-netflow-gen1",
+    "topic_id": "netflow",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of NetFlow / sFlow / IPFIX in networking.",
+    "correct_answers": [
+      "netflow / sflow / ipfix networking",
+      "netflow / sflow / ipfix",
+      "netflow / sflow / ipfix concept",
+      "generating",
+      "talkers"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NetFlow / sFlow / IPFIX is a core concept in noc operations that describes NetFlow / sFlow / IPFIX is a networking concept.",
+    "hints": [
+      "Review the theory section on NetFlow / sFlow / IPFIX"
+    ]
+  },
+  {
+    "id": "q-netflow-gen2",
+    "topic_id": "netflow",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does NetFlow / sFlow / IPFIX improve network operations or security?",
+    "correct_answers": [
+      "netflow / sflow / ipfix improvement",
+      "netflow / sflow / ipfix optimization",
+      "netflow / sflow / ipfix efficiency",
+      "generating",
+      "talkers"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of NetFlow / sFlow / IPFIX leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on NetFlow / sFlow / IPFIX"
+    ]
+  },
+  {
+    "id": "q-netflow-gen3",
+    "topic_id": "netflow",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying NetFlow / sFlow / IPFIX. What are the key implementation considerations?",
+    "correct_answers": [
+      "netflow / sflow / ipfix deployment",
+      "netflow / sflow / ipfix testing",
+      "netflow / sflow / ipfix planning",
+      "generating",
+      "talkers"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying NetFlow / sFlow / IPFIX requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on NetFlow / sFlow / IPFIX"
+    ]
+  },
+  {
+    "id": "q-syslog-monitoring-gen1",
+    "topic_id": "syslog-monitoring",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Syslog in networking.",
+    "correct_answers": [
+      "syslog",
+      "syslog concept",
+      "syslog networking",
+      "source",
+      "severity"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Syslog is a core concept in noc operations that describes Syslog is a networking concept.",
+    "hints": [
+      "Review the theory section on Syslog"
+    ]
+  },
+  {
+    "id": "q-syslog-monitoring-gen2",
+    "topic_id": "syslog-monitoring",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Syslog improve network operations or security?",
+    "correct_answers": [
+      "syslog efficiency",
+      "syslog optimization",
+      "syslog improvement",
+      "source",
+      "severity"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Syslog leads to improved noc operations outcomes. Key concepts include: source, severity, daemons.",
+    "hints": [
+      "Review the theory section on Syslog"
+    ]
+  },
+  {
+    "id": "q-syslog-monitoring-gen3",
+    "topic_id": "syslog-monitoring",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Syslog. What are the key implementation considerations?",
+    "correct_answers": [
+      "syslog deployment",
+      "syslog testing",
+      "syslog planning",
+      "source",
+      "severity"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Syslog requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Syslog"
+    ]
+  },
+  {
+    "id": "q-zabbix-gen1",
+    "topic_id": "zabbix",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Zabbix Monitoring in networking.",
+    "correct_answers": [
+      "zabbix monitoring networking",
+      "zabbix monitoring",
+      "zabbix monitoring concept",
+      "sms",
+      "events"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Zabbix Monitoring is a core concept in noc operations that describes Zabbix Monitoring is a networking concept.",
+    "hints": [
+      "Review the theory section on Zabbix Monitoring"
+    ]
+  },
+  {
+    "id": "q-zabbix-gen2",
+    "topic_id": "zabbix",
+    "domain": "noc_operations",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Zabbix Monitoring improve network operations or security?",
+    "correct_answers": [
+      "zabbix monitoring efficiency",
+      "zabbix monitoring optimization",
+      "zabbix monitoring improvement",
+      "sms",
+      "events"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Zabbix Monitoring leads to improved noc operations outcomes.",
+    "hints": [
+      "Review the theory section on Zabbix Monitoring"
+    ]
+  },
+  {
+    "id": "q-zabbix-gen3",
+    "topic_id": "zabbix",
+    "domain": "noc_operations",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Zabbix Monitoring. What are the key implementation considerations?",
+    "correct_answers": [
+      "zabbix monitoring planning",
+      "zabbix monitoring deployment",
+      "zabbix monitoring testing",
+      "sms",
+      "events"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Zabbix Monitoring requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Zabbix Monitoring"
+    ]
+  },
+  {
+    "id": "q-zabbix-gen4",
+    "topic_id": "zabbix",
+    "domain": "noc_operations",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Zabbix Monitoring. What are the key implementation considerations?",
+    "correct_answers": [
+      "zabbix monitoring planning",
+      "zabbix monitoring deployment",
+      "zabbix monitoring testing",
+      "sms",
+      "events"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Zabbix Monitoring requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Zabbix Monitoring"
     ]
   }
 ]

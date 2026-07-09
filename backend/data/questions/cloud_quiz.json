@@ -437,7 +437,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "Azure Virtual Network (VNet) is the equivalent of AWS VPC \u2014 an isolated network for Azure resources.",
+    "explanation": "Azure Virtual Network (VNet) is the equivalent of AWS VPC — an isolated network for Azure resources.",
     "hints": [
       "VNet"
     ]
@@ -503,6 +503,720 @@
     "explanation": "A service mesh manages service-to-service communication using sidecar proxies. Provides: traffic management, observability, security (mTLS), and resilience without code changes.",
     "hints": [
       "Manages microservice communication"
+    ]
+  },
+  {
+    "id": "q-aws-route-tables-gen1",
+    "topic_id": "aws-route-tables",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of AWS Route Tables in networking.",
+    "correct_answers": [
+      "aws route tables networking",
+      "aws route tables concept",
+      "aws route tables",
+      "most",
+      "propagation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "AWS Route Tables is a core concept in cloud networking that describes AWS Route Tables is used in cloud networking environments.",
+    "hints": [
+      "Review the theory section on AWS Route Tables"
+    ]
+  },
+  {
+    "id": "q-aws-route-tables-gen2",
+    "topic_id": "aws-route-tables",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does AWS Route Tables improve network operations or security?",
+    "correct_answers": [
+      "aws route tables optimization",
+      "aws route tables improvement",
+      "aws route tables efficiency",
+      "most",
+      "propagation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of AWS Route Tables leads to improved cloud networking outcomes.",
+    "hints": [
+      "Review the theory section on AWS Route Tables"
+    ]
+  },
+  {
+    "id": "q-aws-route-tables-gen3",
+    "topic_id": "aws-route-tables",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying AWS Route Tables. What are the key implementation considerations?",
+    "correct_answers": [
+      "aws route tables planning",
+      "aws route tables deployment",
+      "aws route tables testing",
+      "most",
+      "propagation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying AWS Route Tables requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on AWS Route Tables"
+    ]
+  },
+  {
+    "id": "q-aws-route-tables-gen4",
+    "topic_id": "aws-route-tables",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying AWS Route Tables. What are the key implementation considerations?",
+    "correct_answers": [
+      "aws route tables planning",
+      "aws route tables deployment",
+      "aws route tables testing",
+      "most",
+      "propagation"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying AWS Route Tables requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on AWS Route Tables"
+    ]
+  },
+  {
+    "id": "q-cdn-gen1",
+    "topic_id": "cdn",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Cloud CDN in networking.",
+    "correct_answers": [
+      "cloud cdn",
+      "cloud cdn concept",
+      "cloud cdn networking",
+      "cors",
+      "s-maxage"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Cloud CDN is a core concept in cloud networking that describes Cloud CDN is used in cloud networking environments.",
+    "hints": [
+      "Review the theory section on Cloud CDN"
+    ]
+  },
+  {
+    "id": "q-cdn-gen2",
+    "topic_id": "cdn",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Cloud CDN improve network operations or security?",
+    "correct_answers": [
+      "cloud cdn optimization",
+      "cloud cdn efficiency",
+      "cloud cdn improvement",
+      "cors",
+      "s-maxage"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Cloud CDN leads to improved cloud networking outcomes. Key concepts include: cors, s-maxage, behaviors.",
+    "hints": [
+      "Review the theory section on Cloud CDN"
+    ]
+  },
+  {
+    "id": "q-cdn-gen3",
+    "topic_id": "cdn",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Cloud CDN. What are the key implementation considerations?",
+    "correct_answers": [
+      "cloud cdn deployment",
+      "cloud cdn testing",
+      "cloud cdn planning",
+      "cors",
+      "s-maxage"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Cloud CDN requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Cloud CDN"
+    ]
+  },
+  {
+    "id": "q-cdn-gen4",
+    "topic_id": "cdn",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Cloud CDN. What are the key implementation considerations?",
+    "correct_answers": [
+      "cloud cdn deployment",
+      "cloud cdn testing",
+      "cloud cdn planning",
+      "cors",
+      "s-maxage"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Cloud CDN requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Cloud CDN"
+    ]
+  },
+  {
+    "id": "q-cloud-dns2-gen1",
+    "topic_id": "cloud-dns2",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Cloud DNS Services in networking.",
+    "correct_answers": [
+      "cloud dns services concept",
+      "cloud dns services",
+      "cloud dns services networking",
+      "alias",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Cloud DNS Services is a core concept in cloud networking that describes Cloud DNS Services is used in cloud networking environments.",
+    "hints": [
+      "Review the theory section on Cloud DNS Services"
+    ]
+  },
+  {
+    "id": "q-cloud-dns2-gen2",
+    "topic_id": "cloud-dns2",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Cloud DNS Services improve network operations or security?",
+    "correct_answers": [
+      "cloud dns services optimization",
+      "cloud dns services efficiency",
+      "cloud dns services improvement",
+      "alias",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Cloud DNS Services leads to improved cloud networking outcomes.",
+    "hints": [
+      "Review the theory section on Cloud DNS Services"
+    ]
+  },
+  {
+    "id": "q-cloud-dns2-gen3",
+    "topic_id": "cloud-dns2",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Cloud DNS Services. What are the key implementation considerations?",
+    "correct_answers": [
+      "cloud dns services testing",
+      "cloud dns services deployment",
+      "cloud dns services planning",
+      "alias",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Cloud DNS Services requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Cloud DNS Services"
+    ]
+  },
+  {
+    "id": "q-cloud-dns2-gen4",
+    "topic_id": "cloud-dns2",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Cloud DNS Services. What are the key implementation considerations?",
+    "correct_answers": [
+      "cloud dns services testing",
+      "cloud dns services deployment",
+      "cloud dns services planning",
+      "alias",
+      "dns"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Cloud DNS Services requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Cloud DNS Services"
+    ]
+  },
+  {
+    "id": "q-cloud-waf2-gen1",
+    "topic_id": "cloud-waf2",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Cloud WAF in networking.",
+    "correct_answers": [
+      "cloud waf networking",
+      "cloud waf concept",
+      "cloud waf",
+      "concerns",
+      "rate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Cloud WAF is a core concept in cloud networking that describes Cloud WAF is used in cloud networking environments.",
+    "hints": [
+      "Review the theory section on Cloud WAF"
+    ]
+  },
+  {
+    "id": "q-cloud-waf2-gen2",
+    "topic_id": "cloud-waf2",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Cloud WAF improve network operations or security?",
+    "correct_answers": [
+      "cloud waf improvement",
+      "cloud waf efficiency",
+      "cloud waf optimization",
+      "concerns",
+      "rate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Cloud WAF leads to improved cloud networking outcomes. Key concepts include: concerns, rate, limiting.",
+    "hints": [
+      "Review the theory section on Cloud WAF"
+    ]
+  },
+  {
+    "id": "q-cloud-waf2-gen3",
+    "topic_id": "cloud-waf2",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Cloud WAF. What are the key implementation considerations?",
+    "correct_answers": [
+      "cloud waf testing",
+      "cloud waf deployment",
+      "cloud waf planning",
+      "concerns",
+      "rate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Cloud WAF requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Cloud WAF"
+    ]
+  },
+  {
+    "id": "q-cloud-waf2-gen4",
+    "topic_id": "cloud-waf2",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Cloud WAF. What are the key implementation considerations?",
+    "correct_answers": [
+      "cloud waf testing",
+      "cloud waf deployment",
+      "cloud waf planning",
+      "concerns",
+      "rate"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Cloud WAF requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Cloud WAF"
+    ]
+  },
+  {
+    "id": "q-container-net-gen1",
+    "topic_id": "container-net",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Container Networking in networking.",
+    "correct_answers": [
+      "container networking networking",
+      "container networking concept",
+      "container networking",
+      "virtual",
+      "failures"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Container Networking is a core concept in cloud networking that describes Container Networking is used in cloud networking environments.",
+    "hints": [
+      "Review the theory section on Container Networking"
+    ]
+  },
+  {
+    "id": "q-container-net-gen2",
+    "topic_id": "container-net",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Container Networking improve network operations or security?",
+    "correct_answers": [
+      "container networking improvement",
+      "container networking optimization",
+      "container networking efficiency",
+      "virtual",
+      "failures"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Container Networking leads to improved cloud networking outcomes.",
+    "hints": [
+      "Review the theory section on Container Networking"
+    ]
+  },
+  {
+    "id": "q-container-net-gen3",
+    "topic_id": "container-net",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Container Networking. What are the key implementation considerations?",
+    "correct_answers": [
+      "container networking deployment",
+      "container networking testing",
+      "container networking planning",
+      "virtual",
+      "failures"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Container Networking requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Container Networking"
+    ]
+  },
+  {
+    "id": "q-container-net-gen4",
+    "topic_id": "container-net",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Container Networking. What are the key implementation considerations?",
+    "correct_answers": [
+      "container networking deployment",
+      "container networking testing",
+      "container networking planning",
+      "virtual",
+      "failures"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Container Networking requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Container Networking"
+    ]
+  },
+  {
+    "id": "q-nacl-gen1",
+    "topic_id": "nacl",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of AWS NACLs in networking.",
+    "correct_answers": [
+      "aws nacls concept",
+      "aws nacls",
+      "aws nacls networking",
+      "support",
+      "nacls"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "AWS NACLs is a core concept in cloud networking that describes AWS NACLs is used in cloud networking environments.",
+    "hints": [
+      "Review the theory section on AWS NACLs"
+    ]
+  },
+  {
+    "id": "q-nacl-gen2",
+    "topic_id": "nacl",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does AWS NACLs improve network operations or security?",
+    "correct_answers": [
+      "aws nacls improvement",
+      "aws nacls optimization",
+      "aws nacls efficiency",
+      "support",
+      "nacls"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of AWS NACLs leads to improved cloud networking outcomes. Key concepts include: support, nacls, windows.",
+    "hints": [
+      "Review the theory section on AWS NACLs"
+    ]
+  },
+  {
+    "id": "q-nacl-gen3",
+    "topic_id": "nacl",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying AWS NACLs. What are the key implementation considerations?",
+    "correct_answers": [
+      "aws nacls planning",
+      "aws nacls deployment",
+      "aws nacls testing",
+      "support",
+      "nacls"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying AWS NACLs requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on AWS NACLs"
+    ]
+  },
+  {
+    "id": "q-private-ep-gen1",
+    "topic_id": "private-ep",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Private Endpoints in networking.",
+    "correct_answers": [
+      "private endpoints concept",
+      "private endpoints networking",
+      "private endpoints",
+      "paas",
+      "timeout"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Private Endpoints is a core concept in cloud networking that describes Private Endpoints is used in cloud networking environments.",
+    "hints": [
+      "Review the theory section on Private Endpoints"
+    ]
+  },
+  {
+    "id": "q-private-ep-gen2",
+    "topic_id": "private-ep",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Private Endpoints improve network operations or security?",
+    "correct_answers": [
+      "private endpoints efficiency",
+      "private endpoints improvement",
+      "private endpoints optimization",
+      "paas",
+      "timeout"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Private Endpoints leads to improved cloud networking outcomes.",
+    "hints": [
+      "Review the theory section on Private Endpoints"
+    ]
+  },
+  {
+    "id": "q-private-ep-gen3",
+    "topic_id": "private-ep",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Private Endpoints. What are the key implementation considerations?",
+    "correct_answers": [
+      "private endpoints planning",
+      "private endpoints testing",
+      "private endpoints deployment",
+      "paas",
+      "timeout"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Private Endpoints requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Private Endpoints"
+    ]
+  },
+  {
+    "id": "q-private-ep-gen4",
+    "topic_id": "private-ep",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Private Endpoints. What are the key implementation considerations?",
+    "correct_answers": [
+      "private endpoints planning",
+      "private endpoints testing",
+      "private endpoints deployment",
+      "paas",
+      "timeout"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Private Endpoints requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Private Endpoints"
+    ]
+  },
+  {
+    "id": "q-service-mesh2-gen1",
+    "topic_id": "service-mesh2",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of Service Mesh in networking.",
+    "correct_answers": [
+      "service mesh networking",
+      "service mesh concept",
+      "service mesh",
+      "jaeger",
+      "errors"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Service Mesh is a core concept in cloud networking that describes Service Mesh is used in cloud networking environments.",
+    "hints": [
+      "Review the theory section on Service Mesh"
+    ]
+  },
+  {
+    "id": "q-service-mesh2-gen2",
+    "topic_id": "service-mesh2",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does Service Mesh improve network operations or security?",
+    "correct_answers": [
+      "service mesh efficiency",
+      "service mesh improvement",
+      "service mesh optimization",
+      "jaeger",
+      "errors"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of Service Mesh leads to improved cloud networking outcomes.",
+    "hints": [
+      "Review the theory section on Service Mesh"
+    ]
+  },
+  {
+    "id": "q-service-mesh2-gen3",
+    "topic_id": "service-mesh2",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying Service Mesh. What are the key implementation considerations?",
+    "correct_answers": [
+      "service mesh deployment",
+      "service mesh planning",
+      "service mesh testing",
+      "jaeger",
+      "errors"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Service Mesh requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Service Mesh"
+    ]
+  },
+  {
+    "id": "q-service-mesh2-gen4",
+    "topic_id": "service-mesh2",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying Service Mesh. What are the key implementation considerations?",
+    "correct_answers": [
+      "service mesh deployment",
+      "service mesh planning",
+      "service mesh testing",
+      "jaeger",
+      "errors"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying Service Mesh requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on Service Mesh"
+    ]
+  },
+  {
+    "id": "q-vpc-peering-topic-gen1",
+    "topic_id": "vpc-peering-topic",
+    "domain": "cloud_networking",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of VPC Peering in networking.",
+    "correct_answers": [
+      "vpc peering networking",
+      "vpc peering concept",
+      "vpc peering",
+      "maximum",
+      "analyzer"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "VPC Peering is a core concept in cloud networking that describes VPC Peering is used in cloud networking environments.",
+    "hints": [
+      "Review the theory section on VPC Peering"
+    ]
+  },
+  {
+    "id": "q-vpc-peering-topic-gen2",
+    "topic_id": "vpc-peering-topic",
+    "domain": "cloud_networking",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does VPC Peering improve network operations or security?",
+    "correct_answers": [
+      "vpc peering improvement",
+      "vpc peering optimization",
+      "vpc peering efficiency",
+      "maximum",
+      "analyzer"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of VPC Peering leads to improved cloud networking outcomes.",
+    "hints": [
+      "Review the theory section on VPC Peering"
+    ]
+  },
+  {
+    "id": "q-vpc-peering-topic-gen3",
+    "topic_id": "vpc-peering-topic",
+    "domain": "cloud_networking",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying VPC Peering. What are the key implementation considerations?",
+    "correct_answers": [
+      "vpc peering testing",
+      "vpc peering planning",
+      "vpc peering deployment",
+      "maximum",
+      "analyzer"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying VPC Peering requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on VPC Peering"
     ]
   }
 ]

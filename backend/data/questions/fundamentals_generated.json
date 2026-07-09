@@ -379,7 +379,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "VLAN 1 is the default VLAN \u2014 all ports are in VLAN 1 by default.",
+    "explanation": "VLAN 1 is the default VLAN — all ports are in VLAN 1 by default.",
     "hints": [
       "The first one"
     ]
@@ -455,7 +455,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "Native VLAN mismatch causes traffic leaking between VLANs \u2014 a security vulnerability. CDP/LLDP will report the mismatch.",
+    "explanation": "Native VLAN mismatch causes traffic leaking between VLANs — a security vulnerability. CDP/LLDP will report the mismatch.",
     "hints": [
       "What if they disagree on which VLAN is untagged?"
     ]
@@ -493,7 +493,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "VLANs are separate broadcast domains \u2014 inter-VLAN communication requires a Layer 3 device (router or L3 switch).",
+    "explanation": "VLANs are separate broadcast domains — inter-VLAN communication requires a Layer 3 device (router or L3 switch).",
     "hints": [
       "VLANs isolate traffic"
     ]
@@ -531,7 +531,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "DNS uses port 53 \u2014 UDP for queries, TCP for zone transfers and large responses.",
+    "explanation": "DNS uses port 53 — UDP for queries, TCP for zone transfers and large responses.",
     "hints": [
       "A well-known port number"
     ]
@@ -670,7 +670,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "Client asks recursive resolver \u2192 resolver queries root servers \u2192 TLD servers \u2192 authoritative nameserver \u2192 returns answer to client.",
+    "explanation": "Client asks recursive resolver → resolver queries root servers → TLD servers → authoritative nameserver → returns answer to client.",
     "hints": [
       "Multiple servers are involved"
     ]
@@ -689,7 +689,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "TCP three-way handshake: SYN \u2192 SYN-ACK \u2192 ACK. Establishes a reliable connection.",
+    "explanation": "TCP three-way handshake: SYN → SYN-ACK → ACK. Establishes a reliable connection.",
     "hints": [
       "Three steps to connect"
     ]
@@ -788,7 +788,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "TCP is connection-oriented, reliable, ordered delivery. UDP is connectionless, unreliable, no ordering \u2014 but faster and lower overhead.",
+    "explanation": "TCP is connection-oriented, reliable, ordered delivery. UDP is connectionless, unreliable, no ordering — but faster and lower overhead.",
     "hints": [
       "One guarantees delivery, one doesn't"
     ]
@@ -844,7 +844,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "DHCP DORA: Discover \u2192 Offer \u2192 Request \u2192 Acknowledge.",
+    "explanation": "DHCP DORA: Discover → Offer → Request → Acknowledge.",
     "hints": [
       "DORA"
     ]
@@ -1186,7 +1186,7 @@
     ],
     "validation_type": "contains_any",
     "required_keywords": [],
-    "explanation": "STP port states: Blocking \u2192 Listening \u2192 Learning \u2192 Forwarding (and Disabled). RSTP simplifies to: Discarding, Learning, Forwarding.",
+    "explanation": "STP port states: Blocking → Listening → Learning → Forwarding (and Disabled). RSTP simplifies to: Discarding, Learning, Forwarding.",
     "hints": [
       "Five states in classic STP"
     ]
@@ -1532,6 +1532,342 @@
     "explanation": "ICMP Type 3, Code 3 = Destination Unreachable, Port Unreachable. Sent when UDP port has no listener.",
     "hints": [
       "Type 3 is unreachable"
+    ]
+  },
+  {
+    "id": "q-http-https-gen1",
+    "topic_id": "http-https",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of HTTP/HTTPS in networking.",
+    "correct_answers": [
+      "http/https concept",
+      "http/https",
+      "http/https networking",
+      "cors",
+      "metadata"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "HTTP/HTTPS is a core concept in fundamentals that describes HTTP/HTTPS is a networking concept.",
+    "hints": [
+      "Review the theory section on HTTP/HTTPS"
+    ]
+  },
+  {
+    "id": "q-http-https-gen2",
+    "topic_id": "http-https",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does HTTP/HTTPS improve network operations or security?",
+    "correct_answers": [
+      "http/https improvement",
+      "http/https optimization",
+      "http/https efficiency",
+      "cors",
+      "metadata"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of HTTP/HTTPS leads to improved fundamentals outcomes. Key concepts include: cors, metadata, resource.",
+    "hints": [
+      "Review the theory section on HTTP/HTTPS"
+    ]
+  },
+  {
+    "id": "q-http-https-gen3",
+    "topic_id": "http-https",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying HTTP/HTTPS. What are the key implementation considerations?",
+    "correct_answers": [
+      "http/https planning",
+      "http/https testing",
+      "http/https deployment",
+      "cors",
+      "metadata"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying HTTP/HTTPS requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on HTTP/HTTPS"
+    ]
+  },
+  {
+    "id": "q-http-https-gen4",
+    "topic_id": "http-https",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying HTTP/HTTPS. What are the key implementation considerations?",
+    "correct_answers": [
+      "http/https planning",
+      "http/https testing",
+      "http/https deployment",
+      "cors",
+      "metadata"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying HTTP/HTTPS requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on HTTP/HTTPS"
+    ]
+  },
+  {
+    "id": "q-icmp-protocol-gen1",
+    "topic_id": "icmp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of ICMP (Internet Control Message Protocol) in networking.",
+    "correct_answers": [
+      "icmp (internet control message protocol) concept",
+      "icmp (internet control message protocol)",
+      "icmp (internet control message protocol) networking",
+      "works",
+      "type"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "ICMP (Internet Control Message Protocol) is a core concept in fundamentals that describes ICMP (Internet Control Message Protocol) is a networking concept.",
+    "hints": [
+      "Review the theory section on ICMP (Internet Control Message Protocol)"
+    ]
+  },
+  {
+    "id": "q-icmp-protocol-gen2",
+    "topic_id": "icmp-protocol",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does ICMP (Internet Control Message Protocol) improve network operations or security?",
+    "correct_answers": [
+      "icmp (internet control message protocol) improvement",
+      "icmp (internet control message protocol) efficiency",
+      "icmp (internet control message protocol) optimization",
+      "works",
+      "type"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of ICMP (Internet Control Message Protocol) leads to improved fundamentals outcomes.",
+    "hints": [
+      "Review the theory section on ICMP (Internet Control Message Protocol)"
+    ]
+  },
+  {
+    "id": "q-icmp-protocol-gen3",
+    "topic_id": "icmp-protocol",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying ICMP (Internet Control Message Protocol). What are the key implementation considerations?",
+    "correct_answers": [
+      "icmp (internet control message protocol) deployment",
+      "icmp (internet control message protocol) planning",
+      "icmp (internet control message protocol) testing",
+      "works",
+      "type"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying ICMP (Internet Control Message Protocol) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on ICMP (Internet Control Message Protocol)"
+    ]
+  },
+  {
+    "id": "q-icmp-protocol-gen4",
+    "topic_id": "icmp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying ICMP (Internet Control Message Protocol). What are the key implementation considerations?",
+    "correct_answers": [
+      "icmp (internet control message protocol) deployment",
+      "icmp (internet control message protocol) planning",
+      "icmp (internet control message protocol) testing",
+      "works",
+      "type"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying ICMP (Internet Control Message Protocol) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on ICMP (Internet Control Message Protocol)"
+    ]
+  },
+  {
+    "id": "q-ntp-protocol-gen1",
+    "topic_id": "ntp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of NTP (Network Time Protocol) in networking.",
+    "correct_answers": [
+      "ntp (network time protocol) concept",
+      "ntp (network time protocol)",
+      "ntp (network time protocol) networking",
+      "outbound",
+      "server"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "NTP (Network Time Protocol) is a core concept in fundamentals that describes NTP (Network Time Protocol) is a networking concept.",
+    "hints": [
+      "Review the theory section on NTP (Network Time Protocol)"
+    ]
+  },
+  {
+    "id": "q-ntp-protocol-gen2",
+    "topic_id": "ntp-protocol",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does NTP (Network Time Protocol) improve network operations or security?",
+    "correct_answers": [
+      "ntp (network time protocol) optimization",
+      "ntp (network time protocol) improvement",
+      "ntp (network time protocol) efficiency",
+      "outbound",
+      "server"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of NTP (Network Time Protocol) leads to improved fundamentals outcomes.",
+    "hints": [
+      "Review the theory section on NTP (Network Time Protocol)"
+    ]
+  },
+  {
+    "id": "q-ntp-protocol-gen3",
+    "topic_id": "ntp-protocol",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying NTP (Network Time Protocol). What are the key implementation considerations?",
+    "correct_answers": [
+      "ntp (network time protocol) deployment",
+      "ntp (network time protocol) testing",
+      "ntp (network time protocol) planning",
+      "outbound",
+      "server"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying NTP (Network Time Protocol) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on NTP (Network Time Protocol)"
+    ]
+  },
+  {
+    "id": "q-ntp-protocol-gen4",
+    "topic_id": "ntp-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying NTP (Network Time Protocol). What are the key implementation considerations?",
+    "correct_answers": [
+      "ntp (network time protocol) deployment",
+      "ntp (network time protocol) testing",
+      "ntp (network time protocol) planning",
+      "outbound",
+      "server"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying NTP (Network Time Protocol) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on NTP (Network Time Protocol)"
+    ]
+  },
+  {
+    "id": "q-ssh-protocol-gen1",
+    "topic_id": "ssh-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "easy",
+    "question": "Explain the basic concept of SSH (Secure Shell) in networking.",
+    "correct_answers": [
+      "ssh (secure shell) networking",
+      "ssh (secure shell) concept",
+      "ssh (secure shell)",
+      "bastion",
+      "ssh"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "SSH (Secure Shell) is a core concept in fundamentals that describes SSH (Secure Shell) is a networking concept.",
+    "hints": [
+      "Review the theory section on SSH (Secure Shell)"
+    ]
+  },
+  {
+    "id": "q-ssh-protocol-gen2",
+    "topic_id": "ssh-protocol",
+    "domain": "fundamentals",
+    "type": "scenario",
+    "difficulty": "medium",
+    "question": "How does SSH (Secure Shell) improve network operations or security?",
+    "correct_answers": [
+      "ssh (secure shell) optimization",
+      "ssh (secure shell) efficiency",
+      "ssh (secure shell) improvement",
+      "bastion",
+      "ssh"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Proper implementation of SSH (Secure Shell) leads to improved fundamentals outcomes.",
+    "hints": [
+      "Review the theory section on SSH (Secure Shell)"
+    ]
+  },
+  {
+    "id": "q-ssh-protocol-gen3",
+    "topic_id": "ssh-protocol",
+    "domain": "fundamentals",
+    "type": "command",
+    "difficulty": "hard",
+    "question": "A network team is deploying SSH (Secure Shell). What are the key implementation considerations?",
+    "correct_answers": [
+      "ssh (secure shell) testing",
+      "ssh (secure shell) planning",
+      "ssh (secure shell) deployment",
+      "bastion",
+      "ssh"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying SSH (Secure Shell) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on SSH (Secure Shell)"
+    ]
+  },
+  {
+    "id": "q-ssh-protocol-gen4",
+    "topic_id": "ssh-protocol",
+    "domain": "fundamentals",
+    "type": "theory",
+    "difficulty": "hard",
+    "question": "A network team is deploying SSH (Secure Shell). What are the key implementation considerations?",
+    "correct_answers": [
+      "ssh (secure shell) testing",
+      "ssh (secure shell) planning",
+      "ssh (secure shell) deployment",
+      "bastion",
+      "ssh"
+    ],
+    "validation_type": "contains_any",
+    "required_keywords": [],
+    "explanation": "Deploying SSH (Secure Shell) requires careful planning, testing, and validation to ensure successful integration.",
+    "hints": [
+      "Review the theory section on SSH (Secure Shell)"
     ]
   }
 ]
