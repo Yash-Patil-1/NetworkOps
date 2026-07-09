@@ -30,7 +30,7 @@ export default function Sidebar() {
       <div className="space-y-2">
         <StreakBadge />
         <div className="border-t border-carbon/30 pt-3">
-          <a href="https://github.com/Yash-Patil-1" target="_blank" className="nav-item">
+          <a href="https://github.com/Yash-Patil-1" target="_blank" rel="noopener noreferrer" className="nav-item">
             <Github className="w-4 h-4"/>GitHub
           </a>
         </div>

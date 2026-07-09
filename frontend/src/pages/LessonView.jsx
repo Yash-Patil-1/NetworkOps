@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, CheckCircle, XCircle, Lightbulb, ChevronRight, BookOpen, Zap, Trophy, Flame } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
 import axios from 'axios'
 
 export default function LessonView() {
@@ -184,8 +185,9 @@ export default function LessonView() {
           <h2 className="text-sm font-bold text-red mb-3 font-mono uppercase tracking-wider">
             {section.title}
           </h2>
-          <div className="text-sm text-ash leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: renderContent(section.content) }} />
+          <div className="text-sm text-ash leading-relaxed [&_strong]:text-chalk [&_code]:text-red [&_code]:font-mono [&_code]:text-xs [&_code]:bg-red/5 [&_code]:px-1 [&_code]:rounded [&_pre]:bg-void [&_pre]:border [&_pre]:border-carbon [&_pre]:rounded-lg [&_pre]:p-3 [&_pre]:my-2 [&_pre]:text-xs [&_pre]:font-mono [&_pre]:text-chalk [&_pre]:overflow-x-auto [&_li]:text-ash [&_li]:text-sm [&_li]:ml-4 [&_p]:text-sm [&_p]:text-ash [&_p]:leading-relaxed [&_p]:mb-3">
+              <ReactMarkdown>{section.content}</ReactMarkdown>
+            </div>
         </div>
 
         {/* Key concepts */}
@@ -288,15 +290,4 @@ export default function LessonView() {
   )
 }
 
-function renderContent(content) {
-  if (!content) return ''
-  // Convert basic markdown: code blocks, inline code, bold, lists
-  const html = content
-    .replace(/```(\w*)\n?([\s\S]*?)```/g, '<pre class="bg-void border border-carbon rounded-lg p-3 my-2 text-xs font-mono text-chalk overflow-x-auto">$2</pre>')
-    .replace(/`([^`]+)`/g, '<code class="text-red font-mono text-xs bg-red/5 px-1 rounded">$1</code>')
-    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-chalk font-bold">$1</strong>')
-    .replace(/^- (.*)/gm, '<li class="text-ash text-sm ml-4 list-disc">$1</li>')
-  // Wrap in paragraphs, splitting on double newlines
-  const parts = html.split(/\n\n+/)
-  return '<p class="text-sm text-ash leading-relaxed mb-3">' + parts.join('</p><p class="text-sm text-ash leading-relaxed mb-3">') + '</p>'
-}
+
