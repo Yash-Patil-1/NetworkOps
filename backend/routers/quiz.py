@@ -78,17 +78,3 @@ async def get_quiz_stats(request: Request, topic: str = None):
         correct = conn.execute("SELECT COUNT(*) as c FROM quiz_history WHERE correct = 1").fetchone()["c"]
     conn.close()
     return {"total_answered": total, "correct": correct, "accuracy": round(correct/total*100, 1) if total else 0}
-
-
-@router.get("/stats")
-async def get_quiz_stats(request: Request, topic: str = None):
-    """Get quiz performance stats."""
-    conn = get_connection()
-    if topic:
-        total = conn.execute("SELECT COUNT(*) as c FROM quiz_history WHERE topic_id = ?", (topic,)).fetchone()["c"]
-        correct = conn.execute("SELECT COUNT(*) as c FROM quiz_history WHERE topic_id = ? AND correct = 1", (topic,)).fetchone()["c"]
-    else:
-        total = conn.execute("SELECT COUNT(*) as c FROM quiz_history").fetchone()["c"]
-        correct = conn.execute("SELECT COUNT(*) as c FROM quiz_history WHERE correct = 1").fetchone()["c"]
-    conn.close()
-    return {"total_answered": total, "correct": correct, "accuracy": round(correct/total*100, 1) if total else 0}

@@ -7,8 +7,8 @@
     "difficulty": "beginner",
     "theory": {
       "what": "Firewalls control traffic flow between network zones based on rules. They inspect packets and allow/deny based on source, destination, port, protocol, and state.",
-      "why": "Firewalls are the primary network security control. They enforce the principle of least privilege at the network level \u2014 only explicitly allowed traffic passes.",
-      "how": "Types:\n- Packet filter: Stateless, checks individual packets\n- Stateful: Tracks connection state, allows return traffic\n- NGFW: Adds application awareness, IPS, URL filtering\n\nRule processing: Top-down, first match wins. Implicit deny at bottom.",
+      "why": "Firewalls are the primary network security control. They enforce the principle of least privilege at the network level — only explicitly allowed traffic passes.",
+      "how": "Types: Packet filter (stateless, checks individual packets), Stateful (tracks connection state, allows return traffic automatically), NGFW (adds application awareness, IPS, URL filtering). Rule processing: Top-down, first match wins. Implicit deny at bottom.",
       "when": "Deploy firewalls at: internet edge, between security zones, in front of sensitive servers, between departments. Always default deny.",
       "key_concepts": [
         "Stateful inspection",
@@ -19,11 +19,16 @@
         "Application awareness (NGFW)"
       ],
       "configuration": "! Cisco ASA example\naccess-list OUTSIDE_IN permit tcp any host 203.0.113.10 eq 443\naccess-list OUTSIDE_IN deny ip any any log\n!\naccess-group OUTSIDE_IN in interface outside",
+      "worked_examples": "**Worked Example 1: Stateful Firewall Rule Order**\nRules are processed top-down, first match wins. Incorrect ordering can bypass security.\n\nBad rule order:\n  1. permit ip any any  (allows everything!)\n  2. deny ip 10.0.0.0/8 any\n\nResult: Rule 1 matches everything, Rule 2 never evaluated. All traffic allowed including 10.x.x.x.\n\nGood rule order:\n  1. deny ip 10.0.0.0/8 any  (block RFC 1918 first)\n  2. permit tcp any host 203.0.113.10 eq 443\n  3. permit tcp any host 203.0.113.10 eq 80\n  4. deny ip any any  (implicit deny)\n\nKey: Specific denys first, then specific permits, then implicit deny at bottom.\n\n**Worked Example 2: Diagnosing Firewall Issues**\nSymptom: Traffic allowed by firewall rules is still being blocked.\n\nshow access-list OUTSIDE_IN\n  Check hit counts — is the rule actually being matched?\n  If hit count = 0, either the rule is never reached (earlier rule matches first) or traffic doesn't exist.\n\nCheck state table:\n  show conn | include 203.0.113.10:443\n  Is the connection state tracked?\n\nCheck logging:\n  show logging | include denied\n  Look for denied packets — they often tell you exactly which rule blocked the traffic.\n\n**Worked Example 3: NGFW Application Identification**\nA traditional firewall allows TCP 443 to any destination. An NGFW can differentiate:\n  - Facebook traffic over TLS → block (productivity policy)\n  - Salesforce traffic over TLS → allow (business application)\n  - Unknown TLS traffic → allow but log\n\nThis requires application-level inspection, not just port/protocol matching.",
+      "summary": "**Key Takeaways:**\n• Firewalls enforce network security policy using top-down rule processing with implicit deny\n• Stateful firewalls track connection state and allow return traffic automatically\n• NGFWs add application awareness and IPS capabilities\n• Always place specific deny rules before broad permit rules\n• Check hit counts and logs to verify firewall rules are working as intended\n\n**Best Practice:** Start with default-deny on all interfaces. Add specific permit rules for legitimate traffic. Log denied traffic for security monitoring. Review rules quarterly and remove unused ones.",
       "troubleshooting": [
-        "show access-list (hit counts)",
-        "show conn (active connections)",
-        "packet-tracer (ASA simulation)",
-        "show logging | include denied"
+        "show access-list (hit counts per rule)",
+        "show conn (active connections through firewall)",
+        "packet-tracer (ASA simulation for path verification)",
+        "show logging | include denied",
+        "Check rule order — top-down, first match wins",
+        "Verify zones and interfaces are correctly assigned",
+        "Test with packet-tracer for multi-rule verification"
       ]
     },
     "related_topics": [
@@ -47,8 +52,8 @@
     "difficulty": "intermediate",
     "theory": {
       "what": "IDS detects malicious activity and alerts. IPS detects AND blocks malicious activity inline. Both use signatures and anomaly detection.",
-      "why": "Firewalls allow/deny based on ports \u2014 they can't inspect payload content. IDS/IPS examines packet contents for exploit signatures, malware, and anomalous behavior.",
-      "how": "Deployment:\n- IDS: Passive (mirror/SPAN port) \u2014 detects and alerts only\n- IPS: Inline \u2014 detects and blocks in real-time\n\nDetection methods:\n- Signature-based: Known attack patterns\n- Anomaly-based: Deviations from baseline\n- Policy-based: Violations of defined rules",
+      "why": "Firewalls allow/deny based on ports — they can't inspect payload content. IDS/IPS examines packet contents for exploit signatures, malware, and anomalous behavior.",
+      "how": "IDS: Passive (mirror/SPAN port) — detects and alerts only. IPS: Inline — detects and blocks in real-time. Detection methods: Signature-based (known attack patterns), Anomaly-based (deviations from baseline), Policy-based (violations of defined rules).",
       "when": "Deploy IDS/IPS at network boundaries, in front of critical servers, and between security zones. Use IPS inline for active protection, IDS for monitoring-only.",
       "key_concepts": [
         "Inline (IPS) vs Passive (IDS)",
@@ -59,11 +64,16 @@
         "SPAN/TAP for IDS"
       ],
       "configuration": "# Suricata IPS (inline)\nsuricata -c /etc/suricata/suricata.yaml -i eth0 --af-packet\n\n# Snort IDS\nsnort -c /etc/snort/snort.conf -i eth0 -A alert_fast",
+      "worked_examples": "**Worked Example 1: IPS False Positive Tuning**\nAn IPS blocks legitimate HTTP traffic because a signature matches a benign pattern.\n\nSymptom: Users report that a specific website is inaccessible. Firewall allows it, but IPS logs show 'ET WEB_SERVER SQL Injection Attempt' blocked.\n\nSolution:\n1. Verify it's a false positive by examining the packet payload\n2. Create a 'pass' rule to exempt the specific traffic\n   drop tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"SQLI...\")\n   pass tcp $HOME_NET any -> 198.51.100.10 80 (msg:\"False positive exception\")\n3. Submit the false positive to the signature vendor for correction\n\n**Worked Example 2: Signature Tuning for Production**\nDeploying a new IPS can cause outages from false positives.\n\nStrategy:\n1. Deploy in IDS mode (alert only) for 2-4 weeks\n2. Review alerts daily — categorize as true/false positive\n3. Create exceptions for confirmed false positives\n4. After tuning, switch critical signatures to IPS (block) mode\n5. Continue monitoring for new false positives\n\n**Worked Example 3: Anomaly Detection Example**\nBaseline: Web server normally receives 100-500 requests/sec.\nAlert: Server receives 10,000 requests/sec from 500 IPs.\n\nThis anomaly could indicate a DDoS attack. IPS/IDS can:\n- Rate-limit connections to the web server\n- Drop traffic from IPs exceeding threshold\n- Alert the SOC team",
+      "summary": "**Key Takeaways:**\n• IDS monitors and alerts; IPS monitors AND blocks inline\n• Signature-based detection catches known attacks; Anomaly-based catches novel threats\n• False positives are the biggest operational challenge — tune signatures carefully\n• Deploy IDS first (alert-only), tune, then switch to IPS\n• Keep signatures updated regularly for new threat coverage\n\n**Best Practice:** Start all signatures in alert-only mode (IDS) for at least 2 weeks. Tune significantly before enabling blocking mode (IPS). Monitor false positive rates and adjust continuously.",
       "troubleshooting": [
-        "Check alert logs",
-        "Verify signatures are updated",
-        "Monitor false positive rate",
-        "Test with known exploit (safely)"
+        "Check alert logs for blocked/alerted traffic patterns",
+        "Verify signature update status — outdated sigs miss new threats",
+        "Monitor false positive rate: >1% means tuning is needed",
+        "Test IPS with known exploit simulation (Metasploit safe module)",
+        "Check CPU usage on IPS device — high CPU means tuning needed",
+        "Verify SPAN/TAP configuration for IDS deployment",
+        "Check network throughput vs IPS inspection capacity"
       ]
     },
     "related_topics": [
@@ -83,12 +93,12 @@
     "id": "vpn-ipsec",
     "domain": "network_security",
     "phase": 4,
-    "name": "VPN \u2014 IPSec",
+    "name": "VPN — IPSec",
     "difficulty": "intermediate",
     "theory": {
       "what": "IPSec VPN creates encrypted tunnels between sites (site-to-site) or between remote users and the network (remote access). Provides confidentiality, integrity, and authentication.",
       "why": "Data traversing the internet is vulnerable to interception. IPSec VPN encrypts all traffic between endpoints, creating a secure channel over untrusted networks.",
-      "how": "IPSec phases:\nPhase 1 (IKE): Authenticate peers, establish secure channel\n- Main Mode or Aggressive Mode\n- Negotiate: encryption, hash, DH group, auth method\n\nPhase 2 (IPSec SA): Negotiate data encryption\n- ESP (Encapsulating Security Payload): Encrypts + authenticates\n- AH (Authentication Header): Authenticates only\n\nModes: Tunnel (entire packet encrypted) vs Transport (payload only).",
+      "how": "IPSec phases: Phase 1 (IKE): Authenticate peers, establish secure channel. Main Mode or Aggressive Mode. Negotiate: encryption, hash, DH group, auth method. Phase 2 (IPSec SA): Negotiate data encryption. ESP (Encapsulating Security Payload): Encrypts + authenticates. AH (Authentication Header): Authenticates only. Modes: Tunnel (entire packet encrypted) vs Transport (payload only).",
       "when": "Use IPSec for: site-to-site connectivity over internet, remote access VPN, encrypting traffic between cloud and on-premises.",
       "key_concepts": [
         "IKE Phase 1 and Phase 2",
@@ -99,11 +109,17 @@
         "SA (Security Association)"
       ],
       "configuration": "! Cisco Site-to-Site VPN\ncrypto isakmp policy 10\n encryption aes 256\n hash sha256\n authentication pre-share\n group 14\ncrypto isakmp key SECRET address 203.0.113.1\n!\ncrypto ipsec transform-set AES-SHA esp-aes 256 esp-sha256-hmac\ncrypto map VPN 10 ipsec-isakmp\n set peer 203.0.113.1\n set transform-set AES-SHA\n match address VPN-TRAFFIC",
+      "worked_examples": "**Worked Example 1: Diagnosing VPN Not Coming Up**\nSymptom: VPN tunnel shows as DOWN/Mm\ndown.\n\nStep 1 — Check Phase 1:\n  show crypto isakmp sa\n  If no SA: Check IKE parameters match (encryption, hash, DH group, auth method). If one side uses AES256/SHA256/DH14 and the other uses AES128/SHA1/DH5, negotiation fails.\n\nStep 2 — Check Phase 2:\n  show crypto ipsec sa | include peer\n  If Phase 1 is up but Phase 2 fails: Check transform set and ACLs match on both sides. The ACLs must mirror each other (SrcA→DstA vs SrcB→DstB).\n\nStep 3 — Connectivity:\n  Can both peers ping each other? If not, routing is the issue.\n  Is UDP 500 (ISAKMP) and UDP 4500 (NAT-T) open in firewalls?\n\n**Worked Example 2: NAT Traversal (NAT-T)**\nOne VPN peer is behind NAT. IPSec breaks because NAT modifies the IP header.\n\nSymptom: VPN connects but no traffic passes.\n\nFix: Enable NAT-T\n  crypto ipsec nat-transparency udp-encapsulation\n\nHow NAT-T works: The VPN encapsualtes IPSec packets in UDP (port 4500) instead of directly in IP, allowing NAT to translate the UDP headers without breaking IPSec integrity.\n\nVerify: 'show crypto ipsec sa | include encaps' shows 'encapsulation: UDP'.\n\n**Worked Example 3: Site-to-Site with Cloud**\nAWS VPC connects to on-premises via IPSec VPN.\n\nOn-premises: Standard IPSec configuration with peer = AWS VPN endpoint IP.\nAWS: Virtual Private Gateway with the on-premises peer configuration.\n\nTroubleshooting:\n1. Verify both ends have matching IKE parameters\n2. AWS uses IKEv1 or IKEv2 (specify in config)\n3. Enable NAT-T on both sides (AWS handles this automatically)\n4. Check routing: on-premises must route VPC CIDRs through the tunnel, AWS must route on-prem CIDRs through the VPG",
+      "summary": "**Key Takeaways:**\n• IPSec provides encrypted tunnels using IKE (Phase 1) and IPSec SA (Phase 2)\n• ESP encrypts and authenticates; AH authenticates only\n• Tunnel mode encrypts entire packet; Transport mode encrypts payload only\n• NAT-T (UDP 4500) must be enabled if either peer is behind NAT\n• Use certificates for authentication at scale; pre-shared keys for simple setups\n\n**Best Practice:** Use IKEv2 (simpler, more secure), ESP with AES256/SHA256/DH14, enable Perfect Forward Secrecy (PFS group 14), and enable NAT-T always. Configure Dead Peer Detection (DPD) for faster failover.",
       "troubleshooting": [
-        "show crypto isakmp sa",
-        "show crypto ipsec sa",
-        "debug crypto isakmp",
-        "debug crypto ipsec"
+        "show crypto isakmp sa — Phase 1 status (active/negotiating/idle)",
+        "show crypto ipsec sa — Phase 2 status (encaps, decaps, errors)",
+        "debug crypto isakmp — verbose IKE negotiation (use carefully)",
+        "debug crypto ipsec — verbose IPSec SA negotiation",
+        "ping peer source Lo0 — test reachability",
+        "Check UDP 500 and 4500 in firewalls",
+        "Verify ACLs mirror each other on both ends",
+        "check crypto map application on correct interface"
       ]
     },
     "related_topics": [
@@ -126,8 +142,8 @@
     "difficulty": "intermediate",
     "theory": {
       "what": "Network segmentation divides a network into isolated zones with controlled access between them. Each zone has its own security policy.",
-      "why": "Flat networks allow lateral movement \u2014 once an attacker gets in, they can reach everything. Segmentation limits blast radius and enforces least privilege at the network level.",
-      "how": "Implementation methods:\n- VLANs + inter-VLAN firewall rules\n- Physical separation\n- Microsegmentation (host-based)\n- Zero Trust Network Access (ZTNA)\n\nCommon zones: DMZ, Internal, Management, Guest, IoT, PCI CDE.",
+      "why": "Flat networks allow lateral movement — once an attacker gets in, they can reach everything. Segmentation limits blast radius and enforces least privilege at the network level.",
+      "how": "Implementation methods: VLANs + inter-VLAN firewall rules, Physical separation, Microsegmentation (host-based), Zero Trust Network Access (ZTNA). Common zones: DMZ, Internal, Management, Guest, IoT, PCI CDE.",
       "when": "Segment when: you have different trust levels, compliance requirements (PCI CDE), IoT devices, guest access, or want to limit breach impact.",
       "key_concepts": [
         "Zones and trust levels",
@@ -138,11 +154,15 @@
         "East-West traffic control"
       ],
       "configuration": "! Inter-VLAN firewall (on L3 switch or firewall)\naccess-list 101 permit tcp 10.0.10.0 0.0.0.255 10.0.20.0 0.0.0.255 eq 443\naccess-list 101 deny ip 10.0.10.0 0.0.0.255 10.0.20.0 0.0.0.255\naccess-list 101 permit ip any any",
+      "worked_examples": "**Worked Example 1: Three-Zone Segmentation**\nZone 1 — DMZ (web servers): Only allows HTTP/HTTPS from internet, only allows outbound database queries to Zone 2.\nZone 2 — Internal App (application servers): Only allows traffic from DMZ on specific ports, only allows outbound to Zone 3 on DB port.\nZone 3 — Data (databases): Only allows traffic from Zone 2 on the database port, denies all outbound internet.\n\nBenefit: If the DMZ web server is compromised, the attacker can't directly access the database. They'd need to pivot through the app server.\n\n**Worked Example 2: Guest Network Isolation**\nGuest Wi-Fi in VLAN 40 with strict ACL:\n  - DHCP from guest subnet only\n  - DNS to internet only\n  - HTTP/HTTPS to internet only\n  - NO access to internal subnets (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16)\n  - NO access to management subnets\n  - Rate-limited (100 Mbps per client)\n\nImplementation: Firewall zone-pair between GUEST-ZONE and CORP-ZONE: deny all.\n\n**Worked Example 3: Microsegmentation with Host-Based Firewalls**\nWithin the same subnet, use host-based firewalls to isolate individual workloads.\n\nInstead of VLAN-per-app (complex), use the same subnet but enforce:\n  Web server: only accepts HTTP/HTTPS from load balancer\n  App server: only accepts traffic from web servers on specific port\n  DB server: only accepts database traffic from app servers\n\nTools: iptables/nftables (Linux), Windows Firewall, Cisco ACI, VMware NSX.\n\nBenefit: Even within the same L2 segment, hosts can only communicate as explicitly permitted.",
+      "summary": "**Key Takeaways:**\n• Network segmentation isolates zones and limits lateral movement during breaches\n• VLANs + firewalls provide basic segmentation; microsegmentation provides granular host-level controls\n• DMZ architecture isolates public-facing services from internal networks\n• Zero Trust assumes no implicit trust — verify every connection\n• Segmentation limits blast radius: an IoT breach can't reach corporate data\n\n**Best Practice:** Design zones based on data sensitivity and trust. Place firewalls between each zone boundary. Allow only necessary traffic between zones. Implement at least: DMZ, Internal, Management, and Guest zones.",
       "troubleshooting": [
-        "Verify traffic is being filtered between zones",
-        "Check ACL hit counts",
-        "Test connectivity between zones",
-        "Review firewall logs for denied traffic"
+        "Verify traffic is being filtered between zones — test connectivity",
+        "Check ACL hit counts on inter-zone rules",
+        "Use traceroute between zones to verify the path",
+        "Review firewall logs for denied inter-zone traffic",
+        "Check route tables — segmented zones must not have direct routes to each other",
+        "Verify default routes don't bypass firewalls"
       ]
     },
     "related_topics": [
@@ -165,8 +185,8 @@
     "difficulty": "advanced",
     "theory": {
       "what": "802.1X is a port-based network access control standard. Devices must authenticate before getting network access. Unauthenticated devices are blocked or placed in a guest VLAN.",
-      "why": "Without 802.1X, anyone who plugs into a network port gets access. 802.1X ensures only authorized devices and users can access the network \u2014 essential for zero trust.",
-      "how": "Components:\n- Supplicant: Client device requesting access\n- Authenticator: Switch port enforcing access\n- Authentication Server: RADIUS server (validates credentials)\n\nProcess: Device connects \u2192 switch challenges \u2192 device provides credentials \u2192 RADIUS validates \u2192 switch grants/denies access.",
+      "why": "Without 802.1X, anyone who plugs into a network port gets access. 802.1X ensures only authorized devices and users can access the network — essential for zero trust.",
+      "how": "Components: Supplicant (client device requesting access), Authenticator (switch port enforcing access), Authentication Server (RADIUS server validating credentials). Process: Device connects → switch challenges → device provides credentials → RADIUS validates → switch grants/denies access.",
       "when": "Implement 802.1X on all access ports in secure environments. Use for: corporate wired access, wireless (WPA2-Enterprise), and IoT device authentication.",
       "key_concepts": [
         "Supplicant/Authenticator/Auth Server",
@@ -177,11 +197,17 @@
         "Guest VLAN for failures"
       ],
       "configuration": "! Switch port 802.1X\naaa new-model\naaa authentication dot1x default group radius\n!\ninterface GigabitEthernet0/1\n switchport mode access\n authentication port-control auto\n dot1x pae authenticator\n authentication host-mode multi-auth",
+      "worked_examples": "**Worked Example 1: 802.1X Deployment Phases**\nPhase 1 — Monitor Mode: Enable 802.1X in monitor-only mode. Log which devices would be blocked. This reveals unexpected devices on the network.\nPhase 2 — Guest VLAN: Configure a guest VLAN for unauthorised devices. Users who can't authenticate get internet-only access.\nPhase 3 — Enforce: Enable 802.1X enforcement. Only authenticated devices get network access.\nPhase 4 — MAB for Legacy Devices: Enable MAC Authentication Bypass for printers, scanners, and IoT devices that don't support 802.1X.\n\n**Worked Example 2: Diagnosing 802.1X Failures**\nSymptom: A known-good device can't authenticate.\n\nStep 1 — Check supplicant status on the client:\n  Windows: 'netsh lan show interfaces'\n  Linux: 'wpa_supplicant -c /etc/wpa_supplicant.conf -D wired -i eth0'\n\nStep 2 — Check RADIUS server:\n  Logs: 'tail -f /var/log/freeradius/radacct/*'\n  Common errors: wrong EAP type, expired certificate, wrong password\n\nStep 3 — Check switch:\n  show authentication sessions interface Gi0/1\n  show dot1x all interface Gi0/1\n\n**Worked Example 3: MAC Authentication Bypass (MAB)**\nNetwork printer can't run 802.1X supplicant. Use MAB:\n\nSwitch config:\n  interface Gi0/5\n   authentication order mab dot1x\n   authentication priority dot1x mab\n\nRADIUS config:\n  If MAC AA:BB:CC:DD:EE:FF authenticates via MAB → assign VLAN 200 (Printers)\n\nProcess: Switch tries 802.1X first. No response → falls back to MAB. Switch sends the device's MAC as username/password to RADIUS. RADIUS validates the MAC against its database. Grants access with the printer VLAN.",
+      "summary": "**Key Takeaways:**\n• 802.1X authenticates devices before granting network access\n• Three components: Supplicant (client), Authenticator (switch), Authentication Server (RADIUS)\n• Guest VLAN provides limited access for unauthenticated devices\n• MAB allows legacy devices (printers, scanners) to authenticate by MAC address\n• Dynamic VLAN assignment enables role-based network access\n\n**Best Practice:** Deploy in monitor mode first to discover rogue devices. Use MAB for IoT/printers. Implement guest VLAN for smooth deployment. Test with a pilot group before full rollout.",
       "troubleshooting": [
-        "show authentication sessions",
-        "show dot1x all",
-        "test aaa group radius",
-        "debug dot1x all"
+        "show authentication sessions — view authentication state per port",
+        "show dot1x all — detailed 802.1X status",
+        "test aaa group radius — test RADIUS connectivity",
+        "debug dot1x all — real-time 802.1X debugging",
+        "Check RADIUS server logs for auth failures",
+        "Verify supplicant is running on the client",
+        "Check certificate validity (EAP-TLS)",
+        "Verify guest VLAN exists if MAB/802.1X fails"
       ]
     },
     "related_topics": [

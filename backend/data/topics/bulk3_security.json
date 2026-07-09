@@ -6,31 +6,18 @@
     "name": "Zero Trust Architecture",
     "difficulty": "advanced",
     "theory": {
-      "what": "Assumes no implicit trust \u2014 every access request is verified regardless of location.",
-      "why": "Traditional perimeter fails when attackers get inside. Zero Trust limits lateral movement.",
-      "how": "Principles: Verify explicitly, Least privilege, Assume breach. Components: Identity, device health, microsegmentation.",
-      "when": "Implement when modernizing security or after a breach.",
-      "key_concepts": [
-        "Never trust always verify",
-        "Microsegmentation",
-        "Identity-centric",
-        "Continuous verification"
-      ],
-      "configuration": "# Zero Trust steps\n1. Identify protect surfaces\n2. Map transaction flows\n3. Build architecture\n4. Create policies\n5. Monitor",
-      "troubleshooting": [
-        "Verify identity for every access",
-        "Check microsegmentation",
-        "Monitor lateral movement"
-      ]
+      "what": "Zero Trust architecture assumes no implicit trust — every access request must be verified, regardless of the source location (inside or outside the network perimeter). The core principle is 'never trust, always verify.' Instead of the traditional castle-and-moat model (trusted inside, untrusted outside), Zero Trust treats every network as hostile. Every user, device, and connection must authenticate and be authorized before accessing any resource. Key components include: identity and access management (IAM), device health verification, microsegmentation (fine-grained network policies), continuous monitoring, and least-privilege access. The architecture is defined by NIST SP 800-207, which outlines seven core tenets including continuous verification, device authentication, and encrypted traffic.",
+      "why": "The traditional perimeter security model assumes everything inside the corporate network is trusted. This fails once an attacker breaches the perimeter — they can move laterally across the trusted internal network. High-profile breaches (Target, Equifax, SolarWinds) all involved lateral movement after perimeter breach. Zero Trust limits blast radius: even if an attacker compromises one system, they cannot automatically access other systems. Benefits: 1) Reduces lateral movement — every access is verified. 2) Protects against insider threats — no implicit trust. 3) Enables secure remote work — access is identity-based, not location-based. 4) Supports cloud and hybrid environments — consistent policy everywhere. For compliance (PCI DSS 4.0, FedRAMP), Zero Trust principles are increasingly required.",
+      "how": "Zero Trust implementation follows a phased approach: Phase 1 — Identify protect surfaces (critical data, applications, assets, services). Phase 2 — Map transaction flows (how data moves between protect surfaces). Phase 3 — Build a Zero Trust architecture (define policies, choose enforcement points, implement segmentation). Phase 4 — Create Zero Trust policies (identity-first, least-privilege). Phase 5 — Monitor and maintain (continuous verification, traffic analysis, threat detection). Key technologies: identity provider (Okta, Azure AD) for user authentication; device trust (device compliance checking); microsegmentation (NSX, ACI, Calico); software-defined perimeter (Zscaler, Cloudflare Access); and behavioral analytics (UEBA — User and Entity Behavior Analytics).",
+      "when": "Implement Zero Trust when: modernizing security architecture, migrating to cloud/hybrid environments, enabling remote/hybrid work, after experiencing a breach involving lateral movement, or when compliance requirements demand it (PCI DSS, HIPAA, FedRAMP). Start with the highest-value protect surfaces: critical applications, sensitive data stores, privileged access. Zero Trust is a journey, not a product — gradually implement components over 12-24 months.",
+      "key_concepts": ["Never trust, always verify — continuous verification", "Microsegmentation — fine-grained network segmentation", "Identity-centric — access based on identity, not network location", "Continuous verification — re-verify access periodically", "Least privilege — minimum access required for each role", "Assume breach — design for containment, not prevention", "NIST SP 800-207 — Zero Trust architecture standard"],
+      "configuration": "# Zero Trust policy example (Cloudflare Access)\n# Policy: Only authorized users from managed devices can access internal app\n\npolicies:\n  - name: Access Internal Apps\n    decision: allow\n    include:\n      - email_domain: example.com\n    require:\n      - device_posture: os_version_checked\n      - auth_method: mfa\n    session_duration: 24h\n\n# Microsegmentation policy (NSX)\n# Web tier can only connect to App tier on TCP 8080\n# App tier can only connect to DB tier on TCP 3306\n# All other east-west traffic denied\n\nfirewall_sections:\n  - section_name: Zero Trust Rules\n    rules:\n      - name: Allow Web to App\n        source: WEB_VM_GROUP\n        destination: APP_VM_GROUP\n        service: TCP_8080\n        action: ALLOW\n      - name: Allow App to DB\n        source: APP_VM_GROUP\n        destination: DB_VM_GROUP\n        service: TCP_3306\n        action: ALLOW\n      - name: Default Deny East-West\n        source: ANY\n        destination: ANY\n        action: DENY\n\n# Google BeyondCorp-like implementation\n# Access based on: user identity + device state + context\n# Example: Engineer can SSH to lab servers only if:\n# - Authenticated as engineer@corp.com\n# - Device has current AV + OS patches\n# - Connection from corporate VPN\n# - During business hours",
+      "worked_examples": "**Worked Example 1: Implementing Zero Trust for a Remote Workforce**\nBefore Zero Trust: Remote workers connect via VPN, getting full network access. If a remote worker's laptop is compromised, the attacker has access to everything.\n\nAfter Zero Trust: 1) Users authenticate with MFA (Okta/Azure AD). 2) Device health check: is antivirus running? Is OS patched? 3) Access broker (Zscaler/Cloudflare) grants access only to specific applications based on identity + device health + context. 4) Microsegmentation: even within the data center, east-west traffic is controlled. 5) Continuous re-verification: every 60 minutes, re-check device health. 6) Behavioral monitoring: user downloading 1TB of data at 3 AM? Trigger investigation.\n\nResult: Compromised remote worker credentials cannot access internal resources (MFA required). Compromised device cannot access internal apps (device posture fails). Even if attacker reaches the data center, microsegmentation limits blast radius.\n\n**Worked Example 2: Zero Trust for Multi-Cloud**\nAn enterprise with AWS + Azure + on-premises needs consistent Zero Trust policies across all environments.\n\nImplementation: 1) Identity provider (Azure AD) as single source of truth for user identities. 2) Workload identities (AWS IAM roles, Azure Managed Identities) for service-to-service auth. 3) Sidecar proxy (Istio/Envoy) in Kubernetes provides mTLS and policy enforcement at the workload level. 4) Cloud network microsegmentation (AWS Security Groups, Azure NSGs) enforce least-privilege between tiers. 5) Central policy management (Terraform + policy as code) enforces consistent rules across all clouds.\n\n**Worked Example 3: Zero Trust for OT/IoT**\nSituation: A factory has OT (Operational Technology) devices running production machinery, connected to the corporate network for monitoring.\n\nZero Trust approach: 1) OT devices use separate identity domain. 2) No OT device can initiate connections to IT network. 3) IT-to-OT traffic is restricted to specific management protocols (SCADA, Modbus TCP) from a hardened jump host. 4) All OT traffic is encrypted and logged. 5) Anomaly detection: if an OT device starts sending HTTPS traffic to an external IP, alert immediately.\n\nResult: Even if a corporate laptop is compromised, the attacker cannot reach factory floor systems.",
+      "summary": "**Key Takeaways:**\n• Zero Trust eliminates implicit trust — verify every access request regardless of source\n• Microsegmentation limits lateral movement — even if attacker breaches perimeter\n• Identity + device health + context = three pillars of access decisions\n• Continuous verification re-checks trust periodically during sessions\n• Zero Trust is a journey: start with highest-value protect surfaces\n• NIST SP 800-207 provides the architectural framework\n• Not a single product — combination of IAM, microsegmentation, monitoring, and SDP\n\n**Best Practice:** Start with a pilot project for one critical application. Map transaction flows before implementing policies. Expect 12-24 months for full Zero Trust maturity. 'Start small, prove value, then expand.'",
+      "troubleshooting": ["Verify identity is checked for every access (not just at initial authentication)", "Check microsegmentation policies are enforced east-west, not just north-south", "Monitor for lateral movement events in security tools", "Ensure device posture checks are working correctly", "Test: try accessing a protected resource without MFA — should be denied"]
     },
-    "related_topics": [
-      "network-segmentation"
-    ],
-    "tags": [
-      "zero-trust",
-      "architecture",
-      "identity"
-    ]
+    "related_topics": ["network-segmentation", "microseg"],
+    "tags": ["zero-trust", "architecture", "identity"]
   },
   {
     "id": "waf",
@@ -39,32 +26,18 @@
     "name": "WAF (Web Application Firewall)",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Protects web apps by filtering HTTP traffic \u2014 blocks SQLi, XSS, CSRF.",
-      "why": "Network firewalls cant inspect HTTP payload. WAF understands application protocols.",
-      "how": "Modes: Detection (log only), Prevention (block). Rules: Signature, Anomaly, Custom. Deploy as reverse proxy or cloud.",
-      "when": "Deploy in front of all public web applications.",
-      "key_concepts": [
-        "OWASP Core Rule Set",
-        "Detection vs Prevention",
-        "False positives",
-        "Virtual patching"
-      ],
-      "configuration": "# ModSecurity rule\nSecRuleEngine On\nSecRule ARGS \"@detectSQLi\" \"id:1,deny,status:403\"",
-      "troubleshooting": [
-        "Check WAF logs",
-        "Review false positives",
-        "Verify rules active"
-      ]
+      "what": "A Web Application Firewall (WAF) protects web applications by filtering, monitoring, and blocking malicious HTTP/HTTPS traffic. Unlike network firewalls (which inspect IP/port), WAFs understand application-layer protocols and can detect SQL injection, cross-site scripting (XSS), cross-site request forgery (CSRF), file inclusion, and other OWASP Top 10 attacks. WAFs operate in detection mode (log only — identify attacks without blocking) or prevention mode (actively block). The OWASP Core Rule Set (CRS) provides pre-built rules for common web attacks. WAFs can be deployed as a reverse proxy (ModSecurity), cloud-based (AWS WAF, Cloudflare WAF, Akamai WAF), or integrated (F5 ASM, Imperva). Virtual patching is a key WAF capability — block a known vulnerability before the application developer has time to patch.",
+      "why": "Network firewalls cannot inspect HTTP payload — they see 'TCP port 443 is allowed' but not the actual HTTP request content. This means a SQL injection attack reaching port 443 looks like legitimate traffic to a network firewall. WAF examines the full HTTP request and can detect malicious payloads: a request parameter containing 'DROP TABLE users' is clearly SQL injection. WAF is essential for: 1) Blocking OWASP Top 10 attacks (SQL injection, XSS, CSRF, etc.). 2) Virtual patching — apply security rules without modifying app code. 3) Compliance (PCI DSS Requirement 6.6 requires WAF or code review for public web apps). 4) Rate limiting and bot detection. 5) Logging all web traffic for security analysis.",
+      "how": "WAF analyzes HTTP requests and responses through rule evaluation. Rules can be: Signature-based (match known attack patterns — '1=1', 'SELECT * FROM'), Anomaly-based (detect deviations from normal request patterns), Behavior-based (detect unusual user behavior over time). OWASP CRS includes rules for: SQL injection (942xxx), XSS (941xxx), LFI/RFI (931xxx), RCE (932xxx), PHP injection (933xxx), and more. The rules have severity levels and can be tuned per application. WAF deployment modes: Reverse proxy (traffic goes through WAF), Inline/Transparent bridge, or Cloud-based (DNS redirects traffic to WAF provider). Performance consideration: WAF adds latency (typically 1-5ms for cloud WAF, 0.1-1ms for local WAF).",
+      "when": "Deploy a WAF in front of ALL public-facing web applications. Essential for: e-commerce sites, financial portals, healthcare applications, and any app handling sensitive data. Use cloud WAF (AWS WAF, Cloudflare) for cloud-native apps. Use reverse-proxy WAF (ModSecurity, NGINX WAF) for on-premises apps. Start in detection mode to understand traffic patterns, tune rules to minimize false positives, then switch to prevention mode. Enable logging for post-incident analysis.",
+      "key_concepts": ["OWASP Core Rule Set — industry-standard WAF rules", "Detection vs Prevention — log vs block mode", "False positives — legitimate traffic incorrectly blocked", "Virtual patching — block vulnerability without code change", "SQL injection — most common WAF use case", "XSS (Cross-Site Scripting) — injection of client-side scripts", "Rate limiting — block excessive requests from single source"],
+      "configuration": "# ModSecurity OWASP CRS configuration\nSecRuleEngine On\n\n# Include OWASP CRS\nInclude /etc/modsecurity/crs/crs-setup.conf\nInclude /etc/modsecurity/crs/rules/*.conf\n\n# Custom rule: Block requests with suspicious parameters\nSecRule ARGS \"@detectSQLi\" \\\n  \"id:1000,\\\n  phase:2,\\\n  deny,\\\n  status:403,\\\n  log,\\\n  msg:'SQL Injection detected'\"\n\n# Rate limiting rule\nSecRule IP:REQUEST_RATE \"@gt 100\" \\\n  \"id:2000,\\\n  phase:5,\\\n  deny,\\\n  status:429,\\\n  log,\\\n  msg:'Rate limit exceeded'\"\n\n# AWS WAF (via Terraform)\nresource \"aws_wafv2_web_acl\" \"main\" {\n  name        = \"web-acl\"\n  scope       = \"REGIONAL\"\n  default_action {\n    allow {}\n  }\n  rule {\n    name     = \"AWSManagedRulesCommonRuleSet\"\n    priority = 0\n    statement {\n      managed_rule_group_statement {\n        name        = \"AWSManagedRulesCommonRuleSet\"\n        vendor_name = \"AWS\"\n      }\n    }\n    override_action {\n      count {}  # Start in count mode\n    }\n    visibility_config {\n      cloudwatch_metrics_enabled = true\n      metric_name                = \"AWSCommonRules\"\n      sampled_requests_enabled   = true\n    }\n  }\n}",
+      "worked_examples": "**Worked Example 1: Blocking SQL Injection with WAF**\nAttack: Attacker sends request to /products?id=1' OR '1'='1. This is a SQL injection attempt that would return all products (including ones the attacker shouldn't see).\n\nWithout WAF: Request reaches the web server. Backend interprets the SQL: SELECT * FROM products WHERE id = 1' OR '1'='1. All products returned — data breach.\n\nWith WAF (OWASP CRS): Request analyzed. Rule 942100 (SQL Injection) matches the ' OR '1'='1 pattern. Request blocked (HTTP 403). Logged for security review.\n\n**Worked Example 2: Virtual Patching**\nSituation: A critical vulnerability (CVE-2024-XXXX) is discovered in a web application. The software vendor won't have a patch for 2 weeks.\n\nVirtual patch with WAF: Write a custom WAF rule that blocks the attack pattern: SecRule REQUEST_URI \"@contains /path/to/vulnerable/endpoint\" AND ARGS:cmd \"@detectRCE\" \"deny,status:403\"\n\nThe WAF blocks exploit attempts immediately. The developer has 2 weeks to write and test a proper code fix. No production downtime, no security exposure.\n\n**Worked Example 3: Tuning WAF to Reduce False Positives**\nSituation: After enabling WAF in prevention mode, the e-commerce checkout page stops working. Users get 403 errors.\n\nInvestigation: WAF logs show a CRS rule is blocking the checkout request because it contains JSON with Base64-encoded data (the shopping cart), which triggers a suspicion rule.\n\nTuning: 1) Create an exception rule for the checkout path: SecRule REQUEST_URI \"@beginsWith /checkout\" \"id:9000,phase:1,pass,nolog,ctl:ruleRemoveById=942100\" 2) Monitor for patterns — does the false positive indicate a legitimate traffic pattern change? 3) After confirming the fix works, apply permanent exclusion.\n\nResult: Checkout works again. The specific rule is disabled only for /checkout, not globally. Security posture maintained.",
+      "summary": "**Key Takeaways:**\n• WAF protects web applications at Layer 7 — blocking SQLi, XSS, CSRF, and OWASP Top 10 attacks\n• Network firewalls can't inspect HTTP payload — WAF is essential for web app security\n• OWASP Core Rule Set provides pre-built, industry-standard WAF rules\n• Start in detection mode, tune for false positives, then switch to prevention\n• Virtual patching buys time for proper code fixes after vulnerability disclosure\n• WAF is a PCI DSS requirement for public web applications\n\n**Best Practice:** Always start WAF in detection/logging mode. Tune rules based on your application's traffic patterns. Never go from 'off' to 'blocking' without at least 2 weeks of observation. Monitor WAF logs for attack patterns and false positives. Automate OWASP CRS updates. Use cloud WAF for cloud apps, local WAF for on-premises apps.",
+      "troubleshooting": ["Check WAF logs for blocked requests — identify false positives vs real attacks", "Review false positive rate weekly — adjust rules or add exclusions", "Verify rule updates are current — OWASP CRS releases monthly", "Test: attempt SQL injection against your own app with WAF enabled", "Monitor WAF latency — add WAF should add < 5ms; if higher, check rule efficiency"]
     },
-    "related_topics": [
-      "firewall-fundamentals"
-    ],
-    "tags": [
-      "waf",
-      "web",
-      "application",
-      "firewall"
-    ]
+    "related_topics": ["firewall-fundamentals"],
+    "tags": ["waf", "web", "application", "firewall"]
   },
   {
     "id": "ddos",
@@ -73,32 +46,18 @@
     "name": "DDoS Mitigation",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Detecting and filtering attack traffic while allowing legitimate users through.",
-      "why": "DDoS attacks can take down entire networks.",
-      "how": "Types: Volumetric (flood), Protocol (SYN flood), Application (HTTP flood). Mitigation: upstream filtering, rate limiting, scrubbing.",
-      "when": "Implement DDoS protection for all internet-facing services.",
-      "key_concepts": [
-        "Volumetric vs Protocol vs Application",
-        "Rate limiting",
-        "Blackhole routing",
-        "Scrubbing"
-      ],
-      "configuration": "# Rate limiting\niptables -A INPUT -p tcp --dport 80 -m limit --limit 100/s -j ACCEPT",
-      "troubleshooting": [
-        "Check bandwidth",
-        "Identify attack type",
-        "Enable upstream filtering"
-      ]
+      "what": "DDoS (Distributed Denial of Service) mitigation is the process of detecting and blocking attack traffic while allowing legitimate users through. DDoS attacks overwhelm a target with traffic from multiple sources, making it unavailable to legitimate users. Attack types: Volumetric (flooding bandwidth — measured in Gbps), Protocol (exhausting server resources — SYN flood, ping of death), and Application (targeting application logic — HTTP flood, slow loris). Mitigation techniques include: rate limiting (limit requests per source), blackhole routing (null-route attack traffic), scrubbing (filter malicious traffic upstream), CDN (absorb traffic at edge), and Anycast (distribute attack across multiple locations).",
+      "why": "DDoS attacks can take down entire organizations. Impact: revenue loss ($22,000/minute for e-commerce), reputation damage, SLA penalties, and in some cases, regulatory consequences. The average DDoS attack size exceeds 1 Gbps (enough to saturate most business-grade internet connections). Attacks are becoming more frequent (30,000+ per day globally), larger (terabit-scale attacks now common), and cheaper (rent-a-botnet for $10/hour). Every organization with internet-facing services needs DDoS protection — it's not if, but when. Without mitigation, recovery can take hours as ISPs manually implement filtering.",
+      "how": "DDoS mitigation workflow: 1) Detection — monitor bandwidth, connection counts, and traffic patterns. Sudden 10× traffic spike or high SYN-to-ACK ratio indicates attack. 2) Identification — classify attack type: volumetric (bandwidth saturation), protocol (resource exhaustion), or application (specific endpoint targeted). 3) Mitigation — deploy appropriate defense: upstream blackhole (volumetric), rate limiting (application), scrubbing center (protocol). 4) Recovery — attack subsides, remove filters, verify normal traffic flows. For volumetric attacks: ISP-level blackhole/rtbh (remotely triggered blackhole) drops all traffic to the target. For application-layer attacks: WAF/CDN with challenge-based mitigation (CAPTCHA, JS challenge). Advanced: use a DDoS mitigation service (Cloudflare, Akamai, AWS Shield, Arbor Networks) that scrubs traffic before it reaches your network.",
+      "when": "Implement DDoS protection for ALL internet-facing services. Minimum: enable rate limiting on edge firewalls, use CDN with DDoS protection for web applications, and have a relationship with an upstream DDoS mitigation provider. For critical services: deploy dedicated DDoS mitigation appliances (Arbor, Radware) or subscribe to a cloud scrubbing service. Test your mitigation plan with simulated attacks (safe DDoS simulation drills). After every attack, review what worked and what didn't.",
+      "key_concepts": ["Volumetric — bandwidth saturation (Gbps flood)", "Protocol — resource exhaustion (SYN flood, ACK flood)", "Application — HTTP flood, slow attacks", "Rate limiting — restrict requests per source IP", "Blackhole routing — null-route attack traffic upstream", "Scrubbing — filter traffic at mitigation provider", "CDN — absorb DDoS at edge servers", "Anycast — distribute attack across multiple PoPs", "RTBH — Remotely Triggered Blackhole via BGP"],
+      "configuration": "# iptables rate limiting\n# Limit SYN packets to 100/second\niptables -A INPUT -p tcp --syn -m limit --limit 100/s --limit-burst 150 -j ACCEPT\niptables -A INPUT -p tcp --syn -j DROP\n\n# BGP RTBH (Remotely Triggered Blackhole)\n# Trigger blackhole by announcing victim IP with specific community\nip route 203.0.113.50 255.255.255.255 Null0 tag 666\n!\nrouter bgp 65000\n network 203.0.113.50 route-map RTBH\n!\nroute-map RTBH permit 10\n match tag 666\n set community 65000:666  # Instructs upstream to blackhole\n set ip next-hop 192.0.2.1  # Unreachable blackhole address\n\n# Cloudflare DDoS mitigation\n# 1. Proxy DNS through Cloudflare (orange cloud)\n# 2. Enable 'Under Attack' mode during active DDoS\n# 3. Configure rate limiting rules:\ncurl -X POST https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/rules \\\n  -H \"Authorization: Bearer token\" \\\n  -d '{\n    \"description\": \"Block excessive requests to login\",\n    \"expression\": \"(http.request.uri.path eq \\\"/login\\\")\",\n    \"action\": \"block\",\n    \"ratelimit\": {\n      \"characteristics\": [\"cf.unique_visitor_id\"],\n      \"period\": 10,\n      \"requests_per_period\": 20\n    }\n  }'",
+      "worked_examples": "**Worked Example 1: Responding to a Volumetric DDoS Attack**\nScenario: Web server becomes unreachable. Network monitoring shows 10 Gbps inbound traffic (normal: 50 Mbps).\n\nResponse: 1) Confirm attack — check interface utilization, verify traffic is to the target IP, check traffic characteristics (80% UDP). 2) Classify attack — volumetric (bandwidth saturated). 3) Immediate action: contact ISP to implement RTBH (blackhole the target IP). 4) Traffic drops to zero — legitimate users can't access either, but service is preserved from complete ISP congestion. 5) Notify DDoS mitigation provider to activate scrubbing. 6) Once scrubbing is active, update DNS to point to scrubbed IPs. 7) Attack subsides after 90 minutes. 8) Post-incident: review logs, identify attack vector, tune mitigation rules. 9) Upgrade to always-on DDoS protection.\n\n**Worked Example 2: Application-Layer DDoS (HTTP Flood)**\nScenario: E-commerce site experiences slow checkout. No bandwidth spike. Investigation reveals 50,000 requests/second to /checkout from 1,000 different IPs (normal: 100 req/s).\n\nWAF/rate limiting rule: Block IPs that exceed 20 requests to /checkout per 10 seconds. Use CAPTCHA challenge for suspicious requests. Result: legitimate users see CAPTCHA once, then proceed. Attack traffic blocked. Server CPU drops from 95% to 20%.\n\n**Worked Example 3: DNS Amplification Attack**\nScenario: DNS server receives 100× normal traffic. Source of traffic comes from open DNS resolvers worldwide.\n\nAttack mechanism: Attacker sends DNS queries with spoofed source IP (victim's IP) to open resolvers. Each query (60 bytes) generates a response (3000+ bytes) — 50× amplification.\n\nMitigation: 1) Disable recursion on public-facing DNS servers. 2) Implement Response Rate Limiting (RRL) on DNS servers. 3) Use a DNS DDoS mitigation service. 4) In extreme cases: null-route the DNS server and failover to secondary.\n\nPrevention: DNS servers should never allow recursion from external sources. Separate recursive (internal) from authoritative (external) DNS.",
+      "summary": "**Key Takeaways:**\n• DDoS attacks come in three flavors: volumetric, protocol, and application-layer\n• Every internet-facing service needs DDoS protection — have a plan before an attack\n• Volumetric attacks: mitigate upstream (ISP blackhole, scrubbing center)\n• Application attacks: mitigate at edge (WAF rate limiting, CAPTCHA challenges)\n• CDN absorbs DDoS for web applications (Cloudflare, Akamai, AWS Shield)\n• Test your DDoS response plan with simulated attacks\n• Post-attack review: every attack teaches something about your defenses\n\n**Best Practice:** Deploy always-on DDoS protection for critical services. Have a procedural playbook for DDoS response (who to call, what to do first). Know your ISP's DDoS mitigation capabilities before you need them. Use CDN for web applications (absorbs many attacks automatically). Monitor bandwidth as a leading indicator — sudden spikes indicate attack.",
+      "troubleshooting": ["Check bandwidth utilization — is the link saturated?", "Identify attack type: volumetric (bandwidth), protocol (SYN flood), or application (HTTP)", "Contact ISP immediately — they can implement upstream filtering", "If using a DDoS provider: activate scrubbing, update DNS to scrubbed IPs", "Verify mitigation is working: traffic should normalize, legitimate users should be able to access"]
     },
-    "related_topics": [
-      "firewall-fundamentals"
-    ],
-    "tags": [
-      "ddos",
-      "mitigation",
-      "flooding",
-      "availability"
-    ]
+    "related_topics": ["firewall-fundamentals"],
+    "tags": ["ddos", "mitigation", "flooding", "availability"]
   },
   {
     "id": "packet-analysis",
@@ -107,32 +66,18 @@
     "name": "Packet Analysis (Wireshark)",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Capturing and analyzing packets to troubleshoot and detect attacks.",
-      "why": "Packet captures show exactly whats happening on the wire.",
-      "how": "Workflow: Capture \u2192 Filter \u2192 Analyze \u2192 Export. Filters: ip.addr, tcp.port, http.request.",
-      "when": "Use when troubleshooting connectivity or investigating security incidents.",
-      "key_concepts": [
-        "Capture vs Display filters",
-        "Follow TCP Stream",
-        "Protocol dissectors",
-        "Timing analysis"
-      ],
-      "configuration": "# tcpdump capture\ntcpdump -i eth0 -w capture.pcap host 10.0.0.1 and port 443",
-      "troubleshooting": [
-        "Check retransmissions",
-        "Look at TCP handshake",
-        "Filter for errors"
-      ]
+      "what": "Packet analysis involves capturing and examining network traffic at the packet level to troubleshoot issues, detect attacks, and understand protocol behavior. Wireshark is the industry-standard tool for packet analysis. It captures traffic from a network interface and displays packets with detailed protocol decoding for hundreds of protocols. Key features: capture filters (BPF syntax for pre-capture filtering), display filters (post-capture filtering), colorization (automatic protocol coloring), Follow TCP Stream (reconstruct application data), statistical analysis (conversations, endpoints, IO graphs), and expert analysis (auto-detection of anomalies). Packet captures can be taken with tcpdump (CLI) and analyzed in Wireshark (GUI).",
+      "why": "Packet captures show exactly what is happening on the wire — they don't lie. Unlike device logs or monitoring dashboards (which summarize or interpret), a packet capture is definitive evidence. Packet analysis is essential for: 1) Troubleshooting connectivity issues — see the actual TCP handshake, retransmissions, or resets. 2) Security incident investigation — identify attacker traffic, data exfiltration, malware communication. 3) Protocol debugging — understand why a protocol isn't working as expected. 4) Performance analysis — identify latency sources, packet loss, window scaling issues. 5) Compliance — capture evidence of data flows for audit. When monitoring says 'it's slow' and logs show no errors, packet captures are the final authority.",
+      "how": "Capture workflow: 1) Select the correct interface (where the traffic you want to analyze passes). 2) Apply capture filter (BPF: 'host 10.0.0.1 and port 443' to reduce capture size). 3) Start capture. 4) Reproduce the issue or wait for traffic. 5) Stop capture. 6) Apply display filters ('tcp.analysis.retransmission' shows retransmissions). 7) Analyze: follow TCP stream, check expert info, examine packet details. tcpdump provides CLI capture capability. Use 'tcpdump -i eth0 -w capture.pcap host 10.0.0.1' to capture to a file, then copy to workstation and analyze with Wireshark. For switched networks, port mirroring/SPAN is required unless capturing on the endpoint itself.",
+      "when": "Capture packets when: troubleshooting connectivity issues (packets not reaching destination?), investigating security incidents (what did the attacker do?), analyzing application performance (why is the app slow?), verifying firewall rules (is traffic being blocked?), debugging new deployments (is the protocol working correctly?), or capturing evidence for compliance. Always capture with adequate disk space — full packet capture at 1 Gbps requires ~120 GB/hour.",
+      "key_concepts": ["Capture vs Display filters — BPF for capture, Wireshark syntax for display", "Follow TCP Stream — reconstructs application-layer data", "Protocol dissectors — Wireshark decodes 2000+ protocols", "Expert analysis — auto-detection of retransmissions, duplicate ACKs, zero windows", "Colorization — color codes by protocol for quick visual scanning", "TShark — CLI version of Wireshark for scripted analysis", "tcpdump — minimal CLI capture tool (no analysis)"],
+      "configuration": "# tcpdump capture examples\n# Capture traffic from specific host\nsudo tcpdump -i eth0 -w evidence.pcap host 10.0.0.50\n\n# Capture HTTP traffic only\nsudo tcpdump -i eth0 port 80 -w http.pcap\n\n# Capture with rotation (100MB per file, 10 files)\nsudo tcpdump -i eth0 -w data.pcap -C 100 -W 10\n\n# Capture with minimal packets (useful for troubleshooting)\nsudo tcpdump -i eth0 -c 1000 -w sample.pcap\n\n# Wireshark display filters\n# Show only HTTP GET requests\nhttp.request.method == \"GET\"\n\n# Show TCP retransmissions\ntcp.analysis.retransmission\n\n# Show traffic between two hosts\nip.addr == 10.0.0.1 && ip.addr == 10.0.0.2\n\n# Show all DNS queries\ndns.flags.response == 0\n\n# Expert analysis\n# Wireshark automatically flags:\n# - TCP retransmissions (packet loss)\n# - Duplicate ACKs (potential congestion)\n# - Zero window (receiver overwhelmed)\n# - Out-of-order packets\n# - Previous segment not captured (missing data)",
+      "worked_examples": "**Worked Example 1: Troubleshooting 'Website Not Loading'**\nCapture analysis with Wireshark:\n\n1. TCP handshake: SYN → SYN-ACK → ACK (normal).\n2. Client sends HTTP GET request.\n3. No response from server. After 3 seconds, client retransmits GET.\n4. After timeout, client sends RST (reset) — connection failed.\n\nDiagnosis: Server received the request (TCP handshake completed) but didn't respond. Likely server-side issue (application hung, backlog saturated).\n\nFix: Check web server process, increase backlog, add health monitoring.\n\n**Worked Example 2: Investigating Slow File Transfer**\nSymptom: FTP transfer between two sites runs at 10 Mbps on a 100 Mbps link.\n\nCapture analysis: 1) Observe TCP window scaling — sender advertises window 65535 bytes. 2) But receiver's window drops to 0 frequently (Zero Window signals). 3) This indicates the receiver is overwhelmed — can't process data fast enough.\n\nRoot cause: Receiver disk I/O bottleneck. Data arrives faster than disk can write. Fix: Use faster storage or reduce TCP window to pace the sender.\n\n**Worked Example 3: Detecting Malware Communication**\nSecurity incident: Employee's laptop suspected of malware. Capture outbound traffic:\n\n1. Find HTTP connections: http.request or tls.handshake.type == 1\n2. Identify unusual destinations: connections to IP in foreign country not related to business.\n3. Follow TCP stream: GET /commands?check=1 HTTP/1.1 — not a standard web request.\n4. Check timing: connection every 60 seconds like clockwork — beaconing.\n\nConclusion: Malware beaconing to C2 server. Block destination IP, isolate endpoint, investigate further.",
+      "summary": "**Key Takeaways:**\n• Packet captures provide definitive evidence — they show exactly what's on the wire\n• Wireshark decodes 2000+ protocols and automatically highlights anomalies\n• Capture filters reduce file size (only capture relevant traffic)\n• Display filters help find specific patterns in large captures\n• Follow TCP Stream reconstructs application-layer communication\n• Retransmissions, zero windows, and resets are key indicators of problems\n• tcpdump + Wireshark is the standard combination for packet analysis\n\n**Best Practice:** Use capture filters to keep files manageable. Always capture on the device closest to the source of the problem. For security incidents, preserve the original capture as evidence (chain of custody). Annotate captures with timestamps and descriptions. Use TShark for automated analysis in scripts.",
+      "troubleshooting": ["Check for retransmissions (tcp.analysis.retransmission) — indicates packet loss", "Check TCP handshake time — if > 1 second, network latency or server load issue", "Look for resets (TCP RST) — connection abruptly terminated", "Check application response time — time between HTTP request and first response byte", "If capture is empty: check interface, capture filter, and promiscuous mode"]
     },
-    "related_topics": [
-      "tcp-protocol"
-    ],
-    "tags": [
-      "wireshark",
-      "packets",
-      "capture",
-      "analysis"
-    ]
+    "related_topics": ["tcp-protocol"],
+    "tags": ["wireshark", "packets", "capture", "analysis"]
   },
   {
     "id": "dns-security",
@@ -141,32 +86,18 @@
     "name": "DNS Security",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Securing DNS against poisoning, tunneling, and using DNS for security filtering.",
-      "why": "DNS is critical \u2014 if it fails everything fails. Also abused for exfiltration and C2.",
-      "how": "Threats: Cache poisoning, DNS tunneling, DDoS amplification. Protections: DNSSEC, filtering, monitoring.",
-      "when": "Implement DNS security for all networks. Monitor for anomalies.",
-      "key_concepts": [
-        "DNSSEC",
-        "DNS filtering",
-        "Tunneling detection",
-        "Response Rate Limiting"
-      ],
-      "configuration": "# DNS filtering\nBlock: malware.example.com\nBlock: c2.evil.com\nAlert: high query volume to single domain",
-      "troubleshooting": [
-        "Check DNS resolution",
-        "Monitor query volume",
-        "Look for tunneling"
-      ]
+      "what": "DNS security encompasses protecting DNS infrastructure from attacks (cache poisoning, DDoS, tunneling) and using DNS as a security tool to block malicious domains. DNS threats include: Cache poisoning (attacker injects fake DNS records), DNS tunneling (encapsulating non-DNS traffic in DNS queries for data exfiltration), DDoS amplification (open resolvers used to amplify attacks), and Domain Generation Algorithms (DGA — malware generates many domains to evade blocklists). DNS security protections include DNSSEC (cryptographic validation of DNS responses), DNS filtering (block known malicious domains), Response Rate Limiting (mitigate amplification attacks), and DNS monitoring (detect unusual query patterns).",
+      "why": "DNS is a critical network service — if it fails, everything that depends on domain names stops working (websites, email, APIs, cloud services). But DNS is also abused by attackers: 1) Cache poisoning can redirect users to fake websites. 2) DNS tunneling can exfiltrate data past firewalls (DNS is typically allowed outbound). 3) Open resolvers enable DDoS amplification attacks. 4) Malware uses DNS for C2 communication. Securing DNS is essential for both service reliability and security posture.",
+      "how": "DNSSEC works by cryptographically signing DNS records with a chain of trust from the root zone down to individual domain records. The DNSKEY, RRSIG, DS, and NSEC resource records carry cryptographic signatures. Validating resolvers verify the signature chain to ensure DNS responses haven't been tampered with. DNS filtering intercepts DNS queries and blocks resolution of known malicious domains — this is how many security products work (Cisco Umbrella, Cloudflare Gateway, Quad9). DNS monitoring detects anomalies: high query volume to a single domain (DGA activity), queries to known C2 domains, or DNS tunneling indicators (large TXT query responses, high query rate). Response Rate Limiting (RRL) on authoritative servers limits the rate of identical responses to the same IP, preventing amplification attacks.",
+      "when": "Implement DNSSEC on all domains you control (authoritative). Enable DNSSEC validation on your recursive resolvers. Use DNS filtering (Cisco Umbrella, Cloudflare Gateway) for all corporate devices — blocks malware, phishing, and C2 domains at the DNS layer. Deploy DNS monitoring to detect tunneling and DGA activity. Disable open recursion on DNS servers to prevent amplification attacks. For critical zones, use anycast DNS for DDoS resilience.",
+      "key_concepts": ["DNSSEC — cryptographic signing of DNS records", "DNS filtering — block malicious domains at query time", "DNS tunneling — data exfiltration via DNS queries/responses", "DGA (Domain Generation Algorithm) — malware generates many domains", "Response Rate Limiting — prevent DNS amplification", "DNS monitoring — detect anomalous query patterns", "Anycast DNS — distributed DNS for DDoS resilience"],
+      "configuration": "# DNSSEC zone signing (BIND)\ndnssec-enable yes;\ndnssec-validation yes;\n\nzone \"example.com\" {\n  type master;\n  file \"example.com.signed\";\n  auto-dnssec maintain;\n  inline-signing yes;\n  key-directory \"/etc/bind/keys\";\n};\n\n# DNS filtering with Unbound\nserver:\n  # Block known malware domains\n  local-zone: \"evil.com\" redirect\n  local-data: \"evil.com A 127.0.0.1\"\n  \n  # Use Quad9 (9.9.9.9) for threat blocking\n  forward-zone:\n    name: \".\"\n    forward-addr: 9.9.9.9\n\n# DNS Response Rate Limiting (BIND)\noptions {\n  rate-limit {\n    responses-per-second 5;\n    window 5;\n    slip 2;\n  };\n};\n\n# DNS monitoring with Zeek/Bro\n# Zeek will log all DNS queries to dns.log\n# Install Zeek and configure to listen on port 53",
+      "worked_examples": "**Worked Example 1: DNS Cache Poisoning Prevention with DNSSEC**\nAttack: Attacker intercepts DNS query for 'mybank.com' and injects a fake response pointing to a phishing server.\n\nWithout DNSSEC: The recursive resolver accepts the fake response (no authentication). User is redirected to the phishing site. Credentials stolen.\n\nWith DNSSEC: The resolver checks the RRSIG signature using the DS/DNSKEY chain. The fake response has no valid signature. Resolver discards it and retries the query with the legitimate authoritative server. User reaches the real bank website.\n\n**Worked Example 2: Detecting DNS Tunneling**\nSymptom: Internal server generating massive DNS traffic (10,000+ queries/hour).\n\nInvestigation: 1) Check dns.log in monitoring tool. 2) Identify pattern: queries to subdomain.example.com with random-looking subdomain names (b64-encoded data). 3) TXT record responses are large (2000+ bytes). 4) Query rate is suspiciously high (one query every 2 seconds).\n\nIndicators of DNS tunneling: High query volume, large TXT records, entropy in query names, queries to domains that don't resolve normally.\n\nMitigation: 1) Block the destination domain in DNS filter. 2) Investigate the endpoint for malware. 3) Implement DNS monitoring to detect tunnel patterns automatically. 4) Limit DNS query rates for individual hosts.\n\n**Worked Example 3: DGA Detection**\nMalware uses DGA to evade blocklists: randomly generates hundreds of domain names (zxcvbnm.example.com, qwertyu.example.com) and tries to resolve them until one resolves to the C2 server.\n\nDetection: DNS monitoring shows a host making requests to many non-existent domains. The domain names have high entropy (random characters). Pattern: NXDOMAIN responses followed by another query with a completely different domain. This 'query many, connect one' behavior is classic DGA.\n\nResponse: 1) Identify the infected host. 2) Block the resolved C2 domain. 3) Use threat intelligence feeds to identify the DGA algorithm. 4) Quarantine and remediate the endpoint.",
+      "summary": "**Key Takeaways:**\n• DNS is both a critical service and an attack vector — secure it on both fronts\n• DNSSEC prevents cache poisoning by cryptographically signing DNS records\n• DNS filtering blocks malware, phishing, and C2 communication at the DNS layer\n• DNS tunneling can exfiltrate data — monitor for high query rates and large TXT records\n• DGA detection: monitor for NXDOMAIN-heavy query patterns\n• Response Rate Limiting prevents DNS amplification attacks\n• Anycast DNS provides DDoS resilience for critical DNS infrastructure\n\n**Best Practice:** Enable DNSSEC on all domains. Use a DNS filtering service (Cisco Umbrella, Cloudflare Gateway) for all corporate devices. Implement DNS monitoring for anomaly detection. Keep recursive resolvers internal-only (never allow public recursion). Use anycast for critical authoritative DNS servers.",
+      "troubleshooting": ["Check DNS resolution with dig +trace for full resolution path", "Verify DNSSEC signature validity: dig example.com +dnssec", "Check DNS query volume to identify potential tunneling or DGA activity", "Test DNS filtering: should resolve to 0.0.0.0 or get NXDOMAIN for known malware domains", "Verify recursive resolver is not open to the internet (port scan 53 from external)"]
     },
-    "related_topics": [
-      "dns-fundamentals"
-    ],
-    "tags": [
-      "dns",
-      "security",
-      "filtering",
-      "tunneling"
-    ]
+    "related_topics": ["dns-fundamentals"],
+    "tags": ["dns", "security", "filtering", "tunneling"]
   },
   {
     "id": "tls-security",
@@ -175,33 +106,18 @@
     "name": "TLS Security",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Proper TLS configuration prevents eavesdropping and impersonation.",
-      "why": "Weak TLS exposes data to interception.",
-      "how": "Best practices: TLS 1.2+ only, strong ciphers (AES-GCM), HSTS, certificate management.",
-      "when": "Configure TLS on all services. Disable weak protocols.",
-      "key_concepts": [
-        "TLS 1.2/1.3",
-        "Cipher suites",
-        "HSTS",
-        "PFS",
-        "Certificate transparency"
-      ],
-      "configuration": "# Nginx TLS\nssl_protocols TLSv1.2 TLSv1.3;\nssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256;",
-      "troubleshooting": [
-        "testssl.sh",
-        "Check cert expiry",
-        "Verify cipher strength"
-      ]
+      "what": "TLS (Transport Layer Security) provides encryption, authentication, and integrity for network communications. Proper TLS configuration is essential for preventing eavesdropping, tampering, and impersonation. TLS 1.2 (RFC 5246, 2008) and TLS 1.3 (RFC 8446, 2018) are the current secure versions. TLS 1.0 and 1.1 are deprecated due to protocol weaknesses (POODLE, BEAST attacks). Cipher suites define the cryptographic algorithms used: key exchange (ECDHE), authentication (ECDSA/RSA), encryption (AES-GCM, ChaCha20), and integrity (HMAC). Perfect Forward Secrecy (PFS) ensures that compromising the server's private key doesn't allow decrypting past sessions. HSTS (HTTP Strict Transport Security) prevents SSL stripping attacks by forcing HTTPS connections.",
+      "why": "Without proper TLS configuration, your data in transit is vulnerable. Weak TLS (1.0/1.1) can be broken by attackers. Without PFS, an attacker who obtains your private key can decrypt all past recorded traffic. Without HSTS, users can be downgraded to HTTP (SSL stripping). Proper TLS configuration is a compliance requirement (PCI DSS, HIPAA) and a trust signal for users. High-profile attacks (Heartbleed, POODLE, Logjam) all exploited specific TLS weaknesses — proper configuration prevents these.",
+      "how": "TLS handshake: 1) Client Hello — supported TLS versions, cipher suites, random number. 2) Server Hello — chosen version/cipher, server certificate (public key). 3) Key Exchange — ECDHE key exchange generates session key. 4) Finished — encrypted handshake verification. TLS 1.3 simplifies this to 1 round trip (1-RTT) vs TLS 1.2's 2 round trips. TLS 1.3 removes weak algorithms (static RSA/ DH key exchange, deprecated ciphers, CBC mode). Recommended configuration: TLS 1.2 + 1.3 only, ECDHE key exchange with P-256 curve, AES-256-GCM or ChaCha20-Poly1305 encryption, ECDSA certificates (or RSA with 2048+ bit keys).",
+      "when": "Configure TLS on ALL services — web servers (HTTPS), email (SMTP TLS), APIs, VPNs, databases (TLS connections). Disable TLS 1.0 and 1.1 everywhere. Enable HSTS on web applications. Use certificate automation (Let's Encrypt, ACME) to prevent certificate expiry issues. Test TLS configuration with tools like SSL Labs, testssl.sh, or nmap ssl-enum-ciphers.",
+      "key_concepts": ["TLS 1.2/1.3 — current secure versions", "Cipher suites — ECDHE-ECDSA-AES256-GCM-SHA384", "HSTS — HTTP Strict Transport Security", "PFS (Perfect Forward Secrecy) — ephemeral key exchange", "Certificate — X.509 public key certificate (verified by CA)", "Certificate Transparency — publicly logged certificates", "ACME — automated certificate management (Let's Encrypt)", "OCSP Stapling — faster certificate revocation checking"],
+      "configuration": "# Nginx TLS configuration (Mozilla Intermediate)\nserver {\n    listen 443 ssl http2;\n    ssl_protocols TLSv1.2 TLSv1.3;\n    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;\n    ssl_prefer_server_ciphers on;\n    ssl_ecdh_curve X25519:prime256v1:secp384r1;\n    ssl_session_timeout 1d;\n    ssl_session_cache shared:MozSSL:10m;\n    ssl_session_tickets off;\n    \n    # HSTS (31536000 seconds = 1 year)\n    add_header Strict-Transport-Security \"max-age=63072000\" always;\n    \n    # OCSP Stapling\n    ssl_stapling on;\n    ssl_stapling_verify on;\n    resolver 1.1.1.1 8.8.8.8;\n}\n\n# Test with\ncurl https://ssllabs.com/ssltest/analyze.html?d=example.com\n\n# testssl.sh CLI test\ntestssl.sh example.com:443",
+      "worked_examples": "**Worked Example 1: TLS 1.3 Migration**\nSituation: Web server running TLS 1.2. Migrate to TLS 1.3 for improved performance (1-RTT handshake vs 2-RTT) and security (removed legacy algorithms).\n\nSteps: 1) Update web server software (nginx 1.13+, Apache 2.4.26+, OpenSSL 1.1.1+). 2) Update configuration: ssl_protocols TLSv1.2 TLSv1.3. 3) Update cipher list: TLS 1.3 ciphers only (TLS_AES_256_GCM_SHA384, TLS_CHACHA20_POLY1305_SHA256). 4) Test: run testssl.sh to verify TLS 1.3 support. 5) Monitor for compatibility issues (old clients that don't support TLS 1.3). 6) After confirmation, optionally disable TLS 1.2 for 'TLS 1.3 only' (not recommended for broad compatibility).\n\nPerformance improvement: TLS 1.3 uses 1-RTT (or 0-RTT for returning clients). Page load time improves by 100-300ms for new connections.\n\n**Worked Example 2: Certificate Expiry Crisis**\nSituation: Application stops working. Error: 'certificate expired.' The SSL certificate expired 2 hours ago.\n\nRoot cause: Manual certificate management — someone forgot to renew.\n\nPrevention: 1) Automate certificate management with Let's Encrypt + certbot. 2) Set up certificate expiry alerts (30 days, 14 days, 7 days, 1 day before expiry). 3) Use ACME protocol for auto-renewal. 4) Implement OCSP Stapling for real-time revocation checking.\n\nFix: Renew the expired certificate. If expired > 5 days, certificate may be in the CRL (Certificate Revocation List) — may need to re-issue.\n\n**Worked Example 3: TLS A+ Rating**\nGoal: Achieve A+ rating on SSL Labs test.\n\nRequirements: 1) TLS 1.2 + 1.3 only (disable 1.0, 1.1). 2) Strong ciphers only (no RC4, DES, 3DES, CBC mode). 3) PFS required (ECDHE key exchange). 4) HSTS enabled (max-age ≥ 6 months). 5) OCSP Stapling enabled. 6) No known vulnerabilities (Heartbleed, POODLE, etc.). 7) Certificate valid and from trusted CA.\n\nResult: A+ rating gives users maximum confidence. Used by financial institutions, government, and security-conscious organizations.",
+      "summary": "**Key Takeaways:**\n• TLS 1.2 and 1.3 only — disable 1.0/1.1 everywhere\n• ECDHE key exchange provides Perfect Forward Secrecy (PFS)\n• HSTS prevents SSL stripping attacks\n• OCSP Stapling improves certificate revocation checking\n• Automate certificate management (Let's Encrypt, ACME) to prevent expiry crises\n• Test TLS configuration with SSL Labs or testssl.sh\n• TLS 1.3 reduces handshake latency (1-RTT vs 2-RTT)\n\n**Best Practice:** Use Mozilla's SSL Configuration Generator for recommended settings. Automate certificate renewal. Test TLS configuration monthly with testssl.sh. Aim for A+ SSL Labs rating. Monitor certificate expiry (alert 30 days before). Use ECDSA certificates for better performance (vs RSA).",
+      "troubleshooting": ["testssl.sh testssl.sh example.com:443", "Check cert expiry: openssl s_client -connect example.com:443 -showcerts | openssl x509 -noout -dates", "Check protocol support: nmap --script ssl-enum-ciphers -p 443 example.com", "Verify HSTS: curl -I https://example.com | grep Strict-Transport-Security", "Test OCSP: openssl ocsp -issuer ca.pem -cert server.pem -url http://ocsp.example.com"]
     },
-    "related_topics": [
-      "http-https"
-    ],
-    "tags": [
-      "tls",
-      "ssl",
-      "encryption",
-      "certificates"
-    ]
+    "related_topics": ["http-https"],
+    "tags": ["tls", "ssl", "encryption", "certificates"]
   },
   {
     "id": "forensics",
@@ -210,33 +126,18 @@
     "name": "Network Forensics",
     "difficulty": "advanced",
     "theory": {
-      "what": "Collecting and analyzing network evidence for incident investigation.",
-      "why": "Answers: what happened, when, how, and what was affected.",
-      "how": "Sources: PCAP, NetFlow, firewall logs, DNS logs, proxy logs. Process: Collect \u2192 Analyze \u2192 Document \u2192 Report.",
-      "when": "Perform during/after security incidents. Preserve evidence integrity.",
-      "key_concepts": [
-        "Chain of custody",
-        "PCAP analysis",
-        "Timeline reconstruction",
-        "IOC extraction"
-      ],
-      "configuration": "# Forensic capture\ntcpdump -i eth0 -w evidence.pcap -C 100 -W 10",
-      "troubleshooting": [
-        "Preserve originals",
-        "Build timeline",
-        "Extract IOCs",
-        "Correlate logs"
-      ]
+      "what": "Network forensics collects and analyzes network evidence to investigate security incidents. It answers: what happened, when, how, and what was affected. Forensics relies on data sources: packet captures (full traffic recording), NetFlow records (metadata about flows), firewall logs (allowed/denied connections), DNS logs (domain lookups), DHCP logs (IP assignments), proxy logs (web traffic), authentication logs (logins), and VPN logs. The forensic process: Identify (detect incident) → Preserve (collect evidence, chain of custody) → Analyze (timeline reconstruction, IOC extraction) → Report (document findings) → Recover (contain and remediate). Key skills: timeline reconstruction (mapping events chronologically), IOC (Indicator of Compromise) extraction, log correlation across sources, and evidence preservation.",
+      "why": "After a security incident, the primary question is 'what happened?' Network forensics answers this definitively. Without preserved network evidence: 1) You can't determine the full scope of the breach (what data was accessed? what systems were reached?). 2) You can't identify how the attacker gained access. 3) Legal/compliance action requires forensic evidence. 4) The attacker may return if you don't understand how they got in. 5) You can't prove whether the incident affected specific data (required for GDPR breach notification). Network forensics is the difference between 'we think we're clean' and 'we know we're clean.'",
+      "how": "Forensic workflow: 1) Secure the scene — isolate affected systems, capture volatile data (active connections, running processes). 2) Collect evidence — PCAPs from the incident timeframe, logs from all relevant sources (firewall, DNS, DHCP, authentication, application), system memory dumps, disk images. 3) Establish chain of custody — document who collected what, when, how, and where it's stored. 4) Build timeline — correlate events from all sources to create a chronological narrative. 5) Extract IOCs — attacker IPs, domains, file hashes, registry keys. 6) Determine root cause — how did the attacker get in? 7) Document findings — executive summary + technical detail. SIEM tools (Splunk, Elastic SIEM) automate much of the log correlation and timeline building.",
+      "when": "Perform network forensics after every confirmed security incident (P1/P2). Also conduct forensics when: unknown systems are communicating with external IPs, sensitive data access patterns change unexpectedly, or during regular 'hunt' operations. Key trigger: any incident involving data exfiltration, ransomware, or lateral movement requires forensic investigation.",
+      "key_concepts": ["Chain of custody — documented evidence handling", "PCAP analysis — full packet-level evidence", "Timeline reconstruction — chronological event mapping", "IOC (Indicator of Compromise) extraction — attacker artifacts", "Log correlation — connecting events across data sources", "Volatile data — active connections, processes (lost on power off)", "Evidence preservation — write-protected, hash-verified copies"],
+      "configuration": "# Forensic network capture (full traffic recording)\n# Capture rolling 24-hour PCAP, 1GB per file\nsudo tcpdump -i eth0 -G 3600 -w /evidence/%Y%m%d%H.pcap -z gzip -C 1000\n\n# Capture all DNS queries (lightweight, long retention)\nsudo tcpdump -i eth0 -n port 53 -w /evidence/dns_%m%d%y.pcap -C 500 -W 365\n\n# Key log collection for forensics\n# Syslog to central server (rsyslog)\n*.* @10.0.0.100:514\n\n# NetFlow export for flow-level forensic data\nflow exporter FORENSICS\n destination 10.0.0.100\n transport udp 2055\n source Loopback0\n\n# SIEM query for incident investigation\n# Splunk: Find all traffic to known bad IP in last 7 days\nindex=firewall action=allowed dst_ip=203.0.113.50 | stats count by src_ip, dest_port\n\n# Forensic PCAP analysis with tshark\n# Extract HTTP objects from PCAP\ntshark -r evidence.pcap --export-objects http,/evidence/http_extracted/\n\n# Extract all IP conversations\ntshark -r evidence.pcap -T fields -e ip.src -e ip.dst -e tcp.port",
+      "worked_examples": "**Worked Example 1: Ransomware Investigation**\nAlert: Endpoint detection flags ransomware on a user's laptop.\n\nForensic timeline: 1) DNS logs show laptop queried 'evil-c2.example.com' at 09:15. 2) NetFlow shows outbound connections to 203.0.113.50:443 starting at 09:15 (C2 communication). 3) At 09:20, firewall logs show SMB outbound connections to file server 10.0.0.10:445 (lateral movement). 4) At 09:25, file server starts encrypting files (observed via file audit logs). 5) Ransomware note appears at 09:30.\n\nIOCs extracted: evil-c2.example.com (domain), 203.0.113.50 (IP), ransomware.exe hash.\n\nScope: 1 laptop + 1 file server compromised. Ransomware encrypted 500GB of files.\n\nLessons: 1) Block the C2 domain. 2) Restore from backup. 3) Implement network segmentation (SMB shouldn't be open from user laptops to file servers).\n\n**Worked Example 2: Data Exfiltration Investigation**\nAlert: SIEM detects 10GB outbound traffic from database server to residential IP at 3 AM.\n\nTimeline: 1) Firewall logs: outbound SSH from DB server to 198.51.100.10:22. 2) Authentication logs: SSH session used compromised admin account 'jsmith' at 02:50. 3) Packet capture shows SCP transfer of database dump file.\n\nScope: Database with PII (10,000 records) exfiltrated.\n\nActions: 1) Block the exfiltration IP. 2) Disable compromised account. 3) Notify affected individuals (GDPR requirement). 4) Forensic deep-dive to determine initial compromise (phishing? credential stuffing?).\n\n**Worked Example 3: Insider Threat**\nSituation: Employee resigns. HR requests forensic review of their network activity in the last 30 days.\n\nTimeline: 1) VPN logs show the employee connected outside business hours (11 PM - 2 AM) for 2 weeks before resignation. 2) File server logs show bulk downloads from the employee's shared drive on those nights. 3) Proxy logs show uploads to personal cloud storage (Google Drive) after downloads.\n\nEvidence: The employee was exfiltrating company data before departure. Next steps: legal review, HR action, update DLP policies to flag bulk downloads to personal cloud services.",
+      "summary": "**Key Takeaways:**\n• Network forensics provides definitive evidence of what happened during an incident\n• Timeline reconstruction correlates events across data sources (PCAP, logs, NetFlow)\n• Chain of custody preserves evidence integrity for legal proceedings\n• Full PCAP recording provides the most complete evidence (but requires storage)\n• Logs (firewall, DNS, DHCP, auth) must be retained for forensic analysis\n• SIEM automates log correlation and timeline building\n• Effective forensics requires planning: data must be collected BEFORE the incident\n\n**Best Practice:** Maintain at least 90 days of log retention for forensic analysis. Enable full PCAP recording for critical network segments (reduced to 7 days). Document chain of custody for all evidence collected during an investigation. Practice forensic analysis with tabletop exercises. Know your data sources and their retention times BEFORE an incident occurs. Automate evidence collection where possible.",
+      "troubleshooting": ["Preserve the original evidence — never work directly on original PCAPs or logs", "Build timeline first: identify the first event, last event, and key events in between", "Correlate across data sources: DNS + firewall + NetFlow = powerful combination", "Extract IOCs: IPs, domains, file hashes, user accounts, timestamps", "Hash all evidence files (SHA256) for integrity verification"]
     },
-    "related_topics": [
-      "packet-analysis"
-    ],
-    "tags": [
-      "forensics",
-      "investigation",
-      "evidence",
-      "incident"
-    ]
+    "related_topics": ["packet-analysis"],
+    "tags": ["forensics", "investigation", "evidence", "incident"]
   },
   {
     "id": "nac",
@@ -245,33 +146,18 @@
     "name": "NAC Implementation",
     "difficulty": "advanced",
     "theory": {
-      "what": "Ensures only authorized, compliant devices can access the network.",
-      "why": "Prevents rogue devices and unpatched systems from network access.",
-      "how": "Components: 802.1X + RADIUS + posture assessment. Non-compliant \u2192 quarantine VLAN.",
-      "when": "Implement on all access ports. Start monitor mode then enforce.",
-      "key_concepts": [
-        "802.1X",
-        "Posture assessment",
-        "Remediation VLAN",
-        "Guest access",
-        "Profiling"
-      ],
-      "configuration": "# NAC flow\n1. Device connects\n2. 802.1X auth\n3. Posture check\n4. Compliant \u2192 production\n5. Non-compliant \u2192 remediation",
-      "troubleshooting": [
-        "Check auth status",
-        "Verify posture policy",
-        "Review quarantine"
-      ]
+      "what": "Network Access Control (NAC) ensures only authorized, compliant devices can access the network. Devices that fail authentication or posture checks are placed in a quarantine VLAN with restricted access (remediation). NAC components: 802.1X (port-based authentication), RADIUS server (authentication, authorization, accounting), posture assessment (device health checks — AV running, OS patched, disk encrypted), and profiling (identify device type — Windows, Linux, iPhone, printer, IoT). When a device connects: 1) Switch detects link up. 2) 802.1X challenges the device. 3) Device provides credentials (user + machine cert). 4) RADIUS validates and returns authorization attributes (VLAN assignment, ACL name). 5) Switch applies the authorized policy. Devices without 802.1X supplicant (printers, cameras, IoT) use MAB (MAC Authentication Bypass).",
+      "why": "Without NAC, any device that can connect to a network port gets full network access. An attacker who gains physical access can plug in a Raspberry Pi and start scanning. A contractor can plug in their infected laptop. An employee can connect an insecure IoT device. NAC prevents this by: 1) Authenticating every device. 2) Checking device health/compliance. 3) Assigning appropriate network access based on identity and device type. 4) Quarantining non-compliant devices. NAC is a key component of Zero Trust architecture — 'never trust, always verify' at the network access layer. For compliance frameworks (PCI DSS, HIPAA, NIST), NAC provides access control audit trails and enforcement.",
+      "how": "NAC deployment phases: Phase 1 — Monitor mode (log-only, don't enforce). Discover all devices, identify authorized vs unauthorized, understand your device population. Phase 2 — Registration (add unknown devices to a registration portal for self-onboarding). Phase 3 — Enforce (start applying policies: authorized → production VLAN, unknown → quarantine, non-compliant → remediation). Phase 4 — Posture (add health checks: is AV running? Are patches current?). TACACS+ or RADIUS (Cisco ISE, Aruba ClearPass, FreeRADIUS) is the policy decision point. The switch/router is the enforcement point. MAB is the fallback for devices without 802.1X support.",
+      "when": "Implement NAC when: you have unmanaged devices on the network, compliance requirements demand access control, you need visibility into every device on the network, you want to prevent rogue devices, or you're implementing Zero Trust. Start with monitor mode for 30+ days to understand your device population. Then gradually enforce policies. Never go from 'no NAC' to 'full enforcement' in one step — you will break things.",
+      "key_concepts": ["802.1X — IEEE standard for port-based authentication", "Posture assessment — device health checks (AV, patching, encryption)", "Remediation VLAN — limited-access VLAN for non-compliant devices", "Guest access — limited, internet-only VLAN for visitors", "Profiling — device type identification (OS fingerprinting)", "MAB — MAC Authentication Bypass for devices without 802.1X", "RADIUS — authentication server (policy decision point)", "Cisco ISE / Aruba ClearPass — enterprise NAC platforms"],
+      "configuration": "# NAC flow policy (Cisco ISE)\n# 1. Device connects\n# 2. 802.1X authentication\n# 3. Posture check\n# 4. Authorization result:\n\nauthorization_policy:\n  - name: Corp_Windows_Compliant\n    conditions:\n      - identity_group: WINDOWS_CORP\n      - posture: compliant\n    result:\n      vlan: 100  # Production VLAN\n      acl: CORPORATE_ACCESS\n\n  - name: Corp_Windows_NonCompliant\n    conditions:\n      - identity_group: WINDOWS_CORP\n      - posture: non_compliant\n    result:\n      vlan: 999  # Remediation VLAN\n      acl: REMEDIATION_ONLY\n\n  - name: Unknown_Device\n    conditions:\n      - endpoint_profile: Unknown\n    result:\n      vlan: 500  # Guest VLAN\n      acl: INTERNET_ONLY\n\n  - name: Default_Deny\n    result:\n      vlan: 999  # Quarantine\n\n# Switch configuration\ninterface GigabitEthernet0/1\n  authentication port-control auto\n  dot1x pae authenticator\n  authentication host-mode multi-auth\n  authentication order dot1x mab\n  authentication priority dot1x mab\n  mab\n  spanning-tree portfast",
+      "worked_examples": "**Worked Example 1: NAC Monitor Mode Discovery**\nSituation: IT manager wants to know every device on the network before enforcing NAC.\n\nMonitor mode: 1) Enable 802.1X on all switch ports with 'authentication open' (allow all traffic, log only). 2) RADIUS logs show every authentication attempt. 3) After 30 days: report shows 500 corporate PCs (compliant), 50 unknown devices (non-compliant), 10 printers, 5 IoT devices, 3 rogue APs. 4) Unknown devices: contractor laptops, personal phones, an unauthorized WiFi router.\n\nActions: 1) Register known devices. 2) Create policies for each device type. 3) Address rogue AP. 4) Then switch to 'enforce' mode.\n\n**Worked Example 2: Remediation VLAN**\nEmployee laptop connects to network. 802.1X authenticates successfully. Posture check: antivirus is not running.\n\nResult: Switch places laptop in VLAN 999 (remediation). Laptop can only access: patch management server, AV update server, NAC registration portal. User sees web page: 'Your device is non-compliant. Please install antivirus and reboot.'\n\nAfter user installs AV and reboots: 1) Laptop re-authenticates. 2) Posture check passes. 3) Switch assigns production VLAN. 4) User gets full network access.\n\n**Worked Example 3: Profiling an Unknown Device**\nSituation: New device connects to network. Switch uses MAB (no 802.1X supplicant).\n\nRADIUS receives MAC address. MAC OUI lookup shows it's a 'Nest Labs' device. Based on MAC + DHCP fingerprint, Cisco ISE profiles it as 'Google-Nest'.\n\nAuthorization policy matches: the device is in the IOT profile group. VLAN assignment: IoT VLAN (can't reach corporate resources). ACL: only UDP 123 (NTP) and HTTPS to specific cloud IPs.\n\nResult: IoT device gets exactly the access it needs — no more, no less.",
+      "summary": "**Key Takeaways:**\n• NAC authenticates every device before granting network access\n• Start in monitor mode — understand your device population before enforcing\n• 802.1X provides strongest authentication; MAB is fallback for non-802.1X devices\n• Posture assessment ensures devices meet security policy before access\n• Quarantine VLAN isolates non-compliant devices (self-remediation)\n• Profiling identifies device type for appropriate network access policies\n• NAC is foundational to Zero Trust — 'never trust, always verify' at the network edge\n\n**Best Practice:** Run in monitor mode for at least 30 days before any enforcement. Build a comprehensive device inventory during monitoring. Profile every unknown device. Create granular policies per device type, not one-size-fits-all. Always have a 'guest' and 'quarantine' VLAN as catch-all. Test enforcement on non-critical ports first. Integrate NAC with MDM for automated device registration.",
+      "troubleshooting": ["Check auth status: show authentication sessions interface GigabitEthernet0/1", "Verify RADIUS server reachability: test aaa group radius", "Check posture policy — is the device compliant? What check failed?", "Review quarantine VLAN assignment — is the remediation server reachable?", "For MAB: verify the device MAC is registered in the endpoint identity store"]
     },
-    "related_topics": [
-      "802-1x"
-    ],
-    "tags": [
-      "nac",
-      "access-control",
-      "compliance",
-      "posture"
-    ]
+    "related_topics": ["802-1x"],
+    "tags": ["nac", "access-control", "compliance", "posture"]
   },
   {
     "id": "siem",
@@ -280,33 +166,18 @@
     "name": "SIEM for Networks",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Correlates logs from multiple sources to detect threats.",
-      "why": "Individual logs show fragments. SIEM correlates to detect advanced threats.",
-      "how": "Capabilities: Collection, normalization, correlation, alerting, investigation, reporting.",
-      "when": "Feed: firewalls, IDS, DNS, DHCP, AD, VPN, proxy logs.",
-      "key_concepts": [
-        "Log sources",
-        "Correlation rules",
-        "Use cases",
-        "Alert tuning",
-        "Investigation"
-      ],
-      "configuration": "# Splunk search\nindex=firewall action=denied | stats count by src_ip | where count > 100",
-      "troubleshooting": [
-        "Check log ingestion",
-        "Verify correlation rules",
-        "Review alert volume"
-      ]
+      "what": "Security Information and Event Management (SIEM) correlates logs and events from multiple sources to detect security threats. SIEM's core functions: Collection (ingest logs from firewalls, IDS, servers, network devices, cloud platforms), Normalization (parse diverse log formats into a common schema), Correlation (identify patterns across sources — e.g., 'failed login from IP → followed by successful VPN connection + firewall deny'), Alerting (trigger on correlation rules), Investigation (search and analyze historical data), and Reporting (compliance dashboards, executive summaries). Popular SIEMs: Splunk (market leader), Elastic Security (open source), Microsoft Sentinel (cloud-native), Wazuh (open source), and QRadar (IBM).",
+      "why": "Individual logs from different devices provide fragments of the picture. An attack across a network generates logs in multiple places: firewall (connection allowed), DNS (malicious domain query), web server (exploit attempt), authentication server (privilege escalation). Only a SIEM can correlate these to detect the attack pattern. Without SIEM: threat detection relies on manual log review (which doesn't scale beyond a handful of devices) or individual device alerts (which can't see the bigger picture). With SIEM: a single correlation rule can detect the multi-stage attack and alert the SOC within seconds.",
+      "how": "SIEM deployment: 1) Identify log sources — firewalls, IDS/IPS, DNS, DHCP, AD (domain controller), VPN, web proxies, cloud APIs, endpoint detection. 2) Configure log forwarding — Syslog, Windows Event Forwarding, API integration. 3) Normalize logs — source-specific parsing into common format. 4) Define correlation rules — 'Brute force detection': more than 10 failed logins from same IP in 5 minutes. 5) Build dashboards — real-time security monitoring, compliance reports. 6) Alert tuning — minimize false positives while maintaining detection coverage. 7) Incident response integration — SIEM triggers ticket in SOAR or ticketing system. Key metrics: detection rate, false positive rate, time to detect (MTTD), time to respond (MTTR).",
+      "when": "Deploy SIEM when: your organization has compliance requirements (PCI DSS log monitoring, HIPAA audit controls), you have more than 10 devices generating security logs, security incidents have gone undetected due to siloed log analysis, or you need centralized threat detection. Essential log sources: firewalls (allows/denies), DNS (query logs), DHCP (IP assignments), Active Directory (authentication), and web proxies (URL access). Prioritize feeds that provide visibility into: authentication failures, outbound connections to unknown destinations, DNS queries to suspicious domains, and administrative access.",
+      "key_concepts": ["Log sources — firewalls, IDS, DNS, AD, VPN, proxy, endpoints", "Correlation rules — cross-source pattern detection", "Use cases — specific attack scenarios your SIEM detects", "Alert tuning — minimize false positives", "Investigation — search and pivot across data sources", "SOAR — Security Orchestration Automation and Response", "Normalization — common schema for disparate log formats", "MTTD/MTTR — mean time to detect / respond"],
+      "configuration": "# Splunk correlation search: Multi-factor auth failure\nindex=windows EventCode=4625 (Logon Type=3) | stats count by src_ip, Account_Name | where count > 10 | \"Brute Force Attempt\"\n\n# Elastic Security correlation rule\nrule:\n  name: Network Scan Detection\n  description: Detects NMAP-like scanning behavior\n  query: |\n    event.dataset: firewalld AND destination.port: [22, 80, 443, 8080, 3389]\n    AND source.ip: <same_ip>\n    AND time_window: 5m\n  condition: count(destination.port) > 20\n\n# Wazuh (open source) syslog configuration\n<ossec_config>\n  <remote>\n    <connection>syslog</connection>\n    <allowed-ips>10.0.0.0/8, 172.16.0.0/12</allowed-ips>\n  </remote>\n</ossec_config>\n\n# Log retention policy\nPCI DSS: 1 year minimum, 3 months online\nStandard: 90-180 days\nSOC: 12+ months\nCompliance (GDPR): 12-24 months",
+      "worked_examples": "**Worked Example 1: Multi-Stage Attack Detection**\nA SIEM correlation rule detects a campaign:\n\nStage 1 (02:00): Firewall — outbound connection from workstation to known C2 IP 203.0.113.50. DNS — query for 'evil-c2.example.com' from same workstation.\nStage 2 (02:05): Windows Event Log — privilege escalation (Event ID 4672: Special privileges assigned) on the same workstation.\nStage 3 (02:10): Firewall — SMB connection from workstation to file server (10.0.0.10:445).\nStage 4 (02:15): Windows Event Log — multiple files accessed on file server by the workstation's account.\n\nSIEM Correlation: All four events from the same source IP within 15 minutes = ransomware campaign detection. Alert fired to SOC: 'Critical — ransomware pattern detected on user-laptop-42.'\n\nWithout SIEM: Each event is logged but never correlated. The attack completes undetected until the ransom note appears.\n\n**Worked Example 2: Tuning Out False Positives**\nSituation: SIEM fires 500 'Port Scan' alerts per day. Investigation shows they're triggered by the vulnerability scanner running weekly.\n\nTuning: 1) Add the vulnerability scanner IP to an exclusion list. 2) Create a rule that suppresses alerts from known scanning sources. 3) Adjust the threshold: only alert if port scan comes from an unknown IP. 4) Monitor: alert volume drops from 500/day to 5/day. Remaining alerts are from unknown (potentially hostile) sources.\n\n**Worked Example 3: Compliance Reporting**\nPCI DSS Requirement 10: 'Track and monitor all access to network resources and cardholder data.'\n\nSIEM compliance dashboard: 1) 'Authentication Failures' — count of failed logins vs total logins. 2) 'Privileged Access' — all admin logins with timestamps. 3) 'Firewall Changes' — all configuration modifications to edge firewalls. 4) 'Database Access' — all queries to cardholder data environment. Each report includes: who, what, when, from where. Reports are generated automatically on the 1st of each month and archived for compliance audit.",
+      "summary": "**Key Takeaways:**\n• SIEM correlates logs across sources to detect threats that individual devices can't see\n• Key log sources: firewalls, DNS, AD, IDS/IPS, VPN, web proxies\n• Correlation rules detect multi-stage attack patterns\n• Alert tuning is essential — too many false positives lead to alert fatigue\n• SIEM provides compliance reporting (PCI DSS, HIPAA, SOC 2)\n• MTTD (time to detect) improves dramatically with SIEM vs manual review\n• Starting with open-source (Wazuh, Elastic) is feasible for smaller organizations\n\n**Best Practice:** Prioritize the top 3-5 log sources that give you the best visibility. Start with a few focused correlation rules and expand. Tune relentlessly — every false positive reduces alert effectiveness. Integrate SIEM with incident response (SOAR or ticketing). Test detection coverage regularly with purple team exercises. Review and update correlation rules quarterly.",
+      "troubleshooting": ["Check log ingestion — are all sources sending logs? Any gaps?", "Verify correlation rules — are they triggering correctly?", "Review alert volume — too many = need tuning, too few = may be missing attacks", "Test detection with known attack patterns (purple team exercise)", "Check storage capacity — logs may be dropped if storage is full"]
     },
-    "related_topics": [
-      "syslog-monitoring"
-    ],
-    "tags": [
-      "siem",
-      "correlation",
-      "detection",
-      "logs"
-    ]
+    "related_topics": ["syslog-monitoring"],
+    "tags": ["siem", "correlation", "detection", "logs"]
   },
   {
     "id": "microseg",
@@ -315,31 +186,17 @@
     "name": "Microsegmentation",
     "difficulty": "advanced",
     "theory": {
-      "what": "Security policies at workload level \u2014 controlling east-west traffic.",
-      "why": "Traditional segmentation is too coarse. Microsegmentation stops lateral movement.",
-      "how": "Approaches: Host-based firewalls, hypervisor-based (NSX), agent-based (Illumio), cloud-native (SGs).",
-      "when": "Implement for critical applications and compliance requirements.",
-      "key_concepts": [
-        "East-west control",
-        "Workload policies",
-        "Default deny",
-        "Application mapping"
-      ],
-      "configuration": "# Policy example\nWeb \u2192 App: TCP 8080 only\nApp \u2192 DB: TCP 3306 only\nDeny all other east-west",
-      "troubleshooting": [
-        "Map dependencies first",
-        "Start in monitor mode",
-        "Gradually enforce"
-      ]
+      "what": "Microsegmentation is a security technique that divides a network into very granular segments — down to the individual workload level — with strict policies controlling east-west traffic. Unlike traditional segmentation (which uses VLANs/firewalls to separate large zones), microsegmentation creates security policies for each workload or group of workloads. Approaches: Host-based firewalls (local OS firewall policies), Hypervisor-based (VMware NSX distributed firewall, Microsoft Azure vNets), Agent-based (Illumio, Guardicore), and CNI-based (Calico, Cilium for Kubernetes). Microsegmentation uses labels/tags to define groups ('web servers', 'app servers', 'database servers') rather than IP addresses, which is critical in dynamic environments where workloads move.",
+      "why": "Traditional network segmentation with VLANs and firewalls creates perimeters around large zones (e.g., 'DMZ,' 'Internal,' 'PCI'). But once inside a zone, an attacker can move laterally to any workload. Microsegmentation shrinks the blast radius to individual workloads. Example: If a web server is compromised, microsegmentation policies prevent it from connecting to any other workload except the app server it needs (TCP 8080). The attacker cannot scan the network, cannot pivot to other tiers, and cannot reach the database. For cloud-native environments where workloads are ephemeral and IP addresses change constantly, IP-based segmentation is impossible — microsegmentation using labels is the only practical approach.",
+      "how": "Microsegmentation implementation: 1) Map application dependencies — understand which workloads communicate with which, on what ports. 2) Define workload groups — label by function (web, app, db), environment (prod, staging), compliance (PCI, HIPAA). 3) Create policies — 'Web → App: TCP 8080', 'App → DB: TCP 3306', 'Default: deny all'. 4) Deploy in monitor mode — observe traffic flows, identify violations. 5) Tune policies — add allowed flows discovered during monitoring. 6) Enforce — switch to blocking mode. 7) Monitor and iterate — applications change, policies should too. In virtualized environments (VMware NSX), microsegmentation policies are enforced in the hypervisor kernel — zero performance impact. In Kubernetes, Calico/Cilium enforce policies at the pod level using iptables/eBPF.",
+      "when": "Implement microsegmentation when: running critical applications with compliance requirements (PCI DSS), deploying Zero Trust architecture (essential for lateral movement prevention), managing multi-tenant environments (need to isolate tenants), operating in dynamic environments (container/Kubernetes), or after a security incident involving lateral movement. Start with the most critical applications (PCI CDE, crown jewel applications) and expand gradually.",
+      "key_concepts": ["East-west traffic — workload-to-workload communication", "Workload policies — security rules based on labels, not IPs", "Default deny — whitelist approach for inter-workload traffic", "Application mapping — discovering dependencies before enforcing policy", "Monitor mode — observe and log violations without blocking", "Agent-based vs hypervisor-based vs CNI-based — different enforcement points", "Kubernetes Network Policies — pod-level microsegmentation"],
+      "configuration": "# Calico NetworkPolicy example (Kubernetes)\napiVersion: projectcalico.org/v3\nkind: NetworkPolicy\nmetadata:\n  name: app-tier-security\n  namespace: prod\nspec:\n  selector: app == 'api'  # Apply to API pods\n  ingress:\n    - action: Allow\n      protocol: TCP\n      source:\n        selector: app == 'web'\n      destination:\n        ports:\n          - 8080\n    - action: Allow\n      protocol: TCP\n      source:\n        selector: app == 'monitoring'\n      destination:\n        ports:\n          - 9090\n  egress:\n    - action: Allow\n      protocol: TCP\n      destination:\n        selector: app == 'database'\n        ports:\n          - 3306\n    - action: Deny\n      destination: {}\n\n# Illumio policy example\n\"illumination\": {\n  \"rule_set\": \"PCI-TIER\",\n  \"rules\": [\n    {\n      \"consumers\": [{\"label\": {\"role\": \"WEB\"}}],\n      \"providers\": [{\"label\": {\"role\": \"APP\"}}],\n      \"ingress_services\": [{\"port\": 8080, \"proto\": \"tcp\"}],\n      \"resolve_objects_as\": \"workloads\"\n    },\n    {\n      \"consumers\": [{\"label\": {\"role\": \"APP\"}}],\n      \"providers\": [{\"label\": {\"role\": \"DB\"}}],\n      \"ingress_services\": [{\"port\": 3306, \"proto\": \"tcp\"}],\n      \"resolve_objects_as\": \"workloads\"\n    }\n  ]\n}",
+      "worked_examples": "**Worked Example 1: 3-Tier Application Microsegmentation**\nApplication: Web → API → MySQL database.\n\nWithout microsegmentation: All three tiers in the same VLAN. If a web server is compromised, attacker can directly scan and access the database (port 3306) or other servers.\n\nWith microsegmentation: 1) Map communication: Web needs TCP 8080 to API. API needs TCP 3306 to DB. 2) Create groups: WEB, APP, DB. 3) Create policies: Allow WEB→APP on 8080; Allow APP→DB on 3306; Deny all other east-west. 4) Deploy in monitor mode — verify no legitimate flows are missed. 5) Switch to enforcement.\n\nResult: Web server compromised — attacker can only communicate with the designated API server on TCP 8080. Database is unreachable. Lateral movement stopped.\n\n**Worked Example 2: Kubernetes Namespace Isolation**\nSituation: 3 teams share a Kubernetes cluster (team-prod, team-staging, team-dev).\n\nMicrosegmentation with Calico: 1) Isolate namespaces: traffic cannot cross namespace boundaries by default. 2) Within each namespace, default-deny policy blocks all ingress. 3) Per-application policies selectively allow required traffic. 4) Monitoring namespace has access to all pods (for Prometheus scraping).\n\nResult: team-dev pods cannot access team-prod pods. A compromised dev container cannot reach production data.\n\n**Worked Example 3: Microsegmentation in Monitor Mode**\nSituation: Deploying microsegmentation for the first time. The goal is to understand east-west traffic before enforcing.\n\nMonitor mode: 1) Deploy agents (Illumio or NSX) on all workloads. 2) Wait 2 weeks: collect traffic flow data. 3) Analyze results: 500 allowed flows discovered. The security team expected 300. 200 unexpected flows are found — some are legitimate (missed dependencies), some are suspicious (a web server connecting to a database directly). 4) Review and adjust policies. 5) Create 'exception' rules for legitimate unexpected flows. 6) Switch to enforcement.\n\nResult: By monitoring first, the team avoids breaking legitimate applications. The suspicious flow (web → DB direct) is investigated and removed.",
+      "summary": "**Key Takeaways:**\n• Microsegmentation provides granular security at the workload level — not just network zones\n• Use labels/tags (not IPs) for workload groups — essential for dynamic environments\n• East-west traffic is the primary focus — north-south is typically already secured\n• Start in monitor mode to discover all legitimate traffic before enforcing\n• Default-deny for inter-workload traffic is the goal after proper tuning\n• Kubernetes Network Policies (Calico, Cilium) provide microsegmentation for containers\n• Microsegmentation is the operationalization of Zero Trust for workload communication\n\n**Best Practice:** Always monitor traffic for 2+ weeks before enforcing policies. Map application dependencies thoroughly. Start with the most critical application. Use least-privilege: every allowed flow must have a documented business reason. Review and update policies quarterly. Automated compliance verification: export policies and verify against security requirements.",
+      "troubleshooting": ["App not working after microsegmentation enforcement: check the 'Denied Flows' log", "Map dependencies: use flow monitoring to identify which connections are being blocked", "Create temporary exception rules for legitimate blocked traffic", "Verify: did you include DNS (UDP 53) in allowed flows? (Common oversight)", "Check: did you allow the network monitoring tool to reach all workloads?"]
     },
-    "related_topics": [
-      "network-segmentation"
-    ],
-    "tags": [
-      "microsegmentation",
-      "east-west",
-      "workload",
-      "granular"
-    ]
+    "related_topics": ["network-segmentation"],
+    "tags": ["microsegmentation", "east-west", "workload", "granular"]
   }
 ]

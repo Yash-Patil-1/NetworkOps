@@ -6,21 +6,31 @@
     "name": "AWS Transit Gateway",
     "difficulty": "advanced",
     "theory": {
-      "what": "Hub connecting multiple VPCs and on-premises through single gateway.",
-      "why": "Without TGW, connecting 10 VPCs needs 45 peering connections.",
-      "how": "Architecture: TGW as regional router, VPC attachments, route tables, cross-region peering.",
-      "when": "Use when connecting 3+ VPCs or need centralized routing.",
+      "what": "AWS Transit Gateway (TGW) is a regional network transit hub that connects thousands of VPCs, VPN connections, and Direct Connect gateways through a single central gateway, eliminating the need for complex VPC peering mesh topologies. It operates at the AWS Region level and supports cross-region peering to connect TGWs in different regions. Traffic between VPCs attached to the same TGW stays within the AWS network and never traverses the public internet. TGW supports multicast, inter-Region peering with automatic encryption, and integration with AWS Network Manager for centralized monitoring. Each TGW attachment has its own route table, enabling granular traffic control between spoke VPCs — you can choose which VPCs can communicate with which other VPCs, creating an efficient hub-and-spoke architecture.",
+      "why": "Without Transit Gateway, connecting N VPCs requires N*(N-1)/2 individual peering connections — connecting 10 VPCs needs 45 peering connections, each requiring route table updates in both directions. TGW reduces this to N attachments (one per VPC) with centralized route management. As network scale increases, the advantage grows exponentially: 20 VPCs needs 190 peerings vs 20 TGW attachments. TGW also eliminates the non-transitive nature of VPC peering — with peering, if VPC A is peered to B and B is peered to C, A cannot reach C. With TGW, all attached VPCs can communicate through the hub (subject to route table configuration). Additional benefits include: (1) centralised NAT gateway — share a single NAT GW across all VPCs; (2) centralised internet gateway — control egress traffic from a single point; (3) simplified VPN connectivity — one VPN attachment serves all VPCs; (4) AWS Network Manager provides a single dashboard for global network topology.",
+      "how": "Transit Gateway architecture follows a structured design process. Step 1 — Create the TGW in the desired region with the required Amazon-side ASN (default 64512), and configure default route table association/propagation. Step 2 — Create VPC attachments: each VPC attachment requires one subnet per Availability Zone (minimum 2 for HA), and AWS automatically adds entries to the VPC's main route table pointing to the TGW. Step 3 — Configure TGW route tables: association (which VPC belongs to which route table) and propagation (which attachments' routes are learned). Step 4 — Configure cross-region peering if needed by creating a TGW Peering Attachment between TGWs in different regions. Step 5 — Set up VPN attachments for on-premises connectivity, supporting both static routes and BGP dynamic routing. The key design decision is route table architecture: you can use a single shared route table for open communication, separate route tables per segment (prod/staging/dev with isolation), or separate route tables per VPC for full micro-segmentation.",
+      "when": "Use Transit Gateway when: (1) connecting 3 or more VPCs — the peering mesh becomes unwieldy beyond 3 VPCs; (2) connecting VPCs across different AWS accounts using AWS Resource Access Manager (RAM); (3) connecting on-premises networks via VPN or Direct Connect to multiple VPCs; (4) building hub-and-spoke network architectures with centralised egress/ingress; (5) multicasting within a VPC (TGW supports multicast domains). Avoid TGW for: simple 2-VPC setups (direct VPC peering is simpler and free), or when TGW attachment costs ($0.05/hr per attachment + data processing costs) exceed peering costs at small scale. TGW data processing fees ($0.02/GB for intra-region, $0.04/GB for inter-region) can be significant for high-throughput workloads.",
       "key_concepts": [
-        "Hub-and-spoke",
-        "Route tables",
-        "Attachments",
-        "Cross-region"
+        "Hub-and-spoke architecture — TGW as central hub with VPCs/VPN/DX as spoke attachments",
+        "Route tables — association (which table a VPC uses) and propagation (which routes are learned)",
+        "TGW attachments — VPC, VPN, Direct Connect Gateway, Peering Connection, Connect (SD-WAN)",
+        "Cross-region peering — connect TGWs in different regions with automatic encryption",
+        "Multicast — TGW supports IGMP-based multicast, useful for media distribution",
+        "Network Manager — centralised dashboard for global network topology and monitoring",
+        "TGW Connect — integrates with SD-WAN appliances using Generic Routing Encapsulation (GRE)"
       ],
-      "configuration": "resource \"aws_ec2_transit_gateway\" \"main\" {}",
+      "configuration": "resource \"aws_ec2_transit_gateway\" \"main\" {\n  description                     = \"Central TGW for production VPCs\"\n  amazon_side_asn                 = 64512\n  auto_accept_shared_attachments  = \"enable\"\n  default_route_table_association = \"enable\"\n  default_route_table_propagation  = \"enable\"\n  dns_support                     = \"enable\"\n  vpn_ecmp_support                = \"enable\"\n  tags = { Name = \"prod-tgw\" }\n}\n\nresource \"aws_ec2_transit_gateway_vpc_attachment\" \"app\" {\n  subnet_ids         = [aws_subnet.app_1a.id, aws_subnet.app_1b.id]\n  transit_gateway_id = aws_ec2_transit_gateway.main.id\n  vpc_id             = aws_vpc.app.id\n  tags = { Name = \"app-vpc-attachment\" }\n}\n\nresource \"aws_ec2_transit_gateway_route_table\" \"isolated\" {\n  transit_gateway_id = aws_ec2_transit_gateway.main.id\n  tags = { Name = \"isolated-spokes\" }\n}\n\nresource \"aws_ec2_transit_gateway_route_table_association\" \"app\" {\n  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.app.id\n  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.isolated.id\n}",
+      "worked_examples": "**Worked Example 1: Multi-Account TGW Architecture**\nA company has VPCs in 3 AWS accounts (Shared Services, Production, Development) that all need to communicate.\n\nArchitecture:\n- TGW is created in the Shared Services account\n- TGW is shared to Production and Development accounts via AWS RAM\n- VPC attachments are created in each account\n- Shared Services account hosts central services (AD, monitoring, NAT GW)\n- Three TGW route tables: SHARED (routes to all), PROD-ONLY (isolated), DEV-ONLY (isolated)\n- Production VPC association: SHARED route table (can reach shared services)\n- Shared Services propagates routes to all three route tables\n\n**Worked Example 2: Diagnosing TGW Connectivity Issues**\nSymptom: Two VPCs attached to same TGW cannot communicate.\n\nDiagnosis steps:\n1. Verify both VPC attachments are in 'available' state\n2. Check TGW route table association for each attachment\n3. Check TGW route table propagation — are the remote VPC CIDRs learned?\n4. Verify VPC route tables point to TGW attachment for the remote CIDR\n5. Check Security Group and NACL rules in both VPCs\n6. Verify there's no overlapping CIDR between VPCs\n\n**Worked Example 3: Hybrid Connectivity via TGW VPN**\nOn-premises data center needs access to all VPCs attached to TGW.\n\nSetup:\n- Create VPN attachment on TGW with two tunnels for redundancy\n- On-premises firewall configured with BGP peering to TGW\n- TGW propagates VPN routes to all spoke VPC route tables\n- On-premises receives summarized routes from TGW via BGP\n- Result: single VPN connection gives on-premises access to all 10+ VPCs (vs 10 individual VPNs)",
+      "summary": "**Key Takeaways:**\n• Transit Gateway reduces VPC connectivity from O(n²) peering to O(n) TGW attachments\n• Hub-and-spoke architecture with centralized route management across VPCs, VPN, and DX\n• Cross-region peering and cross-account sharing via AWS RAM enable global network topologies\n• Route table separation enables micro-segmentation between spokes\n• TGW Connect integrates with SD-WAN appliances for hybrid deployments\n• Monitor TGW data processing costs — they scale with traffic volume\n\n**Best Practice:** Design TGW route tables from the start with a 'default deny' mindset. Create separate route tables for different trust levels (prod, staging, dev, shared services) and only propagate the routes each segment needs. Use Network Manager for centralized monitoring.",
       "troubleshooting": [
-        "Check route tables",
-        "Verify attachments",
-        "Check propagation"
+        "Check route table associations and propagations for each attached VPC",
+        "Verify VPC route tables include route to TGW for remote CIDRs",
+        "Ensure no CIDR overlap between connected VPCs",
+        "Check Security Group and NACL rules on all sides",
+        "Use Reachability Analyzer to trace paths through TGW",
+        "Verify cross-account TGW share is accepted in the target account",
+        "Monitor CloudWatch metrics: BytesIn, BytesOut, PacketsIn, PacketsOut per attachment",
+        "Check TGW attachment status in the AWS Console"
       ]
     },
     "related_topics": [
@@ -40,21 +50,30 @@
     "name": "AWS NACLs",
     "difficulty": "beginner",
     "theory": {
-      "what": "Stateless subnet-level firewalls. Must allow return traffic explicitly.",
-      "why": "Additional defense layer beyond Security Groups.",
-      "how": "Stateless, rule numbering, explicit deny, subnet-level. Must allow ephemeral ports for return traffic.",
-      "when": "Use as second layer. Keep rules simple.",
+      "what": "Network Access Control Lists (NACLs) are stateless, rule-based firewalls that operate at the subnet level in AWS VPCs. Unlike Security Groups (stateful instance-level firewalls), NACLs are completely stateless — they inspect each packet individually without any knowledge of connection state. This means you MUST explicitly allow both inbound AND outbound traffic for communication to succeed. NACLs process rules in numerical order (lowest to highest) and have an explicit DENY capability (unlike SGs which only have allow rules). Each NACL applies to an entire subnet and affects all instances in that subnet equally. The default NACL allows all inbound and outbound traffic, but custom NACLs default to deny-all and require explicit allow rules. NACLs support both allow and deny rules, numbered from 1 to 32766 with recommended increments of 100 for flexibility.",
+      "why": "NACLs provide an additional defense layer beyond Security Groups, implementing defense-in-depth at the subnet boundary. While Security Groups protect individual instances, NACLs protect entire subnets — think of SGs as instance-level firewalls and NACLs as subnet-level firewalls. NACLs are essential for: (1) blocking traffic before it reaches instances — a malicious packet dropped at the NACL never uses instance CPU cycles; (2) explicit deny rules — you can explicitly block specific IPs or ranges (e.g., known bad actors) which Security Groups cannot do; (3) stateless inspection for asymmetric routing scenarios; (4) compliance requirements that mandate network-level access control; (5) creating DMZ-style architectures with different NACL rules for public-facing vs private subnets. The most common cause of mysterious timeouts in AWS environments is forgetting that NACLs are stateless and failing to allow ephemeral port return traffic.",
+      "how": "NACL rule evaluation follows a precise sequence. Each rule has: Rule Number (1-32766, processed in order), Type (protocol), Protocol (TCP/UDP/ICMP/etc.), Port Range, Source/Destination (CIDR), and Allow/Deny action. Rules are processed from lowest number to highest — first match wins. If no rule matches, the default deny (rule *) implicitly drops the traffic. The critical stateless behaviour means you must create paired rules: for example, to allow inbound HTTPS traffic from the internet (0.0.0.0/0) to an EC2 instance in a public subnet, you need: Inbound rule ALLOW TCP 443 from 0.0.0.0/0 AND an Outbound rule ALLOW TCP 32768-65535 to 0.0.0.0/0 (ephemeral ports for return traffic). The ephemeral port range varies by OS: Linux uses 32768-60999, Windows uses 49152-65535, and many AWS documentation examples use the conservative 1024-65535 range. NACLs are evaluated before Security Groups — a packet denied by NACL never reaches SG evaluation.",
+      "when": "Use NACLs as a secondary security layer in any VPC design. Best practice NACL architecture includes: Public Subnet NACL — allow HTTP/HTTPS inbound (0.0.0.0/0), allow ephemeral port outbound; Private Subnet NACL — allow only specific ports from specific CIDRs (e.g., HTTP/HTTPS only from ALB subnet), deny all other inbound; Database Subnet NACL — allow only the app tier's CIDR for the database port; Management Subnet NACL — allow SSH/RDP only from corporate VPN or bastion CIDR. NACLs excel at blocking known-bad IP ranges (explicit deny rules for country-level blocks or known C2 infrastructure) and implementing subnet-level compliance controls (e.g., blocking all SSH access to database subnets).",
       "key_concepts": [
-        "Stateless",
-        "Rule numbering",
-        "Explicit deny",
-        "Ephemeral ports"
+        "Stateless — must allow return traffic to/from ephemeral ports explicitly",
+        "Rule numbering — lowest number evaluated first (1-32766, recommended increments of 100)",
+        "Explicit deny — NACLs support explicit deny rules; SGs do not",
+        "Default NACL — allows all traffic; custom NACL denies all by default (implicit deny)",
+        "Ephemeral ports — Linux: 32768-60999, Windows: 49152-65535",
+        "Rule evaluation order — NACLs evaluated before SGs; first match wins",
+        "Subnet-level — one NACL per subnet, affects all instances equally"
       ],
-      "configuration": "# Allow HTTPS + return traffic\nInbound: 100 ALLOW TCP 443 0.0.0.0/0\nOutbound: 100 ALLOW TCP 1024-65535 0.0.0.0/0",
+      "configuration": "# Allow HTTPS to public subnet (stateless — both directions needed!)\n# Inbound rules:\nInbound: 100 ALLOW TCP 443 0.0.0.0/0        # Allow HTTPS from internet\nInbound: 200 ALLOW TCP 80 0.0.0.0/0         # Allow HTTP from internet\nInbound: 300 ALLOW TCP 22 10.0.0.0/8        # Allow SSH from internal network\nInbound: *   DENY ALL ALL 0.0.0.0/0          # Implicit deny (not shown, but active)\n\n# Outbound rules (for the same NACL):\nOutbound: 100 ALLOW TCP 32768-65535 0.0.0.0/0  # Ephemeral port return traffic\nOutbound: *   DENY ALL ALL 0.0.0.0/0\n\n# Terraform example:\nresource \"aws_network_acl\" \"public\" {\n  vpc_id = aws_vpc.main.id\n  \n  ingress {\n    rule_no    = 100\n    protocol   = \"tcp\"\n    action     = \"allow\"\n    cidr_block = \"0.0.0.0/0\"\n    from_port  = 443\n    to_port    = 443\n  }\n  \n  egress {\n    rule_no    = 100\n    protocol   = \"tcp\"\n    action     = \"allow\"\n    cidr_block = \"0.0.0.0/0\"\n    from_port  = 32768\n    to_port    = 65535\n  }\n}",
+      "worked_examples": "**Worked Example 1: Common NACL Configuration for a 3-Tier Web App**\nArchitecture: Public (web) → Private (app) → Data (database) subnets\n\nPublic Subnet NACL:\n  Inbound: 100 ALLOW TCP 80/443 from 0.0.0.0/0\n  Inbound: 200 ALLOW TCP 22 from 10.0.0.0/8 (internal SSH)\n  Outbound: 100 ALLOW TCP 1024-65535 to 0.0.0.0/0 (return traffic)\n  Outbound: 200 ALLOW TCP 3306 to 10.0.2.0/24 (to DB subnet — only if web directly connects)\n\nPrivate Subnet NACL:\n  Inbound: 100 ALLOW TCP 80/443 from 10.0.1.0/24 (web tier)\n  Inbound: 200 ALLOW TCP 22 from 10.0.0.0/8\n  Outbound: 100 ALLOW TCP 1024-65535 to 0.0.0.0/0\n  Outbound: 200 ALLOW TCP 3306 to 10.0.3.0/24 (to database)\n\nDatabase Subnet NACL:\n  Inbound: 100 ALLOW TCP 3306 from 10.0.2.0/24 (app tier only)\n  Outbound: 100 ALLOW TCP 1024-65535 to 10.0.2.0/24\n\n**Worked Example 2: Debugging 'Connection Timed Out'**\nSymptom: Web server can't connect to RDS database (port 3306) in another subnet.\n\nStep 1: Check DB subnet NACL inbound rules for port 3306 and source CIDR alignment.\nStep 2: Check DB subnet NACL outbound rules for ephemeral port return traffic to app CIDR.\nStep 3: Check web subnet NACL outbound rules for port 3306 to DB CIDR.\nStep 4: Verify Security Groups for the RDS instance allow port 3306 from web SG.\n\nMost common issues: forgot outbound NACL rules (stateless!), wrong ephemeral port range, or wrong subnet CIDR in the rule.",
+      "summary": "**Key Takeaways:**\n• NACLs are STATELESS — you must explicitly allow traffic in both directions (inbound AND outbound)\n• Rules are processed lowest number first; first match wins; implicit deny at the end\n• NACLs support explicit deny rules (unlike Security Groups)\n• NACLs protect entire subnets; SGs protect individual instances\n• Always allow ephemeral port range return traffic (1024-65535 or OS-specific)\n• NACLs are evaluated before SGs — denied traffic never reaches SG\n\n**Best Practice:** Start with a deny-all custom NACL and only add required allow rules. Use the standard ephemeral port range (1024-65535) for maximum compatibility. Document each rule's purpose as a tag or comment.",
       "troubleshooting": [
-        "Check rule order",
-        "Remember ephemeral ports",
-        "Check both directions"
+        "Check NACL rule order — rules processed numerically, first match wins",
+        "Verify ephemeral port return rules exist in the opposite direction",
+        "Use VPC Flow Logs to see if traffic is being DENIED (NACL) or REJECTED (SG)",
+        "Check both subnet NACL and the peer's NACL",
+        "Ping and traceroute from the source to isolate where traffic is blocked",
+        "Verify the NACL is associated with the correct subnet",
+        "Use AWS Reachability Analyzer for path tracing"
       ]
     },
     "related_topics": [
@@ -74,21 +93,32 @@
     "name": "GCP VPC",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Global VPC with regional subnets \u2014 no peering needed between regions.",
-      "why": "Simplifies multi-region deployments.",
-      "how": "Differences: Global VPC, priority-based firewall rules, Shared VPC, Private Google Access.",
-      "when": "Use for global applications and multi-region deployments.",
+      "what": "Google Cloud VPC is a global, software-defined networking resource that spans all GCP regions worldwide. Unlike AWS VPCs (regional) and Azure VNets (regional), a single GCP VPC is a global resource — subnets are regional but the VPC itself covers the globe. This means a VM in us-central1 and a VM in europe-west1 can communicate using internal IPs without any VPC peering, VPN, or interconnect — they're automatically connected within the same VPC. GCP VPCs support custom mode (you control subnet creation) and auto mode (subnets auto-created in every region, useful for getting started but not recommended for production). Each subnet has a primary IP range and optional secondary IP ranges (used by GKE pods and services). VMs within the same VPC across different regions communicate over Google's global network — they never traverse the public internet.",
+      "why": "GCP's global VPC model simplifies multi-region deployments dramatically. In AWS, deploying an application in us-east-1 and eu-west-1 requires: separate VPCs in each region, inter-region VPC peering, route table updates in both regions, and maintaining separate security group sets. In GCP, you create one VPC, add subnets in each region, and deploy — the VPC is already global. This eliminates the need for VPC peering for inter-region traffic within the same project. Key benefits include: (1) global routing — a single route table applies everywhere; (2) Private Google Access — on-premises and VM access to Google APIs using internal IPs without NAT; (3) Shared VPC — centrally manage network resources from a host project shared across multiple service projects; (4) VPC Network Peering — connect VPCs across organizations with global peering; (5) Cloud NAT — outbound internet from private instances without public IPs; (6) consistent firewall rules — global application scope with regional enforcement.",
+      "how": "GCP VPC networking follows specific patterns distinct from AWS. Step 1 — Create the VPC with the desired subnet mode (custom recommended for production), selecting an appropriate CIDR range (e.g., 10.0.0.0/8, 172.16.0.0/12, or 192.168.0.0/16). Step 2 — Create regional subnets with non-overlapping primary CIDR ranges and optional secondary ranges for GKE pods/services. Step 3 — Configure firewall rules using priority-based (0-65535, lower = higher priority) VPC firewall rules that support both allow and deny, with ingress/egress directions, target tags, source/destination CIDRs, and service accounts. Step 4 — Set up Cloud NAT for outbound internet from private instances. Step 5 — Establish connectivity: VPC Network Peering for cross-project/cross-organization, Cloud VPN or Cloud Interconnect for on-premises connectivity. GCP firewall rules are global and application to all VMs in the VPC matching the target tags — similar to AWS NACLs in scope but stateful (return traffic automatically allowed).",
+      "when": "Use GCP VPC for any GCP deployment. The global VPC model is particularly beneficial for: (1) multi-region applications that need low-latency inter-region communication (no peering needed); (2) global anycast frontend using Google Cloud Load Balancer; (3) Shared VPC for enterprise environments with multiple teams and projects; (4) GKE clusters (each cluster typically uses a secondary IP range in a subnet); (5) Hybrid cloud with Cloud VPN or Interconnect. Avoid auto-mode VPCs for production (they use predictable IP ranges that often conflict with on-premises).",
       "key_concepts": [
-        "Global VPC",
-        "Regional subnets",
-        "Priority firewall",
-        "Shared VPC"
+        "Global VPC — single VPC spans all regions; subnets are regional",
+        "Custom mode (subnets created manually) vs Auto mode (default per region)",
+        "Firewall rules — global scope, stateful, priority-based, support allow AND deny",
+        "Shared VPC — centrally managed network from host project",
+        "Cloud NAT — managed outbound internet for private instances",
+        "Private Google Access — access Google APIs from on-premises or VMs without public IPs",
+        "VPC Network Peering — connect VPCs across projects/organizations (global)",
+        "Secondary IP ranges — used by GKE pods (/14) and services (/20)"
       ],
-      "configuration": "gcloud compute networks create my-vpc --subnet-mode=custom",
+      "configuration": "gcloud compute networks create my-vpc --subnet-mode=custom\n\ngcloud compute networks subnets create subnet-us-east1 \\\n  --network=my-vpc \\\n  --region=us-east1 \\\n  --range=10.0.1.0/24\n\ngcloud compute networks subnets create subnet-europe-west1 \\\n  --network=my-vpc \\\n  --region=europe-west1 \\\n  --range=10.0.2.0/24\n\ngcloud compute firewall-rules create allow-ssh \\\n  --network=my-vpc \\\n  --allow=tcp:22 \\\n  --source-ranges=10.0.0.0/8 \\\n  --priority=1000\n\ngcloud compute firewall-rules create allow-http \\\n  --network=my-vpc \\\n  --allow=tcp:80,tcp:443 \\\n  --source-ranges=0.0.0.0/0 \\\n  --target-tags=web-server",
+      "worked_examples": "**Worked Example 1: Multi-Region Deployment in a Single Global VPC**\nArchitecture: Application deployed in us-east1 and europe-west1 within the same VPC.\n\nVPC: my-global-vpc (10.0.0.0/16)\n  Subnet us-east1: 10.0.1.0/24\n  Subnet europe-west1: 10.0.2.0/24\n\nA VM in us-east1 (10.0.1.10) can reach VM in europe-west1 (10.0.2.10) directly via internal IP.\nLatency: ~60-100ms (Google's global network vs ~150-200ms over public internet).\nNo VPC peering, no VPN tunnels, no route table updates needed.\n\n**Worked Example 2: Shared VPC for Multi-Team Environment**\nHost project: network-project\n  Contains a single global VPC with subnets per environment (dev, staging, prod)\n\nService project: app-team-project\n  Connected to host project, deploys VMs into the prod subnet\n\nService project: analytics-team-project\n  Connected to host project, deploys VMs into the prod subnet\n\nBoth teams can deploy into shared subnet without managing their own network. Network team controls firewall rules centrally. App teams have limited permissions (can only start/stop VMs, not modify network).",
+      "summary": "**Key Takeaways:**\n• GCP VPCs are global — a single VPC spans all regions with regional subnets\n• Global VPC eliminates cross-region peering for multi-region deployments\n• Firewall rules are global, stateful, priority-based, and support both allow and deny\n• Shared VPC enables centralized network management across projects\n• Subnets have optional secondary ranges for GKE pods and services\n• Auto-mode VPCs use predefined IP ranges — use custom mode for production\n\n**Best Practice:** Always use custom mode VPCs for production. Plan IP ranges to avoid conflicts with on-premises networks. Use Shared VPC for enterprise environments with multiple teams.",
       "troubleshooting": [
-        "Check firewall priorities",
-        "Verify subnet ranges",
-        "Check routes"
+        "Check firewall priorities (lower number = higher priority)",
+        "Verify subnet CIDR ranges don't overlap",
+        "Check VPC Network Peering status and route exchange",
+        "Use gcloud compute firewall-rules list to audit rules",
+        "Use Network Intelligence Center for path analysis and connectivity tests",
+        "Check Cloud NAT status and router configuration for outbound connectivity",
+        "Verify Private Google Access is enabled on subnets requiring API access",
+        "Check VPC flow logs for dropped traffic"
       ]
     },
     "related_topics": [
@@ -108,21 +138,32 @@
     "name": "Cloud Load Balancing",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Distributes traffic across instances for HA and scalability.",
-      "why": "Prevents single points of failure and enables horizontal scaling.",
-      "how": "Types: ALB (Layer 7, HTTP), NLB (Layer 4, TCP/UDP). Features: health checks, auto-scaling, SSL termination.",
-      "when": "Use ALB for web apps, NLB for non-HTTP.",
+      "what": "Cloud load balancing automatically distributes incoming application traffic across multiple targets (EC2 instances, containers, Lambda functions, or IP addresses) to achieve high availability, fault tolerance, and horizontal scaling. Cloud providers offer several types of load balancers optimized for different scenarios. Application Load Balancers (ALB) operate at Layer 7 (HTTP/HTTPS) with content-based routing, path-based rules, host-based routing, and native WebSockets/HTTP/2 support. Network Load Balancers (NLB) operate at Layer 4 (TCP/UDP/TLS) with ultra-low latency and static IP support. Gateway Load Balancers (GWLB) for transparent inline inspection appliances. Classic Load Balancers (CLB) are the legacy option (not recommended for new deployments). Each type provides health checks, automatic scaling, SSL/TLS termination, and integration with AWS auto scaling groups.",
+      "why": "Load balancing is essential for modern applications because: (1) high availability — if an instance fails, the LB automatically routes traffic to healthy instances; (2) horizontal scaling — add or remove instances without impacting users; (3) SSL termination — offload encryption/decryption from backend instances, reducing CPU load; (4) session stickiness — maintain user sessions for stateful applications using cookies; (5) content-based routing — route /api/* to backend API servers, /app/* to web servers; (6) WebSocket support — ALB natively supports WebSocket connections; (7) health checks — continuous monitoring ensures traffic only goes to healthy instances; (8) security — LBs can be a central point for security controls including WAF integration and DDoS protection via AWS Shield.",
+      "how": "Load balancer operation follows a structured flow. Step 1 — Client sends request to LB's DNS name (never the raw IP, except for NLB with static IP). Step 2 — Listener on the LB receives the traffic on a configured port/protocol (e.g., HTTPS:443). Step 3 — Listener rules determine which target group receives the traffic based on conditions (path, host, headers, query string, HTTP method). Step 4 — The LB performs health checks on targets in the selected target group and only routes to healthy ones. Step 5 — The LB forwards the request to a healthy target using the configured protocol (HTTP, HTTPS, gRPC). Step 6 — The target processes the request and returns the response through the LB. ALB supports connection multiplexing (keep-alive) where a single backend connection handles multiple client requests. Cross-zone load balancing distributes traffic evenly across instances in all enabled AZs, not just within the same AZ.",
+      "when": "Use ALB for: HTTP/HTTPS applications, container-based architectures (ECS/EKS), microservices with path-based routing, WebSocket applications, serverless (Lambda targets), gRPC workloads, and when you need advanced routing (path, host, headers, query params). Use NLB for: TCP/UDP applications requiring ultra-low latency, workloads needing static IP addresses (whitelisting scenarios), TLS termination at the LB, and when preserving the client source IP is required. Use GWLB for: transparent inline traffic inspection (third-party firewalls, IDS/IPS).",
       "key_concepts": [
-        "Layer 4 vs 7",
-        "Health checks",
-        "Target groups",
-        "SSL termination"
+        "Listener — port/protocol on which the LB accepts traffic (e.g., HTTPS:443)",
+        "Target group — logical grouping of targets (EC2, Lambda, IP, ALB)",
+        "Health checks — periodic pings to verify target health (path, port, interval, thresholds)",
+        "Cross-zone load balancing — distribute traffic evenly across all AZs",
+        "Sticky sessions (session affinity) — bind user to same target via cookies",
+        "SSL/TLS termination — decrypt at LB, send unencrypted to backends (or re-encrypt)",
+        "Connection draining — complete in-flight requests before removing unhealthy targets",
+        "ALB rules — conditions (path, host, header) + actions (forward, redirect, fixed-response)"
       ],
-      "configuration": "resource \"aws_lb\" \"web\" {\n  load_balancer_type = \"application\"\n}",
+      "configuration": "resource \"aws_lb\" \"web_alb\" {\n  name            = \"web-alb\"\n  load_balancer_type = \"application\"\n  internal        = false\n  security_groups = [aws_security_group.alb.id]\n  subnets         = aws_subnet.public[*].id\n  enable_deletion_protection = true\n  \n  access_logs {\n    bucket  = aws_s3_bucket.alb_logs.id\n    prefix  = \"alb-logs\"\n    enabled = true\n  }\n}\n\nresource \"aws_lb_target_group\" \"web_tg\" {\n  name        = \"web-tg\"\n  port        = 80\n  protocol    = \"HTTP\"\n  vpc_id      = aws_vpc.main.id\n  target_type = \"instance\"\n  \n  health_check {\n    enabled             = true\n    healthy_threshold   = 2\n    unhealthy_threshold = 3\n    timeout             = 5\n    interval            = 30\n    path                = \"/health\"\n  }\n  \n  stickiness {\n    type            = \"lb_cookie\"\n    cookie_duration = 86400\n    enabled         = true\n  }\n}\n\nresource \"aws_lb_listener\" \"front_end\" {\n  load_balancer_arn = aws_lb.web_alb.arn\n  port              = \"443\"\n  protocol          = \"HTTPS\"\n  ssl_policy        = \"ELBSecurityPolicy-TLS-1-2-2017-01\"\n  certificate_arn   = var.acm_certificate_arn\n  \n  default_action {\n    type             = \"forward\"\n    target_group_arn = aws_lb_target_group.web_tg.arn\n  }\n}",
+      "worked_examples": "**Worked Example 1: Path-Based Routing with ALB**\nArchitecture: One ALB routes traffic to different backends based on URL path.\n\nListener: HTTPS:443\n\nRule 1: IF path is /api/* → Forward to api-target-group (port 8080)\nRule 2: IF path is /admin/* → Forward to admin-target-group (port 8443)\nRule 3: IF host is static.example.com → Forward to static-target-group (S3)\nDefault: IF no rules match → Return 404 fixed response\n\n**Worked Example 2: Diagnosing Unhealthy Targets**\nSymptom: Targets are showing as 'Unhealthy' in the target group.\n\nStep 1 — Check health check settings:\n  Is the health check path correct? Try curl -v http://target:80/health from a test instance.\n  Does the path return 200? Any other status code is considered unhealthy.\n  Check the response timeout (5s default) — slow applications may need 10-30s timeout.\n\nStep 2 — Verify Security Group:\n  Does the ALB's SG allow traffic to the target's SG on the health check port?\n  Does the target's SG accept traffic from the ALB's SG?\n\nStep 3 — Check the instance itself:\n  Is the web server running? systemctl status nginx\n  Is it listening on the correct port? ss -tlnp | grep 80\n\n**Worked Example 3: SSL/TLS Termination with ALB**\nArchitecture: HTTPS client → ALB (decrypts) → HTTP backend\n\nSetup:\n1. Request ACM certificate for example.com in us-east-1\n2. Create ALB HTTPS listener on port 443 with the ACM certificate\n3. Create target group with protocol HTTP on port 80\n4. Configure security group: ALB SG allows 443 from 0.0.0.0/0, instance SG allows 80 from ALB SG\n5. Backend instances see original client IP in X-Forwarded-For header\n\nBenefits: Backend instances don't need to handle TLS — reduces CPU overhead, simplifies certificate management.",
+      "summary": "**Key Takeaways:**\n• ALB (Layer 7) for HTTP/HTTPS with content-based routing; NLB (Layer 4) for TCP/UDP with ultra-low latency\n• Target groups group backend instances; health checks ensure traffic goes only to healthy targets\n• Cross-zone load balancing distributes traffic evenly across all AZs\n• SSL/TLS termination offloads encryption from backend instances\n• ALB supports advanced routing: path-based, host-based, header-based, query string-based\n• Stickiness (session affinity) binds users to the same target via cookies\n\n**Best Practice:** Enable deletion protection, access logs, and cross-zone load balancing. Use ALB for all HTTP/HTTPS applications. Configure health checks on a dedicated \"/health\" endpoint that validates the application stack (not just the web server).",
       "troubleshooting": [
-        "Check target health",
-        "Verify listeners",
-        "Check security groups"
+        "Check target group health status — are targets healthy?",
+        "Verify Security Group rules on both ALB and targets",
+        "Check listener configuration — correct port, protocol, SSL certificate?",
+        "Review ALB access logs for request patterns and errors",
+        "Check CloudWatch metrics: HealthyHostCount, UnhealthyHostCount, RequestCount, TargetResponseTime",
+        "Verify targets are in an AZ where the ALB has subnets configured",
+        "Check connection draining settings for in-flight request handling",
+        "Use curl with the ALB DNS name to test connectivity"
       ]
     },
     "related_topics": [
@@ -142,21 +183,30 @@
     "name": "VPC Peering",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Connects two VPCs for private communication without internet.",
-      "why": "Enables shared services and cross-account access.",
-      "how": "Non-transitive, no CIDR overlap, cross-account supported, route table entries required both sides.",
-      "when": "Use for simple 2-VPC connections. Use TGW for 3+.",
+      "what": "VPC Peering is a direct, private network connection between two VPCs that enables traffic routing using private IPv4 or IPv6 addresses without traversing the public internet. The peered VPCs can be in the same AWS account, different accounts, or even different regions. Peered VPCs behave as if they're on the same private network — instances in one VPC can communicate with instances in the other using private IPs. The connection is non-transitive: if VPC A is peered to VPC B, and VPC B is peered to VPC C, VPC A cannot reach VPC C through B. Traffic stays within the AWS backbone and never leaves the AWS network. There's no bandwidth bottleneck or single point of failure — VPC peering uses the existing AWS network infrastructure.",
+      "why": "VPC Peering is the simplest and most cost-effective way to connect VPCs in specific scenarios. Benefits include: (1) No single point of failure or bandwidth bottleneck — traffic flows directly between VPCs using AWS's network infrastructure; (2) No additional cost for the peering connection itself (only data transfer charges apply); (3) Cross-account support — VPCs in different AWS accounts can be peered (useful for shared services patterns); (4) Cross-region support — VPCs in different regions can be peered (though data transfer costs are higher); (5) Simple security model — each VPC maintains its own security groups and NACLs; (6) Maximum MTU of 9001 (jumbo frames) within the same region. Use VPC Peering for simple 2-VPC or 3-VPC connections where a full Transit Gateway would be overkill.",
+      "how": "VPC Peering setup follows a structured workflow. Step 1 — Request a VPC Peering connection from the requester VPC to the accepter VPC (specifying the accepter VPC ID). Step 2 — The accepter account accepts the peering request (programmatically or via AWS Console). Step 3 — Update route tables in both VPCs: add a route for the peer VPC's CIDR pointing to the peering connection ID. Step 4 — Update Security Group rules to allow traffic from the peer VPC's CIDR (or use an SG reference for cross-account, which requires the peered VPC's SG ID). Step 5 — Update NACLs in both VPCs to allow traffic to/from the peer CIDR. Key constraints: (1) CIDR blocks must not overlap — peering won't work if both VPCs use 10.0.0.0/16; (2) Non-transitive — A→B, B→C does NOT give A→C connectivity; (3) Maximum 125 peering connections per VPC; (4) Maximum MTU for inter-region peering is 1500 (jumbo frames not supported).",
+      "when": "Use VPC Peering for: (1) simple 2-VPC or 3-VPC connections — faster to set up than Transit Gateway; (2) connecting a shared services VPC (AD, monitoring) to other VPCs; (3) cross-account resource access (e.g., shared database VPC); (4) direct connection between specific VPCs in multi-region architectures. Use Transit Gateway instead when: connecting more than 3 VPCs, the peering mesh becomes unmanageable, or transitivity is needed. Common pitfalls: forgetting to add routes in BOTH directions — a common cause of 'one-way communication' issues; CIDR overlap preventing peering; not updating SGs to allow traffic from the peer CIDR; assuming VPC Peering is transitive.",
       "key_concepts": [
-        "Non-transitive",
-        "No CIDR overlap",
-        "Cross-account",
-        "Route updates required"
+        "Non-transitive — A→B, B→C does NOT give A→C without a direct A↔C peering",
+        "No CIDR overlap — peering fails if VPCs have overlapping IP ranges",
+        "Route table updates required on both sides — traffic flows only when routes exist in both directions",
+        "Cross-account — requires accepter to approve the request in their account",
+        "Cross-region — supported with higher data transfer costs and 1500 MTU",
+        "Security Group references — cross-account SG references require the peered VPC's SG ID",
+        "Maximum 125 peering connections per VPC — TGW needed beyond this limit"
       ],
-      "configuration": "resource \"aws_vpc_peering_connection\" \"peer\" {\n  vpc_id = aws_vpc.a.id\n  peer_vpc_id = aws_vpc.b.id\n}",
+      "configuration": "resource \"aws_vpc_peering_connection\" \"peer\" {\n  vpc_id      = aws_vpc.a.id\n  peer_vpc_id = aws_vpc.b.id\n  auto_accept = true  # Use false for cross-account\n  \n  accepter {\n    allow_remote_vpc_dns_resolution = true\n  }\n  \n  requester {\n    allow_remote_vpc_dns_resolution = true\n  }\n}\n\n# Route table on VPC A — route to VPC B\nresource \"aws_route\" \"a_to_b\" {\n  route_table_id         = aws_vpc.a.main_route_table_id\n  destination_cidr_block = aws_vpc.b.cidr_block\n  vpc_peering_connection_id = aws_vpc_peering_connection.peer.id\n}\n\n# Route table on VPC B — route to VPC A\nresource \"aws_route\" \"b_to_a\" {\n  route_table_id         = aws_vpc.b.main_route_table_id\n  destination_cidr_block = aws_vpc.a.cidr_block\n  vpc_peering_connection_id = aws_vpc_peering_connection.peer.id\n}",
+      "worked_examples": "**Worked Example 1: Cross-Account VPC Peering for Shared Services**\nArchitecture: Shared Services account has Active Directory, monitoring, and CI/CD infrastructure. Application account has the production workload.\n\nSetup:\n1. App account creates a peering request to the Shared Services VPC\n2. Shared Services account accepts the request\n3. Route tables updated: App VPC adds route to Shared Svs CIDR via peering connection, and vice versa\n4. Security Groups updated: Shared Services AD SG allows LDAP from App VPC CIDR\n5. DNS resolution enabled: App VPC instances can resolve Shared Services private hosted zones\n\nBenefits: App team manages their own VPC and SGs while relying on centrally managed services.\n\n**Worked Example 2: Diagnosing One-Way Communication**\nSymptom: VPC A can ping VPC B, but VPC B cannot ping VPC A.\n\nStep 1: Check VPC B's route table — is there a route for VPC A's CIDR pointing to the peering connection?\nStep 2: Check NACLs in VPC B — is outbound ICMP allowed to VPC A's CIDR?\nStep 3: Check Security Group for VPC B's instances — is inbound ICMP allowed from VPC A's CIDR?\nStep 4: Check VPC B has the peering connection in 'active' status\n\n**Worked Example 3: DNS Resolution Across Peered VPCs**\nWithout DNS resolution: VPC A can ping VPC B's EC2 instance at 10.0.2.50 (private IP), but cannot resolve its private DNS name (ip-10-0-2-50.ec2.internal).\n\nEnable DNS resolution on the peering connection:\n  accepter.allow_remote_vpc_dns_resolution = true\n  requester.allow_remote_vpc_dns_resolution = true\n\nNow VPC A can use private DNS names to reach VPC B instances (subject to SG rules).",
+      "summary": "**Key Takeaways:**\n• VPC Peering provides direct private connectivity between two VPCs without internet transit\n• Non-transitive — each pair requires its own peering connection\n• No overlapping CIDRs allowed between peered VPCs\n• Route tables must be updated in BOTH VPCs for bidirectional traffic\n• Cross-account and cross-region peering are supported\n• Use VPC Peering for simple 2-3 VPC setups; use Transit Gateway for 4+\n\n**Best Practice:** Plan your IP addressing scheme to avoid CIDR overlap between VPCs that may need to peer in the future. Enable DNS resolution on peering connections for easier cross-VPC communication using private DNS names.",
       "troubleshooting": [
-        "Check peering status",
-        "Verify routes both sides",
-        "Check security groups"
+        "Check peering connection status — must be 'active', not 'pending-acceptance' or 'failed'",
+        "Verify route tables in BOTH VPCs — both need routes pointing to the peering connection",
+        "Check Security Group and NACL rules on both sides",
+        "Verify CIDRs don't overlap — if they do, peering cannot work",
+        "Use Reachability Analyzer to test connectivity between two VPCs",
+        "Check VPC Flow Logs for dropped traffic",
+        "For cross-region: verify MTU is 1500 (jumbo frames not supported)"
       ]
     },
     "related_topics": [

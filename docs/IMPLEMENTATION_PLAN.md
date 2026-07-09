@@ -15,7 +15,7 @@
 | **Streak + XP System** | ✅ | XP, streak, levels, daily goal, 7-day history |
 | **Guided Lessons** | ✅ | Topic theory → guided sections + active-recall checkpoints |
 | **Porsche Identity** | ✅ | Graphite Black, Guards Red, Brushed Silver, 2px radii |
-| **Tests** | ✅ | 28 tests (API, streak, lessons, quiz XP) |
+| **Tests** | ✅ | 29 tests (API, streak, lessons, quiz XP) |
 
 ---
 

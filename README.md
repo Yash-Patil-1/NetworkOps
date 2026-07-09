@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?logo=fastapi)
-![Tests](https://img.shields.io/badge/Tests-13%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/Tests-29%20passing-brightgreen)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
@@ -27,7 +27,7 @@ NetworkOps is a local-first learning platform for network operations and enginee
 
 | Feature | Description |
 |---------|-------------|
-| 📚 Topic Explorer | 150 topics across 6 network domains |
+| 📚 Topic Explorer | 148 topics across 6 network domains |
 | 🌐 Domain Browser | Routing, Switching, Security, Protocols, Infrastructure, Troubleshooting |
 | 🧠 Quiz Engine | 401 quiz questions with adaptive testing |
 | 📊 Progress Tracking | Track your learning journey |
@@ -41,10 +41,10 @@ NetworkOps is a local-first learning platform for network operations and enginee
 
 | Metric | Count |
 |--------|-------|
-| Topics | 150 |
+| Topics | 148 |
 | Domains | 6 |
 | Quiz Questions | 401 |
-| Automated Tests | 13 |
+| Automated Tests | 29 |
 
 ---
 
@@ -127,14 +127,14 @@ NetworkOps/
 │   ├── main.py                 # FastAPI application
 │   ├── requirements.txt        # Python dependencies
 │   ├── data/
-│   │   ├── topics/             # Topic JSON files (150 topics)
+│   │   ├── topics/             # Topic JSON files (148 topics)
 │   │   ├── questions/          # Quiz questions (401)
 │   │   ├── domains.json        # Network domains (6)
 │   │   └── phases.json         # Learning phases
 │   ├── models/                 # Database models
 │   ├── routers/                # API route handlers
 │   ├── services/               # Business logic
-│   └── tests/                  # Test suite (13 tests)
+│   └── tests/                  # Test suite (29 tests)
 ├── frontend/
 │   ├── src/
 │   │   ├── components/         # React components
@@ -160,7 +160,19 @@ cd backend
 ./venv/bin/python -m pytest tests/ -v
 ```
 
-**13 tests passing** — API endpoints, topic search, quiz engine, domain listing, progress tracking.
+**29 tests passing** — API endpoints, topic search, quiz engine, domain listing, progress tracking, streak/XP system, and guided lessons.
+
+---
+
+## 📸 Screenshots
+
+| Dashboard | Learn | Topics |
+|:---:|:---:|:---:|
+| ![Dashboard](screenshots/01-dashboard.png) | ![Learn](screenshots/02-learn.png) | ![Topics](screenshots/03-topics.png) |
+
+| Quiz | Lesson View | Topic Detail |
+|:---:|:---:|:---:|
+| ![Quiz](screenshots/04-quiz.png) | ![Lesson](screenshots/05-lesson-osi.png) | ![Topic Detail](screenshots/06-topic-osi.png) |
 
 ---
 

@@ -8,7 +8,7 @@
     "theory": {
       "what": "Netmiko is a Python library that simplifies SSH connections to network devices. It handles device-specific quirks (prompts, paging, timing) so you can focus on commands.",
       "why": "Manual CLI configuration doesn't scale. With 100+ devices, automation is essential. Netmiko makes it easy to connect, send commands, and parse output programmatically.",
-      "how": "Netmiko workflow:\n1. Define device connection parameters\n2. Establish SSH connection\n3. Send commands (show or config)\n4. Parse output\n5. Disconnect\n\nSupports: Cisco IOS/NX-OS, Juniper, Arista, Palo Alto, and 50+ platforms.",
+      "how": "Netmiko workflow: Define device connection parameters, Establish SSH connection, Send commands (show or config), Parse output, Disconnect. Supports: Cisco IOS/NX-OS, Juniper, Arista, Palo Alto, and 50+ platforms.",
       "when": "Use Netmiko for: bulk configuration changes, automated backups, compliance checks, information gathering across many devices.",
       "key_concepts": [
         "ConnectHandler",
@@ -19,11 +19,15 @@
         "Exception handling"
       ],
       "configuration": "from netmiko import ConnectHandler\n\ndevice = {\n    'device_type': 'cisco_ios',\n    'host': '192.168.1.1',\n    'username': 'admin',\n    'password': 'cisco123',\n}\n\nwith ConnectHandler(**device) as conn:\n    output = conn.send_command('show ip int brief')\n    print(output)\n    \n    # Config change\n    commands = ['interface lo0', 'ip address 1.1.1.1 255.255.255.255']\n    conn.send_config_set(commands)",
+      "worked_examples": "**Worked Example 1: Multi-Device Configuration Backup**\nBack up running configs from all devices in a list:\n\ndevices = [\n    {'device_type': 'cisco_ios', 'host': '192.168.1.1', 'username': 'admin', 'password': 'cisco123'},\n    {'device_type': 'cisco_ios', 'host': '192.168.1.2', 'username': 'admin', 'password': 'pass2'},\n    {'device_type': 'cisco_ios', 'host': '10.0.0.1', 'username': 'admin', 'password': 'pass3'},\n]\n\nfor device in devices:\n    try:\n        conn = ConnectHandler(**device)\n        output = conn.send_command('show running-config')\n        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')\n        with open(f'backups/{device[\"host\"]}_{timestamp}.cfg', 'w') as f:\n            f.write(output)\n        print(f\"Backed up {device['host']}\")\n        conn.disconnect()\n    except Exception as e:\n        print(f\"FAILED: {device['host']}: {str(e)}\")\n\nAlways catch exceptions — one device failure shouldn't stop the entire backup process.\n\n**Worked Example 2: Troubleshooting Netmiko**\nSymptom: Connection timeout.\n  → Check SSH access: 'nc -zv 192.168.1.1 22'\n  → Check if device is reachable: 'ping 192.168.1.1'\n  → Increase timeout: ConnectHandler(..., timeout=30)\n\nSymptom: Authentication failed.\n  → Verify username/password\n  → Check if enable password is needed: add 'secret': 'enable_password'\n\nSymptom: Command not recognized.\n  → 'device_type' might be wrong. Check the correct platform string.\n\nSymptom: Output is truncated.\n  → Increase read_timeout: conn.send_command('show run', read_timeout=120)",
+      "summary": "**Key Takeaways:**\n• Netmiko simplifies SSH automation across 50+ network device platforms\n• send_command for show commands; send_config_set for configuration changes\n• Always wrap in try/except — handle connection and command errors gracefully\n• Use TextFSM (ntc-templates) for structured output parsing\n• Netmiko is the foundation for larger automation frameworks (Nornir, Ansible)\n\n**Best Practice:** Always disconnect after each session. Use SSH keys instead of passwords. Store credentials securely (environment variables, vaults). Test on a single device before running on hundreds.",
       "troubleshooting": [
-        "Connection timeout \u2192 check SSH access",
-        "Authentication failed \u2192 verify credentials",
-        "Command timeout \u2192 increase timeout parameter",
-        "Wrong device_type \u2192 check platform"
+        "Connection timeout → check SSH access and network reachability",
+        "Authentication failed → verify credentials include enable/secret password",
+        "Command timeout → increase read_timeout or timeout parameter",
+        "Wrong device_type → check platform support documentation",
+        "Output parsing issues → use TextFSM templates for structured data",
+        "Enable Netmiko logging: logging.basicConfig(level=logging.DEBUG)"
       ]
     },
     "related_topics": [
@@ -45,8 +49,8 @@
     "difficulty": "intermediate",
     "theory": {
       "what": "Ansible is an agentless automation tool that uses YAML playbooks to configure network devices. It connects via SSH/NETCONF and executes tasks declaratively.",
-      "why": "Ansible provides idempotent, repeatable network configuration. Write once, run on hundreds of devices. No agent installation needed \u2014 works with existing SSH access.",
-      "how": "Ansible components:\n- Inventory: List of devices\n- Playbook: YAML file defining tasks\n- Modules: cisco.ios.ios_config, junipernetworks.junos.junos_config, etc.\n- Roles: Reusable task collections\n\nExecution: ansible-playbook \u2192 connects to devices \u2192 executes modules \u2192 reports results.",
+      "why": "Ansible provides idempotent, repeatable network configuration. Write once, run on hundreds of devices. No agent installation needed — works with existing SSH access.",
+      "how": "Ansible components: Inventory (list of devices), Playbook (YAML file defining tasks), Modules (cisco.ios.ios_config, junipernetworks.junos.junos_config), Roles (reusable task collections). Execution: ansible-playbook → connects to devices → executes modules → reports results.",
       "when": "Use Ansible for: standardized configurations, compliance enforcement, bulk changes, network provisioning, and configuration backup.",
       "key_concepts": [
         "Playbooks (YAML)",
@@ -58,12 +62,16 @@
         "ansible-vault (secrets)"
       ],
       "configuration": "# inventory.yml\nall:\n  children:\n    switches:\n      hosts:\n        sw1:\n          ansible_host: 192.168.1.10\n          ansible_network_os: cisco.ios.ios\n\n# playbook.yml\n- name: Configure NTP\n  hosts: switches\n  gather_facts: no\n  tasks:\n    - name: Set NTP server\n      cisco.ios.ios_config:\n        lines:\n          - ntp server 10.0.0.5",
+      "worked_examples": "**Worked Example 1: Idempotent Configuration with Ansible**\nAnsible's ios_config module is idempotent — if the command is already applied, running the playbook again makes no changes.\n\nPlaybook: set NTP server 10.0.0.5\nRun 1: ios_config adds the command → 'changed': true\nRun 2: ios_config sees the command already exists → 'changed': false (idempotent!)\n\nThis means you can run Ansible on a schedule without worrying about duplicate commands.\n\n**Worked Example 2: Using --check for Safe Testing**\nAlways test with --check (dry run) before applying:\n  ansible-playbook deploy-ntp.yml --check --diff\n\nThe --diff flag shows exactly what lines would change:\n  --- before\n  +++ after\n  + ntp server 10.0.0.5\n\nThis allows peer review of network changes before any device is modified.\n\n**Worked Example 3: Troubleshooting Ansible**\nSymptom: Ansible playbook fails with 'Unreachable'.\n\nStep 1 — Increase verbosity:\n  ansible-playbook -vvv deploy.yml\n\nStep 2 — Check common issues:\n  - SSH connectivity: 'ansible -m ping sw1'\n  - Python on device? Network devices don't need Python, but 'connection: network_cli' must be set\n  - ansible_network_os matches the module name?\n\nStep 3 — Try a minimal test:\n  ansible all -m cisco.ios.ios_command -a 'commands=\"show version\"' -i inventory.yml --user admin -k",
+      "summary": "**Key Takeaways:**\n• Ansible provides idempotent, agentless network automation using YAML playbooks\n• Use --check (dry run) and --diff to preview changes safely\n• Modules are vendor-specific (cisco.ios, junos, eos, etc.)\n• Jinja2 templates enable dynamic, device-specific configurations\n• ansible-vault encrypts sensitive data (passwords, keys)\n\n**Best Practice:** Use --check and --diff for every playbook before applying. Store credentials in ansible-vault. Test on one device first, then expand the inventory. Use roles to organize reusable configurations.",
       "troubleshooting": [
-        "ansible-playbook -vvv (verbose)",
-        "Check SSH connectivity first",
-        "Verify ansible_network_os",
-        "Use --check for dry run",
-        "Check module documentation"
+        "ansible-playbook -vvv — verbose debugging (more v's = more detail)",
+        "Check SSH connectivity first: ansible -m ping all",
+        "Verify ansible_network_os matches installed collection",
+        "Use --check for dry run before any production change",
+        "ansible-inventory --graph — visualize device inventory",
+        "Check module documentation: ansible-doc cisco.ios.ios_config",
+        "Test on a single host: ansible-playbook deploy.yml --limit sw1"
       ]
     },
     "related_topics": [
@@ -85,24 +93,28 @@
     "difficulty": "intermediate",
     "theory": {
       "what": "Terraform is an Infrastructure as Code (IaC) tool that provisions and manages network infrastructure declaratively. Define desired state, Terraform makes it happen.",
-      "why": "Terraform enables version-controlled, repeatable infrastructure. Network changes go through code review, testing, and CI/CD \u2014 just like application code.",
-      "how": "Terraform workflow:\n1. Write: Define resources in .tf files (HCL)\n2. Plan: terraform plan (preview changes)\n3. Apply: terraform apply (make changes)\n4. State: Terraform tracks current state\n\nProviders: AWS, Azure, GCP, Palo Alto, Cisco, F5, etc.",
+      "why": "Terraform enables version-controlled, repeatable infrastructure. Network changes go through code review, testing, and CI/CD — just like application code.",
+      "how": "Terraform workflow: Write (define resources in .tf files using HCL), Plan (terraform plan — preview changes), Apply (terraform apply — make changes), State (terraform tracks current state). Providers: AWS, Azure, GCP, Palo Alto, Cisco, F5, etc.",
       "when": "Use Terraform for: cloud network provisioning (VPCs, subnets, firewalls), firewall rule management, DNS management, and any infrastructure that has an API.",
       "key_concepts": [
         "HCL (HashiCorp Configuration Language)",
         "State file",
-        "Plan \u2192 Apply workflow",
+        "Plan → Apply workflow",
         "Providers",
         "Modules (reusable)",
         "Remote state (S3, Terraform Cloud)"
       ],
-      "configuration": "# main.tf\nprovider \"aws\" {\n  region = \"us-east-1\"\n}\n\nresource \"aws_vpc\" \"main\" {\n  cidr_block = \"10.0.0.0/16\"\n  tags = { Name = \"production\" }\n}\n\nresource \"aws_subnet\" \"web\" {\n  vpc_id     = aws_vpc.main.id\n  cidr_block = \"10.0.1.0/24\"\n}\n\n# Commands:\n# terraform init\n# terraform plan\n# terraform apply",
+      "configuration": "# main.tf\nprovider \"aws\" {\n  region = \"us-east-1\"\n}\n\nresource \"aws_vpc\" \"main\" {\n  cidr_block = \"10.0.0.0/16\"\n  tags = { Name = \"production\" }\n}\n\nresource \"aws_subnet\" \"web\" {\n  vpc_id     = aws_vpc.main.id\n  cidr_block = \"10.0.1.0/24\"\n}\n\n# Plan and apply:\n# terraform init\n# terraform plan\n# terraform apply",
+      "worked_examples": "**Worked Example 1: Safe Change Management with Terraform**\nAdding a new subnet to a VPC:\n\n1. Edit the .tf file to add the new subnet resource\n2. Run 'terraform plan' → shows what will be created (the new subnet) and confirms nothing else changes\n3. Team reviews the plan output in a Pull Request\n4. Run 'terraform apply' → only creates the new subnet\n\nThe plan output shows exactly what will change, giving confidence before applying.\n\n**Worked Example 2: Troubleshooting Terraform**\nSymptom: 'terraform apply' fails.\n\nCommon causes and fixes:\n1. State lock: Another process is running → 'terraform force-unlock <lock_id>'\n2. Resource already exists: Import it → 'terraform import aws_subnet.web subnet-abc123'\n3. API rate limits: Retry after backoff period\n4. Credential errors: Check AWS_PROFILE or access keys\n5. Provider version mismatch: Run 'terraform init -upgrade'\n\n**Worked Example 3: Terraform for Multi-Environment**\nUse workspaces or directories for dev/staging/prod:\n\nterraform workspace new dev\nterraform workspace new prod\nterraform workspace select dev\nterraform plan -var-file=dev.tfvars\nterraform apply -var-file=dev.tfvars\n\nEach workspace has its own state file, keeping environments isolated.",
+      "summary": "**Key Takeaways:**\n• Terraform uses HCL to declare infrastructure as code\n• Plan → Apply workflow provides safe change preview\n• State file tracks the relationship between code and real resources\n• Modules enable reusable, composable infrastructure\n• Remote state enables team collaboration and state locking\n\n**Best Practice:** Always review 'terraform plan' output before applying. Use remote state with locking (S3 + DynamoDB). Organize resources into modules. Store state securely — it contains sensitive data.",
       "troubleshooting": [
-        "terraform plan (preview before apply)",
-        "terraform state list (check state)",
-        "terraform import (import existing)",
-        "Check provider documentation",
-        "State lock issues \u2192 check backend"
+        "terraform plan — preview changes before applying",
+        "terraform state list — view resources tracked in state",
+        "terraform import — bring existing resources under Terraform management",
+        "terraform fmt — format HCL files consistently",
+        "terraform validate — check syntax and validity",
+        "terraform init -upgrade — update provider versions",
+        "terraform force-unlock — break stale state locks"
       ]
     },
     "related_topics": [
@@ -125,8 +137,8 @@
     "difficulty": "advanced",
     "theory": {
       "what": "NETCONF is a network management protocol (RFC 6241) that uses XML over SSH. YANG is the data modeling language that defines the structure of configuration and state data.",
-      "why": "CLI scraping is fragile \u2014 output format changes break scripts. NETCONF/YANG provides structured, programmatic access to device configuration with transaction support (commit/rollback).",
-      "how": "NETCONF operations:\n- get-config: Retrieve configuration\n- edit-config: Modify configuration\n- commit: Apply changes (candidate \u2192 running)\n- lock/unlock: Prevent concurrent changes\n\nYANG models define: containers, lists, leaves, types, constraints. Models are vendor-specific or standard (OpenConfig, IETF).",
+      "why": "CLI scraping is fragile — output format changes break scripts. NETCONF/YANG provides structured, programmatic access to device configuration with transaction support (commit/rollback).",
+      "how": "NETCONF operations: get-config (retrieve configuration), edit-config (modify configuration), commit (apply changes — candidate → running), lock/unlock (prevent concurrent changes). YANG models define: containers, lists, leaves, types, constraints. Models are vendor-specific or standard (OpenConfig, IETF).",
       "when": "Use NETCONF/YANG for: programmatic configuration management, when you need transactions (commit/rollback), or when working with modern network devices that support it.",
       "key_concepts": [
         "XML-based protocol",
@@ -137,11 +149,15 @@
         "OpenConfig models"
       ],
       "configuration": "# Python ncclient\nfrom ncclient import manager\n\nwith manager.connect(\n    host='192.168.1.1',\n    port=830,\n    username='admin',\n    password='cisco',\n    hostkey_verify=False\n) as m:\n    config = m.get_config(source='running')\n    print(config)",
+      "worked_examples": "**Worked Example 1: Transactional Config with NETCONF**\nEdit multiple interface settings as one atomic transaction:\n\nwith manager.connect(host='192.168.1.1', port=830, username='admin', password='cisco', hostkey_verify=False) as m:\n    # Load changes into candidate config\n    m.edit_config(target='candidate', config='''\n        <config>\n          <interfaces xmlns=\"urn:ietf:params:xml:ns:yang:ietf-interfaces\">\n            <interface>\n              <name>GigabitEthernet0/1</name>\n              <ipv4 xmlns=\"urn:ietf:params:xml:ns:yang:ietf-ip\">\n                <address>\n                  <ip>10.0.1.1</ip>\n                  <netmask>255.255.255.0</netmask>\n                </address>\n              </ipv4>\n            </interface>\n          </interfaces>\n        </config>\n    ''')\n    \n    # Compare candidate vs running\n    diff = m.get_config(source='candidate')\n    \n    # If verified, commit. If problems, rollback automatically (close without commit)\n    m.commit()\n\nIf the commit fails (can't contact device), the candidate config is discarded — no partial changes applied.\n\n**Worked Example 2: Comparing NETCONF to CLI**\nCLI (fragile): 'show interfaces' → parse text → if output format changes, script breaks.\nNETCONF (structured): m.get_config() → XML with typed data → always consistent format.\n\nBenefits of NETCONF over CLI:\n- Structured data (XML) — no parsing fragile output\n- Transaction support — commit/rollback atomically\n- Standardized models — same code works across vendors\n- Schema validation — catches errors before applying\n\n**Worked Example 3: Troubleshooting NETCONF**\nSymptom: 'ncclient.transport.errors.AuthenticationError'\n  → Check username/password\n  → Verify NETCONF is enabled on the device (ssh port 830?)\n  → Try SSH directly: ssh -p 830 admin@192.168.1.1 (should show NETCONF hello)\n\nSymptom: 'ncclient.operations.rpc.RPCError: data-missing'\n  → The YANG model path in the RPC doesn't match the device's YANG modules\n  → Query capabilities: m.server_capabilities to see supported models",
+      "summary": "**Key Takeaways:**\n• NETCONF provides structured, programmatic device access over SSH (port 830)\n• XML-based operations: get-config, edit-config, commit, rollback\n• YANG models define the data structure — OpenConfig models are multi-vendor\n• Candidate config enables transaction-like atomic commits with rollback\n• Preferred over CLI scraping for reliability and consistency\n\n**Best Practice:** Always use 'candidate' datastore and explicit commit(). Verify device supports NETCONF before implementation. Use ncclient with proper error handling. Consider YANG models for new deployments requiring programmatic access.",
       "troubleshooting": [
-        "Check port 830 (SSH subsystem)",
-        "Verify YANG model support",
-        "Use pyang to validate models",
-        "Check device NETCONF capabilities"
+        "Check port 830 reachability: nc -zv 192.168.1.1 830",
+        "Verify NETCONF is enabled: 'show netconf-yang' on device",
+        "Test with SSH: 'ssh -p 830 admin@host -s netconf' should show XML hello",
+        "Check YANG model support: m.server_capabilities lists all supported modules",
+        "Use pyang to validate and understand YANG models",
+        "Enable ncclient logging: logging.basicConfig(level=logging.DEBUG)"
       ]
     },
     "related_topics": [
@@ -165,7 +181,7 @@
     "theory": {
       "what": "Many modern network devices expose REST APIs for programmatic management. Send HTTP requests (GET/POST/PUT/DELETE) to configure and monitor devices.",
       "why": "REST APIs are the standard for modern automation. They're language-agnostic, well-documented, and integrate easily with CI/CD pipelines and orchestration tools.",
-      "how": "Common patterns:\n- GET /api/interfaces \u2192 list interfaces\n- POST /api/vlans \u2192 create VLAN\n- PUT /api/vlans/10 \u2192 update VLAN 10\n- DELETE /api/vlans/10 \u2192 remove VLAN 10\n\nAuthentication: Token-based, API keys, or OAuth.\nFormat: JSON (usually).",
+      "how": "Common patterns: GET /api/interfaces → list interfaces, POST /api/vlans → create VLAN, PUT /api/vlans/10 → update VLAN 10, DELETE /api/vlans/10 → remove VLAN 10. Authentication: Token-based, API keys, or OAuth. Format: JSON (usually).",
       "when": "Use REST APIs when: device supports it (Cisco DNA Center, Meraki, Palo Alto, F5), building integrations, or creating custom dashboards.",
       "key_concepts": [
         "HTTP methods (GET/POST/PUT/DELETE)",
@@ -176,12 +192,17 @@
         "Rate limiting"
       ],
       "configuration": "import requests\n\n# Cisco DNA Center example\nurl = 'https://dnac.example.com/dna/intent/api/v1/network-device'\nheaders = {'X-Auth-Token': token, 'Content-Type': 'application/json'}\n\nresponse = requests.get(url, headers=headers, verify=False)\ndevices = response.json()['response']\n\nfor device in devices:\n    print(f\"{device['hostname']}: {device['managementIpAddress']}\")",
+      "worked_examples": "**Worked Example 1: Automating Firewall Rule Changes via API**\nAdd a new firewall rule via Palo Alto API:\n\nimport requests\n\nurl = 'https://firewall.example.com/api/v9.0/Policies/Security'\nheaders = {'X-PAN-KEY': api_key, 'Content-Type': 'application/xml'}\n\npayload = '''\n<entry name=\"Allow-Salesforce\">\n  <from>\n    <member>trust</member>\n  </from>\n  <to>\n    <member>untrust</member>\n  </to>\n  <source>\n    <member>10.0.1.0/24</member>\n  </source>\n  <destination>\n    <member>salesforce.com</member>\n  </destination>\n  <service>\n    <member>ssl</member>\n  </service>\n  <action>allow</action>\n</entry>\n'''\n\nresponse = requests.post(url, headers=headers, data=payload)\nprint(f\"Status: {response.status_code}\")\n\n**Worked Example 2: Checking API Response Codes**\n200 OK — Request succeeded\n201 Created — Resource created (POST)\n400 Bad Request — Malformed JSON or invalid data\n401 Unauthorized — Missing/invalid API key or token\n403 Forbidden — Authenticated but not authorized\n404 Not Found — Resource doesn't exist\n429 Too Many Requests — Rate limit exceeded\n500 Internal Server Error — Server-side failure\n\n**Worked Example 3: Pagination Handling**\nLarge API responses return paginated data:\n\nall_devices = []\noffset = 0\nlimit = 100\n\nwhile True:\n    url = f'https://dnac.example.com/api/v1/device?offset={offset}&limit={limit}'\n    response = requests.get(url, headers=headers)\n    data = response.json()\n    all_devices.extend(data['response'])\n    \n    if offset + limit >= data['totalCount']:\n        break\n    offset += limit\n\nprint(f\"Total devices: {len(all_devices)}\")",
+      "summary": "**Key Takeaways:**\n• REST APIs use HTTP methods (GET/POST/PUT/DELETE) for programmatic device management\n• JSON is the standard data format for request/response payloads\n• Authentication via API keys, tokens (Bearer), or OAuth\n• Always handle pagination for large result sets\n• Rate limiting protects API servers — implement backoff\n\n**Best Practice:** Always test API calls with curl or Postman first. Handle HTTP error codes properly. Use retry with backoff for transient failures. Store API keys securely in environment variables or vaults.",
       "troubleshooting": [
-        "Check authentication token",
-        "Verify API endpoint URL",
-        "Check HTTP status code",
-        "Review API documentation",
-        "Use Postman for testing"
+        "Check authentication token is not expired",
+        "Verify API endpoint URL is correct (check documentation)",
+        "Check HTTP status code for error diagnosis",
+        "Review API documentation for required request format",
+        "Use curl/Postman for initial API testing",
+        "Enable request/response logging for debugging",
+        "Handle pagination — default page size may not include all results",
+        "Check rate limit headers: X-RateLimit-Remaining"
       ]
     },
     "related_topics": [

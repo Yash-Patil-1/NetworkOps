@@ -8,7 +8,7 @@
     "theory": {
       "what": "Amazon VPC (Virtual Private Cloud) is an isolated virtual network in AWS where you launch resources. You control IP ranges, subnets, route tables, and gateways.",
       "why": "VPC is the foundation of all AWS networking. Every EC2 instance, RDS database, and Lambda function runs inside a VPC. Understanding VPC design is essential for cloud engineers.",
-      "how": "VPC components:\n- CIDR block (e.g., 10.0.0.0/16)\n- Subnets (public + private, across AZs)\n- Internet Gateway (public internet access)\n- NAT Gateway (private subnet outbound)\n- Route Tables (control traffic flow)\n- Security Groups (instance-level firewall)\n- NACLs (subnet-level firewall)",
+      "how": "VPC components: CIDR block (e.g., 10.0.0.0/16), Subnets (public + private, across AZs), Internet Gateway (public internet access), NAT Gateway (private subnet outbound), Route Tables (control traffic flow), Security Groups (instance-level firewall), NACLs (subnet-level firewall).",
       "when": "Every AWS deployment needs VPC design. Plan subnets for: public (web), private (app), data (DB), management. Use multiple AZs for HA.",
       "key_concepts": [
         "CIDR block",
@@ -20,12 +20,16 @@
         "Availability Zones"
       ],
       "configuration": "# Terraform VPC\nresource \"aws_vpc\" \"main\" {\n  cidr_block = \"10.0.0.0/16\"\n  enable_dns_hostnames = true\n}\n\nresource \"aws_subnet\" \"public\" {\n  vpc_id     = aws_vpc.main.id\n  cidr_block = \"10.0.1.0/24\"\n  availability_zone = \"us-east-1a\"\n  map_public_ip_on_launch = true\n}",
+      "worked_examples": "**Worked Example 1: Three-Tier VPC Design**\nDesign a VPC for a web application with HA across 2 AZs.\n\nVPC: 10.0.0.0/16\n\nPublic Subnet AZ1: 10.0.1.0/24 (ALB, Bastion)\nPublic Subnet AZ2: 10.0.2.0/24 (ALB, Bastion)\nPrivate App AZ1: 10.0.11.0/24 (App servers)\nPrivate App AZ2: 10.0.12.0/24 (App servers)\nPrivate DB AZ1: 10.0.21.0/24 (RDS)\nPrivate DB AZ2: 10.0.22.0/24 (RDS)\n\nRoute tables:\n- Public: 0.0.0.0/0 → IGW\n- Private App: 0.0.0.0/0 → NAT GW\n- Private DB: (no default route, no internet access)\n\n**Worked Example 2: Diagnosing VPC Connectivity Issues**\nSymptom: EC2 instance in a private subnet can't reach the internet.\n\nStep 1 — Check if the subnet has a route 0.0.0.0/0 → NAT GW or IGW\n  Private subnets need NAT GW, not IGW\n\nStep 2 — Check NAT Gateway:\n  Is it in a public subnet? Yes → Is it running? Check status\n  Does it have an Elastic IP? Yes → Is the EIP allocated?\n\nStep 3 — Check route table:\n  Does the private subnet's route table have 0.0.0.0/0 → nat-xxxxxxxx?\n\nStep 4 — Check Security Group:\n  Does the instance's SG allow outbound traffic (default: all outbound)?\n  Does the NAT's SG allow inbound from private subnet?\n\nStep 5 — Check NACL:\n  NACLs are stateless — did you allow both inbound and outbound ephemeral port traffic?",
+      "summary": "**Key Takeaways:**\n• VPC provides isolated virtual networks in AWS with complete IP control\n• Use public subnets (IGW) for internet-facing resources; private subnets (NAT GW) for internal resources\n• Spread subnets across at least 2 AZs for high availability\n• Security Groups (instance-level, stateful) + NACLs (subnet-level, stateless) provide defense-in-depth\n\n**Best Practice:** Always design VPCs with multiple AZs. Use private subnets for all workloads unless they need direct internet access. Use VPC Flow Logs for network monitoring and troubleshooting.",
       "troubleshooting": [
-        "VPC Flow Logs",
-        "Check route tables",
-        "Verify Security Group rules",
-        "Check NACL rules (stateless!)",
-        "Verify IGW attached"
+        "VPC Flow Logs — analyze accepted/rejected traffic",
+        "Check route tables — does the subnet have the correct default route?",
+        "Verify Security Group rules — are required ports open?",
+        "Check NACL rules — stateless! Must allow both directions",
+        "Verify IGW is attached to the VPC",
+        "Check NAT Gateway status — running? In correct public subnet?",
+        "Reachability Analyzer — trace end-to-end paths"
       ]
     },
     "related_topics": [
@@ -48,10 +52,10 @@
     "name": "AWS Security Groups",
     "difficulty": "beginner",
     "theory": {
-      "what": "Security Groups are virtual firewalls for EC2 instances. They control inbound and outbound traffic at the instance level. They are stateful \u2014 return traffic is automatically allowed.",
+      "what": "Security Groups are virtual firewalls for EC2 instances. They control inbound and outbound traffic at the instance level. They are stateful — return traffic is automatically allowed.",
       "why": "Security Groups are the primary network security control in AWS. Misconfigured SGs (0.0.0.0/0 on SSH) are one of the most common cloud security findings.",
-      "how": "Rules specify: Protocol, Port range, Source/Destination (IP or another SG).\n\nKey behaviors:\n- Default: deny all inbound, allow all outbound\n- Stateful: if inbound allowed, response automatically allowed\n- Can reference other SGs (e.g., allow from web-sg to app-sg)\n- Changes take effect immediately",
-      "when": "Configure SGs for every resource. Follow least privilege \u2014 only allow required ports from required sources. Never use 0.0.0.0/0 for management ports.",
+      "how": "Rules specify: Protocol, Port range, Source/Destination (IP or another SG). Key behaviors: Default deny all inbound, allow all outbound. Stateful: if inbound allowed, response automatically allowed. Can reference other SGs (e.g., allow from web-sg to app-sg). Changes take effect immediately.",
+      "when": "Configure SGs for every resource. Follow least privilege — only allow required ports from required sources. Never use 0.0.0.0/0 for management ports.",
       "key_concepts": [
         "Stateful (vs NACLs which are stateless)",
         "Default deny inbound",
@@ -61,12 +65,15 @@
         "Applied at instance level"
       ],
       "configuration": "# Terraform Security Group\nresource \"aws_security_group\" \"web\" {\n  vpc_id = aws_vpc.main.id\n  \n  ingress {\n    from_port   = 443\n    to_port     = 443\n    protocol    = \"tcp\"\n    cidr_blocks = [\"0.0.0.0/0\"]\n  }\n  \n  ingress {\n    from_port       = 22\n    to_port         = 22\n    protocol        = \"tcp\"\n    security_groups = [aws_security_group.bastion.id]\n  }\n}",
+      "worked_examples": "**Worked Example 1: Three-Tier Security Group Design**\nWeb server SG: Allow 443 from 0.0.0.0/0\nApp server SG: Allow 8080 from web-sg (reference, not IP)\nDB server SG: Allow 3306 from app-sg (reference, not IP)\nBastion SG: Allow 22 from corporate IP\n\nUsing SG references means ALBs or auto-scaling don't require IP updates — the SG automatically allows traffic from any instance with the web-sg attached.\n\n**Worked Example 2: Troubleshooting Security Groups**\nSymptom: Connection timeout to EC2 web server.\n\nStep 1 — Check if SG allows inbound 443 from 0.0.0.0/0\nStep 2 — Check if instance is in the correct VPC and subnet\nStep 3 — Check if instance has a public IP (or is behind ALB)\nStep 4 — Check OS-level firewall on the instance (system firewall rules)\nStep 5 — Use VPC Flow Logs: is traffic reaching the instance and being rejected?\n- ACCEPT OK but no response → OS firewall\n- REJECT → SG or NACL blocking\n\n**Worked Example 3: SG vs NACL Comparison**\nTraffic from internet to web server:\n1. NACL (subnet-level): Must allow inbound 443 from 0.0.0.0/0 AND outbound ephemeral ports to 0.0.0.0/0 (stateless!)\n2. SG (instance-level): Must allow inbound 443 from 0.0.0.0/0 (stateful — return traffic auto-allowed)\n\nOne common issue: NACL blocks traffic even when SG allows it. Always check both!",
+      "summary": "**Key Takeaways:**\n• Security Groups are stateful instance-level firewalls with allow rules only\n• Default: deny all inbound, allow all outbound\n• Use SG references instead of IPs for cross-tier access\n• Never open SSH/RDP to 0.0.0.0/0 — use bastion or VPN\n• Changes take effect immediately (no restart needed)\n\n**Best Practice:** Always follow least privilege: specify exact ports and sources. Use SG references for intra-VPC traffic. Audit SGs regularly for overly permissive rules.",
       "troubleshooting": [
-        "Check inbound rules allow traffic",
-        "Verify source IP/SG reference",
-        "Remember: no deny rules possible",
-        "Check if instance is in correct SG",
-        "VPC Flow Logs show denied traffic"
+        "Check inbound rules — are required ports allowed from correct sources?",
+        "Verify source IP/SG reference is correct",
+        "Remember: SGs only have allow rules (no explicit deny)",
+        "Check if instance is attached to the correct SG",
+        "VPC Flow Logs show 'REJECT' — check SG and NACL",
+        "Verify the SG is associated with the instance's ENI"
       ]
     },
     "related_topics": [
@@ -90,23 +97,26 @@
     "theory": {
       "what": "Route tables control where network traffic is directed within a VPC. Each subnet is associated with a route table that determines how traffic flows.",
       "why": "Without proper route tables, subnets can't reach the internet, other subnets, or on-premises networks. Route tables are how you make subnets 'public' or 'private'.",
-      "how": "Each route table has rules:\n- Destination: CIDR block\n- Target: Where to send (IGW, NAT GW, VPC Peering, TGW, local)\n\nPublic subnet: Route to 0.0.0.0/0 \u2192 Internet Gateway\nPrivate subnet: Route to 0.0.0.0/0 \u2192 NAT Gateway\nLocal route (VPC CIDR \u2192 local) is always present and can't be removed.",
+      "how": "Each route table has rules: Destination (CIDR block), Target (where to send: IGW, NAT GW, VPC Peering, TGW, local). Public subnet: Route to 0.0.0.0/0 → Internet Gateway. Private subnet: Route to 0.0.0.0/0 → NAT Gateway. Local route (VPC CIDR → local) is always present and can't be removed.",
       "when": "Configure route tables when: creating subnets, setting up internet access, connecting VPCs, or establishing hybrid connectivity.",
       "key_concepts": [
         "Local route (automatic)",
-        "0.0.0.0/0 \u2192 IGW (public)",
-        "0.0.0.0/0 \u2192 NAT GW (private)",
+        "0.0.0.0/0 → IGW (public)",
+        "0.0.0.0/0 → NAT GW (private)",
         "Subnet association",
         "Most specific route wins",
         "Main route table (default)"
       ],
       "configuration": "# Terraform Route Table\nresource \"aws_route_table\" \"public\" {\n  vpc_id = aws_vpc.main.id\n  route {\n    cidr_block = \"0.0.0.0/0\"\n    gateway_id = aws_internet_gateway.main.id\n  }\n}\n\nresource \"aws_route_table_association\" \"public\" {\n  subnet_id      = aws_subnet.public.id\n  route_table_id = aws_route_table.public.id\n}",
+      "worked_examples": "**Worked Example 1: Public vs Private Subnet Routing**\nPublic subnet: 10.0.1.0/24\n  Route: 10.0.0.0/16 → local\n  Route: 0.0.0.0/0 → igw-xxx (Internet Gateway)\n  EC2 gets a public IP → reachable from internet\n\nPrivate subnet: 10.0.2.0/24\n  Route: 10.0.0.0/16 → local\n  Route: 0.0.0.0/0 → nat-xxx (NAT Gateway)\n  EC2 has private IP only → can initiate outbound traffic but isn't reachable from internet\n\n**Worked Example 2: Diagnosing Routing Issues**\nSymptom: EC2 in a private subnet can't reach the internet.\n\nStep 1 — Check subnet's route table association\nStep 2 — Check the associated route table has 0.0.0.0/0 → nat-xxx\nStep 3 — Is the NAT Gateway in a public subnet? (Must have route 0.0.0.0/0 → IGW)\nStep 4 — Does the NAT Gateway have an Elastic IP?\nStep 5 — Is the NAT Gateway in 'available' state?\n\nMost common issue: NAT GW is in a private subnet (no internet access itself).",
+      "summary": "**Key Takeaways:**\n• Route tables control subnet traffic — public subnets use IGW, private use NAT GW\n• Each subnet can only be associated with one route table\n• Most specific route wins (longest prefix match)\n• The local route is always present and can't be removed\n• Always verify subnet association when troubleshooting\n\n**Best Practice:** Create separate route tables for public and private subnets. Use descriptive names and tags. Document the VPC CIDR and subnet plans.",
       "troubleshooting": [
-        "Check subnet association",
-        "Verify default route target",
-        "Most specific route wins",
-        "Check if IGW/NAT GW exists",
-        "VPC Flow Logs for routing issues"
+        "Check subnet association — which route table is the subnet using?",
+        "Verify default route target — IGW for public, NAT GW for private",
+        "Most specific route wins — verify no conflicting routes",
+        "Check if IGW/NAT GW exists and is in the correct state",
+        "VPC Flow Logs show routing issues in traffic data",
+        "Check route propagation if using VPN/Direct Connect"
       ]
     },
     "related_topics": [
@@ -128,9 +138,9 @@
     "name": "Azure Virtual Network",
     "difficulty": "intermediate",
     "theory": {
-      "what": "Azure VNet is the fundamental building block for private networks in Azure. Similar to AWS VPC \u2014 provides isolation, subnetting, and connectivity control.",
+      "what": "Azure VNet is the fundamental building block for private networks in Azure. Similar to AWS VPC — provides isolation, subnetting, and connectivity control.",
       "why": "Every Azure resource that needs networking runs in a VNet. Understanding VNet design, NSGs, and connectivity options is essential for Azure cloud engineers.",
-      "how": "VNet components:\n- Address space (CIDR, e.g., 10.0.0.0/16)\n- Subnets (no public/private distinction \u2014 use NSGs)\n- NSGs (Network Security Groups \u2014 like AWS SGs but stateless at subnet level)\n- Route tables (UDRs \u2014 User Defined Routes)\n- VNet Peering (connect VNets)\n- VPN Gateway / ExpressRoute (hybrid)",
+      "how": "VNet components: Address space (CIDR), Subnets (no public/private distinction — use NSGs), NSGs (Network Security Groups — like AWS SGs but with deny rules at subnet/NIC level), Route tables (UDRs — User Defined Routes), VNet Peering (connect VNets), VPN Gateway / ExpressRoute (hybrid).",
       "when": "Every Azure deployment. Design subnets for: web tier, app tier, data tier, management. Use NSGs on every subnet.",
       "key_concepts": [
         "Address space",
@@ -142,12 +152,15 @@
         "Private Endpoints"
       ],
       "configuration": "# Azure CLI\naz network vnet create \\\n  --name MyVNet \\\n  --resource-group MyRG \\\n  --address-prefix 10.0.0.0/16 \\\n  --subnet-name WebSubnet \\\n  --subnet-prefix 10.0.1.0/24\n\naz network nsg create \\\n  --name WebNSG \\\n  --resource-group MyRG",
+      "worked_examples": "**Worked Example 1: Azure Three-Tier VNet Design**\nVNet: 10.0.0.0/16\n\nSubnets:\n- WebSubnet (10.0.1.0/24): Web servers → NSG allows 443 from internet\n- AppSubnet (10.0.2.0/24): App servers → NSG allows 8080 from WebSubnet only\n- DBSubnet (10.0.3.0/24): Database → NSG allows 1433 from AppSubnet only\n- MgmtSubnet (10.0.4.0/24): Bastion → NSG allows 22 from corporate IP\n\nAzure vs AWS differences:\n- No public/private subnet distinction — control via NSGs and route tables\n- Azure Bastion is a managed service (vs EC2 bastion in AWS)\n- Private Endpoints for PaaS services (SQL, Storage) keep traffic within Azure backbone\n\n**Worked Example 2: Diagnosing Azure Connectivity**\nSymptom: VM in a subnet can't reach the internet.\n\nStep 1 — Check NSG effective rules:\n  az network nsg show -g MyRG -n MyNSG --query 'defaultSecurityRules'\nStep 2 — Check if the subnet has a route to the internet:\n  Azure default: 0.0.0.0/0 → Internet (built-in, can't remove)\n  But if you define custom routes, the most specific wins\nStep 3 — Check if the VM has a public IP or is behind a load balancer\nStep 4 — Check NSG outbound rules (must allow internet traffic)\n\nCommon issues: custom route table overriding the default internet route, or NSG blocking outbound.",
+      "summary": "**Key Takeaways:**\n• Azure VNet is the equivalent of AWS VPC — CIDR, subnets, routing\n• NSGs are stateful and support both allow and deny rules (unlike AWS SGs)\n• No public/private subnet distinction — use NSGs for access control\n• Private Endpoints keep PaaS traffic within Azure backbone\n• Azure Bastion provides managed jump-box access without public IPs on VMs\n\n**Best Practice:** Design subnets for tiers (web, app, data, management). Always associate NSGs with subnets. Use Private Endpoints where possible to reduce internet exposure.",
       "troubleshooting": [
-        "Check NSG rules (both subnet and NIC level)",
-        "Verify effective routes",
-        "Network Watcher for diagnostics",
-        "Check service endpoints",
-        "IP flow verify tool"
+        "Check NSG rules at both subnet and NIC level",
+        "Verify effective routes — may differ from configured routes",
+        "Use Network Watcher for connectivity diagnostics",
+        "Check service endpoints if PaaS services aren't reachable",
+        "IP flow verify tool to test specific traffic flows",
+        "Check VNet peering status for cross-VNet connectivity"
       ]
     },
     "related_topics": [
@@ -172,7 +185,7 @@
     "theory": {
       "what": "Hybrid connectivity connects on-premises networks to cloud VPCs/VNets. Options include VPN (over internet) and dedicated connections (Direct Connect, ExpressRoute).",
       "why": "Most enterprises have existing on-premises infrastructure. Hybrid connectivity enables gradual cloud migration, disaster recovery, and keeping sensitive workloads on-premises.",
-      "how": "Options:\n- Site-to-Site VPN: Encrypted tunnel over internet (quick, cheap, limited bandwidth)\n- AWS Direct Connect / Azure ExpressRoute: Dedicated physical connection (expensive, high bandwidth, low latency)\n- Transit Gateway: Hub for connecting multiple VPCs and on-premises\n\nConsiderations: Bandwidth, latency, redundancy, cost, encryption.",
+      "how": "Options: Site-to-Site VPN (encrypted tunnel over internet, quick/cheap, limited bandwidth), AWS Direct Connect / Azure ExpressRoute (dedicated physical connection, expensive, high bandwidth, low latency), Transit Gateway (hub for connecting multiple VPCs and on-premises). Considerations: Bandwidth, latency, redundancy, cost, encryption.",
       "when": "Use VPN for: dev/test, low-bandwidth needs, quick setup. Use Direct Connect/ExpressRoute for: production workloads, high bandwidth, low latency requirements.",
       "key_concepts": [
         "Site-to-Site VPN",
@@ -183,12 +196,15 @@
         "Encryption requirements"
       ],
       "configuration": "# AWS Site-to-Site VPN (Terraform)\nresource \"aws_vpn_gateway\" \"main\" {\n  vpc_id = aws_vpc.main.id\n}\n\nresource \"aws_customer_gateway\" \"onprem\" {\n  bgp_asn    = 65000\n  ip_address = \"203.0.113.1\"\n  type       = \"ipsec.1\"\n}",
+      "worked_examples": "**Worked Example 1: VPN vs Direct Connect Decision**\nScenario: Migrating a production application to AWS.\n\nVPN option:\n- Setup time: hours\n- Cost: low (VPN connection + data transfer)\n- Bandwidth: up to 1.25 Gbps per tunnel\n- Latency: variable (over internet)\n- Reliability: best effort\n- Best for: dev/test, low-bandwidth, non-critical\n\nDirect Connect option:\n- Setup time: weeks (carrier coordination)\n- Cost: high (port fees $100+/month + data transfer)\n- Bandwidth: 50 Mbps to 100 Gbps\n- Latency: consistent (private circuit)\n- Reliability: 99.99% SLA available\n- Best for: production, high-bandwidth, latency-sensitive\n\nRecommendation: Start with VPN for migration, then add Direct Connect before going production.\n\n**Worked Example 2: Troubleshooting VPN Connectivity**\nSymptom: VPN tunnel is 'down'.\n\nStep 1 — Check tunnel status:\n  AWS: Tunnel shows 'DOWN' in VPN connection\n  On-prem: 'show crypto isakmp sa' shows no Phase 1\n\nStep 2 — Verify IKE parameters match:\n  Check encryption (AES256?), hashing (SHA256?), DH group (14/24?), auth method (pre-share?)\n\nStep 3 — Check routing:\n  AWS: Route propagation enabled for the VPN?\n  On-prem: Route to VPC CIDR through VPN interface?\n\nStep 4 — Check NAT/Firewall:\n  UDP 500 (ISAKMP) and UDP 4500 (NAT-T) open on both sides?\n\nStep 5 — Check that on-premises peer IP is reachable from AWS and vice versa.",
+      "summary": "**Key Takeaways:**\n• VPN provides encrypted tunnels over the internet (quick, cheap, limited bandwidth)\n• Direct Connect/ExpressRoute provides dedicated private circuits (high bandwidth, low latency, higher cost)\n• Use VPN for non-critical/dev traffic; Direct Connect for production workloads\n• BGP enables dynamic routing over hybrid connections\n• Always design for redundancy with dual tunnels or connections\n\n**Best Practice:** Start with VPN for initial connectivity. Add Direct Connect when moving to production. Always use redundant tunnels (two AWS VPN tunnels, two DX connections). Design with BGP for automatic failover.",
       "troubleshooting": [
-        "Check VPN tunnel status",
-        "Verify BGP peering",
-        "Check route propagation",
-        "Monitor bandwidth utilization",
-        "Test failover"
+        "Check VPN tunnel status — 1 up, 2 down? (AWS creates 2 tunnels for redundancy)",
+        "Verify BGP peering is established between on-prem and cloud",
+        "Check route propagation — both sides must advertise their CIDRs",
+        "Monitor bandwidth utilization — don't oversubscribe the connection",
+        "Test failover by shutting down one tunnel",
+        "Check MTU — consider clamping at 1400 for VPN traffic"
       ]
     },
     "related_topics": [

@@ -42,8 +42,18 @@
         "clear ip ospf process — Force full OSPF restart (use with caution!)"
       ]
     },
-    "related_topics": ["bgp-fundamentals", "subnetting", "ipv4-addressing"],
-    "tags": ["ospf", "routing", "igp", "link-state", "spf"]
+    "related_topics": [
+      "bgp-fundamentals",
+      "subnetting",
+      "ipv4-addressing"
+    ],
+    "tags": [
+      "ospf",
+      "routing",
+      "igp",
+      "link-state",
+      "spf"
+    ]
   },
   {
     "id": "bgp-fundamentals",
@@ -91,8 +101,16 @@
         "traceroute peer source Loopback0 — Verify multi-hop path"
       ]
     },
-    "related_topics": ["ospf-fundamentals"],
-    "tags": ["bgp", "routing", "internet", "autonomous-system", "path-vector"]
+    "related_topics": [
+      "ospf-fundamentals"
+    ],
+    "tags": [
+      "bgp",
+      "routing",
+      "internet",
+      "autonomous-system",
+      "path-vector"
+    ]
   },
   {
     "id": "hsrp-vrrp",
@@ -113,16 +131,30 @@
         "Hello/Hold timers",
         "Interface tracking"
       ],
-      "configuration": "! HSRP\ninterface Vlan10\n ip address 10.0.10.2 255.255.255.0\n standby 1 ip 10.0.10.1\n standby 1 priority 110\n standby 1 preempt\n standby 1 track GigabitEthernet0/0",
+      "configuration": "! HSRP\ninterface Vlan10\n ip address 10.0.10.2 255.255.255.0\n standby 1 ip 10.0.10.1\n standby 1 priority 110\n standby 1 preempt\n standby 1 track GigabitEthernet0/0 20\n\n! VRRP (open standard)\ninterface Vlan10\n vrrp 1 ip 10.0.10.1\n vrrp 1 priority 110\n vrrp 1 preempt\n vrrp 1 track GigabitEthernet0/0 20",
+      "worked_examples": "**Worked Example 1: Active/Active HSRP with Load Sharing**\nArchitecture: Two routers (R1 and R2) both serve as gateways for different VLANs, sharing traffic load while providing failover for each other.\n\nR1:\n  interface Vlan10  ! Primary gateway for VLAN 10\n   standby 1 ip 10.0.10.1\n   standby 1 priority 110  ! Higher priority = Active for VLAN 10\n   standby 1 preempt\n  interface Vlan20  ! Backup gateway for VLAN 20\n   standby 2 ip 10.0.20.1\n   standby 2 priority 100  ! Lower priority = Standby for VLAN 20\n   standby 2 preempt\n\nR2:\n  interface Vlan10  ! Backup gateway for VLAN 10\n   standby 1 ip 10.0.10.1\n   standby 1 priority 100\n   standby 1 preempt\n  interface Vlan20  ! Primary gateway for VLAN 20\n   standby 2 ip 10.0.20.1\n   standby 2 priority 110\n   standby 2 preempt\n\nResult: Traffic for VLAN 10 flows through R1, VLAN 20 through R2. If either fails, both VLANs use the remaining router.\n\n**Worked Example 2: Diagnosing HSRP Issues**\nSymptom: Hosts can't ping the HSRP virtual IP.\n\nStep 1 — Check HSRP state on both routers:\n  show standby brief\n  Expected output: One router is Active for the group, the other is Standby.\n  If both are Active → HSRP split-brain (standby can't reach active — check connectivity between routers).\n  If both are Standby → Preempt not configured, or timers are disagreeing.\n\nStep 2 — If state is correct but hosts can't reach VIP:\n  Can the Active router reach the virtual IP itself? Try pinging the VIP from the Active router.\n  If ping fails, the VIP is not being added to the interface properly. Check standby config.\n  Can hosts ping the Active router's real IP? If not, L2 connectivity issue, not HSRP.\n\nStep 3 — Check interface tracking:\n  show standby | include tracking\n  If the tracked interface (uplink) is down, the priority drops and the other router should become Active.",
+      "summary": "**Key Takeaways:**\n• HSRP (Cisco) and VRRP (open standard RFC 5798) provide gateway redundancy via a shared virtual IP\n• Active/Master router handles traffic; Standby/Backup monitors via hello packets and takes over on failure\n• Priority (higher = preferred) and preemption control which router is active\n• Interface tracking reduces priority when an uplink fails, triggering failover\n• Default failover time is 3-10 seconds; can be reduced with sub-second timers\n• Use active/active design by making each router primary for different VLANs\n\n**Best Practice:** Always enable preempt and interface tracking. Use active/active load sharing for better resource utilization. Set timers to sub-second on fast networks for quicker failover.",
       "troubleshooting": [
-        "show standby",
-        "show standby brief",
-        "show vrrp",
-        "debug standby"
+        "show standby — detailed HSRP state, timers, priority, virtual IPs",
+        "show standby brief — quick overview of all HSRP groups and their states",
+        "show vrrp — VRRP equivalent of show standby",
+        "debug standby — real-time HSRP state changes (use carefully)",
+        "Check L2 connectivity between routers — HSRP/VVRP uses multicast 224.0.0.2 or 224.0.0.18",
+        "Verify interface tracking — if tracked interface is down, priority drops",
+        "Check authentication mismatch between routers"
       ]
     },
-    "related_topics": ["ospf-fundamentals", "stp-protocol"],
-    "tags": ["hsrp", "vrrp", "redundancy", "gateway", "high-availability"]
+    "related_topics": [
+      "ospf-fundamentals",
+      "stp-protocol"
+    ],
+    "tags": [
+      "hsrp",
+      "vrrp",
+      "redundancy",
+      "gateway",
+      "high-availability"
+    ]
   },
   {
     "id": "etherchannel",
@@ -131,28 +163,47 @@
     "name": "EtherChannel (Link Aggregation)",
     "difficulty": "intermediate",
     "theory": {
-      "what": "EtherChannel bundles multiple physical links into one logical link, providing increased bandwidth and redundancy without STP blocking the extra links.",
-      "why": "STP blocks redundant links. EtherChannel tricks STP into seeing multiple links as one, so all links are active. Doubles/triples bandwidth while providing failover.",
-      "how": "Negotiation protocols: LACP (802.3ad, open standard, preferred), PAgP (Cisco proprietary), Static (not recommended). All member links must have same speed, duplex, VLAN, and trunk settings.",
-      "when": "Use EtherChannel between switches, switch and server, or switch and router when more bandwidth than a single link is needed.",
+      "what": "EtherChannel bundles multiple physical Ethernet links into one logical link (Port-channel interface), providing N × link bandwidth while surviving individual link failures. The connected devices see one logical interface. Spanning Tree Protocol (STP) treats the bundle as a single link, so all member links can forward traffic simultaneously — STP does NOT block the redundant physical links because it only sees the single logical Port-channel. EtherChannel is standardized as IEEE 802.3ad (Link Aggregation Control Protocol — LACP). The technology is called different names by vendors: EtherChannel (Cisco), Link Aggregation (open standard), Bonding (Linux), or Teaming (Windows Server). A single EtherChannel can bundle up to 8 active links (plus up to 8 redundant standby links with LACP), with speeds from 100 Mbps to 400 Gbps per link.",
+      "why": "EtherChannel solves a fundamental STP limitation: STP blocks redundant links to prevent loops, wasting bandwidth. With 4 × 10 Gbps links between two switches, STP would block 3 of them (30 Gbps wasted). EtherChannel makes STP see these as one link, so all 4 are active — providing 40 Gbps of bandwidth with 4:1 redundancy. Additional benefits: (1) Linear bandwidth scaling — add links without reconfiguring routing protocols or STP; (2) Load balancing — traffic is distributed across member links using a hash algorithm (src/dst MAC, IP, or port); (3) Automatic failover — if a link fails, traffic is redistributed across remaining links in milliseconds; (4) No STP reconvergence — the Port-channel doesn't go down when a member link fails; (5) Cost-effective — use multiple cheap 1 Gbps links instead of upgrading to 10 Gbps hardware.",
+      "how": "EtherChannel operation has three modes. Mode 1 — LACP (IEEE 802.3ad, open standard, preferred): Uses LACP PDUs to negotiate and manage the bundle. LACP modes: active (initiates negotiation), passive (responds to negotiation but doesn't initiate). At least one side must be active. LACP also supports: system priority (determines which device controls the bundle), port priority (determines which ports are active vs standby), and LACP fast vs slow rate (1s vs 30s hello). Mode 2 — PAgP (Cisco proprietary): Similar to LACP but Cisco-only. Modes: desirable (initiates) and auto (responds). Mode 3 — Static (on mode): No negotiation, just bundle the ports. Not recommended — doesn't detect misconfiguration on the far end. For all modes, member links MUST match: same speed, duplex, VLAN settings, trunk mode (all access or all trunk), native VLAN, and STP settings. The Port-channel assumes the properties of the member interfaces — you configure features (like trunk) on the Port-channel interface, not individual member ports.",
+      "when": "Deploy EtherChannel in these scenarios: (1) Switch-to-switch links — the most common use, increasing inter-switch bandwidth; (2) Switch-to-server — connect servers with dual NICs for redundancy and bandwidth (requires LACP support in the NIC driver); (3) Switch-to-router — aggregated uplinks from access switches to distribution routers; (4) Data center ToR-to-leaf — 4-8 × 25/100G links between top-of-rack and leaf switches. Do NOT use EtherChannel when: the two sides don't support the same negotiation protocol, or the links have different characteristics (speed, duplex). Maximum 8 active links per EtherChannel on most platforms (some newer platforms support up to 16 or 32).",
       "key_concepts": [
-        "LACP (active/passive)",
-        "PAgP (desirable/auto)",
-        "Load balancing (src-mac, dst-mac, src-dst-ip)",
-        "All links must match settings",
-        "Port-channel interface",
-        "Maximum 8 links per channel"
+        "LACP (802.3ad) — open standard, preferred; uses active/passive modes",
+        "PAgP — Cisco proprietary; uses desirable/auto modes",
+        "Port-channel — the logical interface representing the bundle",
+        "Load balancing — hash-based; options: src-mac, dst-mac, src-dst-mac, src-ip, dst-ip, src-dst-ip",
+        "All member links must match — speed, duplex, VLAN, trunk, STP",
+        "Max 8 active links per bundle (plus 8 LACP standby)",
+        "LACP system priority — determines which device manages the bundle",
+        "LACP port priority — determines which ports are active vs standby",
+        "On mode (static) — no protocol; risky because misconfigs aren't detected"
       ],
-      "configuration": "! LACP EtherChannel\ninterface range GigabitEthernet0/1-2\n channel-group 1 mode active\n!\ninterface Port-channel1\n switchport mode trunk",
+      "configuration": "! LACP EtherChannel (Recommended)\ninterface range GigabitEthernet0/1-4\n description Uplink to Core Switch\n channel-group 1 mode active\n!\ninterface Port-channel1\n description LACP to Core-SW\n switchport mode trunk\n switchport trunk allowed vlan 10,20,30,99\n spanning-tree guard root\n\n! Configure load balancing method (global)\nport-channel load-balance src-dst-ip\n\n! PAgP EtherChannel (Cisco only)\ninterface range GigabitEthernet0/1-2\n channel-group 2 mode desirable\n!\ninterface Port-channel2\n switchport mode trunk\n\n! LACP with standby links\ninterface range GigabitEthernet0/1-4\n channel-group 1 mode active\n lacp port-priority 100  ! Lower number = higher priority, these are active\n!\ninterface range GigabitEthernet0/5-8\n channel-group 1 mode passive\n lacp port-priority 200  ! Higher = standby\n\n! Verify\nshow etherchannel summary\nshow etherchannel port-channel\nshow lacp neighbor",
+      "worked_examples": "**Worked Example 1: Troubleshooting EtherChannel Issues**\nSymptom: EtherChannel shows 'err-disabled' or only one link comes up.\n\nStep 1 — Check physical characteristics of all member links:\n  show interfaces status | include Gi0/\n  All member links MUST have the same speed and duplex. Mixing 100Mbps and 1Gbps won't work.\n\nStep 2 — Check VLAN configuration consistency:\n  show interfaces trunk\n  All member links must have the same allowed VLAN list. If one link allows VLAN 10-20 and another allows VLAN 10-30, the bundle won't form.\n\nStep 3 — Verify channel-group mode matches between switches:\n  If one side is active and the other is passive, LACP works.\n  If both sides are passive, LACP never negotiates. Side A must be active or desirable.\n  If both sides are active, LACP works.\n\nStep 4 — Check LACP rate:\n  By default LACP sends hellos every 30 seconds. Enabling 'lacp rate fast' sends every 1 second. Both sides must match or the bundle may not form.\n\n**Worked Example 2: Load Balancing Behavior**\nEtherChannel load balancing uses a hash algorithm over selected fields.\n\nDefault hash: src-dst-mac (or src-dst-ip depending on platform)\n\nScenario: A single TCP file transfer between Server A (MAC: AA:AA:AA:AA:AA:01) and Server B (MAC: BB:BB:BB:BB:BB:01).\n  Hash(src-mac XOR dst-mac) % number_of_links = always the same link\n  Conclusion: A single flow uses only ONE link. Multiple flows distribute across links.\n\nTo verify the hash selection:\n  show etherchannel load-balance\n  test etherchannel load-balance interface Port-channel1 mac AA:AA:AA:AA:AA:01 BB:BB:BB:BB:BB:01\n  Shows which member link a given flow would use.",
+      "summary": "**Key Takeaways:**\n• EtherChannel bundles up to 8 physical links into one logical link for N × bandwidth + redundancy\n• STP sees the bundle as one link, so all member links are active simultaneously\n• LACP (802.3ad, open standard) is the preferred negotiation protocol\n• All member links must match: speed, duplex, VLAN settings, trunk mode\n• Load balancing is per-flow (hash-based), not per-packet — a single flow uses one link\n• Automatic failover when a member link goes down (milliseconds, no STP reconvergence)\n\n**Best Practice:** Use LACP active mode for maximum interoperability. Configure features (trunk, allowed VLANs) on the Port-channel interface, not individual member ports. Use lacp rate fast for faster failure detection on critical links.",
       "troubleshooting": [
-        "show etherchannel summary",
-        "show etherchannel port-channel",
-        "show lacp neighbor",
-        "show pagp neighbor"
+        "show etherchannel summary — quick status: bundled, individual, err-disabled, or suspended",
+        "show etherchannel port-channel — Port-channel interface status and member links",
+        "show lacp neighbor — LACP peer status, system ID, port priority",
+        "show pagp neighbor — PAgP peer status",
+        "show etherchannel load-balance — current load balancing algorithm",
+        "show interfaces status | include channel — check member link status",
+        "Check VLAN consistency — all members must have same trunk configuration",
+        "Check speed/duplex consistency — mismatch prevents bundling",
+        "err-disabled — usually indicates misconfiguration or physical issue"
       ]
     },
-    "related_topics": ["stp-protocol", "vlans"],
-    "tags": ["etherchannel", "lacp", "aggregation", "bandwidth", "redundancy"]
+    "related_topics": [
+      "stp-protocol",
+      "vlans"
+    ],
+    "tags": [
+      "etherchannel",
+      "lacp",
+      "aggregation",
+      "bandwidth",
+      "redundancy"
+    ]
   },
   {
     "id": "qos-basics",
@@ -161,27 +212,46 @@
     "name": "QoS (Quality of Service)",
     "difficulty": "intermediate",
     "theory": {
-      "what": "QoS prioritizes certain traffic types over others when network congestion occurs. It ensures critical applications (voice, video) get bandwidth while less important traffic waits.",
-      "why": "Without QoS, all traffic is treated equally. During congestion, voice calls drop, video freezes, and critical apps slow down. QoS ensures business-critical traffic always gets through.",
-      "how": "QoS mechanisms: Classification (DSCP, ACL, NBAR), Marking (DSCP values), Queuing (priority queues), Scheduling (LLQ, CBWFQ), Policing/Shaping (limit bandwidth).",
-      "when": "Implement QoS when running VoIP, video conferencing, or any real-time application over a shared network. Also for WAN links with limited bandwidth.",
+      "what": "QoS (Quality of Service) is a set of traffic management techniques that prioritizes certain types of data over others during network congestion. Without QoS, all packets are treated equally — during congestion, voice calls drop, video conferences freeze, and critical business transactions stall while bulk downloads continue unaffected. QoS ensures that critical applications receive the bandwidth, latency, jitter, and packet loss guarantees they require. The core mechanisms include: classification (identifying traffic types), marking (tagging packets with priority values), policing/shaping (enforcing bandwidth limits), queuing (holding packets during congestion), and scheduling (deciding which queue to service next). QoS is implemented at Layer 2 (802.1p/CoS) and Layer 3 (DSCP). The Differentiated Services (DiffServ) architecture is the dominant QoS model — it classifies packets at the network edge into a limited number of traffic classes and applies per-hop behaviors (PHB) at each router.",
+      "why": "QoS is essential because network bandwidth is finite and congestion is inevitable. Without QoS: (1) Voice quality degrades — voice calls drop when competing with file downloads; (2) Video freezes — video conferencing becomes unusable; (3) Critical transactions time out — database updates, financial trades, and API calls fail; (4) Business-critical apps compete with recreational traffic — YouTube competes with SAP; (5) The 'elephant and mice' problem — a few large flows (elephants) can starve many small flows (mice). QoS ensures business outcomes: voice quality (MOS > 4.0), video quality, transaction completion, and fair allocation. For enterprises, QoS is critical on WAN links (the bottleneck). For service providers, QoS enables service differentiation (Gold/Silver/Bronze SLAs). Without QoS, the network is not managing congestion — it is leaving it to chance.",
+      "how": "QoS implementation follows the 3-step MQC (Modular QoS CLI) process. Step 1 — CLASSIFY: Create class-maps to match traffic. Match based on: ACL, DSCP/CoS values, NBAR (protocol-based), IP precedence, or incoming interface. Example: class-map VOICE matches RTP traffic (UDP ports 16384-32767). Step 2 — POLICY: Create a policy-map that applies actions to each class. Actions include: bandwidth guarantee (bandwidth kbps), priority queue (strict priority for voice), police (limit bandwidth), shape (smooth traffic bursts), set (mark DSCP/CoS), drop (policing). Step 3 — APPLY: Attach the policy-map to an interface with service-policy {input|output}. QoS components in detail include: Classification using ACLs, NBAR (deep packet inspection), or Layer 2/3 markings; Marking by setting DSCP or CoS values at the trust boundary; Queuing using FIFO, WFQ, CBWFQ, or LLQ; Scheduling deciding which queue to serve next; Policing dropping traffic exceeding a configured rate; and Shaping buffering excess traffic to smooth bursts.",
+      "when": "Implement QoS in these scenarios: (1) WAN links — always! WAN bandwidth is the most expensive and constrained; (2) VoIP deployments — voice calls require less than 150ms latency, less than 30ms jitter, and less than 1% loss; (3) Video conferencing — requires strict QoS guarantees; (4) Multi-service networks — when voice, video, and data share the same links; (5) Data center — QoS for storage traffic (FCoE, iSCSI) and VM migration; (6) Service provider networks — QoS enables SLAs and service differentiation. QoS design principles: (1) Mark at the trust boundary (IP phone, switch access port, or router edge); (2) Queue at WAN edges where congestion occurs; (3) Police at access edges; (4) Use LLQ for real-time traffic; (5) Limit LLQ to 30% of bandwidth; (6) Use CBWFQ for data classes.",
       "key_concepts": [
-        "DSCP (Differentiated Services Code Point)",
-        "Classification and Marking",
-        "Queuing (LLQ, CBWFQ)",
-        "Policing vs Shaping",
-        "Trust boundary",
-        "EF (Expedited Forwarding) for voice"
+        "DSCP (Differentiated Services Code Point) — 6-bit field in IP header for packet marking (64 possible values)",
+        "Classification — identifying traffic by ACL, NBAR, or existing markings",
+        "Marking — setting DSCP/CoS at the trust boundary (near the traffic source)",
+        "LLQ (Low Latency Queuing) — strict-priority queue for real-time traffic",
+        "CBWFQ (Class-Based Weighted Fair Queue) — guaranteed bandwidth per class",
+        "Policing — drop traffic exceeding rate (marked as 'conform'/'exceed'/'violate')",
+        "Shaping — buffer excess traffic, smoothing bursts",
+        "Trust boundary — where the network trusts packet markings (IP phone to switch port)",
+        "NBAR (Network-Based Application Recognition) — DPI for application identification",
+        "WRED (Weighted Random Early Detection) — early packet drop to prevent TCP global synchronization"
       ],
-      "configuration": "! Classify and mark voice\nclass-map match-all VOICE\n match protocol rtp\npolicy-map QOS-POLICY\n class VOICE\n  priority 256\n class class-default\n  fair-queue\n!\ninterface GigabitEthernet0/0\n service-policy output QOS-POLICY",
+      "configuration": "! MQC QoS Configuration\n! Step 1 — Classification\nclass-map match-all VOICE\n description Voice traffic (RTP)\n match ip dscp ef\n!\nclass-map match-any VIDEO\n description Video conferencing\n match ip dscp af41 af42 af43\n!\nclass-map match-all TRANSACTIONAL\n description Critical business apps\n match ip dscp af21 af22 af23\n match access-group name CRITICAL_APPS\n!\n! Step 2 — Policy\npolicy-map WAN-EDGE\n class VOICE\n  priority percent 10\n class VIDEO\n  bandwidth percent 20\n class TRANSACTIONAL\n  bandwidth percent 30\n class class-default\n  fair-queue\n  random-detect\n!\n! Step 3 — Apply to WAN interface\ninterface Serial0/0/0\n description WAN Link to HQ - 10 Mbps\n bandwidth 10000\n service-policy output WAN-EDGE",
+      "worked_examples": "**Worked Example 1: Voice and Data QoS on a WAN Link**\nA 10 Mbps WAN link carries voice, video, and data.\n\nPolicy: WAN-EDGE-OUT\n- Voice (EF): priority queue, max 1 Mbps (10%)\n- Video (AF41): CBWFQ, min 2 Mbps (20%), max 4 Mbps\n- Transactional (AF21): CBWFQ, min 3 Mbps (30%)\n- Default (DF): fair queue, remaining bandwidth\n\nResults:\n- Voice always gets served first (strict priority). If voice exceeds 1 Mbps, excess is dropped.\n- Video and transactional data have minimum guarantees. If not used, bandwidth is available to other traffic.\n- Default traffic gets a fair share of what is left but cannot starve higher-priority traffic.\n\n**Worked Example 2: Diagnosing QoS Problems**\nSymptom: Voice quality is poor despite QoS configuration.\n\nStep 1 — Verify the policy is applied to the correct interface and direction:\n  show policy-map interface Serial0/0/0\n  Check: service-policy output: WAN-EDGE\n  If the policy shows 0 packets classified, voice traffic is not matching the class-map!\n\nStep 2 — Verify classification:\n  show class-map VOICE\n  Check: match ip dscp ef — does the voice traffic have DSCP EF set?\n\nStep 3 — Check the trust boundary:\n  show mls qos interface Gi0/1\n  Is the port configured to trust markings from the IP phone?\n\nStep 4 — Check queue drops:\n  show policy-map interface Serial0/0/0\n  Look for 'queue depth' and 'drops' — if the priority queue is dropping packets, increase LLQ bandwidth percent.\n\n**Worked Example 3: Campus Access Port QoS**\nCisco IP phone connected to switch port with PC daisy-chained through phone:\n\ninterface GigabitEthernet0/1\n description User-Port-A12 — Phone + PC\n switchport mode access\n switchport access vlan 100\n switchport voice vlan 110\n mls qos trust device cisco-phone\n mls qos trust cos\n auto qos voip cisco-phone\n\nThe phone marks voice traffic as CoS 5 (DSCP EF) and data as CoS 0. The switch trusts these markings from the phone device. PC traffic is re-marked to CoS 0. This establishes the trust boundary at the network edge.",
+      "summary": "**Key Takeaways:**\n• QoS prioritizes critical traffic during congestion using classification, marking, queuing, and scheduling\n• LLQ provides strict priority for real-time traffic (voice, video) with bandwidth limits\n• CBWFQ guarantees bandwidth for each traffic class with fair sharing of excess\n• DSCP (6-bit, 64 values) is the standard packet marking mechanism\n• Trust boundary must be established at the edge (IP phone or access switch)\n• Police at access edges, shape at WAN edges\n• Limit LLQ to 30% of bandwidth to prevent starvation of other traffic\n\n**Best Practice:** Use AutoQoS for initial setup on Cisco devices, then tune based on monitoring. Always verify QoS with 'show policy-map interface' to confirm packets are matching expected classes.",
       "troubleshooting": [
-        "show policy-map interface",
-        "show class-map",
-        "show mls qos interface",
-        "show queuing"
+        "show policy-map interface — verify applicable policies, classified packet count, drops per queue",
+        "show class-map — review classification criteria",
+        "show mls qos interface — check trust state and QoS settings on switch ports",
+        "show queueing interface — view queue depths and drop statistics",
+        "Verify DSCP values end-to-end using packet capture",
+        "Check priority queue drops — indicates LLQ is undersized for voice/video traffic",
+        "Verify bandwidth allocation does not exceed interface bandwidth",
+        "Check shaping — excessive drops indicate shaper is too restrictive"
       ]
     },
-    "related_topics": ["vlans", "ospf-fundamentals"],
-    "tags": ["qos", "priority", "voice", "bandwidth", "congestion"]
+    "related_topics": [
+      "vlans",
+      "ospf-fundamentals"
+    ],
+    "tags": [
+      "qos",
+      "priority",
+      "voice",
+      "bandwidth",
+      "congestion"
+    ]
   }
 ]
