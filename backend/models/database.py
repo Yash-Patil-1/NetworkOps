@@ -48,6 +48,10 @@ async def init_db():
             lessons INTEGER NOT NULL DEFAULT 0,
             quizzes INTEGER NOT NULL DEFAULT 0
         );
+        CREATE INDEX IF NOT EXISTS idx_quiz_history_topic ON quiz_history(topic_id);
+        CREATE INDEX IF NOT EXISTS idx_quiz_seen_topic ON quiz_seen(topic_id);
+        CREATE INDEX IF NOT EXISTS idx_quiz_seen_question ON quiz_seen(question_id);
+        CREATE INDEX IF NOT EXISTS idx_quiz_history_date ON quiz_history(answered_at);
     """)
     conn.commit()
     conn.close()

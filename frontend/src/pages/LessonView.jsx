@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, CheckCircle, XCircle, Lightbulb, ChevronRight, BookOpen, Zap, Trophy, Flame } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
@@ -19,6 +19,11 @@ export default function LessonView() {
   const [xpEarned, setXpEarned] = useState(0)
   const [streak, setStreak] = useState(null)
   const [checkpointResults, setCheckpointResults] = useState([])
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    sectionRef.current?.focus()
+  }, [step])
 
   useEffect(() => {
     setLoading(true)
@@ -158,8 +163,8 @@ export default function LessonView() {
     const isLastStep = step >= (sections.length * 2) - 1
 
     return (
-      <div className="max-w-4xl animate-fade-in">
-        <Link to="/learn" className="inline-flex items-center gap-1 text-ash hover:text-chalk text-sm mb-4">
+      <div ref={sectionRef} tabIndex={-1} className=" max-w-4xl animate-fade-in focus-visible:ring-1 focus-visible:ring-red outline-none">
+        <Link to="/learn" className="inline-flex items-center  gap-1 text-ash hover:text-chalk text-sm mb-4">
           <ArrowLeft className="w-4 h-4" /> Back to Lessons
         </Link>
 

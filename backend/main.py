@@ -6,6 +6,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
+logger = logging.getLogger(__name__)
+
 from routers import topics, quiz, domains, progress, streak, lessons
 from models.database import init_db
 from services.knowledge_base import NetworkKnowledgeBase
@@ -14,13 +18,13 @@ from services.quiz_engine import QuizEngine
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("🌐 Loading NetworkOps knowledge base...")
+    logger.info("Loading NetworkOps knowledge base...")
     app.state.kb = NetworkKnowledgeBase()
     app.state.kb.load()
     app.state.quiz_engine = QuizEngine(app.state.kb.questions)
-    print(f"✅ Loaded {app.state.kb.topic_count} topics, {app.state.kb.question_count} questions")
+    logger.info("Loaded %d topics, %d questions", app.state.kb.topic_count, app.state.kb.question_count)
     await init_db()
-    print("✅ Database initialized.")
+    logger.info("Database initialized.")
     yield
 
 
