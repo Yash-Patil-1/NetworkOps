@@ -1,4 +1,4 @@
-"""NetworkOps Knowledge Base — loads topics, questions, protocols."""
+"""NetworkOps Knowledge Base — loads topics, questions."""
 
 import json
 from pathlib import Path
@@ -12,8 +12,6 @@ class NetworkKnowledgeBase:
         self.topics: list[dict] = []
         self.questions: list[dict] = []
         self.domains: list[dict] = []
-        self.phases: list[dict] = []
-        self.protocols: list[dict] = []
         self._topic_index: dict[str, dict] = {}
 
     def load(self):
@@ -37,18 +35,6 @@ class NetworkKnowledgeBase:
         if domains_file.exists():
             with open(domains_file, 'r') as f:
                 self.domains = json.load(f)
-
-        # Load phases
-        phases_file = DATA_DIR / "phases.json"
-        if phases_file.exists():
-            with open(phases_file, 'r') as f:
-                self.phases = json.load(f)
-
-        # Load protocols
-        protocols_file = DATA_DIR / "protocols.json"
-        if protocols_file.exists():
-            with open(protocols_file, 'r') as f:
-                self.protocols = json.load(f)
 
     @property
     def topic_count(self) -> int:

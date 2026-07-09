@@ -77,15 +77,6 @@ class QuizEngine:
             "user_answer": user_answer,
         }
 
-    def get_topic_stats(self, topic_id: str) -> dict:
-        """Get question count for a topic."""
-        questions = self._by_topic.get(topic_id, [])
-        return {
-            "total_questions": len(questions),
-            "by_type": self._count_by_type(questions),
-            "by_difficulty": self._count_by_difficulty(questions),
-        }
-
     def _fuzzy_match(self, user: str, correct: str) -> bool:
         """Simple fuzzy matching — checks if key parts of correct answer are in user's answer."""
         # Remove extra whitespace and normalize
@@ -105,16 +96,3 @@ class QuizEngine:
         overlap = len(correct_words & user_words) / len(correct_words)
         return overlap >= 0.7
 
-    def _count_by_type(self, questions: list[dict]) -> dict:
-        counts = {}
-        for q in questions:
-            t = q.get("type", "theory")
-            counts[t] = counts.get(t, 0) + 1
-        return counts
-
-    def _count_by_difficulty(self, questions: list[dict]) -> dict:
-        counts = {}
-        for q in questions:
-            d = q.get("difficulty", "medium")
-            counts[d] = counts.get(d, 0) + 1
-        return counts

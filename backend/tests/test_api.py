@@ -34,9 +34,6 @@ class TestQuiz:
 class TestDomains:
     def test_list(self, client):
         r = client.get("/api/domains"); assert len(r.json()["domains"]) == 6
-    def test_phases(self, client):
-        r = client.get("/api/domains/phases"); assert len(r.json()["phases"]) == 6
-
 class TestProgress:
     def test_get(self, client):
         r = client.get("/api/progress"); assert "total_topics" in r.json()

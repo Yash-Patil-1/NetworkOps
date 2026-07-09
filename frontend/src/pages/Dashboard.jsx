@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { BookOpen, HelpCircle, ArrowRight, Zap, Flame, GraduationCap, TrendingUp } from 'lucide-react'
+import { HelpCircle, ArrowRight, Zap, Flame, GraduationCap, TrendingUp } from 'lucide-react'
 import axios from 'axios'
 
 export default function Dashboard() {

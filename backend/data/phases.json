@@ -1,8 +1,0 @@
-[
-  {"id": 1, "name": "Networking Fundamentals", "description": "Core concepts: OSI, TCP/IP, addressing, protocols."},
-  {"id": 2, "name": "Network Engineering", "description": "Routing protocols, switching, design, high availability."},
-  {"id": 3, "name": "NOC Operations", "description": "Monitoring, alerting, troubleshooting, incident response."},
-  {"id": 4, "name": "Network Security", "description": "Firewalls, IDS/IPS, segmentation, Zero Trust."},
-  {"id": 5, "name": "Cloud Networking", "description": "AWS, Azure, GCP networking and hybrid connectivity."},
-  {"id": 6, "name": "Network Automation", "description": "Python, Ansible, Terraform, APIs for network management."}
-]
