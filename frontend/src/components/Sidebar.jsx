@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { LayoutDashboard, BookOpen, HelpCircle, GraduationCap, Github } from 'lucide-react'
+import { LayoutDashboard, BookOpen, HelpCircle, GraduationCap, Github, Sun, Moon } from 'lucide-react'
 import StreakBadge from './StreakBadge'
 
 const links = [
@@ -9,7 +9,7 @@ const links = [
   { path: '/quiz', label: 'Quiz', icon: HelpCircle },
 ]
 
-export default function Sidebar() {
+export default function Sidebar({ lightMode, toggleLightMode }) {
   const loc = useLocation()
 
   return (
@@ -28,6 +28,11 @@ export default function Sidebar() {
       </nav>
 
       <div className="space-y-2">
+        <button onClick={toggleLightMode}
+          className="flex items-center gap-2 w-full px-3 py-2 rounded text-sm font-mono text-brushed-silver hover:text-cool-ash hover:bg-carbon/30 transition-colors">
+          {lightMode ? <Moon size={14} /> : <Sun size={14} />}
+          {lightMode ? 'Dark Mode' : 'Light Mode'}
+        </button>
         <StreakBadge />
         <div className="border-t border-carbon/30 pt-3">
           <a href="https://github.com/Yash-Patil-1" target="_blank" rel="noopener noreferrer" className="nav-item">

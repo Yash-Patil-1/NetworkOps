@@ -5,9 +5,9 @@ import axios from 'axios'
 
 const DOMAIN_META = {
   fundamentals: { label: 'Networking Fundamentals', icon: Cpu, color: 'text-blue-400' },
-  network_engineering: { label: 'Network Engineering', icon: Network, color: 'text-amber' },
-  noc_operations: { label: 'NOC Operations', icon: Monitor, color: 'text-green' },
-  network_security: { label: 'Network Security', icon: Shield, color: 'text-red' },
+  network_engineering: { label: 'Network Engineering', icon: Network, color: 'text-amber-400' },
+  noc_operations: { label: 'NOC Operations', icon: Monitor, color: 'text-green-400' },
+  network_security: { label: 'Network Security', icon: Shield, color: 'text-red-400' },
   cloud_networking: { label: 'Cloud Networking', icon: Cloud, color: 'text-purple-400' },
   network_automation: { label: 'Network Automation', icon: Terminal, color: 'text-cyan-400' },
 }

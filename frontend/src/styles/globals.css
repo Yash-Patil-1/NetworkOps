@@ -6,11 +6,11 @@
   --color-carbon-panel: #1D2022;
   --color-brushed-silver: #C9CDCE;
   --color-cool-ash: #8A9196;
-  --color-guards-red: #D5001C;
+  --color-guards-red: #E5A100;
   --color-chalk-white: #F2F3F3;
   --color-status-up: #3CB371;
   --color-warn: #E0A100;
-  --color-down: #D5001C;
+  --color-down: #E5A100;
 
   /* Framework aliases */
   --color-void: #131516;
@@ -18,8 +18,8 @@
   --color-carbon: #2A2E30;
   --color-ash: #A6ABAD;
   --color-polar: #F2F3F3;
-  --color-amber: #D5001C;
-  --color-red: #D5001C;
+  --color-amber: #E5A100;
+  --color-red: #E5A100;
   --color-green: #3CB371;
   --color-chalk: #F2F3F3;
 
@@ -31,8 +31,22 @@
   @keyframes fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 }
 
+.light {
+  --color-graphite-black: #faf8f5;
+  --color-carbon-panel: #ffffff;
+  --color-brushed-silver: #1c1c1e;
+  --color-cool-ash: #8e8e96;
+  --color-carbon: #d4d4d0;
+  --color-chalk-white: #1c1c1e;
+  --color-void: #faf8f5;
+  --color-midnight: #ffffff;
+  --color-chalk: #1c1c1e;
+  --color-polar: #1c1c1e;
+  --color-ash: #8e8e96;
+}
+
 @layer base {
-  * { border-color: #2A2E30; }
+  * { border-color: var(--color-carbon); }
   body { background: var(--color-graphite-black); color: var(--color-brushed-silver); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 }
 
@@ -47,7 +61,7 @@
   display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.25rem;
   border-radius: var(--radius-default); background: var(--color-guards-red); color: var(--color-chalk-white);
   font-weight: 600; font-size: 0.875rem; letter-spacing: 0.02em;
-  &:hover { background: #B80018; }
+  &:hover { background: var(--color-amber); }
 }
 
 @utility btn-ghost {
@@ -100,9 +114,9 @@
   display: flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.75rem;
   border-radius: var(--radius-default); color: var(--color-guards-red);
   font-size: 0.85rem; letter-spacing: 0.01em;
-  background: rgba(213,0,28,0.05);
+  background: rgba(229,161,0,0.05);
   border-left: 2px solid var(--color-guards-red);
 }
 
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-thumb { background: #2A2E30; border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--color-carbon); border-radius: 2px; }

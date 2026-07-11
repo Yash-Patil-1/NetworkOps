@@ -18,7 +18,7 @@ export default function StreakBadge() {
   return (
     <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-black/20 border border-carbon/50">
       <div className={`flex items-center gap-1 ${data.goal_met ? 'text-red' : 'text-ash'}`}>
-        <Flame className={`w-4 h-4 ${data.goal_met ? 'drop-shadow-[0_0_4px_rgba(213,0,28,0.5)]' : ''}`} />
+        <Flame className={`w-4 h-4 ${data.goal_met ? 'drop-shadow-[0_0_4px_rgba(229,161,0,0.5)]' : ''}`} />
         <span className="font-mono text-xs font-bold">{data.current_streak}</span>
       </div>
       <div className="text-[10px] leading-tight">

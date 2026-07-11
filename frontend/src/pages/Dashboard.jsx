@@ -45,9 +45,9 @@ export default function Dashboard() {
           <div className="relative w-24 h-24 mb-2">
             <svg className="w-24 h-24 -rotate-90" viewBox="0 0 80 80">
               {/* Background ring */}
-              <circle cx="40" cy="40" r="36" fill="none" stroke="#1D2022" strokeWidth="4" />
+              <circle cx="40" cy="40" r="36" fill="none" stroke="var(--color-carbon-panel)" strokeWidth="4" />
               {/* Progress arc - red needle */}
-              <circle cx="40" cy="40" r="36" fill="none" stroke="#D5001C" strokeWidth="4"
+              <circle cx="40" cy="40" r="36" fill="none" stroke="var(--color-guards-red)" strokeWidth="4"
                 strokeDasharray={circumference}
                 strokeDashoffset={strokeDashoffset}
                 strokeLinecap="round" />

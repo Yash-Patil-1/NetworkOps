@@ -33,7 +33,7 @@ NetworkOps is a local-first learning platform for network operations and enginee
 | 📊 Progress Tracking | Track your learning journey |
 | 🔍 Search & Filter | Find topics by domain, keyword, or difficulty |
 | 📖 Structured Phases | Progressive learning path |
-| 🎨 Hyperstudio Theme | Monochrome terminal + amber accents |
+| 🎨 Hyperstudio Theme | Dark/light toggle — Monochrome terminal + amber accents |
 
 ---
 
@@ -192,9 +192,10 @@ cd backend
 ## 🎨 Design
 
 Hyperstudio design language:
-- Dark monochrome terminal aesthetic
-- Amber accent (#E7C59A) for highlights
-- Green accent (#00AC5C) for success states
+- **Dark/light toggle** — defaults to dark terminal, persists in localStorage
+- **Dark theme:** monochrome terminal aesthetic
+- **Light theme:** cream (#F5F0E8) background, dark text
+- Amber (#E7C59A) highlights, green (#00AC5C) success states
 - Minimal, professional, distraction-free
 
 ---
